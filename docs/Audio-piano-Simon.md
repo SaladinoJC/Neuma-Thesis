@@ -33,3 +33,9 @@ Los archivos fuente no se incluyen en el APK ni se versionan. Los OGG y su manif
 Cada OGG se reabrió con libsndfile y conserva 26.460 frames mono a 44,1 kHz. En Do4 se observó energía espectral principal alrededor de 262 Hz (FFT con resolución de 4 Hz), coherente con la nota; esto no es una medición de precisión acústica del dispositivo ni una evaluación completa de afinación del banco.
 
 La reproducción Android debe comprobar decodificación del OGG real y avance de frames de salida. La escucha en el S22 Ultra y el ajuste perceptual de duración/volumen quedan a cargo del próximo recorrido manual.
+
+## Entrada rápida en v0.2.1
+
+El banco OGG y su conversión se conservan. Antes de habilitar la respuesta se precargan juntas las muestras SoundPool de la escala. El PCM de las notas presentadas se decodifica una vez a medida que Simón las usa, se conserva en memoria y se reproduce con AudioTrack; así no se repite esa decodificación para las doce teclas al iniciar una partida cromática. [SoundPool](https://developer.android.com/reference/android/media/SoundPool) permite precargar y disparar muestras cortas sin esperar cada cola; aquí se usan 16 voces como límite técnico provisional. Al superar ese límite reemplaza las colas más antiguas. La lógica de juego procesa las pulsaciones en orden y no las descarta por el límite de audio.
+
+Los ataques del jugador usan volumen 0,8 por voz; la presentación conserva volumen unitario. El resalte de respuesta dura 100 ms y no deshabilita la siguiente pulsación. Solo al cerrar correctamente una ronda se deja terminar la última muestra antes de presentar la siguiente secuencia; durante esa presentación no corresponde responder. Volver al menú o salir realmente de la app detiene las colas. Son elecciones provisionales, sin una medición de latencia acústica ni evaluación perceptual en el S22 Ultra.

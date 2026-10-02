@@ -1,6 +1,7 @@
 package ar.edu.unmdp.entrenamiento
 
 import android.os.Bundle
+import android.content.pm.ActivityInfo
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -9,11 +10,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
 import ar.edu.unmdp.entrenamiento.audio.AndroidNotePlayer
 import ar.edu.unmdp.entrenamiento.simon.JsonSimonResults
 import ar.edu.unmdp.entrenamiento.simon.SimonSession
 import ar.edu.unmdp.entrenamiento.ui.SimonApp
 import ar.edu.unmdp.entrenamiento.ui.SimonViewModel
+import ar.edu.unmdp.entrenamiento.ui.AppScreen
 import java.io.File
 import kotlin.random.Random
 
@@ -36,6 +39,10 @@ class MainActivity : ComponentActivity() {
         })[SimonViewModel::class.java]
         setContent {
             val ui by model.ui.collectAsStateWithLifecycle()
+            LaunchedEffect(ui.screen) {
+                requestedOrientation = if (ui.screen == AppScreen.MENU)
+                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT else ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
+            }
             SimonApp(ui, model::openSimon, model::selectScale, model::start, model::answer, model::home)
         }
     }
@@ -46,7 +53,8 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onStop() {
-        if (::model.isInitialized) model.background()
+        // Una recreación por orientación no significa que el jugador abandonó la app.
+        if (::model.isInitialized && !isChangingConfigurations) model.background()
         super.onStop()
     }
 }

@@ -18,6 +18,8 @@ Esta decisión sustituye la política anterior de desbloqueo por promedio móvil
 
 Las partidas automáticas comienzan en la escala más alta desbloqueada. Dos partidas automáticas completas consecutivas calificadas como dominio alto en la escala actual habilitan la siguiente para la próxima partida. Las partidas manuales se registran sin contribuir a desbloqueos. La traducción del puntaje a dominio alto y las funciones de pertenencia serán valores de prueba configurables y pendientes de calibración, específicos de Simón.
 
+Ajuste confirmado por el usuario al probar v0.2 (2026-10-02): Simón se abre en horizontal, con preparación y partida sin scroll y teclado ancho. Las pulsaciones del turno del jugador se procesan en orden sin esperar a que termine el sonido anterior; girar el dispositivo no interrumpe la sesión. El menú muestra la versión instalada y elimina las tres frases indicadas por el usuario. Las reglas de escala, puntuación y fin al primer error se conservan.
+
 ## 17.1 Fundamento
 
 **Por qué botones en pantalla, no captura de voz — decisión explícita para

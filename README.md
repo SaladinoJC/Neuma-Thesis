@@ -11,4 +11,4 @@ Materiales y prototipo del Trabajo Final de Ingeniería en Informática de la Un
 - [Especificación](docs/Especificacion-prototipo-v1.md) y [plan de tareas](docs/Plan-tareas-prototipo-v1.md): primera demostración aprobada y enlaces a las issues de GitHub.
 - [`CONTEXT.md`](CONTEXT.md) y [`docs/adr/`](docs/adr/): vocabulario y decisiones de diseño.
 
-La raíz `Tesis/` es la raíz del repositorio Git. Abrir `Plataforma/` en Android Studio para ejecutar la app. El [registro de verificación de Simón v0.2](docs/Verificacion-Simon-v0.2.md) distingue las pruebas del emulador de la comprobación pendiente de la nueva versión en el S22 Ultra.
+La raíz `Tesis/` es la raíz del repositorio Git. Abrir `Plataforma/` en Android Studio para ejecutar la app. Simón v0.2.1 incorpora entrada rápida y pantallas horizontales sin scroll. Su [registro de verificación](docs/Verificacion-Simon-v0.2.1.md) distingue las pruebas del emulador de la comprobación pendiente de la nueva versión en el S22 Ultra.
