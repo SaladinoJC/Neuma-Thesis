@@ -12,6 +12,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.LaunchedEffect
 import ar.edu.unmdp.entrenamiento.audio.AndroidNotePlayer
+import ar.edu.unmdp.entrenamiento.audio.AndroidInstrumentPlayer
+import ar.edu.unmdp.entrenamiento.instruments.InstrumentSession
+import ar.edu.unmdp.entrenamiento.instruments.JsonInstrumentResults
+import ar.edu.unmdp.entrenamiento.ui.InstrumentViewModel
+import ar.edu.unmdp.entrenamiento.ui.InstrumentApp
 import ar.edu.unmdp.entrenamiento.simon.JsonSimonResults
 import ar.edu.unmdp.entrenamiento.simon.SimonSession
 import ar.edu.unmdp.entrenamiento.ui.SimonApp
@@ -22,6 +27,7 @@ import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
     private lateinit var model: SimonViewModel
+    private lateinit var instruments: InstrumentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,24 +43,39 @@ class MainActivity : ComponentActivity() {
                 ) as T
             }
         })[SimonViewModel::class.java]
+        instruments = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                require(modelClass.isAssignableFrom(InstrumentViewModel::class.java))
+                val player = AndroidInstrumentPlayer(applicationContext)
+                return InstrumentViewModel(InstrumentSession({ Random.nextInt(it) }, player,
+                    JsonInstrumentResults(File(filesDir, "instrument-results.json"))), player) as T
+            }
+        })[InstrumentViewModel::class.java]
         setContent {
             val ui by model.ui.collectAsStateWithLifecycle()
-            LaunchedEffect(ui.screen) {
-                requestedOrientation = if (ui.screen == AppScreen.MENU)
+            val instrumentUi by instruments.ui.collectAsStateWithLifecycle()
+            LaunchedEffect(ui.screen, instrumentUi.open) {
+                requestedOrientation = if (ui.screen == AppScreen.MENU || instrumentUi.open)
                     ActivityInfo.SCREEN_ORIENTATION_PORTRAIT else ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
             }
-            SimonApp(ui, model::openSimon, model::selectScale, model::start, model::answer, model::home)
+            if (instrumentUi.open) InstrumentApp(instrumentUi, instruments::selectLevel, instruments::start,
+                instruments::listen, instruments::answer, instruments::next, instruments::home)
+            else SimonApp(ui, model::openSimon, model::selectScale, model::start, model::answer, model::home,
+                instruments::open, instrumentUi.history)
         }
     }
 
     override fun onStart() {
         super.onStart()
         if (::model.isInitialized) model.resume()
+        if (::instruments.isInitialized) instruments.resume()
     }
 
     override fun onStop() {
         // Una recreación por orientación no significa que el jugador abandonó la app.
         if (::model.isInitialized && !isChangingConfigurations) model.background()
+        if (::instruments.isInitialized && !isChangingConfigurations) instruments.background()
         super.onStop()
     }
 }

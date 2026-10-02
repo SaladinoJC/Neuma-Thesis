@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import ar.edu.unmdp.entrenamiento.simon.Phase
 import ar.edu.unmdp.entrenamiento.simon.Scale
 import ar.edu.unmdp.entrenamiento.simon.SimonResult
+import ar.edu.unmdp.entrenamiento.instruments.InstrumentResult
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -49,7 +50,8 @@ fun noteName(midi: Int): String {
 
 @Composable
 fun SimonApp(ui: SimonUiState, onSimon: () -> Unit, onScale: (Scale) -> Unit,
-    onStart: () -> Unit, onAnswer: (Int) -> Unit, onHome: () -> Unit) {
+    onStart: () -> Unit, onAnswer: (Int) -> Unit, onHome: () -> Unit,
+    onInstruments: () -> Unit = {}, instrumentHistory: List<InstrumentResult> = emptyList()) {
     MaterialTheme(colorScheme = darkColorScheme(primary = Pink, secondary = Lavender,
         background = Night, surface = Panel, onSurface = SoftWhite, onBackground = SoftWhite, onPrimary = Night)) {
         BackHandler(enabled = ui.screen != AppScreen.MENU, onBack = onHome)
@@ -57,7 +59,7 @@ fun SimonApp(ui: SimonUiState, onSimon: () -> Unit, onScale: (Scale) -> Unit,
             Box(Modifier.fillMaxSize().padding(padding)
                 .background(Brush.verticalGradient(listOf(Color(0xFF111828), Night, Color(0xFF0B1920))))) {
                 when (ui.screen) {
-                    AppScreen.MENU -> MainMenu(ui, onSimon)
+                    AppScreen.MENU -> MainMenu(ui, onSimon, onInstruments, instrumentHistory)
                     AppScreen.SIMON_SETUP -> Setup(ui, onScale, onStart, onHome)
                     AppScreen.SIMON_GAME -> Game(ui, onAnswer, onHome, onStart)
                 }
@@ -73,7 +75,7 @@ fun SimonApp(ui: SimonUiState, onSimon: () -> Unit, onScale: (Scale) -> Unit,
 }
 
 @Composable
-private fun MainMenu(ui: SimonUiState, onSimon: () -> Unit) {
+private fun MainMenu(ui: SimonUiState, onSimon: () -> Unit, onInstruments: () -> Unit, instrumentHistory: List<InstrumentResult>) {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(22.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp)) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
@@ -93,11 +95,24 @@ private fun MainMenu(ui: SimonUiState, onSimon: () -> Unit) {
         MenuCard("Simón dice musical", "Recordá y repetí notas en el piano", Pink, "♫",
             "Disponible", Modifier.testTag("game-simon"), onClick = onSimon)
         MenuCard("¿Qué instrumento es?", "Descubrí el instrumento por su sonido",
-            Color(0xFF71AAFF), "≋", "Próximamente")
+            Color(0xFF71AAFF), "≋", "Disponible", Modifier.testTag("game-instruments"), onClick = onInstruments)
         MenuCard("Afiná tu voz", "Explorá las notas que cantás", Color(0xFF63D9B0), "♪", "Próximamente")
         if (ui.history.isNotEmpty()) {
             Text("Últimas partidas de Simón", fontWeight = FontWeight.SemiBold)
             ui.history.take(5).forEach { HistoryCard(it) }
+        }
+        if (instrumentHistory.isNotEmpty()) {
+            Text("Últimas partidas de instrumentos", fontWeight = FontWeight.SemiBold)
+            instrumentHistory.take(5).forEach { result ->
+                Surface(color = Panel, shape = RoundedCornerShape(12.dp), modifier = Modifier.fillMaxWidth()) {
+                    Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Text("Instrumentos · ${result.level.label} · ${if (result.completed) "Completada" else "Interrumpida"}",
+                            color = Color(0xFF86B9FF), fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+                        Text("${result.answers.count { it.correct }} / ${result.answers.size} aciertos · " +
+                            SimpleDateFormat("dd/MM HH:mm", Locale.getDefault()).format(Date(result.finishedAtMillis)), color = Muted, fontSize = 12.sp)
+                    }
+                }
+            }
         }
     }
 }

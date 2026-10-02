@@ -33,11 +33,13 @@ Especificación: [#1](https://github.com/SaladinoJC/Tesis/issues/1). Todas las i
 
 **Qué entrega:** segundo minijuego ejecutable con cuatro opciones, banco real de samples y resumen de diez preguntas. Permite seleccionar manualmente los niveles A/B/C y empieza con tres escuchas totales por pregunta; aún no ajusta ayuda.
 
-- [ ] Incorporar muestras con permiso y procedencia comprobados, catálogo/transformaciones documentadas, altura sonora compartida y presentación comparable.
-- [ ] Cuatro opciones con una correcta, respuesta sin presión temporal y máximo de tres reproducciones, incluida la primera.
-- [ ] Contar cada reproducción real y mostrar escuchas restantes sin permitir superar el límite.
-- [ ] Diez respuestas cierran partida con resumen y resultados persistidos; cada pregunta registra selección, corrección y escuchas usadas.
-- [ ] Probar aciertos/errores, repeticiones, diez rondas y cierre; comprobar el banco de audio en Android.
+- [x] Incorporar muestras con permiso y procedencia comprobados, catálogo/transformaciones documentadas, altura sonora compartida y presentación comparable.
+- [x] Cuatro opciones con una correcta, respuesta sin presión temporal y máximo de tres reproducciones, incluida la primera.
+- [x] Contar cada reproducción real y mostrar escuchas restantes sin permitir superar el límite.
+- [x] Diez respuestas cierran partida con resumen y resultados persistidos; cada pregunta registra selección, corrección y escuchas usadas.
+- [x] Probar aciertos/errores, repeticiones, diez rondas y cierre; comprobar el banco de audio en Android.
+
+Software comprobado en emulador Pixel_6/API 34. Evidencia y recorrido físico pendiente en [Verificacion-Instrumentos-v0.3.md](Verificacion-Instrumentos-v0.3.md); catálogo y tratamiento del audio en [Audio-instrumentos.md](Audio-instrumentos.md). No se acredita sonoridad perceptual idéntica, calibración pedagógica ni prueba en S22 Ultra.
 
 ## 3. Ajustar escuchas con DDA Mamdani e inspeccionar sus decisiones
 
