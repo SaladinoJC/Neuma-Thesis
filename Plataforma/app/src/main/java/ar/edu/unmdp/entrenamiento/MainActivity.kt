@@ -1,0 +1,50 @@
+package ar.edu.unmdp.entrenamiento
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.runtime.getValue
+import ar.edu.unmdp.entrenamiento.audio.AndroidNotePlayer
+import ar.edu.unmdp.entrenamiento.simon.JsonSimonResults
+import ar.edu.unmdp.entrenamiento.simon.SimonSession
+import ar.edu.unmdp.entrenamiento.ui.SimonApp
+import ar.edu.unmdp.entrenamiento.ui.SimonViewModel
+import java.io.File
+import kotlin.random.Random
+
+class MainActivity : ComponentActivity() {
+    private lateinit var model: SimonViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        model = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                require(modelClass.isAssignableFrom(SimonViewModel::class.java))
+                return SimonViewModel(
+                    SimonSession({ Random.nextInt(it) }, JsonSimonResults(File(filesDir, "simon-results.json"))),
+                    AndroidNotePlayer(),
+                ) as T
+            }
+        })[SimonViewModel::class.java]
+        setContent {
+            val ui by model.ui.collectAsStateWithLifecycle()
+            SimonApp(ui, model::selectScale, model::start, model::answer, model::home)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (::model.isInitialized) model.resume()
+    }
+
+    override fun onStop() {
+        if (::model.isInitialized) model.background()
+        super.onStop()
+    }
+}
