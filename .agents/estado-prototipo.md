@@ -45,6 +45,8 @@ Se verificaron siete issues publicadas, todas con `ready-for-agent`, cuerpos con
 
 Para #2 se leyeron ticket, especificación, glosario, ADR y fichas. Ocho pruebas JVM y tres Android en emulador Pixel_6/API 34 pasaron; compilación, lint sin errores y generación del APK completadas. La prueba Android del reproductor real observó avance de frames de `AudioTrack`. Dos revisiones independientes de estándares/especificación quedaron sin hallazgos de código pendientes tras corregir una carrera de salida/guardado con regresión roja→verde. Detalles y comandos en `docs/Verificacion-Simon-v0.1.md`.
 
+Implementación subida en `24afc0c`. La issue #2 quedó cerrada con criterios comprobados y enlace al registro; su cierre habilita #3 y #6. La demostración física completa continúa pendiente como indica el registro, sin confundirse con el cierre del incremento de software.
+
 No se conectó ni probó el Samsung S22 Ultra; audibilidad y funcionamiento físicos siguen pendientes. No se midieron latencia acústica ni eficacia pedagógica. No se implementaron instrumentos, DDA, desbloqueos, captura de voz, exportación ni reinicio general.
 
 ## Próximo paso sugerido
