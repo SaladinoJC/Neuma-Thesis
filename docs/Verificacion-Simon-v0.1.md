@@ -27,6 +27,8 @@ La instrumentación detectó además una inicialización incorrecta del buffer e
 
 ## Pendientes en el teléfono
 
-Instalar el APK en el Samsung S22 Ultra y registrar versión de Android, volumen y salida de audio usada. Recorrido: jugar las tres escalas, completar rondas y provocar un error; comprobar sonido/resaltes, puntaje y resumen; volver al menú durante reproducción; salir a otra app; cerrar/reabrir y comprobar historial. Registrar por separado incidencias de audio, interfaz y persistencia.
+Tras solicitar la compilación del APK para su celular, el usuario informó (2026-10-02): «va queriendo, falta corregir muchos detalles pero anda». Primera comprobación manual reportada con funcionamiento general; detalles a corregir todavía sin especificar. No se registraron condiciones del dispositivo ni el recorrido realizado.
+
+Completar el recorrido en el Samsung S22 Ultra y registrar versión de Android, volumen y salida de audio usada: jugar las tres escalas, completar rondas y provocar un error; comprobar sonido/resaltes, puntaje y resumen; volver al menú durante reproducción; salir a otra app; cerrar/reabrir y comprobar historial. Registrar por separado incidencias de audio, interfaz y persistencia.
 
 La demostración física prevista en la especificación sigue pendiente. Este incremento verifica funcionalidad e integración en emulador; no acredita eficacia pedagógica ni calibración de dificultad. La prueba de micrófono/YIN corresponde a #6.

@@ -47,11 +47,11 @@ Para #2 se leyeron ticket, especificación, glosario, ADR y fichas. Ocho pruebas
 
 Implementación subida en `24afc0c`. La issue #2 quedó cerrada con criterios comprobados y enlace al registro; su cierre habilita #3 y #6. La demostración física completa continúa pendiente como indica el registro, sin confundirse con el cierre del incremento de software.
 
-No se conectó ni probó el Samsung S22 Ultra; audibilidad y funcionamiento físicos siguen pendientes. No se midieron latencia acústica ni eficacia pedagógica. No se implementaron instrumentos, DDA, desbloqueos, captura de voz, exportación ni reinicio general.
+En la verificación automatizada no se conectó ni probó el Samsung S22 Ultra. Después de solicitar el APK para instalarlo en su celular, el usuario informó (2026-10-02): «va queriendo, falta corregir muchos detalles pero anda». Esto registra una primera prueba manual con funcionamiento general reportado por el usuario; no detalla versión de Android, condiciones de audio, escalas recorridas ni incidencias concretas. La comprobación física estructurada sigue pendiente. No se midieron latencia acústica ni eficacia pedagógica. No se implementaron instrumentos, DDA, desbloqueos, captura de voz, exportación ni reinicio general.
 
 ## Próximo paso sugerido
 
-Instalar y probar Simón en el Samsung S22 Ultra siguiendo `docs/Verificacion-Simon-v0.1.md`; registrar Android, audio y resultados reales. El siguiente incremento de producto es [#3: reconocimiento tímbrico](https://github.com/SaladinoJC/Tesis/issues/3), leyendo ticket/comentarios y seleccionando muestras con procedencia/licencia verificadas antes de incorporarlas. [#6: prueba de voz](https://github.com/SaladinoJC/Tesis/issues/6) también se habilita tras #2. Los valores iniciales del DDA/tono requieren comprobación y calibración; no adelantarlos como implementados.
+Recoger los detalles que el usuario quiere corregir después de su primera prueba manual y priorizarlos antes de asumir cambios. Completar el recorrido en el Samsung S22 Ultra siguiendo `docs/Verificacion-Simon-v0.1.md`; registrar Android, audio y resultados reales. El siguiente incremento de producto es [#3: reconocimiento tímbrico](https://github.com/SaladinoJC/Tesis/issues/3), leyendo ticket/comentarios y seleccionando muestras con procedencia/licencia verificadas antes de incorporarlas. [#6: prueba de voz](https://github.com/SaladinoJC/Tesis/issues/6) también se habilita tras #2. Los valores iniciales del DDA/tono requieren comprobación y calibración; no adelantarlos como implementados.
 
 ## Mantenimiento
 
