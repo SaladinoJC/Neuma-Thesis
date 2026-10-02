@@ -1,0 +1,70 @@
+{
+    "repository":  "SaladinoJC/Tesis",
+    "specification":  {
+                          "number":  1,
+                          "url":  "https://github.com/SaladinoJC/Tesis/issues/1"
+                      },
+    "tickets":  [
+                    {
+                        "blocked_by_ordinals":  [
+
+                                                ],
+                        "number":  2,
+                        "database_id":  5681657439,
+                        "ordinal":  1,
+                        "url":  "https://github.com/SaladinoJC/Tesis/issues/2",
+                        "title":  "Jugar una partida de Simón en Android"
+                    },
+                    {
+                        "blocked_by_ordinals":  [
+                                                    1
+                                                ],
+                        "number":  3,
+                        "database_id":  5681657980,
+                        "ordinal":  2,
+                        "url":  "https://github.com/SaladinoJC/Tesis/issues/3",
+                        "title":  "Jugar diez preguntas de reconocimiento tímbrico"
+                    },
+                    {
+                        "blocked_by_ordinals":  [
+                                                    2
+                                                ],
+                        "number":  4,
+                        "database_id":  5681658395,
+                        "ordinal":  3,
+                        "url":  "https://github.com/SaladinoJC/Tesis/issues/4",
+                        "title":  "Ajustar escuchas con DDA Mamdani e inspeccionar sus decisiones"
+                    },
+                    {
+                        "blocked_by_ordinals":  [
+                                                    3
+                                                ],
+                        "number":  5,
+                        "database_id":  5681658831,
+                        "ordinal":  4,
+                        "url":  "https://github.com/SaladinoJC/Tesis/issues/5",
+                        "title":  "Desbloquear niveles y conservar progreso en ambos juegos"
+                    },
+                    {
+                        "blocked_by_ordinals":  [
+                                                    1
+                                                ],
+                        "number":  6,
+                        "database_id":  5681659182,
+                        "ordinal":  5,
+                        "url":  "https://github.com/SaladinoJC/Tesis/issues/6",
+                        "title":  "Inspeccionar tono vocal con YIN en Android"
+                    },
+                    {
+                        "blocked_by_ordinals":  [
+                                                    4,
+                                                    5
+                                                ],
+                        "number":  7,
+                        "database_id":  5681659726,
+                        "ordinal":  6,
+                        "url":  "https://github.com/SaladinoJC/Tesis/issues/7",
+                        "title":  "Exportar y reiniciar una demostración reproducible"
+                    }
+                ]
+}

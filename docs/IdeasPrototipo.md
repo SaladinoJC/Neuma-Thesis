@@ -1,5 +1,7 @@
 # Ideas para el Prototipo — Protocolo de Tesis
 
+> Actualización 2026-10-02: el usuario eligió para la primera demostración Android (Kotlin/Compose), Simón y ¿Qué instrumento es?, un DDA Mamdani y una prueba de voz separada con YIN. Las fichas de esos dos juegos contienen las decisiones actualizadas. Las menciones posteriores a promedio móvil/umbrales describen la propuesta anterior; el resto del catálogo y su orden siguen siendo sugeridos. El funcionamiento compartido del motor tendrá indicadores y reglas específicos por juego, sin asumir que sus puntajes son intercambiables.
+
 Selección de 5 minijuegos para arrancar la implementación del primer
 prototipo, pensada para la reunión con el director. Criterios de selección:
 variedad de temas (sin repetir categoría ni mecánica) y una rampa de

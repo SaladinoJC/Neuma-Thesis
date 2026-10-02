@@ -7,6 +7,20 @@
 
 **Estado:** DESARROLLADA
 
+## Actualización confirmada — 2026-10-02
+
+El usuario revisó la política DDA en la entrevista `grill-with-docs`. Esta actualización prevalece sobre las descripciones de gobernanza por promedio móvil y de escuchas fijas que se conservan abajo como antecedente:
+
+- Una partida tendrá inicialmente 10 preguntas; cada pregunta es una ronda. El tamaño es un valor de prueba, pendiente de calibración.
+- Un motor basado en lógica difusa ajustará la cantidad de escuchas disponibles entre rondas. Se mantienen cuatro opciones y el nivel de instrumentos de la partida; no se modifica un estímulo ya presentado.
+- Sus indicadores iniciales serán aciertos/errores recientes y uso de reescuchas. El tiempo de respuesta no será penalizado.
+- El desbloqueo de niveles por desempeño se conserva y será permanente. La dificultad activa puede bajar para ayudar al jugador sin retirar niveles desbloqueados.
+- Valores iniciales de prueba aprobados: comenzar con 3 escuchas totales, incluida la primera, y variar entre 1 y 3. Evaluar desde la tercera respuesta sobre las últimas 3 rondas; cambiar como máximo una escucha por ajuste y dejar dos rondas entre cambios. Nunca retirar escuchas de una pregunta iniciada.
+- Se eligió inferencia Mamdani. Las partidas automáticas comienzan en el nivel más alto desbloqueado; dos partidas automáticas completas consecutivas calificadas como dominio alto en ese nivel habilitan el siguiente para la próxima partida. Las partidas manuales no desbloquean niveles.
+- Un acierto con reescuchas sigue siendo correcto, pero aporta menor evidencia de autonomía que acertar con la primera escucha. Acertar pesa más que el uso de reescuchas. Esta interpretación es una hipótesis de diseño, no una medida validada.
+- Un panel de inspección mostrará entradas, reglas activadas, salida difusa y cambio aplicado. Los casos simulados quedarán separados del desempeño real.
+- Las funciones de pertenencia, la combinación numérica de indicadores y la frontera operativa de dominio alto serán valores iniciales explícitos de prueba, configurables y pendientes de calibración.
+
 ## 15.1 Fundamento
 
 **El hueco que cubre, con cita directa de la investigación base.**

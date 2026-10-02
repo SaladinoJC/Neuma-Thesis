@@ -8,6 +8,14 @@
 
 **Estado:** DESARROLLADA
 
+## Actualización confirmada — 2026-10-02
+
+En la entrevista `grill-with-docs`, el usuario confirmó mantener escala y tónica fijas durante la partida, crecimiento de una nota por ronda superada y fin al primer error. El motor DDA compartido usará lógica difusa para el desbloqueo de escalas entre partidas; no habrá un ajuste intrapartida adicional en esta primera versión. Los desbloqueos serán permanentes.
+
+Esta decisión sustituye la política anterior de desbloqueo por promedio móvil y umbral que se conserva abajo como antecedente. El puntaje es la longitud máxima completada correctamente: completar cuatro notas y fallar en la secuencia de cinco da un puntaje de cuatro; se conserva además la secuencia intentada y la posición del error.
+
+Las partidas automáticas comienzan en la escala más alta desbloqueada. Dos partidas automáticas completas consecutivas calificadas como dominio alto en la escala actual habilitan la siguiente para la próxima partida. Las partidas manuales se registran sin contribuir a desbloqueos. La traducción del puntaje a dominio alto y las funciones de pertenencia serán valores de prueba configurables y pendientes de calibración, específicos de Simón.
+
 ## 17.1 Fundamento
 
 **Por qué botones en pantalla, no captura de voz — decisión explícita para

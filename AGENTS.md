@@ -19,6 +19,8 @@ El usuario confirmó que quiere comenzar a prototipar. Consultar `.agents/estado
 
 ## Orientación técnica actual
 
+Decisiones confirmadas por el usuario el 2026-10-02: Android como plataforma para el proyecto; primera demostración con Simón y ¿Qué instrumento es?, DDA basado en lógica difusa y una prueba técnica separada de captura/estimación de tono. El DDA deberá contemplar adaptación intrapartida y desbloqueo de niveles. Consultar `.agents/estado-prototipo.md` para las preguntas aún abiertas y `docs/adr/0001-plataforma-android.md` para la decisión de plataforma. Las fichas conservan el diseño anterior del DDA por promedio móvil y umbrales; ese diseño está en revisión.
+
 El contexto previo atribuye al borrador del protocolo un MVP con audio monofónico, estimación de tono con una línea base DSP (YIN) y posible apoyo de un modelo ML liviano, telemetría para validar la precisión y un motor reutilizable de ajuste dinámico de dificultad (DDA). También describe ejecución local de audio, procesamiento asíncrono y exclusión de extracción de voz en entornos polifónicos, multijugador en tiempo real y XR/3D pesado. Comprobar estas atribuciones en el protocolo disponible antes de usarlas para fijar el alcance. `docs/IdeasPrototipo.md` propone empezar por minijuegos sin captura de audio y avanzar hacia ritmo y reproducción vocal de intervalos.
 
 Estos detalles son hipótesis de diseño: al planificar o implementar, comprobar su viabilidad y registrar la decisión concreta. En particular, los documentos tempranos exploran una arquitectura web con React/Next.js, WebAudio y RNN/LSTM; el protocolo posterior propone audio nativo/edge. No asumir que ambos stacks se usarán juntos.
