@@ -18,15 +18,19 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlin.random.Random
 
+enum class AppScreen { MENU, SIMON_SETUP, SIMON_GAME }
+
 data class SimonUiState(
     val game: SimonState = SimonState(),
     val selectedScale: Scale = Scale.PENTATONIC,
-    val inGame: Boolean = false,
+    val screen: AppScreen = AppScreen.MENU,
     val highlighted: Int? = null,
     val busy: Boolean = false,
     val history: List<SimonResult> = emptyList(),
     val error: String? = null,
-)
+) {
+    val inGame: Boolean get() = screen == AppScreen.SIMON_GAME
+}
 
 class SimonViewModel(private val session: SimonSession, private val player: NotePlayer) : ViewModel() {
     private val mutableUi = MutableStateFlow(SimonUiState())
@@ -46,6 +50,12 @@ class SimonViewModel(private val session: SimonSession, private val player: Note
         if (!ui.value.inGame) mutableUi.value = ui.value.copy(selectedScale = scale)
     }
 
+    fun openSimon() {
+        if (!ui.value.inGame && !ui.value.busy && !returningHome) {
+            mutableUi.value = ui.value.copy(screen = AppScreen.SIMON_SETUP, error = null)
+        }
+    }
+
     fun start() {
         if (ui.value.busy || returningHome) return
         playback?.cancel()
@@ -54,7 +64,7 @@ class SimonViewModel(private val session: SimonSession, private val player: Note
             actions.withLock {
                 try {
                     session.start(ui.value.selectedScale, tonicMidi = Random.nextInt(60, 72))
-                    mutableUi.value = ui.value.copy(game = session.state, inGame = true)
+                    mutableUi.value = ui.value.copy(game = session.state, screen = AppScreen.SIMON_GAME)
                     if (foreground && !returningHome) playSequence(session.state)
                     else interruptLocked()
                 } catch (error: Exception) { report(error) }
@@ -88,7 +98,7 @@ class SimonViewModel(private val session: SimonSession, private val player: Note
                 try {
                     playback?.cancel()
                     interruptLocked()
-                    mutableUi.value = ui.value.copy(inGame = false, busy = false, highlighted = null)
+                    mutableUi.value = ui.value.copy(screen = AppScreen.MENU, busy = false, highlighted = null)
                 } catch (error: Exception) { report(error) }
                 finally { returningHome = false }
             }

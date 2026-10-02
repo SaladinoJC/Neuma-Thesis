@@ -10,6 +10,8 @@
 
 ## Actualización confirmada — 2026-10-02
 
+Después de probar el primer APK, el usuario pidió un menú principal, una preparación separada y un piano táctil en lugar de la grilla de botones, siguiendo aproximadamente `docs/ui simon.png`. También eligió muestras de piano `mf` de University of Iowa convertidas a OGG (`docs/Audio-piano-Simon.md`). Las menciones posteriores a botones quedan como antecedente: la entrada sigue siendo táctil, ahora mediante teclas de piano. No se añadieron escalas, vidas ni otros juegos a partir del mockup.
+
 En la entrevista `grill-with-docs`, el usuario confirmó mantener escala y tónica fijas durante la partida, crecimiento de una nota por ronda superada y fin al primer error. El motor DDA compartido usará lógica difusa para el desbloqueo de escalas entre partidas; no habrá un ajuste intrapartida adicional en esta primera versión. Los desbloqueos serán permanentes.
 
 Esta decisión sustituye la política anterior de desbloqueo por promedio móvil y umbral que se conserva abajo como antecedente. El puntaje es la longitud máxima completada correctamente: completar cuatro notas y fallar en la secuencia de cinco da un puntaje de cuatro; se conserva además la secuencia intentada y la posición del error.

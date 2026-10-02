@@ -2,33 +2,43 @@ package ar.edu.unmdp.entrenamiento.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import ar.edu.unmdp.entrenamiento.simon.Phase
 import ar.edu.unmdp.entrenamiento.simon.Scale
 import ar.edu.unmdp.entrenamiento.simon.SimonResult
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.math.sin
 
-private val Ink = Color(0xFF213B46)
-private val Clay = Color(0xFFB65B35)
-private val Cream = Color(0xFFF6F3EC)
-private val NoteColors = listOf(0xFFEAD2BC, 0xFFF0DCB1, 0xFFD6E4CA, 0xFFBDDDD7,
-    0xFFC4D8EC, 0xFFD9CBE7, 0xFFE8CAD7, 0xFFC8D6CF, 0xFFDADBB8, 0xFFD3CEE7, 0xFFE6C8BD, 0xFFBCD8DB)
+internal val Night = Color(0xFF0B121C)
+internal val Panel = Color(0xFF1B2432)
+internal val Pink = Color(0xFFF278AA)
+internal val Lavender = Color(0xFFAE9CFF)
+internal val SoftWhite = Color(0xFFF4F1FF)
+internal val Muted = Color(0xFFA6B1C5)
 
 fun noteName(midi: Int): String {
     val pitch = listOf("Do", "Do♯", "Re", "Re♯", "Mi", "Fa", "Fa♯", "Sol", "Sol♯", "La", "La♯", "Si")
@@ -36,25 +46,22 @@ fun noteName(midi: Int): String {
 }
 
 @Composable
-fun SimonApp(
-    ui: SimonUiState,
-    onScale: (Scale) -> Unit,
-    onStart: () -> Unit,
-    onAnswer: (Int) -> Unit,
-    onHome: () -> Unit,
-) {
-    MaterialTheme(colorScheme = lightColorScheme(primary = Ink, secondary = Clay,
-        background = Cream, surface = Color.White, onSurface = Ink, onBackground = Ink)) {
-        BackHandler(enabled = ui.inGame, onBack = onHome)
-        Scaffold(containerColor = Cream, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
-            Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState())
-                .padding(horizontal = 24.dp, vertical = 20.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
-                Text("ENTRENAMIENTO AUDITIVO", style = MaterialTheme.typography.labelMedium,
-                    color = Clay, fontWeight = FontWeight.Bold)
-                if (!ui.inGame) Home(ui, onScale, onStart)
-                else Game(ui, onAnswer, onHome, onStart)
+fun SimonApp(ui: SimonUiState, onSimon: () -> Unit, onScale: (Scale) -> Unit,
+    onStart: () -> Unit, onAnswer: (Int) -> Unit, onHome: () -> Unit) {
+    MaterialTheme(colorScheme = darkColorScheme(primary = Pink, secondary = Lavender,
+        background = Night, surface = Panel, onSurface = SoftWhite, onBackground = SoftWhite, onPrimary = Night)) {
+        BackHandler(enabled = ui.screen != AppScreen.MENU, onBack = onHome)
+        Scaffold(containerColor = Night, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
+            Box(Modifier.fillMaxSize().padding(padding)
+                .background(Brush.verticalGradient(listOf(Color(0xFF111828), Night, Color(0xFF0B1920))))) {
+                when (ui.screen) {
+                    AppScreen.MENU -> MainMenu(ui, onSimon)
+                    AppScreen.SIMON_SETUP -> Setup(ui, onScale, onStart, onHome)
+                    AppScreen.SIMON_GAME -> Game(ui, onAnswer, onHome, onStart)
+                }
                 ui.error?.let {
-                    Surface(color = MaterialTheme.colorScheme.errorContainer, shape = RoundedCornerShape(12.dp)) {
+                    Surface(Modifier.align(Alignment.BottomCenter).padding(16.dp),
+                        color = MaterialTheme.colorScheme.errorContainer, shape = RoundedCornerShape(12.dp)) {
                         Text(it, Modifier.padding(16.dp), color = MaterialTheme.colorScheme.onErrorContainer)
                     }
                 }
@@ -64,118 +71,226 @@ fun SimonApp(
 }
 
 @Composable
-private fun Home(ui: SimonUiState, onScale: (Scale) -> Unit, onStart: () -> Unit) {
-    Text("Escuchá. Recordá.\nRepetí.", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
-    Text("Simón musical", style = MaterialTheme.typography.titleLarge, color = Clay)
-    Surface(color = Ink, shape = RoundedCornerShape(22.dp)) {
-        Column(Modifier.padding(22.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            Text("Una secuencia, una nota más", style = MaterialTheme.typography.titleMedium,
-                color = Color.White, fontWeight = FontWeight.Bold)
-            Text("Escuchá y mirá los botones. Cuando sea tu turno, repetí las notas en el mismo orden. " +
-                "Cada acierto agrega una nota; el primer error termina la partida.", color = Color(0xFFDBE5E8))
+private fun MainMenu(ui: SimonUiState, onSimon: () -> Unit) {
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(22.dp),
+        verticalArrangement = Arrangement.spacedBy(14.dp)) {
+        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween) {
+            Text("♫", color = Lavender, fontSize = 32.sp)
+            Text("TU ESPACIO MUSICAL", color = Muted, fontSize = 10.sp, letterSpacing = 2.sp)
         }
-    }
-    Text("Elegí tu escala", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-    Scale.entries.forEach { scale ->
-        val selected = ui.selectedScale == scale
-        OutlinedButton(onClick = { onScale(scale) }, enabled = !ui.busy,
-            modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(14.dp),
-            border = BorderStroke(if (selected) 2.dp else 1.dp, if (selected) Ink else Color(0xFFD5DCD8)),
-            colors = ButtonDefaults.outlinedButtonColors(containerColor = if (selected) Color(0xFFE5EBE6) else Color.White)) {
-            Row(Modifier.fillMaxWidth().padding(vertical = 7.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(scale.label, fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal)
-                Text("${scale.intervals.size} notas")
+        Box(Modifier.fillMaxWidth().height(200.dp), contentAlignment = Alignment.Center) {
+            SoundWaves(Modifier.fillMaxSize())
+            Column(horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text("Entrená tu oído", color = SoftWhite, fontSize = 36.sp, lineHeight = 40.sp,
+                    textAlign = TextAlign.Center, fontWeight = FontWeight.ExtraBold)
+                Text("Pequeños juegos, grandes oídos.", color = Color(0xFFBBDCF0), fontSize = 14.sp)
             }
         }
+        Text("ELEGÍ TU PRÓXIMO DESAFÍO", color = Muted, fontSize = 10.sp, letterSpacing = 1.5.sp)
+        MenuCard("Simón dice musical", "Recordá y repetí notas en el piano", Pink, "♫",
+            "Disponible", Modifier.testTag("game-simon"), onClick = onSimon)
+        MenuCard("¿Qué instrumento es?", "Descubrí el instrumento por su sonido",
+            Color(0xFF71AAFF), "≋", "Próximamente")
+        MenuCard("Afiná tu voz", "Explorá las notas que cantás", Color(0xFF63D9B0), "♪", "Próximamente")
+        Text("A tu ritmo. Una nota a la vez.", color = Muted, fontSize = 13.sp,
+            modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp), textAlign = TextAlign.Center)
+        if (ui.history.isNotEmpty()) {
+            Text("Últimas partidas de Simón", fontWeight = FontWeight.SemiBold)
+            ui.history.take(5).forEach { HistoryCard(it) }
+        }
     }
-    Button(onClick = onStart, enabled = !ui.busy, modifier = Modifier.fillMaxWidth().height(56.dp),
-        shape = RoundedCornerShape(16.dp)) { Text("Jugar Simón") }
-    Text("Práctica libre · Una tónica nueva en cada partida", style = MaterialTheme.typography.bodySmall)
-    if (ui.history.isNotEmpty()) {
-        HorizontalDivider()
-        Text("Tus últimas partidas", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-        ui.history.take(5).forEach { result -> HistoryCard(result) }
+}
+
+@Composable
+private fun MenuCard(title: String, subtitle: String, accent: Color, symbol: String,
+    badge: String, modifier: Modifier = Modifier, onClick: (() -> Unit)? = null) {
+    Surface(onClick = { onClick?.invoke() }, enabled = onClick != null,
+        modifier = modifier.fillMaxWidth(), shape = RoundedCornerShape(20.dp),
+        color = accent.copy(alpha = if (onClick != null) 0.16f else 0.08f),
+        border = BorderStroke(if (onClick != null) 1.5.dp else 1.dp, accent.copy(alpha = 0.5f))) {
+        Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+            Box(Modifier.size(56.dp).clip(RoundedCornerShape(14.dp))
+                .background(Brush.linearGradient(listOf(accent, accent.copy(alpha = 0.5f)))),
+                contentAlignment = Alignment.Center) { Text(symbol, fontSize = 34.sp, color = SoftWhite) }
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(title, color = SoftWhite, fontWeight = FontWeight.Bold, fontSize = 17.sp)
+                Text(subtitle, color = Muted, fontSize = 12.sp, lineHeight = 16.sp)
+                Text(badge, color = accent, fontSize = 10.sp, fontWeight = FontWeight.SemiBold)
+            }
+            if (onClick != null) Text("›", color = accent, fontSize = 30.sp)
+        }
+    }
+}
+
+@Composable
+private fun SoundWaves(modifier: Modifier) {
+    Canvas(modifier) {
+        for (line in 0..5) {
+            val path = Path()
+            for (step in 0..80) {
+                val x = size.width * step / 80
+                val y = size.height * 0.78f + sin(step * 0.085 + line * 0.18).toFloat() *
+                    size.height * 0.12f + line * 5.dp.toPx()
+                if (step == 0) path.moveTo(x, y) else path.lineTo(x, y)
+            }
+            drawPath(path, Brush.horizontalGradient(listOf(Lavender.copy(alpha = 0.08f),
+                Color(0xFF38C5DC).copy(alpha = 0.25f))),
+                style = androidx.compose.ui.graphics.drawscope.Stroke(1.dp.toPx()))
+        }
+        drawCircle(Lavender.copy(alpha = 0.07f), size.width * 0.22f, Offset(size.width * 0.07f, size.height * 0.25f))
+    }
+}
+
+@Composable
+private fun PageHeader(onHome: () -> Unit) {
+    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        TextButton(onClick = onHome, contentPadding = PaddingValues(0.dp),
+            modifier = Modifier.width(48.dp).semantics { contentDescription = "Volver al menú" }) {
+            Text("‹", color = SoftWhite, fontSize = 32.sp)
+        }
+        Text("♫", color = Pink, fontSize = 24.sp, modifier = Modifier.padding(end = 9.dp))
+        Text("Simón dice musical", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+    }
+}
+
+@Composable
+private fun Setup(ui: SimonUiState, onScale: (Scale) -> Unit, onStart: () -> Unit, onHome: () -> Unit) {
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        PageHeader(onHome)
+        Surface(color = Panel, shape = RoundedCornerShape(22.dp), border = BorderStroke(1.dp, Lavender.copy(alpha = 0.16f))) {
+            Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                Text("¿Cómo se juega?", fontWeight = FontWeight.Bold, fontSize = 21.sp)
+                Text("Escuchá las notas del piano y repetilas tocando las mismas teclas. " +
+                    "Cada ronda suma una nota. El primer error termina la partida.", color = Muted, fontSize = 14.sp, lineHeight = 21.sp)
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                    Instruction("♪", "Escuchá", Pink)
+                    Instruction("▥", "Repetí", Lavender)
+                    Instruction("☆", "Avanzá", Color(0xFFFFCD75))
+                }
+            }
+        }
+        Text("Seleccioná la escala", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+        Scale.entries.forEach { scale ->
+            val selected = ui.selectedScale == scale
+            Surface(onClick = { onScale(scale) }, enabled = !ui.busy,
+                modifier = Modifier.fillMaxWidth().testTag("scale-${scale.name}"), shape = RoundedCornerShape(16.dp),
+                color = if (selected) Pink.copy(alpha = 0.12f) else Panel,
+                border = BorderStroke(if (selected) 1.5.dp else 1.dp, if (selected) Pink else Color(0xFF303848))) {
+                Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                    Box(Modifier.size(20.dp).clip(CircleShape)
+                        .background(if (selected) Pink else Color(0xFF414B60)), contentAlignment = Alignment.Center) {
+                        if (selected) Box(Modifier.size(8.dp).clip(CircleShape).background(SoftWhite))
+                    }
+                    Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Text(scale.label, fontWeight = FontWeight.SemiBold)
+                        Text("${scale.intervals.size} notas · " + when (scale) {
+                            Scale.PENTATONIC -> "Una primera melodía"
+                            Scale.DIATONIC -> "Todos los grados de la escala"
+                            Scale.CHROMATIC -> "Los doce semitonos"
+                        }, color = Muted, fontSize = 12.sp)
+                    }
+                }
+            }
+        }
+        Button(onClick = onStart, enabled = !ui.busy, modifier = Modifier.fillMaxWidth().height(54.dp),
+            shape = RoundedCornerShape(18.dp)) { Text("Jugar Simón", fontWeight = FontWeight.Bold, fontSize = 16.sp) }
+        Text("Práctica libre · Una tónica nueva en cada partida", color = Muted, fontSize = 11.sp,
+            textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+        TextButton(onClick = onHome, modifier = Modifier.fillMaxWidth()) { Text("Volver al menú") }
+    }
+}
+
+@Composable
+private fun Instruction(symbol: String, label: String, color: Color) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Box(Modifier.size(44.dp).clip(CircleShape).background(color.copy(alpha = 0.15f)),
+            contentAlignment = Alignment.Center) { Text(symbol, color = color, fontSize = 26.sp) }
+        Text(label, fontSize = 12.sp)
     }
 }
 
 @Composable
 private fun Game(ui: SimonUiState, onAnswer: (Int) -> Unit, onHome: () -> Unit, onStart: () -> Unit) {
     val state = ui.game
-    Text("Simón musical", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
-    Text("${state.scale.label} · Tónica ${noteName(state.tonicMidi)}", color = Clay)
     val ended = state.phase == Phase.FINISHED || state.phase == Phase.INTERRUPTED
-    if (ended) {
-        Text(if (state.phase == Phase.FINISHED) "Partida terminada" else "Partida interrumpida",
-            style = MaterialTheme.typography.titleLarge)
-        state.result?.let { ResultCard(it) }
-        Button(onClick = onStart, enabled = !ui.busy, modifier = Modifier.fillMaxWidth().height(54.dp)) {
-            Text("Otra partida")
-        }
-    } else {
-        Surface(color = Ink, shape = RoundedCornerShape(18.dp)) {
-            Column(Modifier.fillMaxWidth().padding(20.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text(if (state.phase == Phase.PLAYBACK) "Escuchá la secuencia" else "Tu turno",
-                    color = Color.White, style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.testTag("phase"))
-                Text(if (state.phase == Phase.PLAYBACK) "Los botones se iluminan en orden." else
-                    "Repetí ${state.sequence.size} ${if (state.sequence.size == 1) "nota" else "notas"}.",
-                    color = Color(0xFFDBE5E8))
-                Text("Longitud completada: ${state.completedLength}", color = Color.White)
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(14.dp)) {
+        PageHeader(onHome)
+        Surface(color = Panel, shape = RoundedCornerShape(16.dp)) {
+            Row(Modifier.fillMaxWidth().padding(16.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text("Ronda ${state.sequence.size}", fontWeight = FontWeight.Bold)
+                Text("${state.completedLength} completadas", color = Pink, fontSize = 13.sp)
             }
         }
-        val columns = if (state.midiNotes.size > 7) 4 else 3
-        state.midiNotes.indices.chunked(columns).forEach { indexes ->
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                indexes.forEach { index ->
-                    val highlighted = ui.highlighted == index
-                    Surface(onClick = { onAnswer(index) },
-                        enabled = state.phase == Phase.RESPONSE && !ui.busy,
-                        modifier = Modifier.weight(1f).heightIn(min = 76.dp).testTag("note-$index")
-                            .semantics { stateDescription = if (highlighted) "Sonando" else "En espera" },
-                        shape = RoundedCornerShape(16.dp),
-                        color = if (highlighted) Ink else Color(NoteColors[index]),
-                        contentColor = if (highlighted) Color.White else Ink,
-                        border = BorderStroke(if (highlighted) 3.dp else 1.dp, if (highlighted) Clay else Color.Transparent)) {
-                        Column(Modifier.padding(vertical = 14.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(noteName(state.midiNotes[index]), style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold)
-                            Text("${index + 1}", style = MaterialTheme.typography.labelSmall)
-                        }
+        Text("${state.scale.label} · Tónica ${noteName(state.tonicMidi)}", color = Muted, fontSize = 12.sp,
+            textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+        if (ended) {
+            Text(if (state.phase == Phase.FINISHED) "Partida terminada" else "Partida interrumpida",
+                fontSize = 24.sp, fontWeight = FontWeight.Bold)
+            state.result?.let { ResultCard(it) }
+            Button(onClick = onStart, enabled = !ui.busy, modifier = Modifier.fillMaxWidth().height(54.dp),
+                shape = RoundedCornerShape(16.dp)) { Text("Otra partida") }
+        } else {
+            val listening = state.phase == Phase.PLAYBACK
+            Column(Modifier.fillMaxWidth().padding(vertical = 12.dp), horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(if (listening) "Escuchá la secuencia…" else "Ahora repetí la secuencia",
+                    fontSize = 18.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.testTag("phase"))
+                Box(Modifier.size(88.dp).clip(CircleShape).background(Pink.copy(alpha = 0.07f)), contentAlignment = Alignment.Center) {
+                    Box(Modifier.size(66.dp).clip(CircleShape).background(Pink.copy(alpha = 0.2f)), contentAlignment = Alignment.Center) {
+                        Text(if (listening) "♫" else "▥", color = Pink, fontSize = 46.sp)
                     }
                 }
-                repeat(columns - indexes.size) { Spacer(Modifier.weight(1f)) }
+                Text(if (listening) "Mirá qué teclas se iluminan" else "Tocá las teclas en el mismo orden", color = Muted, fontSize = 12.sp)
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    repeat(minOf(state.sequence.size, 10)) { index ->
+                        Box(Modifier.size(14.dp).clip(CircleShape)
+                            .background(if (!listening && index < state.responseIndex) Pink else Color(0xFF30394C)))
+                    }
+                    if (state.sequence.size > 10) Text("+${state.sequence.size - 10}", color = Muted, fontSize = 11.sp)
+                }
+                Text(if (listening) "${state.sequence.size} ${if (state.sequence.size == 1) "nota" else "notas"}" else
+                    "${state.responseIndex} / ${state.sequence.size}", color = Muted, fontSize = 12.sp)
             }
+            PianoKeyboard(state.midiNotes, ui.highlighted, state.phase == Phase.RESPONSE && !ui.busy,
+                onAnswer, Modifier.fillMaxWidth().height(220.dp))
+            Text("Las teclas atenuadas no pertenecen a esta escala.", color = Muted, fontSize = 11.sp,
+                modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
         }
-        Text("Respondé cuando aparezca «Tu turno».", style = MaterialTheme.typography.bodySmall)
+        TextButton(onClick = onHome, modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) { Text("Volver al menú") }
     }
-    TextButton(onClick = onHome, modifier = Modifier.fillMaxWidth()) { Text("Volver al menú") }
 }
 
 @Composable
 private fun ResultCard(result: SimonResult) {
-    Surface(color = Color.White, shape = RoundedCornerShape(20.dp)) {
+    Surface(color = Panel, shape = RoundedCornerShape(20.dp), border = BorderStroke(1.dp, Pink.copy(alpha = 0.3f))) {
         Column(Modifier.fillMaxWidth().padding(22.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text("${result.completedLength} ${if (result.completedLength == 1) "nota" else "notas"}",
-                style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
+                color = Pink, fontSize = 36.sp, fontWeight = FontWeight.Bold)
             Text("Longitud máxima completada")
             Text("Secuencia intentada (${result.attemptedSequence.size}): " +
-                result.attemptedSequence.joinToString(" · ") { noteName(result.tonicMidi + result.scale.intervals[it]) })
-            result.errorPosition?.let { Text("Error en la posición ${it + 1}.", color = Clay) }
+                result.attemptedSequence.joinToString(" · ") { noteName(result.tonicMidi + result.scale.intervals[it]) },
+                color = Muted, fontSize = 13.sp)
+            result.errorPosition?.let { Text("Error en la posición ${it + 1}.", color = Pink, fontSize = 13.sp) }
         }
     }
 }
 
 @Composable
 private fun HistoryCard(result: SimonResult) {
-    Surface(color = Color.White, shape = RoundedCornerShape(14.dp)) {
+    Surface(color = Panel.copy(alpha = 0.8f), shape = RoundedCornerShape(14.dp)) {
         Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(result.scale.label, fontWeight = FontWeight.Bold)
-                Text(if (result.completed) "Completada" else "Interrumpida", color = Clay)
+                Text(result.scale.label, fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
+                Text(if (result.completed) "Completada" else "Interrumpida", color = Pink, fontSize = 12.sp)
             }
-            Text("${result.completedLength} notas completadas · ${noteName(result.tonicMidi)}")
-            Text(SimpleDateFormat("dd/MM HH:mm", Locale.forLanguageTag("es-AR")).format(Date(result.finishedAtMillis)),
-                style = MaterialTheme.typography.bodySmall)
+            Text("${result.completedLength} notas completadas · ${noteName(result.tonicMidi)}", color = Muted, fontSize = 12.sp)
+            Text(SimpleDateFormat("dd/MM HH:mm", Locale.forLanguageTag("es-AR")).format(Date(result.finishedAtMillis)), color = Muted, fontSize = 11.sp)
         }
     }
 }

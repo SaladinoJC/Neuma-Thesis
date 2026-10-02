@@ -4,6 +4,8 @@ Estado: síntesis y división en tareas aprobadas por el usuario el 2026-10-02 p
 
 Publicada como [especificación #1](https://github.com/SaladinoJC/Tesis/issues/1). Las tareas y sus bloqueos están en GitHub; este documento conserva la síntesis de referencia.
 
+Actualización confirmada por el usuario (2026-10-02), posterior al primer APK: inicio en un menú de la app, preparación de Simón en una pantalla separada y entrada mediante un piano en pantalla, sustituyendo la grilla de botones. Referencia visual: `docs/ui simon.png`; paleta oscura con acentos rosas. El sonido usa muestras de piano `mf` de University of Iowa convertidas a OGG. Las menciones a botones en este documento se interpretan ahora como teclas del piano; se mantienen las tres escalas, tónica fija, secuencia creciente y fin al primer error. Los catálogos de escalas/juegos y vidas de la imagen son orientativos, no cambios adicionales aprobados. Procedencia y conversión en `docs/Audio-piano-Simon.md`.
+
 ## Problem Statement
 
 El tesista necesita una demostración ejecutable que él y su director puedan usar para discutir el sistema de entrenamiento auditivo. Actualmente existen documentos y fichas de diseño, pero no una aplicación. Antes de una evaluación con estudiantes se necesita comprobar el funcionamiento de dos juegos, observar un DDA explicable y explorar captura y estimación de tono en el teléfono objetivo.

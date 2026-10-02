@@ -22,7 +22,7 @@ data class SimonResult(
     val startedAtMillis: Long = 0,
     val finishedAtMillis: Long = 0,
     val origin: String = "manual",
-    val configurationVersion: String = "simon-0.1",
+    val configurationVersion: String = "simon-0.2-piano-mf",
 )
 data class SimonState(
     val phase: Phase = Phase.IDLE,
