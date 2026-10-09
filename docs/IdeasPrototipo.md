@@ -2,6 +2,8 @@
 
 > Actualización 2026-10-02: el usuario eligió para la primera demostración Android (Kotlin/Compose), Simón y ¿Qué instrumento es?, un DDA Mamdani y una prueba de voz separada con YIN. Las fichas de esos dos juegos contienen las decisiones actualizadas. Las menciones posteriores a promedio móvil/umbrales describen la propuesta anterior; el resto del catálogo y su orden siguen siendo sugeridos. El funcionamiento compartido del motor tendrá indicadores y reglas específicos por juego, sin asumir que sus puntajes son intercambiables.
 
+> Actualización 2026-10-09: después de probar v0.3 en el celular, el usuario pidió melodías breves generadas aleatoriamente para reconocimiento tímbrico. v0.3.1 cambia la frase en cada pregunta y conserva la misma en las reescuchas, con samples reales y gramática común a los instrumentos. La ficha 15 y [Melodias-instrumentos-v0.3.1.md](Melodias-instrumentos-v0.3.1.md) registran el cambio; los parámetros concretos del generador son provisionales.
+
 Selección de 5 minijuegos para arrancar la implementación del primer
 prototipo, pensada para la reunión con el director. Criterios de selección:
 variedad de temas (sin repetir categoría ni mecánica) y una rampa de

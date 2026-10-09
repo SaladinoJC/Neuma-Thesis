@@ -6,6 +6,7 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.graphics.asAndroidBitmap
 import ar.edu.unmdp.entrenamiento.audio.AndroidInstrumentPlayer
 import ar.edu.unmdp.entrenamiento.instruments.Instrument
+import ar.edu.unmdp.entrenamiento.instruments.InstrumentMelody
 import android.content.res.Configuration
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
@@ -21,7 +22,7 @@ class InstrumentAndroidTest {
     fun instrumentosPermiteJugarDiezPreguntasYConservaElHistorialAlReabrir() {
         screenshot("menu")
         compose.onNodeWithTag("game-instruments").performClick()
-        compose.onNodeWithTag("level-C").performClick()
+        compose.onNodeWithTag("level-C").performScrollTo().performClick()
         screenshot("preparacion")
         compose.onNodeWithText("Jugar instrumentos").performClick()
         for (round in 1..10) {
@@ -65,8 +66,8 @@ class InstrumentAndroidTest {
     @Test
     fun nivelesManualesYSalidaDurantePresentacionConservanUnaInterrupcion() {
         compose.onNodeWithTag("game-instruments").performClick()
-        for (level in listOf("A", "B", "C")) compose.onNodeWithTag("level-$level").assertIsDisplayed()
-        compose.onNodeWithTag("level-A").performClick()
+        for (level in listOf("A", "B", "C")) compose.onNodeWithTag("level-$level").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithTag("level-A").performScrollTo().performClick()
         compose.onNodeWithText("Jugar instrumentos").performClick()
         compose.activityRule.scenario.recreate()
         compose.onNodeWithContentDescription("Volver al menú").performClick()
@@ -88,10 +89,11 @@ class InstrumentAndroidTest {
     @Test
     fun elBancoReproduceNueveInstrumentosYConfirmaCadaEscuchaUnaSolaVez() = runBlocking {
         val player = AndroidInstrumentPlayer(compose.activity.applicationContext)
+        val melody = InstrumentMelody(listOf(60, 64, 69, 67, 62, 60), listOf(400, 400, 400, 400, 400, 800))
         for (instrument in Instrument.entries) {
             var starts = 0
-            val frames = player.play(instrument) { starts++ }
-            assertTrue("$instrument: 1,5 s de audio real", frames >= 66_150)
+            val frames = player.play(instrument, melody) { starts++ }
+            assertTrue("$instrument: una frase completa de 3,05 s de audio real", frames >= 134_505)
             assertEquals(1, starts)
         }
     }

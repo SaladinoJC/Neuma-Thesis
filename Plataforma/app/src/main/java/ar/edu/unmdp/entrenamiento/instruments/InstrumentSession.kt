@@ -9,6 +9,7 @@ enum class Instrument(val label: String, val assetKey: String) {
     MARIMBA("Marimba", "marimba"), CLARINET("Clarinete", "clarinet"), TRUMPET("Trompeta", "trumpet"),
     TROMBONE("Trombón", "trombone"), OBOE("Oboe", "oboe"), BASSOON("Fagot", "bassoon");
     val asset: String get() = "instruments/${assetKey}_c4_mf.ogg"
+    fun melodyAsset(midi: Int): String = "instruments/melody/${assetKey}_${midi}_mf.ogg"
 }
 
 @Serializable
@@ -20,9 +21,11 @@ enum class InstrumentLevel(val label: String, val description: String, val instr
 
 enum class InstrumentPhase { IDLE, READY, PLAYBACK, RESPONSE, FEEDBACK, FINISHED, INTERRUPTED }
 
+enum class InstrumentMode { AUTOMATIC, MANUAL, SIMULATED }
+
 interface InstrumentPlayer {
     /** onStarted solo se invoca una vez, al observar avance real del audio. */
-    suspend fun play(instrument: Instrument, onStarted: () -> Unit): Int
+    suspend fun play(instrument: Instrument, melody: InstrumentMelody, onStarted: () -> Unit): Int
     fun close() {}
 }
 
@@ -31,6 +34,8 @@ data class InstrumentAnswer(
     val round: Int, val target: Instrument, val options: List<Instrument>, val selected: Instrument,
     val correct: Boolean, val listensUsed: Int, val answeredAtMillis: Long,
     val listensAllowed: Int = 3,
+    val melody: InstrumentMelody? = null,
+    val ddaDecision: InstrumentDdaDecision? = null,
 )
 
 @Serializable
@@ -38,8 +43,10 @@ data class InstrumentResult(
     val id: String, val level: InstrumentLevel, val answers: List<InstrumentAnswer>,
     val completed: Boolean, val startedAtMillis: Long, val finishedAtMillis: Long,
     val origin: String = "manual", val configurationVersion: String = "instruments-0.3-three-listens",
-    val bankVersion: String = "iowa-c4-mf-v1", val midi: Int = 60,
+    val bankVersion: String = "iowa-c4-mf-v1", val midi: Int? = 60,
     val plannedQuestions: Int = 10,
+    val stimulusKind: String = "single-note",
+    val ddaConfiguration: InstrumentDdaConfiguration? = null,
 )
 
 data class InstrumentState(
@@ -50,8 +57,10 @@ data class InstrumentState(
     val listensUsed: Int = 0,
     val answers: List<InstrumentAnswer> = emptyList(),
     val result: InstrumentResult? = null,
+    val listensAllowed: Int = 3,
+    val mode: InstrumentMode = InstrumentMode.MANUAL,
 ) {
-    val listensRemaining: Int get() = 3 - listensUsed
+    val listensRemaining: Int get() = listensAllowed - listensUsed
     val correctCount: Int get() = answers.count { it.correct }
 }
 
@@ -61,25 +70,33 @@ class InstrumentSession(
     private val player: InstrumentPlayer,
     private val results: InstrumentResults = MemoryInstrumentResults(),
     private val clock: () -> Long = System::currentTimeMillis,
+    val ddaConfiguration: InstrumentDdaConfiguration = InstrumentDdaConfiguration(),
 ) {
     var state = InstrumentState()
         private set
     private var target = Instrument.PIANO
+    private var melody: InstrumentMelody? = null
     private var id = ""
     private var startedAtMillis = 0L
+    private var lastChangeRound: Int? = null
+    private var nextListensAllowed = 3
 
-    fun start(level: InstrumentLevel) {
+    fun start(level: InstrumentLevel, mode: InstrumentMode = InstrumentMode.MANUAL) {
         check(state.phase in listOf(InstrumentPhase.IDLE, InstrumentPhase.FINISHED, InstrumentPhase.INTERRUPTED)) {
             "La partida anterior sigue activa."
         }
         id = UUID.randomUUID().toString()
         startedAtMillis = clock()
-        state = InstrumentState(level = level)
+        state = InstrumentState(level = if (mode == InstrumentMode.AUTOMATIC) InstrumentLevel.A else level, mode = mode)
+        melody = null
+        lastChangeRound = null
+        nextListensAllowed = 3
         prepareQuestion()
     }
 
     private fun prepareQuestion() {
         target = state.level.instruments[randomIndex(4)]
+        melody = generateInstrumentMelody(randomIndex, melody)
         val options = state.level.instruments.toMutableList()
         for (index in options.lastIndex downTo 1) {
             val other = randomIndex(index + 1)
@@ -95,7 +112,7 @@ class InstrumentSession(
         state = state.copy(phase = InstrumentPhase.PLAYBACK)
         var started = false
         try {
-            player.play(target) {
+            player.play(target, checkNotNull(melody)) {
                 if (!started) {
                     started = true
                     state = state.copy(listensUsed = state.listensUsed + 1)
@@ -111,8 +128,11 @@ class InstrumentSession(
     suspend fun answer(selected: Instrument) {
         if (state.phase != InstrumentPhase.RESPONSE || selected !in state.options) return
         val answer = InstrumentAnswer(state.round, target, state.options, selected, selected == target,
-            state.listensUsed, clock())
-        val answers = state.answers + answer
+            state.listensUsed, clock(), listensAllowed = state.listensAllowed, melody = checkNotNull(melody))
+        val decision = decideInstrumentHelp(state.answers + answer, state.listensAllowed, lastChangeRound, state.mode, ddaConfiguration)
+        val answers = state.answers + answer.copy(ddaDecision = decision)
+        nextListensAllowed = decision.listensAfter
+        if (decision.appliedDelta != 0) lastChangeRound = state.round
         if (answers.size == 10) {
             val result = makeResult(answers, completed = true)
             results.save(result)
@@ -122,7 +142,7 @@ class InstrumentSession(
 
     fun nextQuestion() {
         if (state.phase != InstrumentPhase.FEEDBACK) return
-        state = state.copy(round = state.round + 1)
+        state = state.copy(round = state.round + 1, listensAllowed = nextListensAllowed)
         prepareQuestion()
     }
 
@@ -137,5 +157,9 @@ class InstrumentSession(
 
     private fun makeResult(answers: List<InstrumentAnswer>, completed: Boolean) = InstrumentResult(
         id, state.level, answers, completed, startedAtMillis, clock(),
+        origin = state.mode.name.lowercase(java.util.Locale.ROOT),
+        configurationVersion = "instruments-0.4-melodies-dda", bankVersion = "iowa-pentatonic-mf-v2",
+        midi = null, stimulusKind = "generated-melody",
+        ddaConfiguration = ddaConfiguration,
     )
 }

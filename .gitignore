@@ -14,3 +14,7 @@ Desktop.ini
 **/local.properties
 **/.idea/
 *.iml
+
+# Herramientas Python de preparación del audio
+__pycache__/
+*.pyc

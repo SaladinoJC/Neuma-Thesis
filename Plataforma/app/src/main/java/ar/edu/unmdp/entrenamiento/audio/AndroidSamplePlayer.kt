@@ -8,6 +8,8 @@ import android.media.MediaCodec
 import android.media.MediaExtractor
 import android.media.MediaFormat
 import java.io.ByteArrayOutputStream
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.currentCoroutineContext
@@ -18,16 +20,26 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 
+internal data class SampleNote(val asset: String, val durationMillis: Int? = null)
+
 /** Assets mono/44,1 kHz: decode cacheado y AudioTrack liberado incluso al cancelar. */
 internal class AndroidSamplePlayer(context: Context) {
     private val assets = context.applicationContext.assets
     private val mutex = Mutex()
     private val cache = mutableMapOf<String, PcmSample>()
     suspend fun play(asset: String, onStarted: () -> Unit = {}): Int {
+        return playPhrase(listOf(SampleNote(asset)), 0, onStarted)
+    }
+
+    suspend fun playPhrase(notes: List<SampleNote>, gapMillis: Int, onStarted: () -> Unit): Int {
         val callerContext = currentCoroutineContext().minusKey(Job)
         return withContext(Dispatchers.IO) {
             mutex.withLock {
-                val sample = cache[asset] ?: withTimeout(5000) { decode(asset) }.also { cache[asset] = it }
+                val decoded = notes.map { note ->
+                    cache[note.asset] ?: withTimeout(5000) { decode(note.asset) }.also { cache[note.asset] = it }
+                }
+                val sample = if (notes.size == 1 && notes.single().durationMillis == null) decoded.single()
+                    else composePhrase(notes, decoded, gapMillis)
                 val track = AudioTrack.Builder()
                     .setAudioAttributes(AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME)
                         .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build())
@@ -40,7 +52,7 @@ internal class AndroidSamplePlayer(context: Context) {
                     check(track.state == AudioTrack.STATE_INITIALIZED) { "No se pudo iniciar el audio." }
                     track.play()
                     var started = false
-                    withTimeout(4000) {
+                    withTimeout(sample.frames * 1000L / sample.sampleRate + 2500L) {
                         while (true) {
                             val frames = track.playbackHeadPosition
                             if (frames > 0 && !started) {
@@ -58,6 +70,28 @@ internal class AndroidSamplePlayer(context: Context) {
                 }
             }
         }
+    }
+
+    /** Una sola pista evita pausas de decodificación entre notas y cuenta una escucha por frase. */
+    private suspend fun composePhrase(notes: List<SampleNote>, samples: List<PcmSample>, gapMillis: Int): PcmSample {
+        val output = ByteArrayOutputStream()
+        val rate = samples.first().sampleRate
+        val silence = ByteArray(rate * gapMillis / 1000 * 2)
+        notes.zip(samples).forEachIndexed { index, (note, sample) ->
+            currentCoroutineContext().ensureActive()
+            val frames = rate * checkNotNull(note.durationMillis) / 1000
+            check(sample.sampleRate == rate && sample.frames >= frames) { "Nota insuficiente para la frase." }
+            val bytes = sample.bytes.copyOf(frames * 2)
+            val pcm = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN)
+            val fadeFrames = minOf(frames, rate * 40 / 1000)
+            for (frame in frames-fadeFrames until frames) {
+                val gain = (frames-1-frame).toFloat() / (fadeFrames-1).coerceAtLeast(1)
+                pcm.putShort(frame*2, (pcm.getShort(frame*2)*gain).toInt().toShort())
+            }
+            output.write(bytes)
+            if (index < notes.lastIndex) output.write(silence)
+        }
+        return PcmSample(output.toByteArray(), rate)
     }
 
     private suspend fun decode(asset: String): PcmSample {

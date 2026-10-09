@@ -13,11 +13,78 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class InstrumentViewModelTest {
     @Test
+    fun `inspector y simulaciones usan la configuracion efectiva de la partida activa`() = runTest {
+        Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+        try {
+            val configuration = InstrumentDdaConfiguration(defaultHelpInference().copy(version = "configuracion-inyectada-test", rules = emptyList()), .4)
+            val player = object : InstrumentPlayer {
+                override suspend fun play(instrument: Instrument, melody: InstrumentMelody, onStarted: () -> Unit): Int {
+                    onStarted()
+                    return 134_505
+                }
+            }
+            val model = InstrumentViewModel(InstrumentSession({ 0 }, player, ddaConfiguration = configuration),
+                player, StandardTestDispatcher(testScheduler))
+            model.open()
+            model.start()
+            advanceUntilIdle()
+            repeat(3) { model.answer(Instrument.PIANO); advanceUntilIdle(); model.next(); advanceUntilIdle() }
+            assertNull(model.ui.value.game.result)
+            assertEquals(configuration, model.ui.value.ddaConfiguration)
+            model.simulateScenario(InstrumentDdaScenario.AUTONOMOUS, InstrumentLevel.B)
+            advanceUntilIdle()
+            val simulated = requireNotNull(model.ui.value.simulation)
+            assertEquals(configuration, simulated.ddaConfiguration)
+            assertEquals(DdaReason.INVALID_OUTPUT, simulated.answers[2].ddaDecision?.reason)
+            assertEquals(3, simulated.answers[2].ddaDecision?.listensAfter)
+            model.home()
+            advanceUntilIdle()
+        } finally { Dispatchers.resetMain() }
+    }
+
+    @Test
+    fun `simulacion del inspector no reproduce audio ni cambia partida o historial reales`() = runTest {
+        Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+        try {
+            var actualPlays = 0
+            val player = object : InstrumentPlayer {
+                override suspend fun play(instrument: Instrument, melody: InstrumentMelody, onStarted: () -> Unit): Int {
+                    actualPlays++
+                    onStarted()
+                    return 134_505
+                }
+            }
+            val session = InstrumentSession({ 0 }, player)
+            val model = InstrumentViewModel(session, player, StandardTestDispatcher(testScheduler))
+            model.open()
+            model.start()
+            advanceUntilIdle()
+            val before = model.ui.value.game
+            model.openInspector()
+            model.simulateScenario(InstrumentDdaScenario.RECOVERY, InstrumentLevel.C)
+            advanceUntilIdle()
+            assertNotNull(model.ui.value.simulation)
+            val simulation = requireNotNull(model.ui.value.simulation)
+            assertEquals("simulated", simulation.origin)
+            assertEquals(InstrumentLevel.C, simulation.level)
+            assertTrue(simulation.completed)
+            assertEquals(-1, simulation.answers[2].ddaDecision?.appliedDelta)
+            assertEquals(1, simulation.answers[5].ddaDecision?.appliedDelta)
+            assertEquals(before, model.ui.value.game)
+            assertTrue(session.history().isEmpty())
+            assertEquals(1, actualPlays)
+            model.closeInspector()
+            model.home()
+            advanceUntilIdle()
+        } finally { Dispatchers.resetMain() }
+    }
+
+    @Test
     fun `volver al menu durante audio cancela y guarda una sola interrupcion`() = runTest {
         Dispatchers.setMain(StandardTestDispatcher(testScheduler))
         try {
             val player = object : InstrumentPlayer {
-                override suspend fun play(instrument: Instrument, onStarted: () -> Unit): Int {
+                override suspend fun play(instrument: Instrument, melody: InstrumentMelody, onStarted: () -> Unit): Int {
                     onStarted()
                     delay(1500)
                     return 66_150
@@ -44,7 +111,7 @@ class InstrumentViewModelTest {
         Dispatchers.setMain(StandardTestDispatcher(testScheduler))
         try {
             val player = object : InstrumentPlayer {
-                override suspend fun play(instrument: Instrument, onStarted: () -> Unit): Int {
+                override suspend fun play(instrument: Instrument, melody: InstrumentMelody, onStarted: () -> Unit): Int {
                     withTimeout(5) { delay(100) }
                     return 0
                 }
@@ -75,7 +142,7 @@ class InstrumentViewModelTest {
                 }
             }
             val player = object : InstrumentPlayer {
-                override suspend fun play(instrument: Instrument, onStarted: () -> Unit): Int {
+                override suspend fun play(instrument: Instrument, melody: InstrumentMelody, onStarted: () -> Unit): Int {
                     onStarted()
                     return 66_150
                 }

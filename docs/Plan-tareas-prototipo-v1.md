@@ -41,19 +41,25 @@ Especificación: [#1](https://github.com/SaladinoJC/Tesis/issues/1). Todas las i
 
 Software comprobado en emulador Pixel_6/API 34. Evidencia y recorrido físico pendiente en [Verificacion-Instrumentos-v0.3.md](Verificacion-Instrumentos-v0.3.md); catálogo y tratamiento del audio en [Audio-instrumentos.md](Audio-instrumentos.md). No se acredita sonoridad perceptual idéntica, calibración pedagógica ni prueba en S22 Ultra.
 
+Actualización 2026-10-09: el usuario informó que probó v0.3 en el celular y solicitó melodías aleatorias. El ajuste v0.3.1 conserva el alcance del incremento y añade una frase generada por pregunta, reescuchas idénticas y registro de notas/duraciones con banco real ampliado. Pruebas y límites en [Verificacion-Instrumentos-v0.3.1.md](Verificacion-Instrumentos-v0.3.1.md). La prueba física de la versión nueva sigue pendiente. #3 continúa abierta en GitHub; no se publicó ni cerró desde esta sesión.
+
+Actualización 2026-10-09: el usuario informó que probó v0.3 en el celular y solicitó melodías aleatorias. El ajuste v0.3.1 conserva el alcance del incremento y añade una frase generada por pregunta, reescuchas idénticas y registro de notas/duraciones con banco real ampliado. Pruebas y límites en [Verificacion-Instrumentos-v0.3.1.md](Verificacion-Instrumentos-v0.3.1.md). La prueba física de la versión nueva sigue pendiente. #3 continúa abierta en GitHub; no se publicó ni cerró desde esta sesión.
+
 ## 3. Ajustar escuchas con DDA Mamdani e inspeccionar sus decisiones
 
 **Bloqueado por:** 2.
 
 **Qué entrega:** reconocimiento tímbrico automático con adaptación de ayuda observable, motor Mamdani y panel para reproducir escenarios. El modo automático inicia en A hasta que el ticket 4 agregue desbloqueos.
 
-- [ ] Motor independiente de interfaz, configuración identificable y propuestas numéricas de la especificación documentadas como no calibradas.
-- [ ] Desde tercera respuesta evaluar últimas tres rondas; usar exactitud/autonomía y cambiar máximo una escucha dentro de [1, 3].
-- [ ] Aplicar solo a próxima pregunta; dos rondas entre cambios; iniciar cada partida con tres escuchas y ventana vacía.
-- [ ] Mostrar entradas, pertenencias, reglas, salida/acción propuestas, acción aplicada y motivo de espera/límite.
-- [ ] Casos reproducibles de aciertos, errores, reescuchas y alternancia; simulaciones aisladas de desempeño y progreso real.
-- [ ] Mantener resultados correctos como correctos aunque haya ayuda; no penalizar tiempo de respuesta.
-- [ ] Pruebas conductuales de aumento/reducción/mantenimiento, límites, espera, datos insuficientes y fallo seguro sin salida.
+- [x] Motor independiente de interfaz, configuración identificable y propuestas numéricas de la especificación documentadas como no calibradas.
+- [x] Desde tercera respuesta evaluar últimas tres rondas; usar exactitud/autonomía y cambiar máximo una escucha dentro de [1, 3].
+- [x] Aplicar solo a próxima pregunta; dos rondas entre cambios; iniciar cada partida con tres escuchas y ventana vacía.
+- [x] Mostrar entradas, pertenencias, reglas, salida/acción propuestas, acción aplicada y motivo de espera/límite.
+- [x] Casos reproducibles de aciertos, errores, reescuchas y alternancia; simulaciones aisladas de desempeño y progreso real.
+- [x] Mantener resultados correctos como correctos aunque haya ayuda; no penalizar tiempo de respuesta.
+- [x] Pruebas conductuales de aumento/reducción/mantenimiento, límites, espera, datos insuficientes y fallo seguro sin salida.
+
+Comprobado en v0.4: 34 pruebas JVM y 13 Android, lint sin errores y APK generado. Verificación en [Verificacion-DDA-v0.4.md](Verificacion-DDA-v0.4.md); configuración y escenarios en [DDA-instrumentos-v0.4.md](DDA-instrumentos-v0.4.md). El S22 Ultra sigue pendiente. #4 permanece abierta en GitHub, sin publicación/cierre en esta sesión.
 
 ## 4. Desbloquear niveles y conservar progreso en ambos juegos
 

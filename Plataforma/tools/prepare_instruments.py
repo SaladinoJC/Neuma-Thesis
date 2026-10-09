@@ -55,7 +55,7 @@ def fetch(item):
     print(key, name, sf.info(original), flush=True)
     return key, page_url, parser.links[name], original
 
-def segments(audio, rate):
+def segments(audio, rate, maximum_gap_blocks=10):
     hop = round(rate * .01)
     rms = np.array([np.sqrt(np.mean(audio[i:i+hop] ** 2)) for i in range(0, len(audio), hop)])
     active = rms > max(float(rms.max()) * .025, .0001)
@@ -63,7 +63,7 @@ def segments(audio, rate):
     indices = np.flatnonzero(active)
     if not len(indices):
         raise ValueError("Audio silencioso")
-    groups = np.split(indices, np.flatnonzero(np.diff(indices) > 10) + 1)
+    groups = np.split(indices, np.flatnonzero(np.diff(indices) > maximum_gap_blocks) + 1)
     return [(max(0, int(g[0] * hop) - hop), min(len(audio), int((g[-1]+1)*hop)))
             for g in groups if len(g) >= 20]
 

@@ -28,7 +28,9 @@ private val CorrectGreen = Color(0xFF7CDBB0)
 
 @Composable
 fun InstrumentApp(ui: InstrumentUiState, onLevel: (InstrumentLevel) -> Unit, onStart: () -> Unit,
-    onListen: () -> Unit, onAnswer: (Instrument) -> Unit, onNext: () -> Unit, onHome: () -> Unit) {
+    onListen: () -> Unit, onAnswer: (Instrument) -> Unit, onNext: () -> Unit, onHome: () -> Unit,
+    onMode: (InstrumentMode) -> Unit, onInspect: () -> Unit, onCloseInspector: () -> Unit,
+    onScenario: (InstrumentDdaScenario, InstrumentLevel) -> Unit) {
     MaterialTheme(colorScheme = darkColorScheme(primary = InstrumentBlue, secondary = Lavender,
         background = Night, surface = Panel, onSurface = SoftWhite, onBackground = SoftWhite, onPrimary = Night)) {
         BackHandler(onBack = onHome)
@@ -40,34 +42,45 @@ fun InstrumentApp(ui: InstrumentUiState, onLevel: (InstrumentLevel) -> Unit, onS
                         .semantics { contentDescription = "Volver al menú" }, contentPadding = PaddingValues(0.dp)) {
                         Text("‹", fontSize = 32.sp, color = SoftWhite)
                     }
-                    Text("¿Qué instrumento es?", fontWeight = FontWeight.Bold, fontSize = 19.sp)
+                    Text("¿Qué instrumento es?", fontWeight = FontWeight.Bold, fontSize = 19.sp, modifier = Modifier.weight(1f))
+                    TextButton(onClick = onInspect, modifier = Modifier.testTag("dda-open")) { Text("DDA") }
                 }
-                if (ui.setup) InstrumentSetup(ui, onLevel, onStart)
+                if (ui.setup) InstrumentSetup(ui, onLevel, onMode, onStart)
                 else if (ui.game.phase in listOf(InstrumentPhase.FINISHED, InstrumentPhase.INTERRUPTED))
                     InstrumentSummary(ui, onStart, onHome)
                 else InstrumentQuestion(ui, onListen, onAnswer, onNext)
                 ui.error?.let { Text(it, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(vertical = 8.dp)) }
             }
         }
+        if (ui.inspectorOpen) InstrumentDdaInspector(ui, onCloseInspector, onScenario)
     }
 }
 
 @Composable
-private fun ColumnScope.InstrumentSetup(ui: InstrumentUiState, onLevel: (InstrumentLevel) -> Unit, onStart: () -> Unit) {
+private fun ColumnScope.InstrumentSetup(ui: InstrumentUiState, onLevel: (InstrumentLevel) -> Unit,
+    onMode: (InstrumentMode) -> Unit, onStart: () -> Unit) {
     Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(vertical = 14.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        Box(Modifier.fillMaxWidth().height(100.dp), contentAlignment = Alignment.Center) {
-            Surface(shape = CircleShape, color = InstrumentBlue.copy(alpha = .12f), modifier = Modifier.size(90.dp)) {
+        Box(Modifier.fillMaxWidth().height(64.dp), contentAlignment = Alignment.Center) {
+            Surface(shape = CircleShape, color = InstrumentBlue.copy(alpha = .12f), modifier = Modifier.size(64.dp)) {
                 Box(contentAlignment = Alignment.Center) { Text("♫", color = InstrumentBlue, fontSize = 44.sp) }
             }
         }
         Text("Escuchá. Reconocé. Descubrí.", fontSize = 27.sp, lineHeight = 32.sp, fontWeight = FontWeight.Bold)
-        Text("Escuchá un sonido y elegí cuál de los cuatro instrumentos lo produjo. Podés escucharlo hasta tres veces antes de responder.",
+        Text("Reconocé el instrumento de una melodía breve. Cada pregunta cambia la frase; las reescuchas repiten la misma.",
             color = Muted, lineHeight = 22.sp)
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text("10 preguntas", color = InstrumentBlue)
             Text("Sin límite de tiempo", color = Muted)
         }
+        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            FilterChip(selected = ui.selectedMode == InstrumentMode.AUTOMATIC, onClick = { onMode(InstrumentMode.AUTOMATIC) },
+                label = { Text("Automático") }, modifier = Modifier.testTag("mode-automatic"))
+            FilterChip(selected = ui.selectedMode == InstrumentMode.MANUAL, onClick = { onMode(InstrumentMode.MANUAL) },
+                label = { Text("Práctica manual") }, modifier = Modifier.testTag("mode-manual"))
+        }
+        Text(if (ui.selectedMode == InstrumentMode.AUTOMATIC) "Nivel A · La ayuda se adapta entre preguntas, con una a tres escuchas."
+            else "Elegí un nivel. La práctica manual conserva tres escuchas.", color = Muted)
         Text("Elegí el nivel", fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(top = 6.dp))
         InstrumentLevel.entries.forEach { level ->
             val selected = ui.selectedLevel == level
@@ -81,9 +94,9 @@ private fun ColumnScope.InstrumentSetup(ui: InstrumentUiState, onLevel: (Instrum
                 }
             }
         }
-        Button(onClick = onStart, enabled = !ui.busy, shape = RoundedCornerShape(16.dp),
-            modifier = Modifier.fillMaxWidth().height(54.dp)) { Text("Jugar instrumentos", fontWeight = FontWeight.Bold) }
     }
+    Button(onClick = onStart, enabled = !ui.busy, shape = RoundedCornerShape(16.dp),
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp).height(54.dp)) { Text("Jugar instrumentos", fontWeight = FontWeight.Bold) }
 }
 
 @Composable
@@ -105,13 +118,13 @@ private fun ColumnScope.InstrumentQuestion(ui: InstrumentUiState, onListen: () -
                     Text(if (ui.busy) "♫" else "?", color = InstrumentBlue, fontSize = 48.sp, fontWeight = FontWeight.Bold)
                 }
             }
-            Text(if (ui.busy) "Escuchá el sonido…" else if (feedback) "Compará tu respuesta" else "¿Cuál escuchaste?",
+            Text(if (ui.busy) "Escuchá la melodía…" else if (feedback) "Compará tu respuesta" else "¿Cuál escuchaste?",
                 fontSize = 24.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 18.dp), textAlign = TextAlign.Center)
         }
         OutlinedButton(onClick = onListen,
             enabled = !ui.busy && !feedback && state.listensRemaining > 0,
             modifier = Modifier.fillMaxWidth().height(50.dp).testTag("instrument-listen"), shape = RoundedCornerShape(14.dp)) {
-            Text(if (state.listensUsed == 0) "Escuchar el sonido" else "Volver a escuchar")
+            Text(if (state.listensUsed == 0) "Escuchar la melodía" else "Volver a escuchar")
         }
         Text("${state.listensRemaining} ${if (state.listensRemaining == 1) "escucha restante" else "escuchas restantes"}",
             modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center, color = Muted, fontSize = 12.sp)
@@ -140,6 +153,8 @@ private fun ColumnScope.InstrumentQuestion(ui: InstrumentUiState, onListen: () -
             val answer = state.answers.last()
             Text(if (answer.correct) "¡Correcto! Era ${answer.target.label}." else "Era ${answer.target.label}. Elegiste ${answer.selected.label}.",
                 color = if (answer.correct) CorrectGreen else Pink, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+            if (state.mode == InstrumentMode.AUTOMATIC) Text("Próxima pregunta: ${answer.ddaDecision?.listensAfter ?: 3} escuchas",
+                color = Muted, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
             Button(onClick = onNext, enabled = !ui.busy, modifier = Modifier.fillMaxWidth().height(50.dp),
                 shape = RoundedCornerShape(14.dp)) { Text("Siguiente pregunta") }
         } else {

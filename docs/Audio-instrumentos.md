@@ -1,5 +1,7 @@
 # Banco de audio de «¿Qué instrumento es?»
 
+Este documento conserva el banco de nota aislada usado en v0.3. Desde v0.3.1 se usan melodías generadas con cinco notas reales por instrumento; procedencia, conversión y política actual en [Melodias-instrumentos-v0.3.1.md](Melodias-instrumentos-v0.3.1.md). Los resultados históricos conservan el banco v1.
+
 Preparado el 2026-10-02 para el incremento [#3](https://github.com/SaladinoJC/Tesis/issues/3). Elecciones técnicas provisionales del agente, pendientes de escucha en el S22 Ultra y calibración con el director.
 
 ## Procedencia y permiso

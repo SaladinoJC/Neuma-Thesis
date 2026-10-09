@@ -8,7 +8,11 @@ Actualización confirmada por el usuario (2026-10-02), posterior al primer APK: 
 
 Ajuste confirmado por el usuario al probar v0.2 (2026-10-02): Simón se abre en horizontal, con preparación y partida sin scroll y teclado ancho. Las pulsaciones del turno del jugador se procesan en orden sin esperar a que termine el sonido anterior; girar el dispositivo no interrumpe la sesión. El menú muestra la versión instalada y elimina las tres frases indicadas por el usuario. Las reglas de escala, puntuación y fin al primer error se conservan.
 
+Actualización solicitada por el usuario (2026-10-09), después de probar v0.3 en el celular: «¿Qué instrumento es?» debe generar una melodía breve aleatoria al elegir el instrumento, sustituyendo la nota aislada repetida. Implementación v0.3.1: frase nueva por pregunta, conservada en las reescuchas y registrada en cada respuesta; misma gramática para todos los instrumentos. Se mantienen samples reales, alturas disponibles y duraciones comparables, cuatro opciones y límite de escuchas. La gramática pentatónica de seis notas y sus tiempos son elecciones provisionales del agente, pendientes de calibración, descritas en [Melodias-instrumentos-v0.3.1.md](Melodias-instrumentos-v0.3.1.md). Esta actualización prevalece sobre las referencias a estímulo fijo/nota compartida de los borradores; no cambia el alcance pendiente de DDA y voz.
+
 ## Problem Statement
+
+Estado de implementación al 2026-10-09: el incremento #4 incorpora adaptación de escuchas en modo automático (nivel A), panel de inspección y escenarios aislados. La práctica manual A/B/C conserva tres escuchas como elección provisional del agente para mantener el recorrido anterior. Los parámetros iniciales de esta especificación se concretan en [DDA-instrumentos-v0.4.md](DDA-instrumentos-v0.4.md); siguen pendientes de calibración. Desbloqueos, voz y exportación/reinicio corresponden a incrementos posteriores.
 
 El tesista necesita una demostración ejecutable que él y su director puedan usar para discutir el sistema de entrenamiento auditivo. Actualmente existen documentos y fichas de diseño, pero no una aplicación. Antes de una evaluación con estudiantes se necesita comprobar el funcionamiento de dos juegos, observar un DDA explicable y explorar captura y estimación de tono en el teléfono objetivo.
 

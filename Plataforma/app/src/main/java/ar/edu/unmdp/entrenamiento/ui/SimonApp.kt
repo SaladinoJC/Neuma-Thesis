@@ -110,6 +110,7 @@ private fun MainMenu(ui: SimonUiState, onSimon: () -> Unit, onInstruments: () ->
                             color = Color(0xFF86B9FF), fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
                         Text("${result.answers.count { it.correct }} / ${result.answers.size} aciertos · " +
                             SimpleDateFormat("dd/MM HH:mm", Locale.getDefault()).format(Date(result.finishedAtMillis)), color = Muted, fontSize = 12.sp)
+                        Text(if (result.origin == "automatic") "Automática · Ayuda adaptable" else "Práctica manual", color = Muted, fontSize = 12.sp)
                     }
                 }
             }

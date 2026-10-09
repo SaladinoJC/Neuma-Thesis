@@ -60,7 +60,8 @@ class MainActivity : ComponentActivity() {
                     ActivityInfo.SCREEN_ORIENTATION_PORTRAIT else ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
             }
             if (instrumentUi.open) InstrumentApp(instrumentUi, instruments::selectLevel, instruments::start,
-                instruments::listen, instruments::answer, instruments::next, instruments::home)
+                instruments::listen, instruments::answer, instruments::next, instruments::home,
+                instruments::selectMode, instruments::openInspector, instruments::closeInspector, instruments::simulateScenario)
             else SimonApp(ui, model::openSimon, model::selectScale, model::start, model::answer, model::home,
                 instruments::open, instrumentUi.history)
         }

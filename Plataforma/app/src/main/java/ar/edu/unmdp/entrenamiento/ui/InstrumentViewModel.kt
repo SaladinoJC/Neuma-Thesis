@@ -5,6 +5,9 @@ import androidx.lifecycle.viewModelScope
 import ar.edu.unmdp.entrenamiento.instruments.*
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
@@ -22,10 +25,17 @@ data class InstrumentUiState(
     val busy: Boolean = false,
     val history: List<InstrumentResult> = emptyList(),
     val error: String? = null,
+    val selectedMode: InstrumentMode = InstrumentMode.AUTOMATIC,
+    val inspectorOpen: Boolean = false,
+    val simulation: InstrumentResult? = null,
+    val simulationBusy: Boolean = false,
+    val simulationScenario: InstrumentDdaScenario? = null,
+    val ddaConfiguration: InstrumentDdaConfiguration = InstrumentDdaConfiguration(),
 )
 
-class InstrumentViewModel(private val session: InstrumentSession, private val player: InstrumentPlayer) : ViewModel() {
-    private val mutableUi = MutableStateFlow(InstrumentUiState())
+class InstrumentViewModel(private val session: InstrumentSession, private val player: InstrumentPlayer,
+    private val simulationDispatcher: CoroutineDispatcher = Dispatchers.Default) : ViewModel() {
+    private val mutableUi = MutableStateFlow(InstrumentUiState(ddaConfiguration = session.ddaConfiguration))
     val ui = mutableUi.asStateFlow()
     private val actions = Mutex()
     private var playback: Job? = null
@@ -39,11 +49,32 @@ class InstrumentViewModel(private val session: InstrumentSession, private val pl
     }
 
     fun selectLevel(level: InstrumentLevel) {
-        if (ui.value.setup && !ui.value.busy) mutableUi.value = ui.value.copy(selectedLevel = level)
+        if (ui.value.setup && !ui.value.busy) mutableUi.value = ui.value.copy(selectedLevel = level, selectedMode = InstrumentMode.MANUAL)
+    }
+
+    fun selectMode(mode: InstrumentMode) {
+        if (mode != InstrumentMode.SIMULATED && ui.value.setup && !ui.value.busy)
+            mutableUi.value = ui.value.copy(selectedMode = mode,
+                selectedLevel = if (mode == InstrumentMode.AUTOMATIC) InstrumentLevel.A else ui.value.selectedLevel)
+    }
+
+    fun openInspector() { mutableUi.value = ui.value.copy(inspectorOpen = true) }
+    fun closeInspector() { mutableUi.value = ui.value.copy(inspectorOpen = false) }
+    fun simulateScenario(scenario: InstrumentDdaScenario, level: InstrumentLevel) {
+        if (ui.value.simulationBusy) return
+        mutableUi.value = ui.value.copy(simulationBusy = true, simulation = null)
+        viewModelScope.launch {
+            try {
+                val simulation = withContext(simulationDispatcher) { simulateInstrumentDda(scenario, level, session.ddaConfiguration) }
+                mutableUi.value = ui.value.copy(simulation = simulation, simulationScenario = scenario)
+            } catch (cancelled: CancellationException) { throw cancelled }
+            catch (error: Exception) { report(error) }
+            finally { mutableUi.value = ui.value.copy(simulationBusy = false) }
+        }
     }
 
     fun start() = act {
-        session.start(ui.value.selectedLevel)
+        session.start(ui.value.selectedLevel, ui.value.selectedMode)
         mutableUi.value = ui.value.copy(setup = false, game = session.state)
         playQuestion()
     }
@@ -105,7 +136,7 @@ class InstrumentViewModel(private val session: InstrumentSession, private val pl
             actions.withLock {
                 try {
                     interrupt()
-                    mutableUi.value = ui.value.copy(open = false, setup = true)
+                    mutableUi.value = ui.value.copy(open = false, setup = true, inspectorOpen = false)
                 } catch (error: Exception) { report(error) }
                 finally { returningHome = false }
             }
