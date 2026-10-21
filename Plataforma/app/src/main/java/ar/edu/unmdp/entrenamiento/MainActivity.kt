@@ -17,6 +17,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import ar.edu.unmdp.entrenamiento.voice.*
 import ar.edu.unmdp.entrenamiento.history.HistorySession
 import ar.edu.unmdp.entrenamiento.ui.HistoryApp
+import ar.edu.unmdp.entrenamiento.ui.PitchLabViewModel
+import ar.edu.unmdp.entrenamiento.ui.PitchLabApp
 import ar.edu.unmdp.entrenamiento.ui.HistoryViewModel
 import ar.edu.unmdp.entrenamiento.storage.Demonstration
 import ar.edu.unmdp.entrenamiento.ui.VoiceApp
@@ -40,6 +42,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var model: SimonViewModel
     private lateinit var instruments: InstrumentViewModel
     private lateinit var voice: VoiceViewModel
+    private lateinit var pitchLab: PitchLabViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,14 +73,21 @@ class MainActivity : ComponentActivity() {
             override fun <T : ViewModel> create(modelClass: Class<T>): T =
                 VoiceViewModel(JsonVoiceResults(File(filesDir, "voice-results.json"))) as T
         })[VoiceViewModel::class.java]
+        pitchLab = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T = PitchLabViewModel(PitchLabSession(
+                JsonPitchLabResults(File(filesDir, "pitch-lab-results.json")),
+                environment = "Android ${android.os.Build.VERSION.SDK_INT} · ${android.os.Build.MANUFACTURER} ${android.os.Build.MODEL}")) as T
+        })[PitchLabViewModel::class.java]
+        val labModel = pitchLab
         val simonModel = model
         val instrumentModel = instruments
         val voiceModel = voice
         val demonstration = ViewModelProvider(this, object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T = DemonstrationViewModel(data,
-                drain = { voiceModel.stopAndJoin(); simonModel.awaitIdle(); instrumentModel.awaitIdle() },
-                refresh = { simonModel.reload(); instrumentModel.reload(); voiceModel.resetDisplay() },
+                drain = { labModel.cancelAndJoin(); voiceModel.stopAndJoin(); simonModel.awaitIdle(); instrumentModel.awaitIdle() },
+                refresh = { simonModel.reload(); instrumentModel.reload(); voiceModel.resetDisplay(); labModel.resetDisplay() },
                 helpSimulation = { instrumentModel.ui.value.simulation }) as T
         })[DemonstrationViewModel::class.java]
         val history = ViewModelProvider(this, object : ViewModelProvider.Factory {
@@ -92,6 +102,7 @@ class MainActivity : ComponentActivity() {
             val voiceUi by voice.ui.collectAsStateWithLifecycle()
             val dataUi by demonstration.ui.collectAsStateWithLifecycle()
             val historyUi by history.ui.collectAsStateWithLifecycle()
+            val pitchUi by pitchLab.ui.collectAsStateWithLifecycle()
             var auxiliary by rememberSaveable { mutableStateOf("") }
             LaunchedEffect(ui.screen, instrumentUi.open, auxiliary) {
                 requestedOrientation = if (ui.screen == AppScreen.MENU || instrumentUi.open || auxiliary.isNotEmpty())
@@ -102,7 +113,8 @@ class MainActivity : ComponentActivity() {
                 auxiliary = ""
             }
             else if (auxiliary == "history") HistoryApp(historyUi, history) { auxiliary = "" }
-            else if (auxiliary == "data") DemonstrationApp(dataUi, demonstration) { auxiliary = "" }
+            else if (auxiliary == "pitch-lab") PitchLabApp(pitchUi, pitchLab) { auxiliary = "data" }
+            else if (auxiliary == "data") DemonstrationApp(dataUi, demonstration, onHome = { auxiliary = "" }, onPitchLab = { pitchLab.load(); auxiliary = "pitch-lab" })
             else if (instrumentUi.open) InstrumentApp(instrumentUi, instruments::selectLevel, instruments::start,
                 instruments::listen, instruments::answer, instruments::next, instruments::home,
                 instruments::selectMode, instruments::openInspector, instruments::closeInspector, instruments::simulateScenario)
@@ -120,6 +132,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onPause() {
         if (::voice.isInitialized) voice.stop()
+        if (::pitchLab.isInitialized) pitchLab.cancel()
         super.onPause()
     }
 

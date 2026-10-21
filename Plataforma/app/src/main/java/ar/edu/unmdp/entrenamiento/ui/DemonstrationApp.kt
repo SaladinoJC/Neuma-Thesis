@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun DemonstrationApp(ui: DemonstrationUi, model: DemonstrationViewModel, onHome: () -> Unit) {
+fun DemonstrationApp(ui: DemonstrationUi, model: DemonstrationViewModel, onHome: () -> Unit, onPitchLab: () -> Unit = {}) {
     val snackbar = remember { SnackbarHostState() }
     LaunchedEffect(ui.noticeId) {
         if (ui.noticePending && ui.message != null) {
@@ -38,6 +38,7 @@ fun DemonstrationApp(ui: DemonstrationUi, model: DemonstrationViewModel, onHome:
                 TextButton(onClick = onHome, enabled = !ui.busy) { Text("Volver al menú") }
                 Text("Datos y demostración", style = MaterialTheme.typography.headlineMedium)
                 Text("Recorrido: Simón · instrumentos automáticos · panel DDA · voz · exportación. El progreso se conserva al cerrar.")
+                OutlinedButton(onClick = onPitchLab, enabled = !ui.busy, modifier = Modifier.testTag("pitch-lab-open")) { Text("Pruebas sintéticas de tono") }
                 Text("Escenarios de desbloqueo", style = MaterialTheme.typography.titleLarge)
                 Text("DATOS SIMULADOS · Se ejecutan en memoria, sin audio ni cambios en tu perfil.")
                 OutlinedButton(onClick = { model.simulate(false) }, enabled = !ui.busy, modifier = Modifier.testTag("progress-two-high")) { Text("Dos partidas altas en ambos juegos") }

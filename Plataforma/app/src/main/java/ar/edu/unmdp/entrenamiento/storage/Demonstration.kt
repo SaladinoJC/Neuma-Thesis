@@ -15,13 +15,13 @@ import java.io.File
 data class DemonstrationExport(val schemaVersion: Int = 1, val appVersion: String,
     val exportedAtMillis: Long, val simon: List<SimonResult>, val instruments: List<InstrumentResult>,
     val voice: List<VoiceResult>, val simonProgress: Progress, val instrumentProgress: Progress,
-    val simulations: ProgressSimulation? = null, val helpSimulation: InstrumentResult? = null)
+    val simulations: ProgressSimulation? = null, val helpSimulation: InstrumentResult? = null, val syntheticPitchTests: List<PitchLabReport> = emptyList())
 
 /** Accessed after sessions have drained their pending actions on the menu. */
 class Demonstration(private val directory: File) {
     private val mutex = Mutex()
     private val json = Json { encodeDefaults = true; prettyPrint = true }
-    private val names = listOf("simon-results.json", "instrument-results.json", "voice-results.json")
+    private val names = listOf("simon-results.json", "instrument-results.json", "voice-results.json", "pitch-lab-results.json")
     private val marker = File(directory, "reset-pending")
     init { if (marker.exists()) finishReset() }
     private fun finishReset() {
@@ -33,11 +33,12 @@ class Demonstration(private val directory: File) {
             val simon = JsonSimonResults(File(directory, names[0])).all()
             val instruments = JsonInstrumentResults(File(directory, names[1])).all()
             val voice = JsonVoiceResults(File(directory, names[2])).all()
+            val pitchTests = JsonPitchLabResults(File(directory, names[3])).all()
             val data = DemonstrationExport(appVersion = version, exportedAtMillis = System.currentTimeMillis(),
                 simon = simon, instruments = instruments, voice = voice,
                 simonProgress = progression(simon.map { ProgressEntry(it.id, it.scale.ordinal, it.origin, it.completed, it.mastery) }),
                 instrumentProgress = progression(instruments.map { ProgressEntry(it.id, it.level.ordinal, it.origin, it.completed, it.mastery) }),
-                simulations = simulation, helpSimulation = helpSimulation)
+                simulations = simulation, helpSimulation = helpSimulation, syntheticPitchTests = pitchTests)
             json.encodeToString(DemonstrationExport.serializer(), data)
         }
     }

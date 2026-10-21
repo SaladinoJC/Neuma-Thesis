@@ -16,3 +16,11 @@ Autorización: el usuario pidió el 2026-10-21 «Dale, ponete con lo que puedas�
 - Voz: estimaciones válidas, desviación media/mediana absoluta respecto del objetivo y procesamiento p50/p95; no se presentan como precisión sobre canto real ni latencia acústica.
 - Regresión roja→verde del acceso paginado a 26 resultados y filtros. 48 pruebas JVM aprobadas; una Android nueva comprueba paginación, detalle conservado al recrear y cambio a historial vacío en Pixel_6/API 34. Ejecución 40 s, APK generado. Un historial ilegible no oculta los de otros componentes.
 - APK `Plataforma/app/build/outputs/apk/debug/entrenamiento-auditivo-v0.6.apk`: 12062768 bytes, SHA-256 `6d4db3033bf4bacd670763c27536024686e52c619b8ca1c5d99afd87194c7579`.
+
+## v0.7 — Laboratorio de tono
+
+- 83 casos/332 ventanas por ejecución, sin micrófono ni reproducción: senoidales 55–1.000 Hz/amplitudes/fases, armónicos, ruido, silencio/DC/PCM inválido y transición nota–silencio–nota. JSON separa `syntheticPitchTests`; reinicio incluye su archivo y el informe Markdown es exportable.
+- Generación: seno `A sin(2π f n/fs + fase)`; armónicos `(sin θ + 0,5 sin 2θ + 0,25 sin 3θ)/1,75`. Ruido uniforme con media retirada y RMS ajustado al SNR objetivo; semilla 42+índice de ventana. Si el pico supera 0,95 se aplica ganancia común conservada por ventana. No se guardan buffers. Errores de octava: múltiplo entero no nulo de 1.200 cents con tolerancia de 50, solo clasificación técnica.
+- 51 JVM y una Android nueva aprobadas en Pixel_6/API 34; banco completo, persistencia/exportación separada y recreación verificados; APK generado en 45 s. Cancelación sin informe parcial y repetibilidad numérica comprobadas.
+- [Informe medido en JVM](Laboratorio-YIN-v0.7-JVM.md): los criterios obligatorios pasan. A SNR 10 dB se observaron errores máximos cercanos a 96 cents en un caso; a 0 dB las ventanas de prueba se rechazaron. Es caracterización de esas señales, no una medición de voz humana. Se conservó `yin-v1` sin recalibrar para ocultar límites.
+- APK `Plataforma/app/build/outputs/apk/debug/entrenamiento-auditivo-v0.7.apk`: 12347825 bytes, SHA-256 `90d13fe89a9674a910433d8a79397f3735cd063a5a65be9a66b39a5ac8b29cc7`.
