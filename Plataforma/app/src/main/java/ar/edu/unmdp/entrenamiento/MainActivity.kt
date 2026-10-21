@@ -15,6 +15,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import ar.edu.unmdp.entrenamiento.voice.*
+import ar.edu.unmdp.entrenamiento.history.HistorySession
+import ar.edu.unmdp.entrenamiento.ui.HistoryApp
+import ar.edu.unmdp.entrenamiento.ui.HistoryViewModel
 import ar.edu.unmdp.entrenamiento.storage.Demonstration
 import ar.edu.unmdp.entrenamiento.ui.VoiceApp
 import ar.edu.unmdp.entrenamiento.ui.DemonstrationApp
@@ -77,11 +80,18 @@ class MainActivity : ComponentActivity() {
                 refresh = { simonModel.reload(); instrumentModel.reload(); voiceModel.resetDisplay() },
                 helpSimulation = { instrumentModel.ui.value.simulation }) as T
         })[DemonstrationViewModel::class.java]
+        val history = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T = HistoryViewModel(HistorySession(
+                JsonSimonResults(File(filesDir, "simon-results.json")), JsonInstrumentResults(File(filesDir, "instrument-results.json")),
+                JsonVoiceResults(File(filesDir, "voice-results.json")))) as T
+        })[HistoryViewModel::class.java]
         setContent {
             val ui by model.ui.collectAsStateWithLifecycle()
             val instrumentUi by instruments.ui.collectAsStateWithLifecycle()
             val voiceUi by voice.ui.collectAsStateWithLifecycle()
             val dataUi by demonstration.ui.collectAsStateWithLifecycle()
+            val historyUi by history.ui.collectAsStateWithLifecycle()
             var auxiliary by rememberSaveable { mutableStateOf("") }
             LaunchedEffect(ui.screen, instrumentUi.open, auxiliary) {
                 requestedOrientation = if (ui.screen == AppScreen.MENU || instrumentUi.open || auxiliary.isNotEmpty())
@@ -91,13 +101,14 @@ class MainActivity : ComponentActivity() {
                 voice.stop()
                 auxiliary = ""
             }
+            else if (auxiliary == "history") HistoryApp(historyUi, history) { auxiliary = "" }
             else if (auxiliary == "data") DemonstrationApp(dataUi, demonstration) { auxiliary = "" }
             else if (instrumentUi.open) InstrumentApp(instrumentUi, instruments::selectLevel, instruments::start,
                 instruments::listen, instruments::answer, instruments::next, instruments::home,
                 instruments::selectMode, instruments::openInspector, instruments::closeInspector, instruments::simulateScenario)
             else SimonApp(ui, model::openSimon, model::selectScale, model::start, model::answer, model::home,
                 instruments::open, instrumentUi.history, model::selectAutomatic,
-                onVoice = { auxiliary = "voice" }, onData = { auxiliary = "data" })
+                onVoice = { auxiliary = "voice" }, onData = { auxiliary = "data" }, onHistory = { history.load(); auxiliary = "history" })
         }
     }
 

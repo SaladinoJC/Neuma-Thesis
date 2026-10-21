@@ -12,8 +12,12 @@ data class VoiceResult(val id: String, val startedAtMillis: Long, val finishedAt
     val device: String, val androidVersion: String, val configuration: YinConfiguration,
     val actualSampleRate: Int, val measurements: List<VoiceMeasurement>, val origin: String = "microphone",
     val audioSource: String = "VOICE_RECOGNITION", val error: String? = null)
-class JsonVoiceResults(file: File) {
+interface VoiceResults {
+    suspend fun all(): List<VoiceResult>
+    suspend fun save(result: VoiceResult)
+}
+class JsonVoiceResults(file: File) : VoiceResults {
     private val store = JsonResultsFile(file, VoiceResult.serializer())
-    suspend fun all(): List<VoiceResult> = store.all()
-    suspend fun save(result: VoiceResult) = store.append(result) { it.id == result.id }
+    override suspend fun all(): List<VoiceResult> = store.all()
+    override suspend fun save(result: VoiceResult) = store.append(result) { it.id == result.id }
 }

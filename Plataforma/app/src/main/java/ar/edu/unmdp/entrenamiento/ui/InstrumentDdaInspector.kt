@@ -85,7 +85,7 @@ internal fun InstrumentDdaInspector(ui: InstrumentUiState, onClose: () -> Unit,
 private fun number(value: Double) = String.format(Locale.ROOT, "%.3f", value)
 
 @Composable
-private fun DecisionDetails(decision: InstrumentDdaDecision) {
+internal fun DecisionDetails(decision: InstrumentDdaDecision) {
     Text("Ventana: preguntas ${decision.windowRounds.joinToString()}")
     Text("Exactitud: ${number(decision.accuracy)} (${decision.correctCount}/${decision.windowRounds.size})")
     Text("Autonomía: ${number(decision.autonomy)} (${decision.firstListenCorrectCount}/${decision.correctCount} aciertos con primera escucha)")
