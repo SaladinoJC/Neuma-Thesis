@@ -77,7 +77,8 @@ class DemonstrationAndroidTest {
         compose.onNodeWithTag("data-open").performScrollTo().performClick()
         compose.onNodeWithTag("data-export").performScrollTo().performClick()
         val instrumentation = InstrumentationRegistry.getInstrumentation()
-        compose.waitUntil(15_000) {
+        // El arranque en frío del proveedor externo no es latencia de esta aplicación.
+        compose.waitUntil(30_000) {
             instrumentation.uiAutomation.rootInActiveWindow?.packageName?.toString()?.contains("documentsui") == true
         }
         // The first Back can hide the filename keyboard; then dismiss the picker.

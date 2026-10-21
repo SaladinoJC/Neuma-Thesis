@@ -52,19 +52,25 @@ fun noteName(midi: Int): String {
 fun SimonApp(ui: SimonUiState, onSimon: () -> Unit, onScale: (Scale) -> Unit,
     onStart: () -> Unit, onAnswer: (Int) -> Unit, onHome: () -> Unit,
     onInstruments: () -> Unit = {}, instrumentHistory: List<InstrumentResult> = emptyList(),
-    onAutomatic: () -> Unit = {}, onVoice: () -> Unit = {}, onData: () -> Unit = {}, onHistory: () -> Unit = {}) {
+    onAutomatic: () -> Unit = {}, onVoice: () -> Unit = {}, onData: () -> Unit = {}, onHistory: () -> Unit = {}, onRetryStorage: () -> Unit = {}) {
     MaterialTheme(colorScheme = darkColorScheme(primary = Pink, secondary = Lavender,
         background = Night, surface = Panel, onSurface = SoftWhite, onBackground = SoftWhite, onPrimary = Night)) {
         BackHandler(enabled = ui.screen != AppScreen.MENU, onBack = onHome)
         Scaffold(containerColor = Night, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
             Box(Modifier.fillMaxSize().padding(padding)
                 .background(Brush.verticalGradient(listOf(Color(0xFF111828), Night, Color(0xFF0B1920))))) {
-                when (ui.screen) {
+                if (ui.storageError != null && ui.screen != AppScreen.MENU) {
+                    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp)) {
+                        Text(ui.storageError)
+                        TextButton(onClick = onRetryStorage) { Text("Reintentar lectura") }
+                        TextButton(onClick = onHome) { Text("Volver al menú") }
+                    }
+                } else when (ui.screen) {
                     AppScreen.MENU -> MainMenu(ui, onSimon, onInstruments, instrumentHistory, onVoice, onData, onHistory)
                     AppScreen.SIMON_SETUP -> Setup(ui, onScale, onStart, onHome, onAutomatic)
                     AppScreen.SIMON_GAME -> Game(ui, onAnswer, onHome, onStart)
                 }
-                ui.error?.let {
+                ui.error?.takeIf { ui.storageError == null }?.let {
                     Surface(Modifier.align(Alignment.BottomCenter).padding(16.dp),
                         color = MaterialTheme.colorScheme.errorContainer, shape = RoundedCornerShape(12.dp)) {
                         Text(it, Modifier.padding(16.dp), color = MaterialTheme.colorScheme.onErrorContainer)
@@ -209,7 +215,7 @@ private fun Setup(ui: SimonUiState, onScale: (Scale) -> Unit, onStart: () -> Uni
                         }
                     }
                 }
-                Button(onClick = onStart, enabled = !ui.busy, modifier = Modifier.fillMaxWidth().height(48.dp),
+                Button(onClick = onStart, enabled = !ui.busy && ui.storageError == null, modifier = Modifier.fillMaxWidth().height(48.dp),
                     shape = RoundedCornerShape(14.dp)) { Text("Jugar Simón", fontWeight = FontWeight.Bold) }
                 TextButton(onClick = onHome, modifier = Modifier.fillMaxWidth().height(40.dp)) { Text("Volver al menú") }
             }
@@ -254,7 +260,7 @@ private fun Game(ui: SimonUiState, onAnswer: (Int) -> Unit, onHome: () -> Unit, 
                     ProgressSummary(ui.progress, Scale.entries.map { it.label })
                     state.result?.mastery?.let { MasteryButton(it) }
                 }
-                Button(onClick = onStart, enabled = !ui.busy, modifier = Modifier.weight(1f).height(52.dp),
+                Button(onClick = onStart, enabled = !ui.busy && ui.storageError == null, modifier = Modifier.weight(1f).height(52.dp),
                     shape = RoundedCornerShape(16.dp)) { Text("Otra partida") }
             }
         } else {

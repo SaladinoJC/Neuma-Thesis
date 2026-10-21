@@ -33,6 +33,7 @@ data class SimonUiState(
     val preparing: Boolean = false,
     val history: List<SimonResult> = emptyList(),
     val error: String? = null,
+    val storageError: String? = null,
     val automatic: Boolean = true,
     val progress: Progress = Progress(),
 ) {
@@ -63,7 +64,10 @@ class SimonViewModel(private val session: SimonSession, private val player: Note
     }
     suspend fun awaitIdle() = actions.withLock {
         session.interrupt()
-        refreshHistory()
+    }
+    suspend fun discardForReset() {
+        cancelAudio()
+        actions.withLock { session.discardForReset() }
     }
 
     suspend fun reload() = actions.withLock {
@@ -79,12 +83,13 @@ class SimonViewModel(private val session: SimonSession, private val player: Note
     }
 
     fun start() {
-        if (ui.value.busy || returningHome) return
+        if (ui.value.busy || returningHome || ui.value.storageError != null) return
         cancelAudio()
         mutableUi.value = ui.value.copy(busy = true, preparing = true, error = null)
         viewModelScope.launch {
             actions.withLock {
                 try {
+                    refreshHistory()
                     if (ui.value.automatic) session.startAutomatic(Random.nextInt(60, 72))
                     else session.start(ui.value.selectedScale, tonicMidi = Random.nextInt(60, 72))
                     mutableUi.value = ui.value.copy(game = session.state, screen = AppScreen.SIMON_GAME)
@@ -129,7 +134,10 @@ class SimonViewModel(private val session: SimonSession, private val player: Note
                     interruptLocked()
                     mutableUi.value = ui.value.copy(screen = AppScreen.MENU, busy = false, highlighted = null)
                 } catch (error: Exception) { report(error) }
-                finally { returningHome = false }
+                finally {
+                    mutableUi.value = ui.value.copy(screen = AppScreen.MENU, busy = false, preparing = false, highlighted = null)
+                    returningHome = false
+                }
             }
         }
     }
@@ -215,11 +223,23 @@ class SimonViewModel(private val session: SimonSession, private val player: Note
         refreshHistory()
     }
 
+    fun retryStorage() {
+        viewModelScope.launch { actions.withLock {
+            try { refreshHistory(); mutableUi.value = ui.value.copy(error = null) }
+            catch (error: Exception) { report(error) }
+        } }
+    }
+
     private suspend fun refreshHistory() {
-        val history = session.history().sortedByDescending { it.finishedAtMillis }
-        val progress = session.progress()
-        // Read the current UI only after suspendable storage work; preserve navigation and input.
-        mutableUi.value = ui.value.copy(history = history, progress = progress)
+        try {
+            val history = session.history().sortedByDescending { it.finishedAtMillis }
+            val progress = session.progress()
+            mutableUi.value = ui.value.copy(history = history, progress = progress, storageError = null)
+        } catch (cancelled: CancellationException) { throw cancelled }
+        catch (error: Exception) {
+            mutableUi.value = ui.value.copy(storageError = "No se puede leer el historial. Exportá los originales desde Datos y demostración antes de reiniciar.")
+            throw error
+        }
     }
 
     private fun report(error: Exception) {

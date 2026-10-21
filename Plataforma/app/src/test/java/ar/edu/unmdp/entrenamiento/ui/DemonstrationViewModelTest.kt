@@ -16,6 +16,24 @@ class DemonstrationViewModelTest {
     @Before fun main() { Dispatchers.setMain(StandardTestDispatcher()) }
     @After fun reset() { Dispatchers.resetMain() }
 
+    @Test fun `recuperacion funciona sin parsear historial roto y distingue cancelacion e interrupcion`() = runTest {
+        java.io.File(temporary.root, "simon-results.json").writeText("{incompleto")
+        val model = DemonstrationViewModel(Demonstration(temporary.root), { error("No debe necesitar leer historiales") }, {})
+        model.prepareRecovery(); model.ui.first { it.recoveryReady }; model.recoveryLaunched()
+        val output = ByteArrayOutputStream()
+        model.exportRecovery { output }; model.ui.first { !it.busy }
+        assertEquals("Originales guardados para recuperación.", model.ui.value.message)
+        java.util.zip.ZipInputStream(output.toByteArray().inputStream()).use { zip ->
+            assertEquals("simon-results.json", zip.nextEntry.name)
+            assertEquals("{incompleto", zip.readBytes().toString(Charsets.UTF_8))
+        }
+        var opened = false
+        model.exportRecovery { opened = true; output }
+        assertFalse(opened)
+        model.prepareRecovery(); model.ui.first { it.recoveryReady }; model.exportRecovery(null)
+        assertEquals("Recuperación cancelada.", model.ui.value.message)
+    }
+
     @Test fun `resultado sin instantanea informa interrupcion y no abre el destino`() = runTest {
         val model = DemonstrationViewModel(Demonstration(temporary.root), {}, {})
         var opened = false

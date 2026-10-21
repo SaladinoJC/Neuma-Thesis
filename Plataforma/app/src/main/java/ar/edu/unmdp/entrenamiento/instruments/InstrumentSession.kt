@@ -156,6 +156,8 @@ class InstrumentSession(
         prepareQuestion()
     }
 
+    /** Solo después de una confirmación de reinicio de perfil; no guarda una interrupción. */
+    fun discardForReset() { state = InstrumentState() }
     suspend fun history(): List<InstrumentResult> = results.all()
 
     suspend fun interrupt() {

@@ -102,6 +102,8 @@ class SimonSession(
         return state
     }
 
+    /** Solo después de una confirmación de reinicio de perfil; no guarda una interrupción. */
+    fun discardForReset() { state = SimonState() }
     suspend fun history(): List<SimonResult> = results.all()
     suspend fun interrupt(): SimonState {
         if (state.phase !in listOf(Phase.PLAYBACK, Phase.RESPONSE)) return state

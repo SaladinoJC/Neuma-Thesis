@@ -1,5 +1,8 @@
 # Iteraciones posteriores a v0.5
 
+Estado al 2026-10-21: **seis incrementos implementados y verificados**, hasta v0.10. 63 JVM y 22 Android por cada API 34/36 aprobadas; [registro y artefactos](Verificacion-iteraciones-post-v0.5.md), [guía actual](Demostracion-prototipo-v0.10.md). La prueba física sigue pendiente. El texto siguiente conserva el plan que autorizó esta ejecución.
+
+
 Fecha: 2026-10-21. El usuario pidió seguir iterando y preparar varios incrementos que puedan trabajarse sin su intervención ni pruebas inmediatas en el teléfono. Este documento define el trabajo propuesto; las versiones indicadas son entregas futuras, no funcionalidades ya implementadas ni decisiones del director.
 
 ## Objetivo y forma de trabajo
@@ -87,4 +90,4 @@ Orden propuesto: 1 → 2 → 3 → 4 → 5 → 6. Cada entrega se puede ejecutar
 
 No incorporar otros juegos, cuentas, backend, ML, polifonía, editor general de reglas o actualización del protocolo Word dentro de estos incrementos. No borrar resultados reales, importar perfiles ni publicar cambios externos para avanzar este plan. Las propuestas técnicas son reversibles; los cambios de reglas pedagógicas y afirmaciones de eficacia requieren evidencia y revisión posteriores.
 
-Al retomar implementación, comenzar por el incremento 1. Registrar versiones reales y verificación cuando se construyan; no marcar estos incrementos como terminados a partir de este documento.
+Las seis entregas ya tienen implementación y evidencia, registradas fuera de este plan. Al retomar, partir del estado actualizado en `.agents/estado-prototipo.md` y del recorrido físico pendiente en la guía v0.10; no repetir los incrementos completados.

@@ -11,4 +11,4 @@ Materiales y prototipo del Trabajo Final de Ingeniería en Informática de la Un
 - [Especificación](docs/Especificacion-prototipo-v1.md) y [plan de tareas](docs/Plan-tareas-prototipo-v1.md): primera demostración aprobada y enlaces a las issues de GitHub.
 - [`CONTEXT.md`](CONTEXT.md) y [`docs/adr/`](docs/adr/): vocabulario y decisiones de diseño.
 
-La raíz `Tesis/` es la raíz del repositorio Git. Abrir `Plataforma/` en Android Studio para ejecutar la app. La versión 0.5 reúne el recorrido de demostración: [guía y límites](docs/Demostracion-prototipo-v0.5.md), [verificación](docs/Verificacion-prototipo-v0.5.md). La prueba física completa en S22 Ultra sigue pendiente.
+La raíz `Tesis/` es la raíz del repositorio Git. Abrir `Plataforma/` en Android Studio para ejecutar la app. La versión 0.10 agrega historial completo, laboratorio YIN, referencia/gráfica vocal, banco DDA y recuperación de datos: [guía y límites](docs/Demostracion-prototipo-v0.10.md), [verificación](docs/Verificacion-iteraciones-post-v0.5.md). La prueba física completa en S22 Ultra sigue pendiente.

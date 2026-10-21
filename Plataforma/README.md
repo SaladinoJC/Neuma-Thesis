@@ -1,10 +1,10 @@
 # Aplicación Android
 
-Versión 0.5: Simón y «¿Qué instrumento es?» con progresión automática persistida, inspección Mamdani, práctica manual y muestras reales offline. El automático inicia en el nivel más alto desbloqueado; dos partidas completas consecutivas de dominio alto habilitan el siguiente. Instrumentos adapta entre una y tres escuchas; manual conserva tres. «Afiná tu voz» incorpora captura y estimación YIN con objetivo seleccionable. «Datos y demostración» ofrece escenarios aislados, exportación JSON y reinicio confirmado. Las reglas siguen siendo experimentales. [Conducta y recorrido completo](../docs/Demostracion-prototipo-v0.5.md).
+Versión 0.10: Simón y «¿Qué instrumento es?» con progresión automática persistida, inspección Mamdani y práctica manual. Incluye historial completo con filtros y detalle, laboratorio YIN de 83 casos, referencia sonora/gráfica de voz y banco DDA de nueve escenarios. «Datos y demostración» exporta JSON y originales ZIP para recuperación, y permite reiniciar el perfil con confirmación. La voz conserva en memoria un guardado fallido y permite reintentarlo. Las reglas son experimentales; la prueba física del S22 Ultra sigue pendiente. [Guía actual](../docs/Demostracion-prototipo-v0.10.md) y [verificación por incremento](../docs/Verificacion-iteraciones-post-v0.5.md).
 
 El piano usa 23 muestras `mf` de University of Iowa, Do4–Si♭5, incluidas como OGG mono a 44,1 kHz, recortadas a 600 ms con fade final. Los OGG ocupan aproximadamente 186 KiB en total. `MediaCodec` las decodifica fuera del hilo de interfaz; el PCM de cada nota presentada se decodifica una vez, se conserva en memoria y se reproduce con `AudioTrack`. Las teclas usan `SoundPool` precargado, con hasta 16 colas simultáneas y volumen de reproducción 0,8, sin bloquear la entrada por los 600 ms de duración. La entrada de notas se mantiene ordenada e independiente del audio; al exceder 16 colas, se reemplazan las más viejas, no se descartan respuestas por ese límite. Procedencia, condiciones y script de conversión en [Audio-piano-Simon.md](../docs/Audio-piano-Simon.md). No se necesita conexión para jugar.
 
-Los resultados se guardan en almacenamiento privado como JSON versionado. El historial muestra las cinco partidas más recientes de cada juego, conservando todas en archivos separados. El de Simón mantiene su esquema anterior; el de instrumentos incluye cada respuesta, opciones, objetivo, acierto, escuchas, nivel, fechas y versión del banco. Las salidas al menú o a segundo plano se guardan como interrupciones. La nueva versión mantiene el identificador de la app y su firma debug para actualizar el APK anterior sin desinstalarlo y conservar su historial.
+Los resultados se guardan en almacenamiento privado como JSON versionado. El menú muestra las cinco partidas más recientes; «Ver todos los resultados» permite consultar todas en bloques de 20, filtrar y abrir detalles. Los archivos originales se conservan al consultar. El de Simón mantiene su esquema anterior; el de instrumentos incluye cada respuesta, opciones, objetivo, acierto, escuchas, nivel, fechas y versión del banco. Las salidas al menú o a segundo plano se guardan como interrupciones. La nueva versión mantiene el identificador de la app y su firma debug para actualizar el APK anterior sin desinstalarlo y conservar su historial.
 
 Instrumentos utiliza 45 muestras reales `mf` de Iowa: Do4, Re4, Mi4, Sol4 y La4 para cada uno de los nueve instrumentos. Los OGG mono/44,1 kHz de 900 ms ocupan 497.231 bytes (~486 KiB), además del banco histórico v1 conservado. El generador usa seis notas, saltos acotados, al menos tres alturas distintas y cierre en Do4: cinco notas de 400 ms, final de 800 ms y separaciones de 50 ms (3,05 s en total). La gramática es común a los instrumentos; sus parámetros son provisionales. La app compone una única pista PCM con fade al terminar cada nota, sin transposición, y registra la frase por respuesta. El contador confirma una escucha cuando avanza AudioTrack; si falla antes de comenzar, no consume ayuda. Un fallo posterior conserva la escucha consumida. [Procedencia, conversión y mediciones](../docs/Melodias-instrumentos-v0.3.1.md). El modo automático adapta las escuchas; la selección manual A/B/C conserva ayuda fija. Los desbloqueos están disponibles desde v0.5.
 
@@ -43,7 +43,8 @@ Si hay varios dispositivos, agregar `-s <serial>` a los comandos ADB. El S22 Ult
 # Regresión de salida al menú durante guardado
 .\gradlew.bat :app:testDebugUnitTest --tests '*SimonViewModelTest'
 
-# Android, con un dispositivo o emulador conectado
+# Android: solo sobre un emulador de pruebas; las pruebas reinician datos
+$env:ANDROID_SERIAL = "emulator-5554"
 .\gradlew.bat :app:connectedDebugAndroidTest
 ```
 
@@ -83,3 +84,19 @@ En preparación, elegir Automático e iniciar: nivel A y tres escuchas iniciales
 ```
 
 APK: `app/build/outputs/apk/debug/entrenamiento-auditivo-v0.5.apk`. Mismo paquete y firma debug: instalar encima para conservar datos. Abrir «Datos y demostración» para exportar resultados antes de un reinicio voluntario. Ver [demostración v0.5](../docs/Demostracion-prototipo-v0.5.md) y [verificación](../docs/Verificacion-prototipo-v0.5.md). La verificación física en S22 Ultra sigue pendiente.
+
+## Verificación y paquete reproducible
+
+Desde `Plataforma/`, con un emulador iniciado:
+
+```powershell
+.\tools\verify-prototype.ps1 -Serial emulator-5554
+# Solo JVM/lint/APK, sin instalar en ningún dispositivo:
+.\tools\verify-prototype.ps1 -SkipAndroid
+```
+
+El comando comprueba JDK/SDK y que el serial sea un emulador. Conserva log, informes comprimidos, APK, tamaño y SHA-256 en `build/verification/<fecha>/summary.json`. No admite teléfonos físicos: las pruebas Android reinician el perfil de la app. `ANDROID_SERIAL` queda configurado en la sesión de PowerShell; indicarlo nuevamente al cambiar de emulador.
+
+El guardado JSON usa una barrera compartida por directorio, sustitución atómica e identificadores para deduplicar. Exportar el JSON genera una instantánea coherente. Un archivo ilegible o de esquema desconocido se conserva y bloquea nuevas partidas del juego afectado; se puede reintentar la lectura o conservar los originales en ZIP antes de reiniciar. La recuperación copia bytes, no repara ni importa. El ZIP solo incluye los cuatro archivos conocidos y, si existe, `pending-voice-save.json`; nunca grabaciones.
+
+`pendingVoiceSave` en el JSON y `pending-voice-save.json` en el ZIP identifican mediciones derivadas pendientes de persistencia. No se mezclan con las sesiones guardadas. El pendiente vive en memoria y **no sobrevive a la muerte del proceso**; reintentar usa el mismo identificador. Reiniciar con confirmación también descarta ese pendiente. No se migra a Room ni se cambia la configuración YIN/DDA en esta entrega.

@@ -30,7 +30,7 @@ private val CorrectGreen = Color(0xFF7CDBB0)
 fun InstrumentApp(ui: InstrumentUiState, onLevel: (InstrumentLevel) -> Unit, onStart: () -> Unit,
     onListen: () -> Unit, onAnswer: (Instrument) -> Unit, onNext: () -> Unit, onHome: () -> Unit,
     onMode: (InstrumentMode) -> Unit, onInspect: () -> Unit, onCloseInspector: () -> Unit,
-    onScenario: (InstrumentDdaScenario, InstrumentLevel) -> Unit) {
+    onScenario: (InstrumentDdaScenario, InstrumentLevel) -> Unit, onRetryStorage: () -> Unit = {}) {
     MaterialTheme(colorScheme = darkColorScheme(primary = InstrumentBlue, secondary = Lavender,
         background = Night, surface = Panel, onSurface = SoftWhite, onBackground = SoftWhite, onPrimary = Night)) {
         BackHandler(onBack = onHome)
@@ -44,6 +44,10 @@ fun InstrumentApp(ui: InstrumentUiState, onLevel: (InstrumentLevel) -> Unit, onS
                     }
                     Text("¿Qué instrumento es?", fontWeight = FontWeight.Bold, fontSize = 19.sp, modifier = Modifier.weight(1f))
                     TextButton(onClick = onInspect, modifier = Modifier.testTag("dda-open")) { Text("DDA") }
+                }
+                ui.storageError?.let {
+                    Text(it, color = MaterialTheme.colorScheme.error)
+                    TextButton(onClick = onRetryStorage) { Text("Reintentar lectura") }
                 }
                 if (ui.setup) InstrumentSetup(ui, onLevel, onMode, onStart)
                 else if (ui.game.phase in listOf(InstrumentPhase.FINISHED, InstrumentPhase.INTERRUPTED))
@@ -97,7 +101,7 @@ private fun ColumnScope.InstrumentSetup(ui: InstrumentUiState, onLevel: (Instrum
             }
         }
     }
-    Button(onClick = onStart, enabled = !ui.busy, shape = RoundedCornerShape(16.dp),
+    Button(onClick = onStart, enabled = !ui.busy && ui.storageError == null, shape = RoundedCornerShape(16.dp),
         modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp).height(54.dp)) { Text("Jugar instrumentos", fontWeight = FontWeight.Bold) }
 }
 
@@ -191,7 +195,7 @@ private fun ColumnScope.InstrumentSummary(ui: InstrumentUiState, onStart: () -> 
                 }
             }
         }
-        Button(onClick = onStart, enabled = !ui.busy, modifier = Modifier.fillMaxWidth().height(52.dp),
+        Button(onClick = onStart, enabled = !ui.busy && ui.storageError == null, modifier = Modifier.fillMaxWidth().height(52.dp),
             shape = RoundedCornerShape(14.dp)) { Text("Otra partida") }
         TextButton(onClick = onHome, modifier = Modifier.fillMaxWidth()) { Text("Volver al menú") }
     }

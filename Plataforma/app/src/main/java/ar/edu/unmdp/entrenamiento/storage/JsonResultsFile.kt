@@ -5,8 +5,6 @@ import java.nio.file.AtomicMoveNotSupportedException
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -14,16 +12,18 @@ import kotlinx.serialization.json.Json
 
 /** JSON versionado y sustitución atómica; conserva el esquema previo de Simón. */
 internal class JsonResultsFile<T>(private val file: File, itemSerializer: KSerializer<T>) {
-    private val mutex = Mutex()
+    private val profile = ProfileFiles.inDirectory(file.absoluteFile.parentFile!!)
     private val json = Json { encodeDefaults = true }
     private val serializer = ResultsDocument.serializer(itemSerializer)
 
-    suspend fun all(): List<T> = withContext(Dispatchers.IO) { mutex.withLock { read().results } }
+    suspend fun all(): List<T> = withContext(Dispatchers.IO) { profile.transaction { read().results } }
 
-    suspend fun append(result: T, isDuplicate: (T) -> Boolean = { false }): Unit = withContext(Dispatchers.IO) {
-        mutex.withLock {
+    suspend fun append(result: T, isDuplicate: (T) -> Boolean = { false }) {
+        val generation = profile.generation.get()
+        withContext(Dispatchers.IO) { profile.transaction {
+            check(profile.generation.get() == generation) { "El perfil se reinició durante el guardado." }
             val previous = read()
-            if (previous.results.any(isDuplicate)) return@withLock
+            if (previous.results.any(isDuplicate)) return@transaction
             val document = previous.copy(results = previous.results + result)
             val parent = file.absoluteFile.parentFile!!
             check(parent.isDirectory || parent.mkdirs()) { "No se pudo crear el directorio de resultados." }
@@ -36,7 +36,7 @@ internal class JsonResultsFile<T>(private val file: File, itemSerializer: KSeria
                     Files.move(temporary.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING)
                 }
             } finally { temporary.delete() }
-        }
+        } }
     }
 
     private fun read(): ResultsDocument<T> {

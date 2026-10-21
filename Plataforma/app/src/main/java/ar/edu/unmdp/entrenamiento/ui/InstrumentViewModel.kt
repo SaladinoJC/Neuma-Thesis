@@ -27,6 +27,7 @@ data class InstrumentUiState(
     val busy: Boolean = false,
     val history: List<InstrumentResult> = emptyList(),
     val error: String? = null,
+    val storageError: String? = null,
     val selectedMode: InstrumentMode = InstrumentMode.AUTOMATIC,
     val inspectorOpen: Boolean = false,
     val simulation: InstrumentResult? = null,
@@ -75,11 +76,15 @@ class InstrumentViewModel(private val session: InstrumentSession, private val pl
         }
     }
 
-    fun start() = act {
-        if (ui.value.selectedMode == InstrumentMode.AUTOMATIC) session.startAutomatic()
-        else session.start(ui.value.selectedLevel, ui.value.selectedMode)
-        mutableUi.value = ui.value.copy(setup = false, game = session.state)
-        playQuestion()
+    fun start() {
+        if (ui.value.storageError != null) return
+        act {
+            refreshHistory()
+            if (ui.value.selectedMode == InstrumentMode.AUTOMATIC) session.startAutomatic()
+            else session.start(ui.value.selectedLevel, ui.value.selectedMode)
+            mutableUi.value = ui.value.copy(setup = false, game = session.state)
+            playQuestion()
+        }
     }
 
     fun answer(instrument: Instrument) = act {
@@ -141,7 +146,10 @@ class InstrumentViewModel(private val session: InstrumentSession, private val pl
                     interrupt()
                     mutableUi.value = ui.value.copy(open = false, setup = true, inspectorOpen = false)
                 } catch (error: Exception) { report(error) }
-                finally { returningHome = false }
+                finally {
+                    mutableUi.value = ui.value.copy(open = false, setup = true, busy = false, inspectorOpen = false)
+                    returningHome = false
+                }
             }
         }
     }
@@ -158,7 +166,10 @@ class InstrumentViewModel(private val session: InstrumentSession, private val pl
 
     suspend fun awaitIdle() = actions.withLock {
         session.interrupt()
-        refreshHistory()
+    }
+    suspend fun discardForReset() {
+        playback?.cancel()
+        actions.withLock { session.discardForReset() }
     }
 
     suspend fun reload() = actions.withLock {
@@ -175,11 +186,23 @@ class InstrumentViewModel(private val session: InstrumentSession, private val pl
         refreshHistory()
     }
 
+    fun retryStorage() {
+        viewModelScope.launch { actions.withLock {
+            try { refreshHistory(); mutableUi.value = ui.value.copy(error = null) }
+            catch (error: Exception) { report(error) }
+        } }
+    }
+
     private suspend fun refreshHistory() {
-        val history = session.history().sortedByDescending { it.finishedAtMillis }
-        val progress = session.progress()
-        // Read the current UI only after suspendable storage work; preserve navigation and input.
-        mutableUi.value = ui.value.copy(history = history, progress = progress)
+        try {
+            val history = session.history().sortedByDescending { it.finishedAtMillis }
+            val progress = session.progress()
+            mutableUi.value = ui.value.copy(history = history, progress = progress, storageError = null)
+        } catch (cancelled: CancellationException) { throw cancelled }
+        catch (error: Exception) {
+            mutableUi.value = ui.value.copy(storageError = "No se puede leer el historial. Exportá los originales desde Datos y demostración antes de reiniciar.")
+            throw error
+        }
     }
 
     private fun report(error: Exception) {

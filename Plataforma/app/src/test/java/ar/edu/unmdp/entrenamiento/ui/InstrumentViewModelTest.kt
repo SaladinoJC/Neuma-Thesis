@@ -12,6 +12,28 @@ import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class InstrumentViewModelTest {
+    @Test fun `historial ilegible bloquea partida manual hasta relectura correcta`() = runTest {
+        Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+        try {
+            var broken = true
+            val results = object : InstrumentResults {
+                override suspend fun all(): List<InstrumentResult> { check(!broken); return emptyList() }
+                override suspend fun save(result: InstrumentResult) {}
+            }
+            var plays = 0
+            val player = object : InstrumentPlayer {
+                override suspend fun play(instrument: Instrument, melody: InstrumentMelody, onStarted: () -> Unit): Int {
+                    plays++; onStarted(); return 134505
+                }
+            }
+            val model = InstrumentViewModel(InstrumentSession({ 0 }, player, results), player)
+            model.selectLevel(InstrumentLevel.A); model.start(); advanceUntilIdle()
+            assertEquals(0, plays); assertNotNull(model.ui.value.storageError)
+            model.home(); advanceUntilIdle(); assertFalse(model.ui.value.open)
+            broken = false; model.retryStorage(); advanceUntilIdle()
+            model.start(); advanceUntilIdle(); assertEquals(1, plays)
+        } finally { Dispatchers.resetMain() }
+    }
     @Test
     fun `inspector y simulaciones usan la configuracion efectiva de la partida activa`() = runTest {
         Dispatchers.setMain(StandardTestDispatcher(testScheduler))

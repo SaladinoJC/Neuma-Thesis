@@ -10,14 +10,18 @@ import java.io.OutputStream
 
 data class DemonstrationUi(val busy: Boolean = false, val pickerReady: Boolean = false,
     val message: String? = null, val simulation: ProgressSimulation? = null, val benchmark: DdaBenchReport? = null,
-    val noticeId: Long = 0, val noticePending: Boolean = false, val awaitingDestination: Boolean = false)
+    val noticeId: Long = 0, val noticePending: Boolean = false, val awaitingDestination: Boolean = false,
+    val recoveryReady: Boolean = false)
 class DemonstrationViewModel(private val data: Demonstration, private val drain: suspend () -> Unit,
     private val refresh: suspend () -> Unit,
-    private val helpSimulation: () -> ar.edu.unmdp.entrenamiento.instruments.InstrumentResult? = { null }) : ViewModel() {
+    private val helpSimulation: () -> ar.edu.unmdp.entrenamiento.instruments.InstrumentResult? = { null },
+    private val pendingVoice: () -> ar.edu.unmdp.entrenamiento.voice.VoiceResult? = { null },
+    private val drainForReset: suspend () -> Unit = drain) : ViewModel() {
     private val mutableUi = MutableStateFlow(DemonstrationUi())
     val ui = mutableUi.asStateFlow()
     private var snapshot: String? = null
     private var writing = false
+    private var recoveryPending = false
     private fun notify(message: String) {
         mutableUi.value = ui.value.copy(message = message, noticeId = ui.value.noticeId+1, noticePending = true)
     }
@@ -46,10 +50,35 @@ class DemonstrationViewModel(private val data: Demonstration, private val drain:
     }
     fun prepareExport() = act {
         drain()
-        snapshot = data.export(BuildConfig.VERSION_NAME, ui.value.simulation, helpSimulation(), ui.value.benchmark)
+        snapshot = data.export(BuildConfig.VERSION_NAME, ui.value.simulation, helpSimulation(), ui.value.benchmark, pendingVoice())
         mutableUi.value = ui.value.copy(pickerReady = true, awaitingDestination = true)
     }
     fun pickerLaunched() { mutableUi.value = ui.value.copy(pickerReady = false) }
+    fun prepareRecovery() = act {
+        recoveryPending = true
+        mutableUi.value = ui.value.copy(recoveryReady = true, awaitingDestination = true)
+    }
+    fun recoveryLaunched() { mutableUi.value = ui.value.copy(recoveryReady = false) }
+    fun exportRecovery(open: (() -> OutputStream?)?) {
+        if (writing) return
+        val ready = recoveryPending
+        recoveryPending = false
+        mutableUi.value = ui.value.copy(recoveryReady = false, awaitingDestination = false)
+        if (open == null || !ready) {
+            mutableUi.value = ui.value.copy(busy = false)
+            notify(if (open == null) "Recuperación cancelada." else "La recuperación se interrumpió. Iniciá otra exportación.")
+            return
+        }
+        writing = true
+        viewModelScope.launch {
+            try {
+                val pending = pendingVoice()
+                withContext(Dispatchers.IO) { data.writeRecovery(checkNotNull(open()) { "No se pudo abrir el destino." }, pending) }
+                notify("Originales guardados para recuperación.")
+            } catch (error: Exception) { notify("No se pudo exportar: ${error.message}") }
+            finally { writing = false; mutableUi.value = ui.value.copy(busy = false) }
+        }
+    }
     fun export(open: (() -> OutputStream?)?) {
         if (writing) return
         val content = snapshot
@@ -72,7 +101,7 @@ class DemonstrationViewModel(private val data: Demonstration, private val drain:
     }
     fun reset() = act {
         withContext(NonCancellable) {
-            drain()
+            drainForReset()
             data.reset()
             refresh()
             mutableUi.value = ui.value.copy(simulation = null, benchmark = null)

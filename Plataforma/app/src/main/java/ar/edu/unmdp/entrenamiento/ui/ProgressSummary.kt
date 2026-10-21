@@ -11,6 +11,6 @@ internal fun ProgressSummary(progress: Progress, levels: List<String>) {
     Column {
         Text("Desbloqueado: ${levels[progress.level]} · Racha ${progress.streak}/2", color = Muted, fontSize = 11.sp)
         Text(if (progress.level == levels.lastIndex) "Último nivel del juego" else
-            "Próximo: ${levels[progress.level+1]} · Faltan ${2-progress.streak} partidas de dominio alto", color = Muted, fontSize = 11.sp)
+            "Próximo: ${levels[progress.level+1]} · ${if (progress.streak == 1) "Falta 1 partida" else "Faltan 2 partidas"} de dominio alto", color = Muted, fontSize = 11.sp)
     }
 }

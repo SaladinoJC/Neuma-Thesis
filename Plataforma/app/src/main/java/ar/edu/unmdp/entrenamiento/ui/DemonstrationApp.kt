@@ -30,6 +30,12 @@ fun DemonstrationApp(ui: DemonstrationUi, model: DemonstrationViewModel, onHome:
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
         model.export(if (uri == null) null else ({ resolver.openOutputStream(uri, "wt") }))
     }
+    val recovery = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
+        model.exportRecovery(if (uri == null) null else ({ resolver.openOutputStream(uri, "wt") }))
+    }
+    LaunchedEffect(ui.recoveryReady) {
+        if (ui.recoveryReady) { model.recoveryLaunched(); recovery.launch("recuperacion-${System.currentTimeMillis()}.zip") }
+    }
     LaunchedEffect(ui.pickerReady) {
         if (ui.pickerReady) { model.pickerLaunched(); picker.launch("entrenamiento-auditivo-${System.currentTimeMillis()}.json") }
     }
@@ -82,6 +88,8 @@ fun DemonstrationApp(ui: DemonstrationUi, model: DemonstrationViewModel, onHome:
                 Text("Exportar resultados", style = MaterialTheme.typography.titleLarge)
                 Text("Incluye partidas, progreso, decisiones, configuración y mediciones de voz; el escenario visible y el banco DDA van separados. Elegí dónde guardar el JSON.")
                 Button(onClick = model::prepareExport, enabled = !ui.busy, modifier = Modifier.testTag("data-export")) { Text("Exportar JSON") }
+                Text("Si el JSON local no se puede leer, conservá una copia de los archivos originales antes de reiniciar. La copia ZIP no repara ni importa datos.")
+                OutlinedButton(onClick = model::prepareRecovery, enabled = !ui.busy, modifier = Modifier.testTag("data-recovery")) { Text("Exportar originales para recuperación") }
                 Text("Reiniciar perfil local", style = MaterialTheme.typography.titleLarge)
                 Text("Borra historiales, mediciones, rachas y desbloqueos de esta app. Los archivos ya exportados se conservan.")
                 OutlinedButton(onClick = { confirm = true }, enabled = !ui.busy, modifier = Modifier.testTag("data-reset")) { Text("Reiniciar datos") }

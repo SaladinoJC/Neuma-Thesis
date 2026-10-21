@@ -88,7 +88,8 @@ class MainActivity : ComponentActivity() {
             override fun <T : ViewModel> create(modelClass: Class<T>): T = DemonstrationViewModel(data,
                 drain = { labModel.cancelAndJoin(); voiceModel.stopAndJoin(); simonModel.awaitIdle(); instrumentModel.awaitIdle() },
                 refresh = { simonModel.reload(); instrumentModel.reload(); voiceModel.resetDisplay(); labModel.resetDisplay() },
-                helpSimulation = { instrumentModel.ui.value.simulation }) as T
+                helpSimulation = { instrumentModel.ui.value.simulation }, pendingVoice = voiceModel::pendingForExport,
+                drainForReset = { labModel.cancelAndJoin(); voiceModel.stopAndJoin(); simonModel.discardForReset(); instrumentModel.discardForReset() }) as T
         })[DemonstrationViewModel::class.java]
         val history = ViewModelProvider(this, object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
@@ -117,10 +118,10 @@ class MainActivity : ComponentActivity() {
             else if (auxiliary == "data") DemonstrationApp(dataUi, demonstration, onHome = { auxiliary = "" }, onPitchLab = { pitchLab.load(); auxiliary = "pitch-lab" })
             else if (instrumentUi.open) InstrumentApp(instrumentUi, instruments::selectLevel, instruments::start,
                 instruments::listen, instruments::answer, instruments::next, instruments::home,
-                instruments::selectMode, instruments::openInspector, instruments::closeInspector, instruments::simulateScenario)
+                instruments::selectMode, instruments::openInspector, instruments::closeInspector, instruments::simulateScenario, instruments::retryStorage)
             else SimonApp(ui, model::openSimon, model::selectScale, model::start, model::answer, model::home,
                 instruments::open, instrumentUi.history, model::selectAutomatic,
-                onVoice = { auxiliary = "voice" }, onData = { auxiliary = "data" }, onHistory = { history.load(); auxiliary = "history" })
+                onVoice = { auxiliary = "voice" }, onData = { auxiliary = "data" }, onHistory = { history.load(); auxiliary = "history" }, onRetryStorage = model::retryStorage)
         }
     }
 

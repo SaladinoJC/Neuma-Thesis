@@ -56,8 +56,12 @@ fun VoiceApp(ui: VoiceUiState, model: VoiceViewModel, onHome: () -> Unit) {
                 Button(onClick = {
                     if (context.checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) model.start()
                     else permission.launch(Manifest.permission.RECORD_AUDIO)
-                }, enabled = !ui.running && !ui.referencePlaying, modifier = Modifier.testTag("voice-start")) { Text("Iniciar micrófono") }
+                }, enabled = !ui.running && !ui.referencePlaying && !ui.pendingSave, modifier = Modifier.testTag("voice-start")) { Text("Iniciar micrófono") }
                 OutlinedButton(onClick = model::stop, enabled = ui.running, modifier = Modifier.testTag("voice-stop")) { Text("Detener y guardar mediciones") }
+                if (ui.pendingSave && !ui.running) {
+                    Text("Guardado pendiente. Las mediciones siguen en memoria mientras esta sesión permanezca abierta. Podés reintentar o incluirlas en Exportar JSON desde Datos y demostración.")
+                    Button(onClick = model::retrySave, enabled = !ui.savingPending, modifier = Modifier.testTag("voice-retry-save")) { Text("Reintentar guardado") }
+                }
                 ui.error?.let {
                     Text(it, color = MaterialTheme.colorScheme.error)
                     if (it.contains("autorizado") || it.contains("permiso")) TextButton(onClick = { context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, "package:${context.packageName}".toUri())) }) {
