@@ -160,4 +160,25 @@ class SimonViewModelTest {
             Dispatchers.resetMain()
         }
     }
+    @Test
+    fun `el historial tardio no deshace la apertura de Simon`() = runTest {
+        Dispatchers.setMain(kotlinx.coroutines.test.StandardTestDispatcher(testScheduler))
+        try {
+            val loaded = kotlinx.coroutines.CompletableDeferred<Unit>()
+            val results = object : SimonResults {
+                override suspend fun all(): List<SimonResult> { loaded.await(); return emptyList() }
+                override suspend fun save(result: SimonResult) {}
+            }
+            val player = object : NotePlayer {
+                override suspend fun play(midiNote: Int) = 0
+                override fun feedback(midiNote: Int) = 1
+            }
+            val model = SimonViewModel(SimonSession({ 0 }, results), player)
+            runCurrent()
+            model.openSimon()
+            assertEquals(AppScreen.SIMON_SETUP, model.ui.value.screen)
+            loaded.complete(Unit); advanceUntilIdle()
+            assertEquals(AppScreen.SIMON_SETUP, model.ui.value.screen)
+        } finally { Dispatchers.resetMain() }
+    }
 }

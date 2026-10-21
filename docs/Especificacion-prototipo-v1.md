@@ -12,9 +12,9 @@ Actualización solicitada por el usuario (2026-10-09), después de probar v0.3 e
 
 ## Problem Statement
 
-Estado de implementación al 2026-10-09: el incremento #4 incorpora adaptación de escuchas en modo automático (nivel A), panel de inspección y escenarios aislados. La práctica manual A/B/C conserva tres escuchas como elección provisional del agente para mantener el recorrido anterior. Los parámetros iniciales de esta especificación se concretan en [DDA-instrumentos-v0.4.md](DDA-instrumentos-v0.4.md); siguen pendientes de calibración. Desbloqueos, voz y exportación/reinicio corresponden a incrementos posteriores.
+Estado de implementación al 2026-10-21: v0.5 integra progresión/desbloqueos (#5), prueba de voz YIN (#6) y exportación/reinicio (#7), conservando instrumentos y DDA intrapartida de v0.4. Parámetros, compatibilidad y recorrido en [Demostracion-prototipo-v0.5.md](Demostracion-prototipo-v0.5.md). La validación física completa en S22 Ultra sigue pendiente; implementación no equivale a calibración ni eficacia pedagógica.
 
-El tesista necesita una demostración ejecutable que él y su director puedan usar para discutir el sistema de entrenamiento auditivo. Actualmente existen documentos y fichas de diseño, pero no una aplicación. Antes de una evaluación con estudiantes se necesita comprobar el funcionamiento de dos juegos, observar un DDA explicable y explorar captura y estimación de tono en el teléfono objetivo.
+El tesista necesita una demostración ejecutable que él y su director puedan usar para discutir el sistema de entrenamiento auditivo. Al redactar la especificación inicial existían documentos y fichas de diseño; ahora hay una aplicación Android ejecutable. Antes de una evaluación con estudiantes se necesita comprobar el funcionamiento de dos juegos, observar un DDA explicable y explorar captura y estimación de tono en el teléfono objetivo.
 
 ## Solution
 
@@ -109,7 +109,7 @@ Estas propuestas concretan valores que no se fijaron en la entrevista. Se docume
 
 ## Testing Decisions
 
-- No existe código ni pruebas previas que reutilizar. El usuario aprobó un límite principal de sesión para probar acciones → estado/resultados/decisiones/progreso/exportación con audio y almacenamiento controlados.
+- Al crear esta especificación no había código ni pruebas previas; la implementación actual conserva y amplía las pruebas de sesión y Android. El usuario aprobó un límite principal de sesión para probar acciones → estado/resultados/decisiones/progreso/exportación con audio y almacenamiento controlados.
 - Un segundo límite justificado es muestras PCM → estimación de tono: permite comparar contra frecuencias conocidas sin depender de canto o de un micrófono.
 - Probar conductas observables, no métodos privados ni forma de los módulos. Las pruebas deben detectar errores de puntaje, ajustes fuera de rango, cambios de una ronda iniciada, avances duplicados y mezcla de datos simulados/manuales con progreso real.
 - Casos de juegos: repetición correcta e incorrecta de Simón; fallo en cinco después de completar cuatro; respuesta correcta/incorrecta de instrumentos; límite real de reproducciones; diez respuestas y resumen; interrupción de partida.

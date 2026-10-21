@@ -1,5 +1,6 @@
 package ar.edu.unmdp.entrenamiento.ui
 
+import ar.edu.unmdp.entrenamiento.progress.Progress
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unmdp.entrenamiento.audio.NotePlayer
@@ -32,6 +33,8 @@ data class SimonUiState(
     val preparing: Boolean = false,
     val history: List<SimonResult> = emptyList(),
     val error: String? = null,
+    val automatic: Boolean = true,
+    val progress: Progress = Progress(),
 ) {
     val inGame: Boolean get() = screen == AppScreen.SIMON_GAME
 }
@@ -52,7 +55,21 @@ class SimonViewModel(private val session: SimonSession, private val player: Note
     }
 
     fun selectScale(scale: Scale) {
-        if (!ui.value.inGame) mutableUi.value = ui.value.copy(selectedScale = scale)
+        if (!ui.value.inGame) mutableUi.value = ui.value.copy(selectedScale = scale, automatic = false)
+    }
+
+    fun selectAutomatic() {
+        if (!ui.value.inGame && !ui.value.busy) mutableUi.value = ui.value.copy(automatic = true)
+    }
+    suspend fun awaitIdle() = actions.withLock {
+        session.interrupt()
+        refreshHistory()
+    }
+
+    suspend fun reload() = actions.withLock {
+        session.interrupt()
+        mutableUi.value = SimonUiState()
+        refreshHistory()
     }
 
     fun openSimon() {
@@ -68,7 +85,8 @@ class SimonViewModel(private val session: SimonSession, private val player: Note
         viewModelScope.launch {
             actions.withLock {
                 try {
-                    session.start(ui.value.selectedScale, tonicMidi = Random.nextInt(60, 72))
+                    if (ui.value.automatic) session.startAutomatic(Random.nextInt(60, 72))
+                    else session.start(ui.value.selectedScale, tonicMidi = Random.nextInt(60, 72))
                     mutableUi.value = ui.value.copy(game = session.state, screen = AppScreen.SIMON_GAME)
                     if (foreground && !returningHome) playSequence(session.state)
                     else interruptLocked()
@@ -198,7 +216,10 @@ class SimonViewModel(private val session: SimonSession, private val player: Note
     }
 
     private suspend fun refreshHistory() {
-        mutableUi.value = ui.value.copy(history = session.history().sortedByDescending { it.finishedAtMillis })
+        val history = session.history().sortedByDescending { it.finishedAtMillis }
+        val progress = session.progress()
+        // Read the current UI only after suspendable storage work; preserve navigation and input.
+        mutableUi.value = ui.value.copy(history = history, progress = progress)
     }
 
     private fun report(error: Exception) {

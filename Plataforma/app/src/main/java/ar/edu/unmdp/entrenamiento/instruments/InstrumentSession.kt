@@ -2,6 +2,7 @@ package ar.edu.unmdp.entrenamiento.instruments
 
 import kotlinx.serialization.Serializable
 import java.util.UUID
+import ar.edu.unmdp.entrenamiento.progress.*
 
 @Serializable
 enum class Instrument(val label: String, val assetKey: String) {
@@ -47,6 +48,7 @@ data class InstrumentResult(
     val plannedQuestions: Int = 10,
     val stimulusKind: String = "single-note",
     val ddaConfiguration: InstrumentDdaConfiguration? = null,
+    val mastery: Mastery? = null,
 )
 
 data class InstrumentState(
@@ -81,17 +83,25 @@ class InstrumentSession(
     private var lastChangeRound: Int? = null
     private var nextListensAllowed = 3
 
-    fun start(level: InstrumentLevel, mode: InstrumentMode = InstrumentMode.MANUAL) {
+    suspend fun start(level: InstrumentLevel, mode: InstrumentMode = InstrumentMode.MANUAL) {
         check(state.phase in listOf(InstrumentPhase.IDLE, InstrumentPhase.FINISHED, InstrumentPhase.INTERRUPTED)) {
             "La partida anterior sigue activa."
         }
         id = UUID.randomUUID().toString()
         startedAtMillis = clock()
-        state = InstrumentState(level = if (mode == InstrumentMode.AUTOMATIC) InstrumentLevel.A else level, mode = mode)
+        state = InstrumentState(level = if (mode == InstrumentMode.AUTOMATIC) InstrumentLevel.entries[progress().level] else level, mode = mode)
         melody = null
         lastChangeRound = null
         nextListensAllowed = 3
         prepareQuestion()
+    }
+
+    suspend fun progress(): Progress = progression(results.all().map {
+        ProgressEntry(it.id, it.level.ordinal, it.origin, it.completed, it.mastery)
+    })
+
+    suspend fun startAutomatic() {
+        start(InstrumentLevel.A, InstrumentMode.AUTOMATIC)
     }
 
     private fun prepareQuestion() {
@@ -158,8 +168,11 @@ class InstrumentSession(
     private fun makeResult(answers: List<InstrumentAnswer>, completed: Boolean) = InstrumentResult(
         id, state.level, answers, completed, startedAtMillis, clock(),
         origin = state.mode.name.lowercase(java.util.Locale.ROOT),
-        configurationVersion = "instruments-0.4-melodies-dda", bankVersion = "iowa-pentatonic-mf-v2",
+        configurationVersion = "instruments-0.5-progression", bankVersion = "iowa-pentatonic-mf-v2",
         midi = null, stimulusKind = "generated-melody",
         ddaConfiguration = ddaConfiguration,
+        mastery = if (completed) mastery(mapOf("exactitud" to answers.count { it.correct }.toDouble()/answers.size,
+            "autonomía" to if (answers.none { it.correct }) 0.0 else
+                answers.count { it.correct && it.listensUsed == 1 }.toDouble()/answers.count { it.correct })) else null,
     )
 }

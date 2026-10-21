@@ -168,4 +168,27 @@ class InstrumentViewModelTest {
             assertEquals(10, model.ui.value.history.single().answers.size)
         } finally { Dispatchers.resetMain() }
     }
+    @Test
+    fun `el historial tardio no deshace la apertura de instrumentos`() = runTest {
+        Dispatchers.setMain(kotlinx.coroutines.test.StandardTestDispatcher(testScheduler))
+        try {
+            val loaded = kotlinx.coroutines.CompletableDeferred<Unit>()
+            val results = object : ar.edu.unmdp.entrenamiento.instruments.InstrumentResults {
+                override suspend fun all(): List<ar.edu.unmdp.entrenamiento.instruments.InstrumentResult> {
+                    loaded.await(); return emptyList()
+                }
+                override suspend fun save(result: ar.edu.unmdp.entrenamiento.instruments.InstrumentResult) {}
+            }
+            val player = object : ar.edu.unmdp.entrenamiento.instruments.InstrumentPlayer {
+                override suspend fun play(instrument: ar.edu.unmdp.entrenamiento.instruments.Instrument,
+                    melody: ar.edu.unmdp.entrenamiento.instruments.InstrumentMelody, onStarted: () -> Unit) = 0
+            }
+            val model = InstrumentViewModel(ar.edu.unmdp.entrenamiento.instruments.InstrumentSession({ 0 }, player, results), player)
+            runCurrent()
+            model.open()
+            org.junit.Assert.assertTrue(model.ui.value.open)
+            loaded.complete(Unit); advanceUntilIdle()
+            org.junit.Assert.assertTrue("La carga no debe cerrar la pantalla recién abierta", model.ui.value.open)
+        } finally { Dispatchers.resetMain() }
+    }
 }

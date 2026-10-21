@@ -9,9 +9,17 @@ import org.junit.Test
 class InstrumentDdaAndroidTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
 
+    @org.junit.Before
+    fun awaitAppWindow() {
+        compose.waitUntil(15_000) { compose.activity.hasWindowFocus() }
+        compose.waitForIdle()
+    }
+
+
     @Test
     fun inspectorReproduceRecuperacionSinCambiarLaPartidaReal() {
-        compose.onNodeWithTag("game-instruments").performClick()
+        compose.onNodeWithTag("game-instruments").performScrollTo().performClick()
+        compose.waitUntil(10_000) { compose.onAllNodesWithTag("dda-open").fetchSemanticsNodes().isNotEmpty() }
         compose.onNodeWithTag("dda-open").performClick()
         compose.onNodeWithTag("dda-simulated").performClick()
         compose.onNodeWithTag("dda-level-C").performClick()
@@ -36,7 +44,8 @@ class InstrumentDdaAndroidTest {
 
     @Test
     fun escenariosDeAciertosAyudadosYAlternanciaMantienenLaAyuda() {
-        compose.onNodeWithTag("game-instruments").performClick()
+        compose.onNodeWithTag("game-instruments").performScrollTo().performClick()
+        compose.waitUntil(10_000) { compose.onAllNodesWithTag("dda-open").fetchSemanticsNodes().isNotEmpty() }
         compose.onNodeWithTag("dda-open").performClick()
         compose.onNodeWithTag("dda-simulated").performClick()
         for (scenario in listOf("HELPED", "ALTERNATING")) {

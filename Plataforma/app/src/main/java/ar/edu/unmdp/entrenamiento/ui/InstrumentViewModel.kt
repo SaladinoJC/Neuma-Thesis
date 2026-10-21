@@ -1,5 +1,6 @@
 package ar.edu.unmdp.entrenamiento.ui
 
+import ar.edu.unmdp.entrenamiento.progress.Progress
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unmdp.entrenamiento.instruments.*
@@ -19,6 +20,7 @@ import kotlinx.coroutines.sync.withLock
 
 data class InstrumentUiState(
     val open: Boolean = false,
+    val progress: Progress = Progress(),
     val setup: Boolean = true,
     val selectedLevel: InstrumentLevel = InstrumentLevel.A,
     val game: InstrumentState = InstrumentState(),
@@ -55,7 +57,7 @@ class InstrumentViewModel(private val session: InstrumentSession, private val pl
     fun selectMode(mode: InstrumentMode) {
         if (mode != InstrumentMode.SIMULATED && ui.value.setup && !ui.value.busy)
             mutableUi.value = ui.value.copy(selectedMode = mode,
-                selectedLevel = if (mode == InstrumentMode.AUTOMATIC) InstrumentLevel.A else ui.value.selectedLevel)
+                selectedLevel = if (mode == InstrumentMode.AUTOMATIC) InstrumentLevel.entries[ui.value.progress.level] else ui.value.selectedLevel)
     }
 
     fun openInspector() { mutableUi.value = ui.value.copy(inspectorOpen = true) }
@@ -74,7 +76,8 @@ class InstrumentViewModel(private val session: InstrumentSession, private val pl
     }
 
     fun start() = act {
-        session.start(ui.value.selectedLevel, ui.value.selectedMode)
+        if (ui.value.selectedMode == InstrumentMode.AUTOMATIC) session.startAutomatic()
+        else session.start(ui.value.selectedLevel, ui.value.selectedMode)
         mutableUi.value = ui.value.copy(setup = false, game = session.state)
         playQuestion()
     }
@@ -153,6 +156,17 @@ class InstrumentViewModel(private val session: InstrumentSession, private val pl
         }
     }
 
+    suspend fun awaitIdle() = actions.withLock {
+        session.interrupt()
+        refreshHistory()
+    }
+
+    suspend fun reload() = actions.withLock {
+        session.interrupt()
+        mutableUi.value = InstrumentUiState(ddaConfiguration = session.ddaConfiguration)
+        refreshHistory()
+    }
+
     fun resume() { foreground = true }
 
     private suspend fun interrupt() {
@@ -162,7 +176,10 @@ class InstrumentViewModel(private val session: InstrumentSession, private val pl
     }
 
     private suspend fun refreshHistory() {
-        mutableUi.value = ui.value.copy(history = session.history().sortedByDescending { it.finishedAtMillis })
+        val history = session.history().sortedByDescending { it.finishedAtMillis }
+        val progress = session.progress()
+        // Read the current UI only after suspendable storage work; preserve navigation and input.
+        mutableUi.value = ui.value.copy(history = history, progress = progress)
     }
 
     private fun report(error: Exception) {

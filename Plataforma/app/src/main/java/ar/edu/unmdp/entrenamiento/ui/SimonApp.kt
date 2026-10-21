@@ -51,7 +51,8 @@ fun noteName(midi: Int): String {
 @Composable
 fun SimonApp(ui: SimonUiState, onSimon: () -> Unit, onScale: (Scale) -> Unit,
     onStart: () -> Unit, onAnswer: (Int) -> Unit, onHome: () -> Unit,
-    onInstruments: () -> Unit = {}, instrumentHistory: List<InstrumentResult> = emptyList()) {
+    onInstruments: () -> Unit = {}, instrumentHistory: List<InstrumentResult> = emptyList(),
+    onAutomatic: () -> Unit = {}, onVoice: () -> Unit = {}, onData: () -> Unit = {}) {
     MaterialTheme(colorScheme = darkColorScheme(primary = Pink, secondary = Lavender,
         background = Night, surface = Panel, onSurface = SoftWhite, onBackground = SoftWhite, onPrimary = Night)) {
         BackHandler(enabled = ui.screen != AppScreen.MENU, onBack = onHome)
@@ -59,8 +60,8 @@ fun SimonApp(ui: SimonUiState, onSimon: () -> Unit, onScale: (Scale) -> Unit,
             Box(Modifier.fillMaxSize().padding(padding)
                 .background(Brush.verticalGradient(listOf(Color(0xFF111828), Night, Color(0xFF0B1920))))) {
                 when (ui.screen) {
-                    AppScreen.MENU -> MainMenu(ui, onSimon, onInstruments, instrumentHistory)
-                    AppScreen.SIMON_SETUP -> Setup(ui, onScale, onStart, onHome)
+                    AppScreen.MENU -> MainMenu(ui, onSimon, onInstruments, instrumentHistory, onVoice, onData)
+                    AppScreen.SIMON_SETUP -> Setup(ui, onScale, onStart, onHome, onAutomatic)
                     AppScreen.SIMON_GAME -> Game(ui, onAnswer, onHome, onStart)
                 }
                 ui.error?.let {
@@ -75,7 +76,7 @@ fun SimonApp(ui: SimonUiState, onSimon: () -> Unit, onScale: (Scale) -> Unit,
 }
 
 @Composable
-private fun MainMenu(ui: SimonUiState, onSimon: () -> Unit, onInstruments: () -> Unit, instrumentHistory: List<InstrumentResult>) {
+private fun MainMenu(ui: SimonUiState, onSimon: () -> Unit, onInstruments: () -> Unit, instrumentHistory: List<InstrumentResult>, onVoice: () -> Unit, onData: () -> Unit) {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(22.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp)) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
@@ -96,7 +97,8 @@ private fun MainMenu(ui: SimonUiState, onSimon: () -> Unit, onInstruments: () ->
             "Disponible", Modifier.testTag("game-simon"), onClick = onSimon)
         MenuCard("¿Qué instrumento es?", "Descubrí el instrumento por su sonido",
             Color(0xFF71AAFF), "≋", "Disponible", Modifier.testTag("game-instruments"), onClick = onInstruments)
-        MenuCard("Afiná tu voz", "Explorá las notas que cantás", Color(0xFF63D9B0), "♪", "Próximamente")
+        MenuCard("Afiná tu voz", "Explorá las notas que cantás", Color(0xFF63D9B0), "♪", "Prueba técnica", Modifier.testTag("game-voice"), onClick = onVoice)
+        OutlinedButton(onClick = onData, modifier = Modifier.fillMaxWidth().testTag("data-open")) { Text("Datos y demostración") }
         if (ui.history.isNotEmpty()) {
             Text("Últimas partidas de Simón", fontWeight = FontWeight.SemiBold)
             ui.history.take(5).forEach { HistoryCard(it) }
@@ -172,7 +174,7 @@ private fun PageHeader(onHome: () -> Unit) {
 }
 
 @Composable
-private fun Setup(ui: SimonUiState, onScale: (Scale) -> Unit, onStart: () -> Unit, onHome: () -> Unit) {
+private fun Setup(ui: SimonUiState, onScale: (Scale) -> Unit, onStart: () -> Unit, onHome: () -> Unit, onAutomatic: () -> Unit) {
     Column(Modifier.fillMaxSize().padding(horizontal = 16.dp).testTag("simon-viewport")) {
         PageHeader(onHome)
         Row(Modifier.weight(1f).padding(bottom = 8.dp), horizontalArrangement = Arrangement.spacedBy(24.dp)) {
@@ -185,12 +187,14 @@ private fun Setup(ui: SimonUiState, onScale: (Scale) -> Unit, onStart: () -> Uni
                     Instruction("▥", "Repetí", Lavender)
                     Instruction("☆", "Avanzá", Color(0xFFFFCD75))
                 }
-                Text("Práctica libre · Una tónica nueva en cada partida", color = Muted, fontSize = 11.sp)
+                Text("Desbloqueado: ${Scale.entries[ui.progress.level].label} · Racha ${ui.progress.streak}/2", color = Muted, fontSize = 11.sp)
+                FilterChip(selected = ui.automatic, onClick = onAutomatic, label = { Text("Automático") }, modifier = Modifier.testTag("simon-automatic"))
+                Text(if (ui.automatic) "Próxima: ${Scale.entries[ui.progress.level].label}" else "Práctica manual · No desbloquea", color = Muted, fontSize = 11.sp)
             }
             Column(Modifier.weight(1.15f).fillMaxHeight(), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Text("Seleccioná la escala", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
                 Scale.entries.forEach { scale ->
-                    val selected = ui.selectedScale == scale
+                    val selected = !ui.automatic && ui.selectedScale == scale
                     Surface(onClick = { onScale(scale) }, enabled = !ui.busy,
                         modifier = Modifier.fillMaxWidth().weight(1f).testTag("scale-${scale.name}"),
                         shape = RoundedCornerShape(12.dp), color = if (selected) Pink.copy(alpha = 0.12f) else Panel,
@@ -246,6 +250,8 @@ private fun Game(ui: SimonUiState, onAnswer: (Int) -> Unit, onHome: () -> Unit, 
                     Text(if (state.phase == Phase.FINISHED) "Partida terminada" else "Partida interrumpida",
                         fontSize = 22.sp, fontWeight = FontWeight.Bold)
                     state.result?.let { ResultCard(it) }
+                    Text("Desbloqueado: ${Scale.entries[ui.progress.level].label} · Racha ${ui.progress.streak}/2", fontSize = 12.sp)
+                    state.result?.mastery?.let { MasteryButton(it) }
                 }
                 Button(onClick = onStart, enabled = !ui.busy, modifier = Modifier.weight(1f).height(52.dp),
                     shape = RoundedCornerShape(16.dp)) { Text("Otra partida") }
@@ -293,6 +299,7 @@ private fun HistoryCard(result: SimonResult) {
                 Text(result.scale.label, fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
                 Text(if (result.completed) "Completada" else "Interrumpida", color = Pink, fontSize = 12.sp)
             }
+            Text(if (result.origin == "automatic") "Automática" else "Práctica manual", color = Muted, fontSize = 12.sp)
             Text("${result.completedLength} notas completadas · ${noteName(result.tonicMidi)}", color = Muted, fontSize = 12.sp)
             Text(SimpleDateFormat("dd/MM HH:mm", Locale.forLanguageTag("es-AR")).format(Date(result.finishedAtMillis)), color = Muted, fontSize = 11.sp)
         }

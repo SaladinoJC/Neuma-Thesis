@@ -7,6 +7,10 @@
 
 **Estado:** DESARROLLADA
 
+## Implementación del plan — 2026-10-21
+
+El usuario solicitó completar desbloqueos, voz y demostración. v0.5 incorpora progresión Mamdani persistida en ambos juegos: automático inicia en el nivel más alto desbloqueado; dos partidas completas consecutivas de dominio alto habilitan el siguiente para la próxima partida. Práctica manual y simulaciones no alteran el progreso real. Las funciones, umbrales y referencias son parámetros experimentales de la especificación, sin calibración pedagógica. Esta actualización prevalece sobre los estados históricos «pendiente de implementación» que siguen abajo. Conducta y límites en [Demostracion-prototipo-v0.5.md](../Demostracion-prototipo-v0.5.md); verificación en [Verificacion-prototipo-v0.5.md](../Verificacion-prototipo-v0.5.md).
+
 ## Actualización solicitada — 2026-10-09
 
 En el siguiente incremento autorizado por el usuario, v0.4 implementa el DDA intrapartida de escuchas con las propuestas numéricas de la especificación y un panel de inspección/simulación. Automático inicia en A; práctica manual A/B/C conserva tres escuchas, como elección provisional del agente para preservar el recorrido anterior. Escenarios, configuración y límites en [DDA-instrumentos-v0.4.md](../DDA-instrumentos-v0.4.md). Los desbloqueos todavía corresponden a #5 y no están implementados.

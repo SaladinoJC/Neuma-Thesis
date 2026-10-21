@@ -18,6 +18,13 @@ import android.graphics.Bitmap
 class InstrumentAndroidTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
 
+    @org.junit.Before
+    fun awaitAppWindow() {
+        compose.waitUntil(15_000) { compose.activity.hasWindowFocus() }
+        compose.waitForIdle()
+    }
+
+
     @Test
     fun instrumentosPermiteJugarDiezPreguntasYConservaElHistorialAlReabrir() {
         screenshot("menu")

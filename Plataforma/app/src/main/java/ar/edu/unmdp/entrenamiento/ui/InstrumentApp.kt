@@ -79,11 +79,12 @@ private fun ColumnScope.InstrumentSetup(ui: InstrumentUiState, onLevel: (Instrum
             FilterChip(selected = ui.selectedMode == InstrumentMode.MANUAL, onClick = { onMode(InstrumentMode.MANUAL) },
                 label = { Text("Práctica manual") }, modifier = Modifier.testTag("mode-manual"))
         }
-        Text(if (ui.selectedMode == InstrumentMode.AUTOMATIC) "Nivel A · La ayuda se adapta entre preguntas, con una a tres escuchas."
+        Text(if (ui.selectedMode == InstrumentMode.AUTOMATIC) "${InstrumentLevel.entries[ui.progress.level].label} · La ayuda se adapta entre preguntas, con una a tres escuchas."
             else "Elegí un nivel. La práctica manual conserva tres escuchas.", color = Muted)
-        Text("Elegí el nivel", fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(top = 6.dp))
+        Text("Desbloqueado: ${InstrumentLevel.entries[ui.progress.level].label} · Racha ${ui.progress.streak}/2", color = Muted)
+        Text("Práctica manual: elegí el nivel", fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(top = 6.dp))
         InstrumentLevel.entries.forEach { level ->
-            val selected = ui.selectedLevel == level
+            val selected = if (ui.selectedMode == InstrumentMode.AUTOMATIC) ui.progress.level == level.ordinal else ui.selectedLevel == level
             Surface(onClick = { onLevel(level) }, enabled = !ui.busy,
                 modifier = Modifier.fillMaxWidth().testTag("level-${level.name}"),
                 shape = RoundedCornerShape(16.dp), color = if (selected) InstrumentBlue.copy(alpha = .12f) else Panel,
@@ -176,6 +177,8 @@ private fun ColumnScope.InstrumentSummary(ui: InstrumentUiState, onStart: () -> 
             Text("${state.correctCount} / ${state.answers.size}", color = InstrumentBlue, fontSize = 54.sp, fontWeight = FontWeight.Bold)
             Text("${state.answers.size} preguntas respondidas", color = Muted)
             Text(state.level.label, color = InstrumentBlue)
+            Text("Desbloqueado: ${InstrumentLevel.entries[ui.progress.level].label} · Racha ${ui.progress.streak}/2", color = Muted)
+            state.result?.mastery?.let { MasteryButton(it) }
             state.answers.forEach { answer ->
                 Surface(color = Panel, shape = RoundedCornerShape(12.dp), modifier = Modifier.fillMaxWidth()) {
                     Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {

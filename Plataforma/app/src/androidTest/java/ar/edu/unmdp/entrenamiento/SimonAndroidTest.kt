@@ -25,6 +25,13 @@ import org.junit.Test
 class SimonAndroidTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
 
+    @org.junit.Before
+    fun awaitAppWindow() {
+        compose.waitUntil(15_000) { compose.activity.hasWindowFocus() }
+        compose.waitForIdle()
+    }
+
+
     @Test
     fun recrearLaActividadNoInterrumpeLaPartidaYSimonEntraHorizontal() {
         compose.onNodeWithTag("game-simon").performClick()
@@ -69,6 +76,7 @@ class SimonAndroidTest {
         compose.onNodeWithText("¿Cómo se juega?").assertIsDisplayed()
         compose.onNodeWithText("Jugar Simón").assertIsDisplayed()
         compose.onNodeWithText("Volver al menú").performClick()
+        compose.waitUntil(10_000) { compose.activity.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT }
         compose.onNodeWithText("Entrená tu oído").assertIsDisplayed()
     }
 

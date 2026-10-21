@@ -8,6 +8,10 @@
 
 **Estado:** DESARROLLADA
 
+## Implementación del plan — 2026-10-21
+
+El usuario solicitó completar desbloqueos, voz y demostración. v0.5 incorpora progresión Mamdani persistida en ambos juegos: automático inicia en el nivel más alto desbloqueado; dos partidas completas consecutivas de dominio alto habilitan el siguiente para la próxima partida. Práctica manual y simulaciones no alteran el progreso real. Las funciones, umbrales y referencias son parámetros experimentales de la especificación, sin calibración pedagógica. Esta actualización prevalece sobre los estados históricos «pendiente de implementación» que siguen abajo. Conducta y límites en [Demostracion-prototipo-v0.5.md](../Demostracion-prototipo-v0.5.md); verificación en [Verificacion-prototipo-v0.5.md](../Verificacion-prototipo-v0.5.md).
+
 ## Actualización confirmada — 2026-10-02
 
 Después de probar el primer APK, el usuario pidió un menú principal, una preparación separada y un piano táctil en lugar de la grilla de botones, siguiendo aproximadamente `docs/ui simon.png`. También eligió muestras de piano `mf` de University of Iowa convertidas a OGG (`docs/Audio-piano-Simon.md`). Las menciones posteriores a botones quedan como antecedente: la entrada sigue siendo táctil, ahora mediante teclas de piano. No se añadieron escalas, vidas ni otros juegos a partir del mockup.

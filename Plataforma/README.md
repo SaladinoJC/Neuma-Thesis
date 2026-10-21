@@ -1,12 +1,12 @@
 # Aplicación Android
 
-Versión 0.4: menú principal con Simón y «¿Qué instrumento es?». Simón conserva el teclado de piano táctil y la selección manual de escala. Se abre en horizontal; preparación, teclado y resumen caben sin scroll. Las pulsaciones rápidas no esperan el sonido anterior y las rotaciones/recreaciones de pantalla conservan la sesión. El menú vuelve a vertical y muestra la versión instalada. Instrumentos permite seleccionar los niveles A/B/C y jugar diez preguntas, con cuatro opciones y tres escuchas totales por pregunta. Cada pregunta genera una melodía nueva; las reescuchas repiten la misma. La primera escucha comienza automáticamente; cada frase reproducida consume una escucha y no se pueden superponer. El modo automático inicia en A y ajusta entre una y tres escuchas para la pregunta siguiente; la práctica manual conserva tres. El botón DDA permite inspeccionar decisiones y ejecutar simulaciones aisladas. Voz y desbloqueos siguen pendientes. Las reglas se prueban mediante la sesión pública, independiente de Compose.
+Versión 0.5: Simón y «¿Qué instrumento es?» con progresión automática persistida, inspección Mamdani, práctica manual y muestras reales offline. El automático inicia en el nivel más alto desbloqueado; dos partidas completas consecutivas de dominio alto habilitan el siguiente. Instrumentos adapta entre una y tres escuchas; manual conserva tres. «Afiná tu voz» incorpora captura y estimación YIN con objetivo seleccionable. «Datos y demostración» ofrece escenarios aislados, exportación JSON y reinicio confirmado. Las reglas siguen siendo experimentales. [Conducta y recorrido completo](../docs/Demostracion-prototipo-v0.5.md).
 
 El piano usa 23 muestras `mf` de University of Iowa, Do4–Si♭5, incluidas como OGG mono a 44,1 kHz, recortadas a 600 ms con fade final. Los OGG ocupan aproximadamente 186 KiB en total. `MediaCodec` las decodifica fuera del hilo de interfaz; el PCM de cada nota presentada se decodifica una vez, se conserva en memoria y se reproduce con `AudioTrack`. Las teclas usan `SoundPool` precargado, con hasta 16 colas simultáneas y volumen de reproducción 0,8, sin bloquear la entrada por los 600 ms de duración. La entrada de notas se mantiene ordenada e independiente del audio; al exceder 16 colas, se reemplazan las más viejas, no se descartan respuestas por ese límite. Procedencia, condiciones y script de conversión en [Audio-piano-Simon.md](../docs/Audio-piano-Simon.md). No se necesita conexión para jugar.
 
 Los resultados se guardan en almacenamiento privado como JSON versionado. El historial muestra las cinco partidas más recientes de cada juego, conservando todas en archivos separados. El de Simón mantiene su esquema anterior; el de instrumentos incluye cada respuesta, opciones, objetivo, acierto, escuchas, nivel, fechas y versión del banco. Las salidas al menú o a segundo plano se guardan como interrupciones. La nueva versión mantiene el identificador de la app y su firma debug para actualizar el APK anterior sin desinstalarlo y conservar su historial.
 
-Instrumentos utiliza 45 muestras reales `mf` de Iowa: Do4, Re4, Mi4, Sol4 y La4 para cada uno de los nueve instrumentos. Los OGG mono/44,1 kHz de 900 ms ocupan 497.231 bytes (~486 KiB), además del banco histórico v1 conservado. El generador usa seis notas, saltos acotados, al menos tres alturas distintas y cierre en Do4: cinco notas de 400 ms, final de 800 ms y separaciones de 50 ms (3,05 s en total). La gramática es común a los instrumentos; sus parámetros son provisionales. La app compone una única pista PCM con fade al terminar cada nota, sin transposición, y registra la frase por respuesta. El contador confirma una escucha cuando avanza AudioTrack; si falla antes de comenzar, no consume ayuda. Un fallo posterior conserva la escucha consumida. [Procedencia, conversión y mediciones](../docs/Melodias-instrumentos-v0.3.1.md). El modo automático adapta las escuchas; la selección manual A/B/C conserva ayuda fija. Los desbloqueos siguen pendientes.
+Instrumentos utiliza 45 muestras reales `mf` de Iowa: Do4, Re4, Mi4, Sol4 y La4 para cada uno de los nueve instrumentos. Los OGG mono/44,1 kHz de 900 ms ocupan 497.231 bytes (~486 KiB), además del banco histórico v1 conservado. El generador usa seis notas, saltos acotados, al menos tres alturas distintas y cierre en Do4: cinco notas de 400 ms, final de 800 ms y separaciones de 50 ms (3,05 s en total). La gramática es común a los instrumentos; sus parámetros son provisionales. La app compone una única pista PCM con fade al terminar cada nota, sin transposición, y registra la frase por respuesta. El contador confirma una escucha cuando avanza AudioTrack; si falla antes de comenzar, no consume ayuda. Un fallo posterior conserva la escucha consumida. [Procedencia, conversión y mediciones](../docs/Melodias-instrumentos-v0.3.1.md). El modo automático adapta las escuchas; la selección manual A/B/C conserva ayuda fija. Los desbloqueos están disponibles desde v0.5.
 
 ## Preparación
 
@@ -32,7 +32,7 @@ Seleccionar la configuración `app` y un dispositivo en Android Studio y pulsar 
 & "$env:ANDROID_HOME\platform-tools\adb.exe" shell am start -n ar.edu.unmdp.entrenamiento/.MainActivity
 ```
 
-Si hay varios dispositivos, agregar `-s <serial>` a los comandos ADB. El S22 Ultra requiere depuración USB habilitada y autorizar el equipo. No se necesitan permisos de micrófono para Simón.
+Si hay varios dispositivos, agregar `-s <serial>` a los comandos ADB. El S22 Ultra requiere depuración USB habilitada y autorizar el equipo. Simón e instrumentos no requieren micrófono. La prueba de voz solicita permiso al iniciarse.
 
 ## Verificación
 
@@ -74,3 +74,12 @@ Para comprobar el banco nuevo: `python tools/verify_instrument_melodies.py`. Par
 ```
 
 En preparación, elegir Automático e iniciar: nivel A y tres escuchas iniciales. Contestar y revisar la ayuda anunciada para la próxima pregunta; en DDA → Partida real, recorrer las preguntas y contrastar entradas, pertenencias, reglas, centroide y motivo. En DDA → Simulación, elegir nivel y «Aciertos sin reescuchas»: cambios tras 3 y 6; «Aciertos y luego errores»: reducción tras 3 y recuperación tras 6; los otros dos escenarios mantienen ayuda. Cerrar el panel y comprobar que la partida real continúa igual. Seleccionar una tarjeta de nivel activa práctica manual; iniciar allí conserva tres escuchas. La nueva versión se instala encima de v0.3.1 y conserva los historiales. Registro: [Verificación DDA v0.4](../docs/Verificacion-DDA-v0.4.md).
+
+
+## Verificar v0.5
+
+```powershell
+.\gradlew.bat :app:testDebugUnitTest :app:connectedDebugAndroidTest :app:lintDebug :app:assembleDebug
+```
+
+APK: `app/build/outputs/apk/debug/entrenamiento-auditivo-v0.5.apk`. Mismo paquete y firma debug: instalar encima para conservar datos. Abrir «Datos y demostración» para exportar resultados antes de un reinicio voluntario. Ver [demostración v0.5](../docs/Demostracion-prototipo-v0.5.md) y [verificación](../docs/Verificacion-prototipo-v0.5.md). La verificación física en S22 Ultra sigue pendiente.
