@@ -8,6 +8,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import ar.edu.unmdp.entrenamiento.storage.ProgressScenario
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
@@ -15,6 +17,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun DemonstrationApp(ui: DemonstrationUi, model: DemonstrationViewModel, onHome: () -> Unit, onPitchLab: () -> Unit = {}) {
+    var boundaries by rememberSaveable { mutableStateOf(false) }
     val snackbar = remember { SnackbarHostState() }
     LaunchedEffect(ui.noticeId) {
         if (ui.noticePending && ui.message != null) {
@@ -43,10 +46,30 @@ fun DemonstrationApp(ui: DemonstrationUi, model: DemonstrationViewModel, onHome:
                 Text("DATOS SIMULADOS · Se ejecutan en memoria, sin audio ni cambios en tu perfil.")
                 OutlinedButton(onClick = { model.simulate(false) }, enabled = !ui.busy, modifier = Modifier.testTag("progress-two-high")) { Text("Dos partidas altas en ambos juegos") }
                 OutlinedButton(onClick = { model.simulate(true) }, enabled = !ui.busy, modifier = Modifier.testTag("progress-recovery")) { Text("Alta, baja y recuperación de racha") }
+                ProgressScenario.entries.drop(2).forEach { scenario ->
+                    OutlinedButton(onClick = { model.simulateScenario(scenario) }, enabled = !ui.busy,
+                        modifier = Modifier.testTag("progress-scenario-${scenario.name}")) { Text(scenario.label) }
+                }
+                OutlinedButton(onClick = model::runDdaBank, enabled = !ui.busy, modifier = Modifier.testTag("dda-bench-run")) { Text("Ejecutar banco DDA completo") }
+                ui.benchmark?.let { report ->
+                    Text("Último banco: ${report.simulations.size} escenarios · ${report.boundaries.size} fronteras · ${report.checks.count { it.passed }}/${report.checks.size} comprobaciones", modifier = Modifier.testTag("dda-bench-summary"))
+                    Text("DATOS SIMULADOS · Las fronteras caracterizan reglas sin calibración pedagógica.")
+                    report.checks.forEach { Text("${if (it.passed) "Cumple" else "FALLA"}: ${it.label} · ${it.observed}") }
+                    TextButton(onClick = { boundaries = !boundaries }) { Text(if (boundaries) "Ocultar fronteras" else "Inspeccionar fronteras de dominio") }
+                    if (boundaries) report.boundaries.forEach { case ->
+                        Text("${case.game} · Nivel ${case.level+1} · ${case.description}")
+                        MasteryButton(case.mastery)
+                    }
+                }
                 ui.simulation?.let { simulation ->
                     Text("SIMULADO · ${simulation.scenario}")
                     Text("Simón: nivel ${simulation.simonProgress.level+1}, racha ${simulation.simonProgress.streak}/2", modifier = Modifier.testTag("simulated-simon-progress"))
                     Text("Instrumentos: nivel ${simulation.instrumentProgress.level+1}, racha ${simulation.instrumentProgress.streak}/2")
+                    simulation.steps.forEach { step ->
+                        Text("${step.game} · Nivel ${step.level+1} · ${step.effectiveMode} · ${if (step.completed) "Completa" else "Interrumpida"}")
+                        Text("Racha ${step.before.streak} → ${step.after.streak}; nivel ${step.before.level+1} → ${step.after.level+1}")
+                        Text(step.reason + if (step.duplicateAttempted) " · Mismo identificador guardado dos veces" else "")
+                    }
                     simulation.simon.forEachIndexed { i, result ->
                         Text("Simón ${i+1}: ${result.completedLength} notas · ${result.origin}")
                         result.mastery?.let { MasteryButton(it) }
@@ -57,7 +80,7 @@ fun DemonstrationApp(ui: DemonstrationUi, model: DemonstrationViewModel, onHome:
                     }
                 }
                 Text("Exportar resultados", style = MaterialTheme.typography.titleLarge)
-                Text("Incluye partidas, progreso, decisiones, configuración y mediciones de voz; el escenario simulado visible va separado. Elegí dónde guardar el JSON.")
+                Text("Incluye partidas, progreso, decisiones, configuración y mediciones de voz; el escenario visible y el banco DDA van separados. Elegí dónde guardar el JSON.")
                 Button(onClick = model::prepareExport, enabled = !ui.busy, modifier = Modifier.testTag("data-export")) { Text("Exportar JSON") }
                 Text("Reiniciar perfil local", style = MaterialTheme.typography.titleLarge)
                 Text("Borra historiales, mediciones, rachas y desbloqueos de esta app. Los archivos ya exportados se conservan.")

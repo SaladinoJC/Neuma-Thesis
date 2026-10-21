@@ -33,3 +33,10 @@ Autorización: el usuario pidió el 2026-10-21 «Dale, ponete con lo que puedas�
 - APK `Plataforma/app/build/outputs/apk/debug/entrenamiento-auditivo-v0.8.apk`: 12174168 bytes, SHA-256 `79fbbad1774f9c08ca29bbc65d3f8c9330d7b2676bf0766f8bd5c4e2ed06fd88`.
 
 Límite del laboratorio v0.7: los casos exactos de 1.000 Hz se rechazan con la configuración actual por el control del límite superior de la frecuencia estimada. El informe lo expone; no se modificó el detector para forzar aprobación. Los objetivos vocales actuales están entre Do3 y La4 y la calibración física sigue pendiente.
+
+## v0.9 — Banco DDA
+
+- Nueve escenarios, 56 pasos simulados con antes/después, 93 fronteras de dominio y 21 comprobaciones aprobadas. Incluye ayuda, errores, alternancia, interrupciones, manual entre automáticas, último nivel, duplicación y ausencia de salida de ayuda. Simón no tiene reescuchas: en el escenario de ayuda se demuestra su práctica manual, identificado en los pasos.
+- Datos aislados y origen `simulated`, configuración y pertenencias inspeccionables; exportación opcional `ddaScenarios` separada del perfil. Se mantienen las reglas de producción. Las fronteras describen la calificación actual, no validación pedagógica.
+- 55 JVM y una Android del banco/recreación aprobadas en Pixel_6/API 34; APK generado en 53 s. [Informe reproducible](Banco-DDA-v0.9.md).
+- APK `Plataforma/app/build/outputs/apk/debug/entrenamiento-auditivo-v0.9.apk`: 12161213 bytes, SHA-256 `a12f18da4a3c0d7734d5ba0376e95c0437d40bc54c1e780c0abd8b22648b4207`.

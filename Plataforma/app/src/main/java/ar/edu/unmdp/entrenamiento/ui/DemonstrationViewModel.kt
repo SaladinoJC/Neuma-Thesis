@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.*
 import java.io.OutputStream
 
 data class DemonstrationUi(val busy: Boolean = false, val pickerReady: Boolean = false,
-    val message: String? = null, val simulation: ProgressSimulation? = null,
+    val message: String? = null, val simulation: ProgressSimulation? = null, val benchmark: DdaBenchReport? = null,
     val noticeId: Long = 0, val noticePending: Boolean = false, val awaitingDestination: Boolean = false)
 class DemonstrationViewModel(private val data: Demonstration, private val drain: suspend () -> Unit,
     private val refresh: suspend () -> Unit,
@@ -34,13 +34,19 @@ class DemonstrationViewModel(private val data: Demonstration, private val drain:
             finally { if (!ui.value.awaitingDestination && !writing) mutableUi.value = ui.value.copy(busy = false) }
         }
     }
-    fun simulate(recovery: Boolean) = act {
-        val simulation = withContext(Dispatchers.Default) { simulateProgress(recovery) }
+    fun simulate(recovery: Boolean) = simulateScenario(if (recovery) ProgressScenario.RECOVERY else ProgressScenario.TWO_HIGH)
+    fun simulateScenario(scenario: ProgressScenario) = act {
+        val simulation = withContext(Dispatchers.Default) { simulateProgress(scenario) }
         mutableUi.value = ui.value.copy(simulation = simulation)
+    }
+    fun runDdaBank() = act {
+        val benchmark = withContext(Dispatchers.Default) { runDdaBench() }
+        mutableUi.value = ui.value.copy(benchmark = benchmark)
+        notify("Banco DDA completado: ${benchmark.checks.count { !it.passed }} comprobaciones fallidas.")
     }
     fun prepareExport() = act {
         drain()
-        snapshot = data.export(BuildConfig.VERSION_NAME, ui.value.simulation, helpSimulation())
+        snapshot = data.export(BuildConfig.VERSION_NAME, ui.value.simulation, helpSimulation(), ui.value.benchmark)
         mutableUi.value = ui.value.copy(pickerReady = true, awaitingDestination = true)
     }
     fun pickerLaunched() { mutableUi.value = ui.value.copy(pickerReady = false) }
@@ -69,7 +75,7 @@ class DemonstrationViewModel(private val data: Demonstration, private val drain:
             drain()
             data.reset()
             refresh()
-            mutableUi.value = ui.value.copy(simulation = null)
+            mutableUi.value = ui.value.copy(simulation = null, benchmark = null)
             notify("Datos reiniciados. Ambos juegos comienzan en el primer nivel.")
         }
     }
