@@ -8,35 +8,44 @@ import kotlinx.coroutines.flow.*
 import java.util.UUID
 
 data class VoiceUiState(val running: Boolean = false, val targetMidi: Int = 60,
-    val latest: VoiceMeasurement? = null, val error: String? = null, val saved: Int = 0)
-class VoiceViewModel(private val results: JsonVoiceResults) : ViewModel() {
+    val latest: VoiceMeasurement? = null, val error: String? = null, val saved: Int = 0,
+    val referencePlaying: Boolean = false, val recent: List<VoiceMeasurement> = emptyList(), val lastCapture: VoiceResult? = null)
+class VoiceViewModel(private val results: VoiceResults, private val recorder: VoiceCapture = AndroidVoiceCapture(),
+    private val reference: ReferencePlayer = AndroidReferencePlayer(),
+    private val monotonicNanos: () -> Long = System::nanoTime,
+    private val wallClock: () -> Long = System::currentTimeMillis,
+    private val deviceInfo: () -> Pair<String, String> = { "${Build.MANUFACTURER} ${Build.MODEL}" to "${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})" }) : ViewModel() {
     private val mutableUi = MutableStateFlow(VoiceUiState())
     val ui = mutableUi.asStateFlow()
     private var capture: Job? = null
-    fun target(midi: Int) { if (!ui.value.running) mutableUi.value = ui.value.copy(targetMidi = midi, latest = null) }
+    private var referenceJob: Job? = null
+    fun target(midi: Int) { if (!ui.value.running && !ui.value.referencePlaying) mutableUi.value = ui.value.copy(targetMidi = midi, latest = null) }
     fun permissionDenied() { mutableUi.value = ui.value.copy(error = "Micrófono no autorizado. Podés habilitarlo en Ajustes de Android.") }
     fun start() {
-        if (capture?.isActive == true || ui.value.running) return
+        if (capture?.isActive == true || ui.value.running || ui.value.referencePlaying) return
         val target = ui.value.targetMidi
-        mutableUi.value = ui.value.copy(running = true, latest = null, error = null)
+        mutableUi.value = ui.value.copy(running = true, latest = null, recent = emptyList(), error = null)
         capture = viewModelScope.launch {
             val measurements = mutableListOf<VoiceMeasurement>()
-            val started = System.currentTimeMillis()
-            val monotonic = System.nanoTime()
+            val started = wallClock()
+            val monotonic = monotonicNanos()
             var last = -200L
             var sampleRate = 0
             var failure: String? = null
             val configuration = YinConfiguration()
             try {
                 withTimeoutOrNull(120_000) {
-                    AndroidVoiceCapture().capture(configuration) { estimate, micros, rate ->
-                        val elapsed = (System.nanoTime()-monotonic)/1_000_000
+                    recorder.capture(configuration) { estimate, micros, rate ->
+                        val elapsed = (monotonicNanos()-monotonic)/1_000_000
                         sampleRate = rate
                         if (elapsed-last >= 200) {
                             last = elapsed
                             val measurement = VoiceMeasurement(elapsed, target, estimate, micros, estimate.cents(target))
                             measurements.add(measurement)
-                            withContext(Dispatchers.Main.immediate) { mutableUi.value = ui.value.copy(latest = measurement) }
+                            withContext(Dispatchers.Main.immediate) {
+                                mutableUi.value = ui.value.copy(latest = measurement,
+                                    recent = (ui.value.recent + measurement).filter { it.elapsedMillis >= elapsed-10_000 })
+                            }
                         }
                     }
                 }
@@ -45,9 +54,11 @@ class VoiceViewModel(private val results: JsonVoiceResults) : ViewModel() {
             finally {
                 withContext(NonCancellable) {
                     try {
-                        results.save(VoiceResult(UUID.randomUUID().toString(), started, System.currentTimeMillis(),
-                            "${Build.MANUFACTURER} ${Build.MODEL}", "${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})",
-                            configuration, sampleRate, measurements.toList(), error = failure))
+                        val device = deviceInfo()
+                        val result = VoiceResult(UUID.randomUUID().toString(), started, wallClock(),
+                            device.first, device.second, configuration, sampleRate, measurements.toList(), error = failure)
+                        results.save(result)
+                        mutableUi.value = ui.value.copy(lastCapture = result)
                         mutableUi.value = ui.value.copy(saved = ui.value.saved+1)
                     } catch (error: Exception) { failure = "No se pudo guardar: ${error.message}" }
                     mutableUi.value = ui.value.copy(running = false, latest = null, error = failure)
@@ -55,7 +66,24 @@ class VoiceViewModel(private val results: JsonVoiceResults) : ViewModel() {
             }
         }
     }
-    fun stop() { capture?.cancel() }
-    suspend fun stopAndJoin() { capture?.cancelAndJoin() }
+    fun playReference() {
+        if (ui.value.referencePlaying) return
+        val target = ui.value.targetMidi
+        mutableUi.value = ui.value.copy(referencePlaying = true, error = null)
+        referenceJob = viewModelScope.launch {
+            try {
+                capture?.cancelAndJoin()
+                reference.play(target)
+            } catch (cancelled: CancellationException) { throw cancelled }
+            catch (error: Exception) { mutableUi.value = ui.value.copy(error = "No se pudo reproducir el objetivo: ${error.message}") }
+            finally { mutableUi.value = ui.value.copy(referencePlaying = false) }
+        }
+    }
+    fun stop() { referenceJob?.cancel(); capture?.cancel() }
+    suspend fun stopAndJoin() {
+        referenceJob?.cancel(); capture?.cancel()
+        referenceJob?.join(); capture?.join()
+    }
+    override fun onCleared() { stop(); reference.close(); super.onCleared() }
     fun resetDisplay() { mutableUi.value = VoiceUiState() }
 }

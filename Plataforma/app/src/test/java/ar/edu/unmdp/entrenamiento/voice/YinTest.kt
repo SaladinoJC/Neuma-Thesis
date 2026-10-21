@@ -28,4 +28,14 @@ class YinTest {
         assertEquals(0.0, requireNotNull(a.cents(69)), 1.0)
         assertEquals(1200.0, requireNotNull(a.cents(57)), 1.0)
     }
+    @Test fun `referencia sintetizada conserva frecuencia y dura seiscientos milisegundos`() {
+        for (midi in listOf(45, 57, 69)) {
+            val pcm = referenceTone(midi)
+            assertEquals(26460, pcm.size)
+            assertEquals(0.toShort(), pcm.first()); assertEquals(0.toShort(), pcm.last())
+            val estimate = YinEstimator().estimate(FloatArray(4096) { pcm[8000+it]/32768f })
+            assertTrue(estimate.valid)
+            assertTrue(abs(requireNotNull(estimate.cents(midi))) < 10)
+        }
+    }
 }

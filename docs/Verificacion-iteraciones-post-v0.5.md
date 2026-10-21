@@ -24,3 +24,12 @@ Autorización: el usuario pidió el 2026-10-21 «Dale, ponete con lo que puedas�
 - 51 JVM y una Android nueva aprobadas en Pixel_6/API 34; banco completo, persistencia/exportación separada y recreación verificados; APK generado en 45 s. Cancelación sin informe parcial y repetibilidad numérica comprobadas.
 - [Informe medido en JVM](Laboratorio-YIN-v0.7-JVM.md): los criterios obligatorios pasan. A SNR 10 dB se observaron errores máximos cercanos a 96 cents en un caso; a 0 dB las ventanas de prueba se rechazaron. Es caracterización de esas señales, no una medición de voz humana. Se conservó `yin-v1` sin recalibrar para ocultar límites.
 - APK `Plataforma/app/build/outputs/apk/debug/entrenamiento-auditivo-v0.7.apk`: 12347825 bytes, SHA-256 `90d13fe89a9674a910433d8a79397f3735cd063a5a65be9a66b39a5ac8b29cc7`.
+
+## v0.8 — Referencia sonora y gráfica de voz
+
+- Tono objetivo sintetizado (44,1 kHz/600 ms, fades 20 ms, amplitud 0,2), sin nuevos assets. Detiene y espera captura/guardado antes de emitir; iniciar micrófono queda deshabilitado durante reproducción y no se reinicia automáticamente. Pausa/salida cancelan ambos recursos.
+- Indicador de cents y diez segundos de traza derivada, sin suavizado; silencio corta líneas y marcador actual, números sin recorte y gráfica acotada a ±100. Resumen de última captura conservado; detalles técnicos desplegables. PCM de referencia solo en memoria.
+- 54 JVM aprobadas: tono/frecuencia/duración, exclusión de captura/referencia, buffer temporal y silencio. Tres Android anteriores de voz/datos pasaron; dos nuevos de referencia/UI detectaron la validación prematura del estado de AudioTrack estático, corregida con carga antes de validación. Esos dos pasaron al reejecutar (38 s), con avance ≥26.460 frames para Do3/La4. No acredita audibilidad en teléfono.
+- APK `Plataforma/app/build/outputs/apk/debug/entrenamiento-auditivo-v0.8.apk`: 12174168 bytes, SHA-256 `79fbbad1774f9c08ca29bbc65d3f8c9330d7b2676bf0766f8bd5c4e2ed06fd88`.
+
+Límite del laboratorio v0.7: los casos exactos de 1.000 Hz se rechazan con la configuración actual por el control del límite superior de la frecuencia estimada. El informe lo expone; no se modificó el detector para forzar aprobación. Los objetivos vocales actuales están entre Do3 y La4 y la calibración física sigue pendiente.

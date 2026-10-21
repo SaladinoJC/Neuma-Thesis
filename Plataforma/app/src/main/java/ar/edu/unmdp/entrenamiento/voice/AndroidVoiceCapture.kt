@@ -6,9 +6,12 @@ import android.media.AudioRecord
 import android.media.MediaRecorder
 import kotlinx.coroutines.*
 
-class AndroidVoiceCapture {
+interface VoiceCapture {
+    suspend fun capture(configuration: YinConfiguration, onMeasurement: suspend (PitchEstimate, Long, Int) -> Unit)
+}
+class AndroidVoiceCapture : VoiceCapture {
     @SuppressLint("MissingPermission")
-    suspend fun capture(configuration: YinConfiguration, onMeasurement: suspend (PitchEstimate, Long, Int) -> Unit) = withContext(Dispatchers.IO) {
+    override suspend fun capture(configuration: YinConfiguration, onMeasurement: suspend (PitchEstimate, Long, Int) -> Unit) = withContext(Dispatchers.IO) {
         val c = configuration
         val minimum = AudioRecord.getMinBufferSize(c.sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT)
         check(minimum > 0) { "El dispositivo no admite la configuración de captura." }

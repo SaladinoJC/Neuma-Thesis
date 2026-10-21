@@ -37,6 +37,8 @@
 
 ## Avance comprobado
 
+- **v0.8 completada:** referencia sonora con exclusión captura/reproducción, gráfica de diez segundos con huecos y resumen al detener. 54 JVM y cinco casos Android de voz/datos/referencia aprobados; los dos de referencia reejecutados tras corregir inicialización de AudioTrack estático. APK y evidencia en `docs/Verificacion-iteraciones-post-v0.5.md`. Próximo: escenarios DDA v0.9.
+
 - **v0.7 completada:** laboratorio YIN de 83 casos/332 ventanas, cancelable, sin micrófono, con JSON separado y Markdown. 51 JVM y una Android del banco/exportación/recreación aprobadas. Se observaron límites con ruido sin cambiar `yin-v1`. Informe `docs/Laboratorio-YIN-v0.7-JVM.md`; APK/evidencia en `docs/Verificacion-iteraciones-post-v0.5.md`. Próximo: pantalla de voz v0.8.
 
 - **v0.6 completada:** historial por juego/nivel/origen, páginas de 20 y detalle con datos de juegos/DDA/voz. 48 JVM y una Android de historial aprobadas (paginación, detalle y recreación); APK generado. Ver `docs/Verificacion-iteraciones-post-v0.5.md`. Próximo: laboratorio YIN v0.7.
@@ -103,7 +105,7 @@ Ejecución final v0.3: 21 pruebas JVM y 11 Android aprobadas, lint sin errores/1
 
 ## Próximo paso sugerido
 
-El usuario indicó el 2026-10-21 que no puede probar ahora y pidió preparar varios incrementos para seguir iterando con poca intervención. Se preparó `docs/Plan-iteraciones-post-v0.5.md`: seis entregas propuestas (operaciones/progreso, historial detallado, laboratorio YIN, pantalla de voz, escenarios DDA y resistencia de datos/empaquetado). El usuario autorizó implementar el plan. Los incrementos 1–3 están terminados y verificados (v0.5.1/v0.6/v0.7); continuar por el incremento 4 (pantalla de voz). v0.5 queda conservada como referencia local verificada.
+El usuario indicó el 2026-10-21 que no puede probar ahora y pidió preparar varios incrementos para seguir iterando con poca intervención. Se preparó `docs/Plan-iteraciones-post-v0.5.md`: seis entregas propuestas (operaciones/progreso, historial detallado, laboratorio YIN, pantalla de voz, escenarios DDA y resistencia de datos/empaquetado). El usuario autorizó implementar el plan. Los incrementos 1–4 están terminados y verificados (hasta v0.8); continuar por el incremento 5 (escenarios DDA). v0.5 queda conservada como referencia local verificada.
 
 La prueba física de v0.5 en Samsung S22 Ultra queda pendiente y no bloquea esas mejoras. Seguir `docs/Demostracion-prototipo-v0.5.md` cuando el usuario pueda: actualizar encima sin desinstalar, revisar historiales, progresión, ayuda, voz/permisos, exportación y reinicio. Registrar Android, condiciones de audio y resultados físicos; calibración de dominio/YIN, audibilidad y latencia acústica siguen pendientes. La dirección técnica todavía no se incorporó al protocolo Word. Los cambios permanecen locales; no se publicaron ni se cerraron issues en GitHub durante esta sesión.
 
