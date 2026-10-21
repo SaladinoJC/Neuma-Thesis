@@ -4,6 +4,8 @@
 
 ## Decisiones y origen
 
+- **Continuación autorizada (usuario, 2026-10-21):** «Dale, ponete con lo que puedas» sobre el plan de seis iteraciones post-v0.5. Avanzar incrementos verificables sin pruebas inmediatas del teléfono; sin publicación externa.
+
 - **Implementación autorizada por el usuario (2026-10-21):** pidió avanzar todo lo posible sin mucha intervención y luego «Implement the plan». Alcance: completar #5, #6 y #7, conservar compatibilidad e historiales, verificar en emulador y dejar identificada la prueba física pendiente. Las elecciones técnicas reversibles del agente y parámetros experimentales están en `docs/Demostracion-prototipo-v0.5.md`.
 
 - **Continuación autorizada por el usuario (2026-10-09):** «Ok segui desarrollando lo siguiente que siga, yo mientras pruebo la app» y «continua» después de la interrupción: implementar #4, DDA intrapartida de escuchas e inspección. Se conservan las melodías de v0.3.1. Elección provisional del agente: automático inicia en A; práctica manual A/B/C conserva tres escuchas y registra propuestas no aplicadas. Los parámetros difusos de la especificación se concretan como valores de prueba sin calibración; desbloqueos y voz siguen en sus tickets.
@@ -34,6 +36,8 @@
 - **Elecciones técnicas provisionales del agente para instrumentos:** catálogo candidato de la especificación (A: piano/violín/flauta/marimba; B: flauta/clarinete/trompeta/trombón; C: flauta/clarinete/oboe/fagot); Do4 real, dinámica `mf`, OGG mono/44,1 kHz/1,5 s, RMS objetivo 0,08 antes del fade de 80 ms. Primera escucha automática; pantalla vertical; feedback antes de continuar y botones fijos en resumen. No son parámetros pedagógicos calibrados ni decisiones del director.
 
 ## Avance comprobado
+
+- **v0.5.1 completada:** operaciones con Snackbar y aviso consumible, última operación retenida, selector interrumpido distinguido de cancelación y sin escritura vacía; progreso/próximo nivel visibles. 46 JVM y tres Android de voz/datos aprobadas en Pixel_6/API 34, APK generado. Referencia v0.5 conservada en commit local `08eb2c6`; sin push. Evidencia y artefactos en `docs/Verificacion-iteraciones-post-v0.5.md`. Próximo incremento: historial completo v0.6.
 
 - **v0.5, sesión 2026-10-21:** implementados #5/#6/#7 en software. Simón e instrumentos automáticos parten del mayor nivel desbloqueado y progresan con dos partidas completas consecutivas de dominio alto. Resultado y configuración de dominio se guardan juntos; el progreso se reconstruye del historial sin avances duplicados ni desbloqueos retroactivos. Manuales/interrupciones/simulaciones no alteran rachas. Escenarios aislados de dos altas y recuperación, e inspección del dominio en resúmenes.
 - **Voz v0.5:** YIN Kotlin, AudioRecord mono/44,1 kHz, objetivo/nota/frecuencia/cents, permiso y errores. Procesamiento fuera de Main y publicación en Main. Se detiene al pausar la actividad (incluidos cambios rápidos de aplicación); solo guarda mediciones derivadas. Ventana 4.096/salto 1.024, umbral 0,15/RMS 0,01, rango 55–1.000 Hz y máximo dos minutos son elecciones provisionales del agente, no parámetros calibrados.
@@ -95,7 +99,7 @@ Ejecución final v0.3: 21 pruebas JVM y 11 Android aprobadas, lint sin errores/1
 
 ## Próximo paso sugerido
 
-El usuario indicó el 2026-10-21 que no puede probar ahora y pidió preparar varios incrementos para seguir iterando con poca intervención. Se preparó `docs/Plan-iteraciones-post-v0.5.md`: seis entregas propuestas (operaciones/progreso, historial detallado, laboratorio YIN, pantalla de voz, escenarios DDA y resistencia de datos/empaquetado). Este documento es planificación; todavía no se implementaron estos incrementos. Al retomar desarrollo, comenzar por el incremento 1 y conservar v0.5 como referencia local verificada.
+El usuario indicó el 2026-10-21 que no puede probar ahora y pidió preparar varios incrementos para seguir iterando con poca intervención. Se preparó `docs/Plan-iteraciones-post-v0.5.md`: seis entregas propuestas (operaciones/progreso, historial detallado, laboratorio YIN, pantalla de voz, escenarios DDA y resistencia de datos/empaquetado). El usuario autorizó implementar el plan. El incremento 1 está terminado y verificado en v0.5.1; continuar por el incremento 2 (historial completo). v0.5 queda conservada como referencia local verificada.
 
 La prueba física de v0.5 en Samsung S22 Ultra queda pendiente y no bloquea esas mejoras. Seguir `docs/Demostracion-prototipo-v0.5.md` cuando el usuario pueda: actualizar encima sin desinstalar, revisar historiales, progresión, ayuda, voz/permisos, exportación y reinicio. Registrar Android, condiciones de audio y resultados físicos; calibración de dominio/YIN, audibilidad y latencia acústica siguen pendientes. La dirección técnica todavía no se incorporó al protocolo Word. Los cambios permanecen locales; no se publicaron ni se cerraron issues en GitHub durante esta sesión.
 

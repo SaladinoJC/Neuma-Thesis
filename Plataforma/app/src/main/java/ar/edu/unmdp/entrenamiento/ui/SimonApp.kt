@@ -187,7 +187,7 @@ private fun Setup(ui: SimonUiState, onScale: (Scale) -> Unit, onStart: () -> Uni
                     Instruction("▥", "Repetí", Lavender)
                     Instruction("☆", "Avanzá", Color(0xFFFFCD75))
                 }
-                Text("Desbloqueado: ${Scale.entries[ui.progress.level].label} · Racha ${ui.progress.streak}/2", color = Muted, fontSize = 11.sp)
+                ProgressSummary(ui.progress, Scale.entries.map { it.label })
                 FilterChip(selected = ui.automatic, onClick = onAutomatic, label = { Text("Automático") }, modifier = Modifier.testTag("simon-automatic"))
                 Text(if (ui.automatic) "Próxima: ${Scale.entries[ui.progress.level].label}" else "Práctica manual · No desbloquea", color = Muted, fontSize = 11.sp)
             }
@@ -250,7 +250,7 @@ private fun Game(ui: SimonUiState, onAnswer: (Int) -> Unit, onHome: () -> Unit, 
                     Text(if (state.phase == Phase.FINISHED) "Partida terminada" else "Partida interrumpida",
                         fontSize = 22.sp, fontWeight = FontWeight.Bold)
                     state.result?.let { ResultCard(it) }
-                    Text("Desbloqueado: ${Scale.entries[ui.progress.level].label} · Racha ${ui.progress.streak}/2", fontSize = 12.sp)
+                    ProgressSummary(ui.progress, Scale.entries.map { it.label })
                     state.result?.mastery?.let { MasteryButton(it) }
                 }
                 Button(onClick = onStart, enabled = !ui.busy, modifier = Modifier.weight(1f).height(52.dp),

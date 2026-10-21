@@ -15,6 +15,13 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun DemonstrationApp(ui: DemonstrationUi, model: DemonstrationViewModel, onHome: () -> Unit) {
+    val snackbar = remember { SnackbarHostState() }
+    LaunchedEffect(ui.noticeId) {
+        if (ui.noticePending && ui.message != null) {
+            model.consumeNotice(ui.noticeId)
+            snackbar.showSnackbar(ui.message, withDismissAction = true)
+        }
+    }
     var confirm by remember { mutableStateOf(false) }
     val resolver = LocalContext.current.applicationContext.contentResolver
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
@@ -25,7 +32,7 @@ fun DemonstrationApp(ui: DemonstrationUi, model: DemonstrationViewModel, onHome:
     }
     MaterialTheme(colorScheme = darkColorScheme(primary = Pink, background = Night, surface = Panel)) {
         BackHandler { if (!ui.busy) onHome() }
-        Scaffold { padding ->
+        Scaffold(snackbarHost = { SnackbarHost(snackbar, Modifier.testTag("operation-snackbar")) }) { padding ->
             Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(20.dp),
                 verticalArrangement = Arrangement.spacedBy(14.dp)) {
                 TextButton(onClick = onHome, enabled = !ui.busy) { Text("Volver al menú") }
@@ -55,7 +62,7 @@ fun DemonstrationApp(ui: DemonstrationUi, model: DemonstrationViewModel, onHome:
                 Text("Borra historiales, mediciones, rachas y desbloqueos de esta app. Los archivos ya exportados se conservan.")
                 OutlinedButton(onClick = { confirm = true }, enabled = !ui.busy, modifier = Modifier.testTag("data-reset")) { Text("Reiniciar datos") }
                 if (ui.busy) CircularProgressIndicator()
-                ui.message?.let { Text(it, modifier = Modifier.testTag("data-message")) }
+                ui.message?.let { Text("Última operación", style = MaterialTheme.typography.labelLarge); Text(it, modifier = Modifier.testTag("data-message")) }
             }
         }
         if (confirm) AlertDialog(onDismissRequest = { confirm = false }, title = { Text("¿Reiniciar todos los datos locales?") },
