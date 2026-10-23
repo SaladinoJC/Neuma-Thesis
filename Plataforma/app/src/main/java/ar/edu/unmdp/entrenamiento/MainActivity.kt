@@ -43,12 +43,14 @@ class MainActivity : ComponentActivity() {
     private lateinit var instruments: InstrumentViewModel
     private lateinit var voice: VoiceViewModel
     private lateinit var pitchLab: PitchLabViewModel
+    private lateinit var tuner: ar.edu.unmdp.entrenamiento.tuner.TunerViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT),
             navigationBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT))
         val data = Demonstration(filesDir)
+        tuner = ViewModelProvider(this)[ar.edu.unmdp.entrenamiento.tuner.TunerViewModel::class.java]
         model = ViewModelProvider(this, object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -104,12 +106,17 @@ class MainActivity : ComponentActivity() {
             val dataUi by demonstration.ui.collectAsStateWithLifecycle()
             val historyUi by history.ui.collectAsStateWithLifecycle()
             val pitchUi by pitchLab.ui.collectAsStateWithLifecycle()
+            val tunerUi by tuner.ui.collectAsStateWithLifecycle()
             var auxiliary by rememberSaveable { mutableStateOf("") }
             LaunchedEffect(ui.screen, instrumentUi.open, auxiliary) {
                 requestedOrientation = if (ui.screen == AppScreen.MENU || instrumentUi.open || auxiliary.isNotEmpty())
                     ActivityInfo.SCREEN_ORIENTATION_PORTRAIT else ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
             }
-            if (auxiliary == "voice") VoiceApp(voiceUi, voice) {
+            if (auxiliary == "tuner") ar.edu.unmdp.entrenamiento.ui.TunerApp(tunerUi, tuner) {
+                tuner.stop()
+                auxiliary = ""
+            }
+            else if (auxiliary == "voice") VoiceApp(voiceUi, voice) {
                 voice.stop()
                 auxiliary = ""
             }
@@ -121,7 +128,8 @@ class MainActivity : ComponentActivity() {
                 instruments::selectMode, instruments::openInspector, instruments::closeInspector, instruments::simulateScenario, instruments::retryStorage)
             else SimonApp(ui, model::openSimon, model::selectScale, model::start, model::answer, model::home,
                 instruments::open, instrumentUi.history, model::selectAutomatic,
-                onVoice = { auxiliary = "voice" }, onData = { auxiliary = "data" }, onHistory = { history.load(); auxiliary = "history" }, onRetryStorage = model::retryStorage)
+                onVoice = { auxiliary = "voice" }, onData = { auxiliary = "data" }, onHistory = { history.load(); auxiliary = "history" }, onRetryStorage = model::retryStorage,
+                onTuner = { auxiliary = "tuner" })
         }
     }
 
@@ -132,6 +140,7 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onPause() {
+        if (::tuner.isInitialized) tuner.stop()
         if (::voice.isInitialized) voice.stop()
         if (::pitchLab.isInitialized) pitchLab.cancel()
         super.onPause()

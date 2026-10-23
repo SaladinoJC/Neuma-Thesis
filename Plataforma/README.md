@@ -1,5 +1,14 @@
 # Aplicación Android
 
+Versión 0.11: añade **Afinador → Libre**, guitarra estándar, seguimiento automático/cromático, cuerda fijada y Normal/Pro. No guarda desempeño ni PCM. [Recorrido y parámetros](../docs/Demostracion-afinador-v0.11.md). Las funciones de la base v0.10 se conservan; perfiles, guiado y entrenamiento siguen en #10–#14.
+
+```powershell
+.\gradlew.bat :app:testDebugUnitTest --tests '*tuner*'
+.\gradlew.bat :app:connectedDebugAndroidTest '-Pandroid.testInstrumentationRunnerArguments.class=ar.edu.unmdp.entrenamiento.TunerAndroidTest'
+```
+
+Usar únicamente un emulador para pruebas instrumentadas; para teléfono seguir el recorrido manual. Configurar `JAVA_HOME`, `ANDROID_HOME` y `ANDROID_SERIAL` como en la verificación reproducible de abajo.
+
 Versión 0.10: Simón y «¿Qué instrumento es?» con progresión automática persistida, inspección Mamdani y práctica manual. Incluye historial completo con filtros y detalle, laboratorio YIN de 83 casos, referencia sonora/gráfica de voz y banco DDA de nueve escenarios. «Datos y demostración» exporta JSON y originales ZIP para recuperación, y permite reiniciar el perfil con confirmación. La voz conserva en memoria un guardado fallido y permite reintentarlo. Las reglas son experimentales; la prueba física del S22 Ultra sigue pendiente. [Guía actual](../docs/Demostracion-prototipo-v0.10.md) y [verificación por incremento](../docs/Verificacion-iteraciones-post-v0.5.md).
 
 El piano usa 23 muestras `mf` de University of Iowa, Do4–Si♭5, incluidas como OGG mono a 44,1 kHz, recortadas a 600 ms con fade final. Los OGG ocupan aproximadamente 186 KiB en total. `MediaCodec` las decodifica fuera del hilo de interfaz; el PCM de cada nota presentada se decodifica una vez, se conserva en memoria y se reproduce con `AudioTrack`. Las teclas usan `SoundPool` precargado, con hasta 16 colas simultáneas y volumen de reproducción 0,8, sin bloquear la entrada por los 600 ms de duración. La entrada de notas se mantiene ordenada e independiente del audio; al exceder 16 colas, se reemplazan las más viejas, no se descartan respuestas por ese límite. Procedencia, condiciones y script de conversión en [Audio-piano-Simon.md](../docs/Audio-piano-Simon.md). No se necesita conexión para jugar.

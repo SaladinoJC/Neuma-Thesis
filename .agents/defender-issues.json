@@ -1,0 +1,81 @@
+{
+  "repository": "SaladinoJC/Tesis",
+  "approved_on": "2026-10-22",
+  "tickets": [
+    {
+      "number": 23,
+      "database_id": 5986022679,
+      "url": "https://github.com/SaladinoJC/Tesis/issues/23",
+      "title": "[Defender 1/7] Defender básico de notas en sol",
+      "ordinal": 1,
+      "blocked_by_ordinals": []
+    },
+    {
+      "number": 24,
+      "database_id": 5986023407,
+      "url": "https://github.com/SaladinoJC/Tesis/issues/24",
+      "title": "[Defender 2/7] Ampliar notas y presión visual",
+      "ordinal": 2,
+      "blocked_by_ordinals": [
+        1
+      ]
+    },
+    {
+      "number": 25,
+      "database_id": 5986024068,
+      "url": "https://github.com/SaladinoJC/Tesis/issues/25",
+      "title": "[Defender 3/7] Notas con DDA, progreso e historial",
+      "ordinal": 3,
+      "blocked_by_ordinals": [
+        2
+      ]
+    },
+    {
+      "number": 26,
+      "database_id": 5986024673,
+      "url": "https://github.com/SaladinoJC/Tesis/issues/26",
+      "title": "[Defender 4/7] Defender de tríadas por nombre",
+      "ordinal": 4,
+      "blocked_by_ordinals": [
+        3
+      ]
+    },
+    {
+      "number": 27,
+      "database_id": 5986025275,
+      "url": "https://github.com/SaladinoJC/Tesis/issues/27",
+      "title": "[Defender 5/7] Completar lectura de acordes",
+      "ordinal": 5,
+      "blocked_by_ordinals": [
+        4
+      ]
+    },
+    {
+      "number": 28,
+      "database_id": 5986025925,
+      "url": "https://github.com/SaladinoJC/Tesis/issues/28",
+      "title": "[Defender 6/7] Piano virtual jugable en vertical",
+      "ordinal": 6,
+      "blocked_by_ordinals": [
+        5
+      ]
+    },
+    {
+      "number": 29,
+      "database_id": 5986026581,
+      "url": "https://github.com/SaladinoJC/Tesis/issues/29",
+      "title": "[Defender 7/7] Piano completo con progreso independiente",
+      "ordinal": 7,
+      "blocked_by_ordinals": [
+        6
+      ]
+    }
+  ],
+  "specification": {
+    "number": 22,
+    "database_id": 5986022019,
+    "url": "https://github.com/SaladinoJC/Tesis/issues/22",
+    "title": "Especificación: Defender de notas, acordes por nombre y piano virtual"
+  },
+  "native_dependencies_verified": true
+}

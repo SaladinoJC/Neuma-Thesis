@@ -1,5 +1,11 @@
 # 13. Defensa de notas en partitura (multi-clave)
 
+> Actualización 2026-10-22: el usuario eligió planificar Defender por etapas: notas (13), acordes por nombre (12), piano virtual (14), y confirmó supervivencia con tres vidas; solo llegar a la base quita vida, intento incorrecto permite reintentar. Se está definiendo el primer alcance en [Definicion-defender.md](../Definicion-defender.md). El DDA se concretará con Mamdani, en reemplazo del diseño previo por ventanas/umbrales del texto. Planificación confirmada por el usuario, sin atribuir aprobación del director ni implementación existente.
+
+> Segunda ronda: pantalla vertical según `docs/imagenes/capturadefender.png`; responder sin seleccionar enemigo, duplicados por proximidad a base. Progresión actual: sol dentro → líneas adicionales → fa → mezcla, máximo dos líneas adicionales arriba/abajo; do futura. Se elimina el escalón específico de alteraciones del curriculum anterior; su presencia como contenido queda por precisar. Controles por nombre/alteración, sin octava, con escritura exacta y opción Do–Si/C–B aceptados. Estas decisiones prevalecen sobre los detalles anteriores incompatibles del texto.
+
+> Tercera ronda: alteraciones opcionales sin nivel propio, fa ya incluye el rango ampliado; naves se acercan radialmente desde arriba/alrededor hacia la base, no solo en vertical. Probar hasta cuatro simultáneas. DDA de velocidad solo para nuevos enemigos, manteniendo velocidad de los visibles; aparición gradual limitada, sin ajustar frecuencia mediante DDA inicialmente. Ver registro de entrevista para lo aún pendiente.
+
 > Vuelta de tuerca al ítem 15 original ("reconocimiento de notas en distintas
 > claves — básico, ya existe en el mercado"). Idea hermana de la Idea 12,
 > mismo motor arcade de defensa, adaptado a una nota individual en vez de un

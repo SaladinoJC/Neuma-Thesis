@@ -52,7 +52,7 @@ fun noteName(midi: Int): String {
 fun SimonApp(ui: SimonUiState, onSimon: () -> Unit, onScale: (Scale) -> Unit,
     onStart: () -> Unit, onAnswer: (Int) -> Unit, onHome: () -> Unit,
     onInstruments: () -> Unit = {}, instrumentHistory: List<InstrumentResult> = emptyList(),
-    onAutomatic: () -> Unit = {}, onVoice: () -> Unit = {}, onData: () -> Unit = {}, onHistory: () -> Unit = {}, onRetryStorage: () -> Unit = {}) {
+    onAutomatic: () -> Unit = {}, onVoice: () -> Unit = {}, onData: () -> Unit = {}, onHistory: () -> Unit = {}, onRetryStorage: () -> Unit = {}, onTuner: () -> Unit = {}) {
     MaterialTheme(colorScheme = darkColorScheme(primary = Pink, secondary = Lavender,
         background = Night, surface = Panel, onSurface = SoftWhite, onBackground = SoftWhite, onPrimary = Night)) {
         BackHandler(enabled = ui.screen != AppScreen.MENU, onBack = onHome)
@@ -66,7 +66,7 @@ fun SimonApp(ui: SimonUiState, onSimon: () -> Unit, onScale: (Scale) -> Unit,
                         TextButton(onClick = onHome) { Text("Volver al menú") }
                     }
                 } else when (ui.screen) {
-                    AppScreen.MENU -> MainMenu(ui, onSimon, onInstruments, instrumentHistory, onVoice, onData, onHistory)
+                    AppScreen.MENU -> MainMenu(ui, onSimon, onInstruments, instrumentHistory, onVoice, onData, onHistory, onTuner)
                     AppScreen.SIMON_SETUP -> Setup(ui, onScale, onStart, onHome, onAutomatic)
                     AppScreen.SIMON_GAME -> Game(ui, onAnswer, onHome, onStart)
                 }
@@ -82,7 +82,7 @@ fun SimonApp(ui: SimonUiState, onSimon: () -> Unit, onScale: (Scale) -> Unit,
 }
 
 @Composable
-private fun MainMenu(ui: SimonUiState, onSimon: () -> Unit, onInstruments: () -> Unit, instrumentHistory: List<InstrumentResult>, onVoice: () -> Unit, onData: () -> Unit, onHistory: () -> Unit) {
+private fun MainMenu(ui: SimonUiState, onSimon: () -> Unit, onInstruments: () -> Unit, instrumentHistory: List<InstrumentResult>, onVoice: () -> Unit, onData: () -> Unit, onHistory: () -> Unit, onTuner: () -> Unit) {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(22.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp)) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
@@ -104,6 +104,7 @@ private fun MainMenu(ui: SimonUiState, onSimon: () -> Unit, onInstruments: () ->
         MenuCard("¿Qué instrumento es?", "Descubrí el instrumento por su sonido",
             Color(0xFF71AAFF), "≋", "Disponible", Modifier.testTag("game-instruments"), onClick = onInstruments)
         MenuCard("Afiná tu voz", "Explorá las notas que cantás", Color(0xFF63D9B0), "♪", "Prueba técnica", Modifier.testTag("game-voice"), onClick = onVoice)
+        MenuCard("Afinador", "Guitarra estándar · Libre · Normal y Pro", Lavender, "♮", "Disponible", Modifier.testTag("game-tuner"), onClick = onTuner)
         OutlinedButton(onClick = onData, modifier = Modifier.fillMaxWidth().testTag("data-open")) { Text("Datos y demostración") }
         OutlinedButton(onClick = onHistory, modifier = Modifier.fillMaxWidth().testTag("history-open")) { Text("Ver todos los resultados") }
         if (ui.history.isNotEmpty()) {

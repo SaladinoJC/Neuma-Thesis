@@ -1,0 +1,72 @@
+{
+  "repository": "SaladinoJC/Tesis",
+  "approved_on": "2026-10-22",
+  "tickets": [
+    {
+      "number": 9,
+      "database_id": 5984157495,
+      "url": "https://github.com/SaladinoJC/Tesis/issues/9",
+      "title": "[Afinador 1/6] Afinar libremente guitarra estándar con Normal y Pro",
+      "ordinal": 1,
+      "blocked_by_ordinals": []
+    },
+    {
+      "number": 10,
+      "database_id": 5984158242,
+      "url": "https://github.com/SaladinoJC/Tesis/issues/10",
+      "title": "[Afinador 2/6] Afinar con perfiles y afinaciones guardadas",
+      "ordinal": 2,
+      "blocked_by_ordinals": [
+        1
+      ]
+    },
+    {
+      "number": 11,
+      "database_id": 5984158942,
+      "url": "https://github.com/SaladinoJC/Tesis/issues/11",
+      "title": "[Afinador 3/6] Completar guiado y revisión final",
+      "ordinal": 3,
+      "blocked_by_ordinals": [
+        2
+      ]
+    },
+    {
+      "number": 12,
+      "database_id": 5984159556,
+      "url": "https://github.com/SaladinoJC/Tesis/issues/12",
+      "title": "[Afinador 4/6] Referencias del instrumento, piano y tono puro",
+      "ordinal": 4,
+      "blocked_by_ordinals": [
+        1
+      ]
+    },
+    {
+      "number": 13,
+      "database_id": 5984160928,
+      "url": "https://github.com/SaladinoJC/Tesis/issues/13",
+      "title": "[Afinador 5/6] Entrenamiento de oído con comprobación y corrección",
+      "ordinal": 5,
+      "blocked_by_ordinals": [
+        3,
+        4
+      ]
+    },
+    {
+      "number": 14,
+      "database_id": 5984161609,
+      "url": "https://github.com/SaladinoJC/Tesis/issues/14",
+      "title": "[Afinador 6/6] Seguimiento diferenciado, exportación y preferencias completas",
+      "ordinal": 6,
+      "blocked_by_ordinals": [
+        5
+      ]
+    }
+  ],
+  "specification": {
+    "number": 8,
+    "database_id": 5984143471,
+    "url": "https://github.com/SaladinoJC/Tesis/issues/8",
+    "title": "Especificación: afinador de guitarra con entrenamiento de oído"
+  },
+  "native_dependencies_verified": true
+}
