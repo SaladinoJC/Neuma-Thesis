@@ -4,6 +4,8 @@
 
 ## Decisiones y origen
 
+- **Trabajo paralelo autorizado (usuario, 2026-10-23):** aceptó «hagamos eso» sobre tres frentes con subagentes y worktrees: A2/#10, R1/#16 y D1/#23. Base común local `c0f9307` (v0.11 y especificaciones antes sin commit), ramas `trabajo/afinador-a2`, `trabajo/ritmo-r1`, `trabajo/defender-d1` en `C:/Users/Juan/Tesis-worktrees/`. Un agente por frente; integración compartida y verificación pesada por turnos a cargo del agente principal. Autorización de implementación local, sin push ni publicación externa. No equivale a implementar los tickets dependientes posteriores en esta misma tanda.
+
 - **Continuación autorizada (usuario, 2026-10-23):** «ponete a hacer lo que definimos la otra vez», remitiendo a los tickets de GitHub. Se consultaron issues abiertas y #9 con comentarios. Elección del agente: comenzar por A1/#9, primer incremento del afinador, sin reabrir entrevista ni modificar los frentes de ritmo/Defender. Sin publicación externa.
 
 - **Continuación autorizada (usuario, 2026-10-21):** «Dale, ponete con lo que puedas» sobre el plan de seis iteraciones post-v0.5. Avanzar incrementos verificables sin pruebas inmediatas del teléfono; sin publicación externa.
@@ -38,6 +40,8 @@
 - **Elecciones técnicas provisionales del agente para instrumentos:** catálogo candidato de la especificación (A: piano/violín/flauta/marimba; B: flauta/clarinete/trompeta/trombón; C: flauta/clarinete/oboe/fagot); Do4 real, dinámica `mf`, OGG mono/44,1 kHz/1,5 s, RMS objetivo 0,08 antes del fade de 80 ms. Primera escucha automática; pantalla vertical; feedback antes de continuar y botones fijos en resumen. No son parámetros pedagógicos calibrados ni decisiones del director.
 
 ## Avance comprobado
+
+- **Tanda v0.12 pausada por el usuario (2026-10-23):** pidió dejar el trabajo por hoy por el límite de la ventana de cinco horas. Checkpoints WIP separados para A2/#10, R1/#16 y D1/#23, e integración compartida en `trabajo/integracion-v0.12` (`d6e3d7e`). El código de `main` se mantiene en v0.11; no hay v0.12 integrada ni APK nuevo verificado. Hay verdes parciales y regresiones/correcciones pendientes; leer **`.agents/retomar-paralelo-v0.12.md`** para ramas, hashes, contratos y orden de pruebas. No repetir desde cero ni tratar los tickets como completados. No continuar hasta que el usuario pida retomar.
 
 - **v0.11 / afinador A1 implementado en software (2026-10-23):** entrada Afinador → Libre; guitarra estándar con cromático/seguimiento de cuerdas, fijación/liberación sin plegar octavas, Normal ±5/Pro ±2 cents y un segundo continuo. `tuner-continuity-v1` (hueco máximo 250 ms, vigilancia 100 ms) y selección por distancia ≤75 cents/ventaja ≥25 son elecciones provisionales del agente. Reutiliza `yin-v1`/AudioRecord sin cambiar voz/DDA ni guardar PCM/resultados del afinador. Pausa/salida detienen captura y requieren nuevo inicio explícito; conceder permiso tampoco inicia solo. 68 JVM aprobadas; app/APK de pruebas compilados y lint 0 errores/14 advertencias. Captura real del emulador a 44,1 kHz, reapertura tras liberación y recorrido de afinador/pausa/recreación/salida aprobados. Historial de voz conservado byte a byte en el recorrido. Los intentos iniciales tuvieron caída de JVM y ANR de System UI, documentados sin contarlos como aprobación. Guía: `docs/Demostracion-afinador-v0.11.md`; evidencia: `docs/Verificacion-afinador-v0.11.md`. APK `Plataforma/build/apk-archives/entrenamiento-auditivo-v0.11.apk`. Prueba física S22 Ultra pendiente; #9 sigue abierto, sin push.
 
@@ -116,6 +120,8 @@ Pruebas de sesión y ViewModel: límite real de tres escuchas, intentos antes de
 Ejecución final v0.3: 21 pruebas JVM y 11 Android aprobadas, lint sin errores/14 advertencias y APK debug generado; 3 min 50 s en Pixel_6/API 34. Revisión en dos ejes: Spec sin hallazgos; Standards sin incumplimientos documentados, con dos duplicaciones corregidas mediante los componentes PCM/JSON compartidos y un ajuste para conservar la cancelación del timeout al notificar inicio de audio. Registro y APK en `docs/Verificacion-Instrumentos-v0.3.md`; artefacto `Plataforma/app/build/outputs/apk/debug/entrenamiento-auditivo-v0.3.apk` (11.329.014 bytes). No se probó el S22 Ultra ni se midió latencia acústica o eficacia pedagógica.
 
 ## Próximo paso sugerido
+
+**Prioridad al retomar después de la pausa del 2026-10-23:** leer `.agents/retomar-paralelo-v0.12.md`. A2/#10, R1/#16 y D1/#23 ya tienen código WIP en tres worktrees; primero verificar las correcciones y suites pendientes, después integrar junto a `d6e3d7e` y ejecutar comprobaciones completas. Los párrafos siguientes conservan antecedentes; «próximo A2» no significa que deba reimplementarse desde cero. La última entrega comprobada sigue siendo v0.11.
 
 **Continuación actual (2026-10-23):** A1/#9 ya tiene implementación y entrega v0.11; consultar la verificación para el alcance comprobado y la prueba física pendiente. Próximo incremento de software: **A2/#10**, perfiles, presets y afinaciones guardadas, con exportación/reinicio/recuperación compatibles. No repetir A1 ni tratar #9 abierto como ausencia de implementación. Afinador A3–A6, ritmo #16–#21 y Defender #23–#29 siguen pendientes. Los párrafos de publicación del 2026-10-22 siguientes se conservan como antecedentes; su «primer ticket disponible #9» quedó superado por este avance.
 
