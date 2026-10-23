@@ -46,7 +46,7 @@ fun DemonstrationApp(ui: DemonstrationUi, model: DemonstrationViewModel, onHome:
                 verticalArrangement = Arrangement.spacedBy(14.dp)) {
                 TextButton(onClick = onHome, enabled = !ui.busy) { Text("Volver al menú") }
                 Text("Datos y demostración", style = MaterialTheme.typography.headlineMedium)
-                Text("Recorrido: Simón · instrumentos automáticos · panel DDA · voz · exportación. El progreso se conserva al cerrar.")
+                Text("Se conservan partidas, progreso, mediciones de voz y configuraciones del afinador. Rhythm Tap y Defender muestran resúmenes de práctica sin guardarlos todavía.")
                 OutlinedButton(onClick = onPitchLab, enabled = !ui.busy, modifier = Modifier.testTag("pitch-lab-open")) { Text("Pruebas sintéticas de tono") }
                 Text("Escenarios de desbloqueo", style = MaterialTheme.typography.titleLarge)
                 Text("DATOS SIMULADOS · Se ejecutan en memoria, sin audio ni cambios en tu perfil.")
@@ -98,7 +98,7 @@ fun DemonstrationApp(ui: DemonstrationUi, model: DemonstrationViewModel, onHome:
             }
         }
         if (confirm) AlertDialog(onDismissRequest = { confirm = false }, title = { Text("¿Reiniciar todos los datos locales?") },
-            text = { Text("Se borrarán partidas, mediciones y progreso. Esta acción no se puede deshacer.") },
+            text = { Text("Se borrarán partidas, mediciones, progreso, guitarras y afinaciones personalizadas. Esta acción no se puede deshacer.") },
             confirmButton = { TextButton(onClick = { confirm = false; model.reset() }, modifier = Modifier.testTag("data-reset-confirm")) { Text("Borrar y reiniciar") } },
             dismissButton = { TextButton(onClick = { confirm = false }) { Text("Cancelar") } })
     }

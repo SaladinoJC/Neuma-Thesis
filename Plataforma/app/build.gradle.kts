@@ -13,8 +13,8 @@ android {
         applicationId = "ar.edu.unmdp.entrenamiento"
         minSdk = 26
         targetSdk = 36
-        versionCode = 14
-        versionName = "0.11"
+        versionCode = 15
+        versionName = "0.12"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {

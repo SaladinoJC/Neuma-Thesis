@@ -35,6 +35,12 @@ import ar.edu.unmdp.entrenamiento.simon.SimonSession
 import ar.edu.unmdp.entrenamiento.ui.SimonApp
 import ar.edu.unmdp.entrenamiento.ui.SimonViewModel
 import ar.edu.unmdp.entrenamiento.ui.AppScreen
+import ar.edu.unmdp.entrenamiento.tuner.TunerViewModel
+import ar.edu.unmdp.entrenamiento.tuner.JsonTunerConfiguration
+import ar.edu.unmdp.entrenamiento.defender.DefenderViewModel
+import ar.edu.unmdp.entrenamiento.ui.DefenderApp
+import ar.edu.unmdp.entrenamiento.rhythm.RhythmViewModel
+import ar.edu.unmdp.entrenamiento.ui.RhythmApp
 import java.io.File
 import kotlin.random.Random
 
@@ -43,14 +49,22 @@ class MainActivity : ComponentActivity() {
     private lateinit var instruments: InstrumentViewModel
     private lateinit var voice: VoiceViewModel
     private lateinit var pitchLab: PitchLabViewModel
-    private lateinit var tuner: ar.edu.unmdp.entrenamiento.tuner.TunerViewModel
+    private lateinit var tuner: TunerViewModel
+    private lateinit var defender: DefenderViewModel
+    private lateinit var rhythm: RhythmViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT),
             navigationBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT))
         val data = Demonstration(filesDir)
-        tuner = ViewModelProvider(this)[ar.edu.unmdp.entrenamiento.tuner.TunerViewModel::class.java]
+        tuner = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T = TunerViewModel(
+                configurationStore = JsonTunerConfiguration(File(filesDir, "tuner-configuration.json"))) as T
+        })[TunerViewModel::class.java]
+        defender = ViewModelProvider(this)[DefenderViewModel::class.java]
+        rhythm = ViewModelProvider(this)[RhythmViewModel::class.java]
         model = ViewModelProvider(this, object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -85,13 +99,14 @@ class MainActivity : ComponentActivity() {
         val simonModel = model
         val instrumentModel = instruments
         val voiceModel = voice
+        val tunerModel = tuner
         val demonstration = ViewModelProvider(this, object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T = DemonstrationViewModel(data,
-                drain = { labModel.cancelAndJoin(); voiceModel.stopAndJoin(); simonModel.awaitIdle(); instrumentModel.awaitIdle() },
-                refresh = { simonModel.reload(); instrumentModel.reload(); voiceModel.resetDisplay(); labModel.resetDisplay() },
+                drain = { labModel.cancelAndJoin(); voiceModel.stopAndJoin(); tunerModel.awaitConfigurationIdle(); simonModel.awaitIdle(); instrumentModel.awaitIdle() },
+                refresh = { simonModel.reload(); instrumentModel.reload(); voiceModel.resetDisplay(); labModel.resetDisplay(); tunerModel.reload() },
                 helpSimulation = { instrumentModel.ui.value.simulation }, pendingVoice = voiceModel::pendingForExport,
-                drainForReset = { labModel.cancelAndJoin(); voiceModel.stopAndJoin(); simonModel.discardForReset(); instrumentModel.discardForReset() }) as T
+                drainForReset = { labModel.cancelAndJoin(); voiceModel.stopAndJoin(); tunerModel.stop(); tunerModel.awaitConfigurationIdle(); simonModel.discardForReset(); instrumentModel.discardForReset() }) as T
         })[DemonstrationViewModel::class.java]
         val history = ViewModelProvider(this, object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
@@ -107,12 +122,22 @@ class MainActivity : ComponentActivity() {
             val historyUi by history.ui.collectAsStateWithLifecycle()
             val pitchUi by pitchLab.ui.collectAsStateWithLifecycle()
             val tunerUi by tuner.ui.collectAsStateWithLifecycle()
+            val defenderUi by defender.ui.collectAsStateWithLifecycle()
+            val rhythmUi by rhythm.ui.collectAsStateWithLifecycle()
             var auxiliary by rememberSaveable { mutableStateOf("") }
             LaunchedEffect(ui.screen, instrumentUi.open, auxiliary) {
                 requestedOrientation = if (ui.screen == AppScreen.MENU || instrumentUi.open || auxiliary.isNotEmpty())
                     ActivityInfo.SCREEN_ORIENTATION_PORTRAIT else ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
             }
-            if (auxiliary == "tuner") ar.edu.unmdp.entrenamiento.ui.TunerApp(tunerUi, tuner) {
+            if (auxiliary == "rhythm") RhythmApp(rhythmUi, rhythm) {
+                rhythm.home()
+                auxiliary = ""
+            }
+            else if (auxiliary == "defender") DefenderApp(defenderUi, defender) {
+                defender.home()
+                auxiliary = ""
+            }
+            else if (auxiliary == "tuner") ar.edu.unmdp.entrenamiento.ui.TunerApp(tunerUi, tuner) {
                 tuner.stop()
                 auxiliary = ""
             }
@@ -129,7 +154,8 @@ class MainActivity : ComponentActivity() {
             else SimonApp(ui, model::openSimon, model::selectScale, model::start, model::answer, model::home,
                 instruments::open, instrumentUi.history, model::selectAutomatic,
                 onVoice = { auxiliary = "voice" }, onData = { auxiliary = "data" }, onHistory = { history.load(); auxiliary = "history" }, onRetryStorage = model::retryStorage,
-                onTuner = { auxiliary = "tuner" })
+                onTuner = { auxiliary = "tuner" }, onDefender = { defender.prepare(); auxiliary = "defender" },
+                onRhythm = { auxiliary = "rhythm" })
         }
     }
 
@@ -140,6 +166,8 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onPause() {
+        if (::rhythm.isInitialized) rhythm.background()
+        if (::defender.isInitialized) defender.background()
         if (::tuner.isInitialized) tuner.stop()
         if (::voice.isInitialized) voice.stop()
         if (::pitchLab.isInitialized) pitchLab.cancel()
