@@ -8,6 +8,7 @@ import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 import java.io.File
+import androidx.compose.ui.semantics.SemanticsProperties
 import kotlinx.coroutines.*
 import ar.edu.unmdp.entrenamiento.voice.*
 
@@ -34,7 +35,19 @@ class TunerAndroidTest {
         val voiceFile = File(compose.activity.filesDir, "voice-results.json")
         val before = if (voiceFile.exists()) voiceFile.readBytes() else null
         compose.onNodeWithTag("game-tuner").performScrollTo().performClick()
+        compose.waitUntil(10_000) {
+            compose.onAllNodesWithTag("tuner-start").fetchSemanticsNodes().any { !it.config.contains(SemanticsProperties.Disabled) }
+        }
+        compose.onNodeWithTag("tuner-configuration-open").performScrollTo().performClick()
+        compose.onNodeWithTag("tuner-tuning-standard").performScrollTo().performClick()
+        compose.waitUntil(10_000) {
+            compose.onAllNodesWithTag("tuner-start").fetchSemanticsNodes().any { !it.config.contains(SemanticsProperties.Disabled) }
+        }
+        compose.onNodeWithTag("tuner-configuration-open").performScrollTo().performClick()
         compose.onNodeWithText("Pro ±2 cents").performClick()
+        compose.waitUntil(10_000) {
+            compose.onAllNodesWithTag("tuner-start").fetchSemanticsNodes().any { !it.config.contains(SemanticsProperties.Disabled) }
+        }
         compose.onNodeWithText("6 · Mi2").performClick()
         compose.onNodeWithText("Objetivo: Mi2").assertExists()
         compose.onNodeWithTag("tuner-start").performScrollTo().performClick()

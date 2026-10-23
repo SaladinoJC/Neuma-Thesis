@@ -2,9 +2,10 @@ package ar.edu.unmdp.entrenamiento.tuner
 
 import ar.edu.unmdp.entrenamiento.voice.PitchEstimate
 import kotlin.math.abs
+import kotlinx.serialization.Serializable
 
-enum class TunerCriterion(val margin: Double) { NORMAL(5.0), PRO(2.0) }
-enum class TunerTracking { CHROMATIC, STRINGS }
+@Serializable enum class TunerCriterion(val margin: Double) { NORMAL(5.0), PRO(2.0) }
+@Serializable enum class TunerTracking { CHROMATIC, STRINGS }
 data class TunerState(
     val running: Boolean = false,
     val criterion: TunerCriterion = TunerCriterion.NORMAL,
@@ -25,7 +26,15 @@ class TunerSession {
         private set
     private var since: Long? = null
     private var lastTime: Long? = null
-    private val strings = mapOf(6 to 40, 5 to 45, 4 to 50, 3 to 55, 2 to 59, 1 to 64)
+    private var strings = mapOf(6 to 40, 5 to 45, 4 to 50, 3 to 55, 2 to 59, 1 to 64)
+    var setup: TunerSetupSnapshot = TunerConfiguration().snapshot()
+        private set
+    fun configure(snapshot: TunerSetupSnapshot) {
+        stop()
+        setup = snapshot.copy(tuning = snapshot.tuning.copy(notesSixToFirst = snapshot.tuning.notesSixToFirst.toList()))
+        strings = setup.tuning.notesSixToFirst.mapIndexed { index, midi -> (6 - index) to midi }.toMap()
+        state = TunerState(criterion = setup.criterion, tracking = setup.tracking)
+    }
 
     fun start() { clear(); state = state.copy(running = true) }
     fun stop() { clear(); state = state.copy(running = false) }

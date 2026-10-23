@@ -4,6 +4,8 @@ import ar.edu.unmdp.entrenamiento.simon.*
 import ar.edu.unmdp.entrenamiento.instruments.*
 import ar.edu.unmdp.entrenamiento.voice.*
 import ar.edu.unmdp.entrenamiento.progress.*
+import ar.edu.unmdp.entrenamiento.tuner.TunerConfiguration
+import ar.edu.unmdp.entrenamiento.tuner.JsonTunerConfiguration
 import kotlinx.coroutines.*
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -17,13 +19,13 @@ data class DemonstrationExport(val schemaVersion: Int = 1, val appVersion: Strin
     val exportedAtMillis: Long, val simon: List<SimonResult>, val instruments: List<InstrumentResult>,
     val voice: List<VoiceResult>, val simonProgress: Progress, val instrumentProgress: Progress,
     val simulations: ProgressSimulation? = null, val helpSimulation: InstrumentResult? = null, val syntheticPitchTests: List<PitchLabReport> = emptyList(), val ddaScenarios: DdaBenchReport? = null,
-    val pendingVoiceSave: VoiceResult? = null)
+    val pendingVoiceSave: VoiceResult? = null, val tunerConfiguration: TunerConfiguration? = null)
 
 /** Accessed after sessions have drained their pending actions on the menu. */
 class Demonstration(private val directory: File) {
     private val profile = ProfileFiles.inDirectory(directory)
     private val json = Json { encodeDefaults = true; prettyPrint = true }
-    private val names = listOf("simon-results.json", "instrument-results.json", "voice-results.json", "pitch-lab-results.json")
+    private val names = listOf("simon-results.json", "instrument-results.json", "voice-results.json", "pitch-lab-results.json", "tuner-configuration.json")
     private val marker = File(directory, "reset-pending")
     init {
         if (marker.exists()) runBlocking(Dispatchers.IO) { profile.transaction {
@@ -44,7 +46,8 @@ class Demonstration(private val directory: File) {
                 simon = simon, instruments = instruments, voice = voice,
                 simonProgress = progression(simon.map { ProgressEntry(it.id, it.scale.ordinal, it.origin, it.completed, it.mastery) }),
                 instrumentProgress = progression(instruments.map { ProgressEntry(it.id, it.level.ordinal, it.origin, it.completed, it.mastery) }),
-                simulations = simulation, helpSimulation = helpSimulation, syntheticPitchTests = pitchTests, ddaScenarios = ddaScenarios, pendingVoiceSave = pendingVoiceSave)
+                simulations = simulation, helpSimulation = helpSimulation, syntheticPitchTests = pitchTests, ddaScenarios = ddaScenarios, pendingVoiceSave = pendingVoiceSave,
+                tunerConfiguration = File(directory, names[4]).takeIf { it.exists() }?.let { JsonTunerConfiguration(it).load() })
             json.encodeToString(DemonstrationExport.serializer(), data)
         }
     }
@@ -65,7 +68,7 @@ class Demonstration(private val directory: File) {
                 zip.closeEntry()
             }
             zip.putNextEntry(ZipEntry("LEEME.txt"))
-            zip.write("Copia de recuperación de archivos locales. Puede contener JSON dañado o de una versión incompatible. Solo mediciones derivadas, sin grabaciones. No es una importación ni una reparación automática.".toByteArray(Charsets.UTF_8))
+            zip.write("Copia de recuperación de archivos locales. Puede contener JSON dañado o de una versión incompatible. Configuración y resultados derivados, sin grabaciones. No es una importación ni una reparación automática.".toByteArray(Charsets.UTF_8))
             zip.closeEntry()
         }
     } }
