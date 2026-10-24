@@ -20,6 +20,9 @@ fun GuidedTunerPanel(ui: TunerUiState, model: TunerViewModel) {
         }
     }
     if (configuration.mode != TunerMode.GUIDED) return
+    Text("Objetivos · " + configuration.currentTuning.notesSixToFirst.mapIndexed { index, midi ->
+        "${6 - index}: ${noteName(midi)}"
+    }.joinToString(" · "), modifier = Modifier.testTag("tuner-guided-targets"))
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         Switch(checked = configuration.finalReview, onCheckedChange = model::finalReview,
             enabled = !ui.configurationBusy, modifier = Modifier.testTag("tuner-final-review"))
@@ -44,6 +47,7 @@ fun GuidedTunerPanel(ui: TunerUiState, model: TunerViewModel) {
     if (guided.firstPass.isNotEmpty() || guided.review.isNotEmpty()) {
         Text("Resumen del recorrido · ${guided.setup?.guitar?.name} · ${guided.setup?.tuning?.name}",
             style = MaterialTheme.typography.titleMedium, modifier = Modifier.testTag("tuner-guided-summary"))
+        Text("Criterio del recorrido: ${if (guided.setup?.criterion == TunerCriterion.PRO) "Pro ±2" else "Normal ±5"} cents")
         Text("Solo en memoria. Primera pasada y revisión se conservan separadas.", color = Muted)
         listOf("Primera pasada" to guided.firstPass, "Revisión" to guided.review, "Correcciones" to guided.corrections).forEach { (title, results) ->
             if (results.isNotEmpty()) {
