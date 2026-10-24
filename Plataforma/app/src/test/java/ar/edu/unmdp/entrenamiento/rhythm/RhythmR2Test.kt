@@ -4,6 +4,35 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class RhythmR2Test {
+    @Test fun `corpus mixto reproduce semilla sin cruzar barras ni inventar categorias objetivo`() {
+        val selections = listOf(setOf(RhythmCategory.HALF, RhythmCategory.QUARTER),
+            setOf(RhythmCategory.REST_EIGHTH, RhythmCategory.EIGHTH_REST),
+            setOf(RhythmCategory.DOTTED_QUARTER_EIGHTH, RhythmCategory.QUARTER_REST))
+        for (meter in 2..4) for (selection in selections) for (seed in 0L until 20L) {
+            val session = RhythmSession(); session.generate(selection, seed, meter)
+            val score = requireNotNull(session.state.score) { "$meter $selection $seed: ${session.state.error}" }
+            assertTrue(score.bars.all { it.duration == Beat(meter) })
+            assertEquals(selection, score.selected.toSet())
+            for (category in selection) assertTrue(score.occurrences.count { it.target && it.category == category } >= 2)
+            assertTrue(score.occurrences.filterNot { it.target }.all { it.category in setOf(RhythmCategory.QUARTER, RhythmCategory.EIGHTHS) })
+            val again = RhythmSession(); again.generate(selection, seed, meter)
+            assertEquals(score, again.state.score)
+            val encoded = kotlinx.serialization.json.Json.encodeToString(RhythmScore.serializer(), score)
+            assertEquals(score, kotlinx.serialization.json.Json.decodeFromString(RhythmScore.serializer(), encoded))
+        }
+    }
+
+    @Test fun `cancelacion de generacion no se informa como seleccion imposible`() {
+        val session = RhythmSession()
+        try {
+            session.generate(setOf(RhythmCategory.HALF), 1L, 3, checkCancelled = { throw kotlinx.coroutines.CancellationException("cancelled") })
+            fail("Cancellation must propagate")
+        } catch (_: kotlinx.coroutines.CancellationException) {
+            assertNull(session.state.score)
+            assertNull(session.state.error)
+        }
+    }
+
     @Test fun `cada categoria cabe con duracion exacta cuota y conteo segun metrica`() {
         for (meter in 2..4) for (category in RhythmCategory.entries) {
             val session = RhythmSession()
