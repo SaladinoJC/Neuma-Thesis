@@ -22,7 +22,7 @@ class TunerViewModel(private val recorder: VoiceCapture = AndroidVoiceCapture(),
     private var capture: Job? = null
     private var configurationJob: Job? = null
     private fun guidedMode() = configuration.state.configuration?.mode == TunerMode.GUIDED
-    private fun measurement() = if (guidedMode()) guided.state.measurement else session.state
+    private fun measurement() = if (guidedMode() && guided.state.active) guided.state.measurement else session.state
     private fun publish(error: String? = ui.value.error) {
         mutableUi.value = ui.value.copy(tuning = measurement(), guided = guided.state, error = error, configuration = configuration.state)
     }

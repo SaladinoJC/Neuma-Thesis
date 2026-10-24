@@ -11,6 +11,32 @@ import kotlin.math.pow
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class GuidedTunerViewModelTest {
+    @Test fun `preparacion guiada muestra criterio actual sin iniciar captura`() = runTest {
+        Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+        try {
+            var opened = 0
+            val recorder = object : VoiceCapture {
+                override suspend fun capture(configuration: YinConfiguration, onMeasurement: suspend (PitchEstimate, Long, Int) -> Unit) {
+                    opened++; awaitCancellation()
+                }
+            }
+            val model = TunerViewModel(recorder, MemoryTunerConfiguration()) { testScheduler.currentTime }
+            model.awaitConfigurationIdle()
+            model.mode(TunerMode.GUIDED); model.awaitConfigurationIdle()
+            model.criterion(TunerCriterion.PRO); model.awaitConfigurationIdle()
+            assertEquals(TunerCriterion.PRO, model.ui.value.tuning.criterion)
+            assertFalse(model.ui.value.tuning.running)
+            assertEquals(0, opened)
+            model.start(); runCurrent()
+            model.criterion(TunerCriterion.NORMAL); model.awaitConfigurationIdle()
+            assertEquals(GuidedPhase.INTERRUPTED, model.ui.value.guided.phase)
+            assertEquals(TunerCriterion.PRO, model.ui.value.guided.setup!!.criterion)
+            assertEquals(TunerCriterion.NORMAL, model.ui.value.tuning.criterion)
+            assertFalse(model.ui.value.tuning.running)
+            assertEquals(1, opened)
+        } finally { Dispatchers.resetMain() }
+    }
+
     @Test fun `captura guiada completa dos pasadas sin guardar desempeno y al reabrir no inicia sola`() = runTest {
         Dispatchers.setMain(StandardTestDispatcher(testScheduler))
         try {
