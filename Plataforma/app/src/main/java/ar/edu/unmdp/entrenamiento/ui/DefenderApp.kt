@@ -21,6 +21,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.PointerEventPass
@@ -65,8 +66,24 @@ private fun DefenderSetup(ui: DefenderUiState, model: DefenderViewModel) {
         Text("Defendé la base", style = MaterialTheme.typography.headlineLarge)
         Text("Leé la nota, elegí su nombre y dispará antes de que llegue.")
         NoteStaff(DefenderNote(DefenderName.MI, 4), Modifier.fillMaxWidth().height(120.dp))
-        Text("Práctica · Clave de sol · Mi4–Fa5", color = DefenderCyan)
-        Text("Un enemigo · viaje 10 s · tres vidas\nSolo las llegadas quitan vida. Cada acierto suma 100 puntos.")
+        Text("Práctica · elegí qué leer", color = DefenderCyan)
+        DefenderStage.entries.forEach { stage ->
+            FilterChip(selected = ui.stage == stage, onClick = { model.stage(stage) },
+                label = { Text(stage.label) }, modifier = Modifier.testTag("defender-stage-${stage.name}"))
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text("Incluir ♭ y ♯", modifier = Modifier.weight(1f))
+            Switch(checked = ui.accidentals, onCheckedChange = model::accidentals,
+                modifier = Modifier.testTag("defender-accidentals"))
+        }
+        Text("Enemigos simultáneos (si hay espacio)")
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            (1..4).forEach { count ->
+                FilterChip(selected = ui.maxEnemies == count, onClick = { model.maxEnemies(count) },
+                    label = { Text("$count") }, modifier = Modifier.testTag("defender-count-$count"))
+            }
+        }
+        Text("Viaje 10 s · tres vidas\nSolo las llegadas quitan vida. Cada acierto suma 100 puntos.")
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             FilterChip(selected = !ui.letterNames, onClick = { model.letterNames(false) }, label = { Text("Do–Si") })
             FilterChip(selected = ui.letterNames, onClick = { model.letterNames(true) }, label = { Text("C–B") })
@@ -88,7 +105,7 @@ private fun DefenderSetup(ui: DefenderUiState, model: DefenderViewModel) {
 private fun ColumnScope.DefenderGame(ui: DefenderUiState, model: DefenderViewModel) {
     val game = ui.game
     Row(Modifier.fillMaxWidth().padding(vertical = 8.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-        Text("SOL · N1", color = DefenderCyan, fontWeight = FontWeight.Bold)
+        Text(game.configuration.stage.label, color = DefenderCyan, fontWeight = FontWeight.Bold, fontSize = 13.sp)
         Text("♥ ${game.lives}", color = Pink, modifier = Modifier.testTag("defender-lives"))
         Text("${game.points} pts", fontWeight = FontWeight.Bold, modifier = Modifier.testTag("defender-score"))
     }
@@ -123,15 +140,24 @@ private fun ColumnScope.DefenderGame(ui: DefenderUiState, model: DefenderViewMod
                     if (row.size < 4) Spacer(Modifier.weight(1f))
                 }
             }
+            if (game.configuration.accidentals) {
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    DefenderAccidental.entries.forEach { accidental ->
+                        FilterChip(selected = game.selectedAccidental == accidental,
+                            onClick = { model.accidental(accidental) }, label = { Text(accidental.symbol) },
+                            modifier = Modifier.weight(1f).testTag("defender-accidental-${accidental.name}"))
+                    }
+                }
+            }
         }
     }
     Button(onClick = model::fire, enabled = game.selected != null,
         modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp).height(52.dp).testTag("defender-fire")
-            .pointerInput(game.selected) {
+            .pointerInput(game.selected, game.selectedAccidental) {
                 awaitEachGesture {
                     val down = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
                     game.selected?.let { selected ->
-                        model.firePointer(down.uptimeMillis, SystemClock.uptimeMillis(), selected)
+                        model.firePointer(down.uptimeMillis, SystemClock.uptimeMillis(), selected, game.selectedAccidental)
                         down.consume()
                     }
                     waitForUpOrCancellation(pass = PointerEventPass.Initial)?.consume()
@@ -167,18 +193,18 @@ private fun DefenderArena(game: DefenderState, modifier: Modifier) {
                 drawLine(DefenderCyan, base, Offset(p.x * size.width, p.y * size.height), 3.dp.toPx())
             }
         }
-        game.enemy?.let { enemy ->
+        game.enemies.forEach { enemy ->
             val point = enemy.position(game.activeMillis)
-            val cardWidth = minOf(136.dp, maxWidth * .45f)
-            val cardHeight = minOf(116.dp, maxHeight * .35f)
+            val cardWidth = if (game.configuration.maxEnemies == 1) minOf(136.dp, maxWidth * .45f) else maxWidth * .235f
+            val cardHeight = if (game.configuration.maxEnemies == 1) minOf(116.dp, maxHeight * .35f) else maxHeight * .17f
             Column(Modifier.offset(x = maxWidth * point.x - cardWidth / 2, y = maxHeight * point.y - cardHeight / 2)
                 .width(cardWidth), horizontalAlignment = Alignment.CenterHorizontally) {
                 NoteStaff(enemy.note, Modifier.fillMaxWidth().height(cardHeight).testTag("defender-target"))
-                Text("▟▙", color = Pink, fontSize = 22.sp, fontWeight = FontWeight.Black)
+                Text("▟▙", color = Pink, fontSize = 12.sp, fontWeight = FontWeight.Black)
             }
         }
         game.results.lastOrNull()?.takeIf { it.resolution == DefenderResolution.ARRIVED && game.activeMillis - it.atMillis in 0..1200 }?.let { result ->
-            Text("${result.enemy.note.name.solfege}${result.enemy.note.octave}", color = Pink, fontWeight = FontWeight.Black,
+            Text("${result.enemy.note.name.solfege}${if (result.enemy.note.accidental == DefenderAccidental.NATURAL) "" else result.enemy.note.accidental.symbol}${result.enemy.note.octave}", color = Pink, fontWeight = FontWeight.Black,
                 modifier = Modifier.offset(x = maxWidth * result.position.x - 28.dp, y = maxHeight * result.position.y - 22.dp)
                     .background(DefenderSpace).padding(4.dp).testTag("defender-solution"))
         }
@@ -189,12 +215,14 @@ private fun DefenderArena(game: DefenderState, modifier: Modifier) {
 @Composable
 fun NoteStaff(note: DefenderNote, modifier: Modifier = Modifier) {
     Canvas(modifier.background(Color(0xFFFFF1D9), RoundedCornerShape(5.dp)).semantics {
-        contentDescription = "Pentagrama en clave de sol"
+        contentDescription = "Pentagrama en clave de ${note.clef.label.lowercase()}"
     }) {
-        val sx = size.width / 100f; val sy = size.height / 100f
+        val sx = size.width / 100f; val sy = size.height / 120f
         val ink = Color(0xFF13223D)
+        translate(top = 8 * sy) {
         for (line in 0..4) drawLine(ink, Offset(4 * sx, (28 + line * 12) * sy),
             Offset(96 * sx, (28 + line * 12) * sy), .9f * sy)
+        if (note.clef == DefenderClef.TREBLE) {
         val clef = Path().apply {
             moveTo(19*sx, 92*sy)
             cubicTo(32*sx, 94*sy, 28*sx, 79*sy, 25*sx, 69*sy)
@@ -206,10 +234,41 @@ fun NoteStaff(note: DefenderNote, modifier: Modifier = Modifier) {
             cubicTo(10*sx, 72*sy, 23*sx, 75*sy, 29*sx, 65*sy)
         }
         drawPath(clef, ink, style = Stroke(2.3f * sy))
+        } else {
+            val bass = Path().apply {
+                moveTo(8*sx, 43*sy); cubicTo(5*sx, 20*sy, 36*sx, 16*sy, 31*sx, 40*sy)
+                cubicTo(29*sx, 53*sy, 17*sx, 61*sy, 9*sx, 64*sy)
+            }
+            drawPath(bass, ink, style = Stroke(3f*sy))
+            drawCircle(ink, 2.6f*sy, Offset(9*sx, 40*sy))
+            drawCircle(ink, 1.8f*sy, Offset(39*sx, 34*sy))
+            drawCircle(ink, 1.8f*sy, Offset(39*sx, 46*sy))
+        }
+        val ledgerSteps = if (note.staffStep < 0) (-2 downTo note.staffStep step 2).toList()
+            else if (note.staffStep > 8) (10..note.staffStep step 2).toList() else emptyList()
+        ledgerSteps.forEach { step ->
+            val ledgerY = (76 - step * 6) * sy
+            drawLine(ink, Offset(61*sx, ledgerY), Offset(85*sx, ledgerY), .9f*sy)
+        }
+        if (note.accidental != DefenderAccidental.NATURAL) {
+            val ay = (76 - note.staffStep * 6) * sy
+            val ax = 52*sx
+            if (note.accidental == DefenderAccidental.SHARP) {
+                for (dx in listOf(-2f, 3f)) drawLine(ink, Offset(ax+dx*sx, ay-10*sy), Offset(ax+dx*sx, ay+9*sy), 1.3f*sx)
+                for (dy in listOf(-3f, 3f)) drawLine(ink, Offset(ax-6*sx, ay+dy*sy+2*sy), Offset(ax+7*sx, ay+dy*sy-2*sy), 2f*sy)
+            } else {
+                val flat = Path().apply {
+                    moveTo(ax-3*sx, ay-14*sy); lineTo(ax-3*sx, ay+6*sy)
+                    cubicTo(ax+12*sx, ay-4*sy, ax+5*sx, ay-10*sy, ax-3*sx, ay-2*sy)
+                }
+                drawPath(flat, ink, style = Stroke(1.6f*sx))
+            }
+        }
         val y = (76 - note.staffStep * 6) * sy
         drawOval(ink, Offset(66 * sx, y - 4.4f * sy), Size(12 * sx, 8.8f * sy))
         if (note.staffStep >= 4) drawLine(ink, Offset(66*sx, y), Offset(66*sx, y + 29*sy), 1.4f*sx)
         else drawLine(ink, Offset(78*sx, y), Offset(78*sx, y - 29*sy), 1.4f*sx)
+        }
     }
 }
 
@@ -232,7 +291,7 @@ private fun DefenderSummary(ui: DefenderUiState, model: DefenderViewModel) {
                     horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     NoteStaff(result.enemy.note, Modifier.width(110.dp).height(84.dp))
                     Column {
-                        Text("${result.enemy.note.name.solfege}${result.enemy.note.octave} · ${result.enemy.note.name.letter}", fontWeight = FontWeight.Bold)
+                        Text("${result.enemy.note.name.solfege}${if (result.enemy.note.accidental == DefenderAccidental.NATURAL) "" else result.enemy.note.accidental.symbol}${result.enemy.note.octave} · ${result.enemy.note.name.letter}", fontWeight = FontWeight.Bold)
                         Text(if (result.resolution == DefenderResolution.ELIMINATED) "Eliminado" else "Llegó a la base", color = Muted)
                     }
                 }

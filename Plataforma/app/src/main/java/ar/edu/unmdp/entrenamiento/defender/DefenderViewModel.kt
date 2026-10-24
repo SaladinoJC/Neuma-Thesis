@@ -7,7 +7,8 @@ import kotlinx.coroutines.flow.*
 import kotlin.random.Random
 
 data class DefenderUiState(val game: DefenderState = DefenderState(), val letterNames: Boolean = false,
-    val noteSound: Boolean = true, val effectsSound: Boolean = true, val error: String? = null)
+    val noteSound: Boolean = true, val effectsSound: Boolean = true, val error: String? = null,
+    val stage: DefenderStage = DefenderStage.N1, val accidentals: Boolean = false, val maxEnemies: Int = 4)
 
 class DefenderViewModel(private val audio: DefenderAudio = AndroidDefenderAudio(),
     private val clock: () -> Long = { System.nanoTime() / 1_000_000 }) : ViewModel() {
@@ -17,22 +18,28 @@ class DefenderViewModel(private val audio: DefenderAudio = AndroidDefenderAudio(
     private var ticker: Job? = null
     private val playing = mutableListOf<Job>()
     private val soundedResolutions = mutableSetOf<Int>()
-    private val soundedMisses = mutableSetOf<Pair<Long, DefenderName?>>()
+    private val soundedMisses = mutableSetOf<Triple<Long, DefenderName?, DefenderAccidental>>()
 
     fun letterNames(value: Boolean) { if (ui.value.game.phase == DefenderPhase.SETUP) mutableUi.value = ui.value.copy(letterNames = value) }
     fun noteSound(value: Boolean) { if (ui.value.game.phase == DefenderPhase.SETUP) mutableUi.value = ui.value.copy(noteSound = value) }
     fun effectsSound(value: Boolean) { if (ui.value.game.phase == DefenderPhase.SETUP) mutableUi.value = ui.value.copy(effectsSound = value) }
+    fun stage(value: DefenderStage) { if (ui.value.game.phase == DefenderPhase.SETUP) mutableUi.value = ui.value.copy(stage = value) }
+    fun accidentals(value: Boolean) { if (ui.value.game.phase == DefenderPhase.SETUP) mutableUi.value = ui.value.copy(accidentals = value) }
+    fun maxEnemies(value: Int) { if (value in 1..4 && ui.value.game.phase == DefenderPhase.SETUP) mutableUi.value = ui.value.copy(maxEnemies = value) }
+    fun accidental(value: DefenderAccidental) { session.accidental(value); publish() }
     fun start(seed: Int = Random.nextInt()) {
         cancelAudio(); ticker?.cancel(); soundedResolutions.clear(); soundedMisses.clear()
         val options = ui.value
-        session.start(seed, DefenderConfiguration(noteSound = options.noteSound, effectsSound = options.effectsSound, letterNames = options.letterNames))
+        session.start(seed, DefenderConfiguration(noteSound = options.noteSound, effectsSound = options.effectsSound, letterNames = options.letterNames,
+            stage = options.stage, accidentals = options.accidentals, maxEnemies = options.maxEnemies))
         mutableUi.value = options.copy(game = session.state, error = null)
         publish(); launchTicker()
     }
     fun select(name: DefenderName) { session.select(name); publish() }
     fun fire() { session.fire(); publish() }
-    fun firePointer(eventUptimeMillis: Long, dispatchUptimeMillis: Long, capturedSelection: DefenderName) {
-        session.fireAt(clock() + eventUptimeMillis - dispatchUptimeMillis, capturedSelection)
+    fun firePointer(eventUptimeMillis: Long, dispatchUptimeMillis: Long, capturedSelection: DefenderName,
+        capturedAccidental: DefenderAccidental = DefenderAccidental.NATURAL) {
+        session.fireAt(clock() + eventUptimeMillis - dispatchUptimeMillis, capturedSelection, capturedAccidental)
         publish()
         if (session.state.phase == DefenderPhase.RUNNING && ticker?.isActive != true) launchTicker()
     }
@@ -68,7 +75,7 @@ class DefenderViewModel(private val audio: DefenderAudio = AndroidDefenderAudio(
         game.events.forEach { event ->
             val fresh = when (event.kind) {
                 "SHOT_HIT", "ARRIVAL" -> soundedResolutions.add(requireNotNull(event.enemy).id)
-                "SHOT_MISS" -> soundedMisses.add(event.atMillis to event.selection)
+                "SHOT_MISS" -> soundedMisses.add(Triple(event.atMillis, event.selection, event.accidental))
                 else -> false
             }
             if (!fresh || !audible || game.activeMillis - event.atMillis !in 0..250) return@forEach
