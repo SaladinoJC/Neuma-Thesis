@@ -28,10 +28,12 @@ fun defenderNotePool(stage: DefenderStage, accidentals: Boolean): List<DefenderN
     } } }
 }
 
-/** Geometric distance to the assigned base boundary, independent of speed/deadline. */
+/** Shared shield segment, also drawn by the arena; independent of speed/deadline. */
 fun DefenderEnemy.distanceToBaseSquared(at: Long): Float {
     val p = position(at)
-    return (p.x - destination.x) * (p.x - destination.x) + (p.y - destination.y) * (p.y - destination.y)
+    val dx = p.x - p.x.coerceIn(.25f, .75f)
+    val dy = p.y - .84f
+    return dx * dx + dy * dy
 }
 
 fun defenderMatch(enemies: List<DefenderEnemy>, name: DefenderName,

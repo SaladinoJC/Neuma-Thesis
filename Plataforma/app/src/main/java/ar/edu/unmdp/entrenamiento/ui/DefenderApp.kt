@@ -179,6 +179,8 @@ private fun DefenderArena(game: DefenderState, modifier: Modifier) {
                     Offset(x, y), Size(if (index % 7 == 0) 4.dp.toPx() else 1.dp.toPx(), 2.dp.toPx()))
             }
             val base = Offset(size.width * .5f, size.height * .94f)
+            if (game.configuration.maxEnemies > 1) drawLine(DefenderCyan.copy(alpha = .6f),
+                Offset(size.width * .25f, size.height * .84f), Offset(size.width * .75f, size.height * .84f), 2.dp.toPx())
             drawArc(DefenderCyan.copy(alpha = .4f), 180f, 180f, false,
                 Offset(size.width * .16f, size.height * .83f), Size(size.width * .68f, size.height * .34f), style = Stroke(2.dp.toPx()))
             val ship = Path().apply {

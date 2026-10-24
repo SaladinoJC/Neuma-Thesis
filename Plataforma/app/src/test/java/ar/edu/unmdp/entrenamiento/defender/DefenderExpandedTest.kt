@@ -70,4 +70,26 @@ class DefenderExpandedTest {
         assertTrue(session.state.enemies.isEmpty())
         assertEquals(session.state.results.map { it.atMillis }.sorted(), session.state.results.map { it.atMillis })
     }
+
+    @Test fun `cupo cuatro es alcanzable sin reservas superpuestas ni rafagas`() {
+        var reachedFour = false
+        for (seed in 0..30) {
+            var now = 0L
+            val session = DefenderSession { now }
+            session.start(seed, DefenderConfiguration(maxEnemies = 4))
+            for (time in 0L..100000L step 1000) {
+                now = time; session.tick()
+                if (time < 90000) session.state.enemy?.let { session.select(it.note.name); session.fire() }
+                val live = session.state.enemies
+                assertTrue(live.size <= 4)
+                for (i in live.indices) for (j in i + 1 until live.size) {
+                    val a = live[i].position(time); val b = live[j].position(time)
+                    assertTrue(kotlin.math.abs(a.x - b.x) >= .245f || kotlin.math.abs(a.y - b.y) >= .205f)
+                }
+                if (live.size == 4) { reachedFour = true; break }
+            }
+            if (reachedFour) break
+        }
+        assertTrue("El cupo de cuatro debe ser utilizable con reserva legible", reachedFour)
+    }
 }

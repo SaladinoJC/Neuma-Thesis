@@ -25,6 +25,62 @@ import java.io.File
 class DefenderAndroidTest {
     @get:Rule val compose = createComposeRule()
 
+    @Test fun cuatroPentagramasIndependientesYPausaEnPracticaMixta() {
+        var chosenSeed: Int? = null
+        for (seed in 0..30) {
+            var clock = 0L
+            val session = DefenderSession { clock }
+            session.start(seed, DefenderConfiguration(stage = DefenderStage.N4, maxEnemies = 4))
+            for (time in 0L..100000L step 1000) {
+                clock = time; session.tick()
+                if (time < 90000) session.state.enemy?.let { session.select(it.note.name); session.fire() }
+                if (session.state.enemies.size == 4) { chosenSeed = seed; break }
+            }
+            if (chosenSeed != null) break
+        }
+        assertNotNull("Debe existir un recorrido reproducible con cuatro", chosenSeed)
+        var now = 0L
+        val model = DefenderViewModel(clock = { now })
+        compose.setContent {
+            val ui by model.ui.collectAsStateWithLifecycle()
+            DefenderApp(ui, model) { model.home() }
+        }
+        compose.runOnIdle {
+            model.stage(DefenderStage.N4); model.noteSound(false); model.effectsSound(false)
+            model.start(requireNotNull(chosenSeed))
+            for (time in 0L..100000L step 1000) {
+                now = time; model.tick()
+                if (time < 90000) model.ui.value.game.enemy?.let { model.select(it.note.name); model.fire() }
+                if (model.ui.value.game.enemies.size == 4) break
+            }
+        }
+        compose.onAllNodesWithTag("defender-target").assertCountEquals(4)
+        val bounds = compose.onAllNodesWithTag("defender-target").fetchSemanticsNodes().map { it.boundsInRoot }
+        for (i in bounds.indices) for (j in i + 1 until bounds.size) assertFalse(bounds[i].overlaps(bounds[j]))
+        screenshot("d2-cuatro-mixta")
+        compose.onNodeWithTag("defender-pause").performClick()
+        compose.onAllNodesWithTag("defender-target").assertCountEquals(0)
+        compose.runOnIdle { model.home() }
+    }
+
+    @Test fun corpusExtremosFaSolYAlteracionesConAudioSintetizado() = runBlocking {
+        val corpus = listOf(
+            DefenderNote(DefenderName.LA, 3, DefenderAccidental.FLAT),
+            DefenderNote(DefenderName.DO, 6, DefenderAccidental.SHARP),
+            DefenderNote(DefenderName.DO, 2, DefenderAccidental.FLAT, DefenderClef.BASS),
+            DefenderNote(DefenderName.MI, 4, DefenderAccidental.SHARP, DefenderClef.BASS))
+        compose.setContent {
+            Column { corpus.forEachIndexed { index, note ->
+                NoteStaff(note, Modifier.width(200.dp).height(130.dp).testTag("d2-extreme-$index"))
+            } }
+        }
+        compose.onNodeWithTag("d2-extreme-0").assertContentDescriptionEquals("Pentagrama en clave de sol")
+        compose.onNodeWithTag("d2-extreme-2").assertContentDescriptionEquals("Pentagrama en clave de fa")
+        screenshot("d2-extremos-sol-fa")
+        val audio = AndroidDefenderAudio()
+        for (note in corpus) assertTrue(audio.note(note.midi) >= 26460)
+    }
+
     @Test fun disparoPorPulsacionAciertaUnaVezYLimpiaSeleccion() {
         var now = 0L
         val model = DefenderViewModel(clock = { now })
