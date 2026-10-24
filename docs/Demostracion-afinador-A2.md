@@ -1,6 +1,6 @@
 # Afinador A2 — perfiles y afinaciones
 
-Trabajo **WIP, detenido por pedido del usuario el 2026-10-23**, sobre [#10](https://github.com/SaladinoJC/Tesis/issues/10), con la base A1/v0.11. La implementación local incorpora configuración persistida, editor y contratos de exportación/reinicio, pero el segundo incremento de código aún no pasó su verificación verde final. No guarda desempeño ni mediciones en el historial de voz. Guiado, referencias y entrenamiento siguen en sus tickets.
+Trabajo retomado por el usuario el **2026-10-24**, sobre [#10](https://github.com/SaladinoJC/Tesis/issues/10), con la base A1/v0.11. La implementación local incorpora configuración persistida, editor y contratos de exportación/reinicio y pasó la suite JVM completa. El recorrido Android y la entrega integrada siguen pendientes; este documento no acredita un APK nuevo. No guarda desempeño ni mediciones en el historial de voz. Guiado, referencias y entrenamiento siguen en sus tickets.
 
 ## Contrato previsto para el incremento
 
@@ -23,9 +23,13 @@ La prueba en S22 Ultra/guitarra sigue pendiente. Registrar Android, instrumento,
 
 Último verde real: primer slice de perfiles/presets/preferencias, `:app:testDebugUnitTest --tests '*tuner*'`, **seis pruebas aprobadas**, compilación en 1 min 45 s. Antes se comprobó rojo por ausencia de repositorio/sesión/configure.
 
-Después se agregó el flujo personalizada → edición → copia → exportación/ZIP/reinicio y se comprobó rojo por `saveCustom` y `DemonstrationExport.tunerConfiguration` ausentes, en 45 s. Se implementó ese segundo slice y se añadieron pruebas de presets, orden/duplicados, entradas inválidas, corrupción/esquemas futuros, cancelación, rango PCM y compatibilidad. **Esta versión posterior no se compiló ni ejecutó todavía**. La suite completa, los nueve casos de `TunerConfigurationTest`, las dos Android A1 actualizadas y el nuevo Android A2 deben verificarse al retomar.
+Después se agregó el flujo personalizada → edición → copia → exportación/ZIP/reinicio y se comprobó rojo por `saveCustom` y `DemonstrationExport.tunerConfiguration` ausentes, en 45 s. Se implementó ese segundo slice y se añadieron pruebas de presets, orden/duplicados, entradas inválidas, corrupción/esquemas futuros, cancelación, rango PCM y compatibilidad.
 
-No hay compilación activa al detener el trabajo. El padre coordina turnos de Gradle por memoria; no iniciar compilaciones paralelas. Próximo comando desde este worktree, cuando se asigne turno:
+El 2026-10-24 se ejecutó desde este worktree la **suite JVM completa: 78 pruebas, cero fallos/errores/omisiones, en 1 min 36 s**, con un worker y Kotlin en proceso. Incluye los nueve casos de `TunerConfigurationTest` y una prueba adicional del ViewModel: captura estable → cambio a Drop D → liberación de captura/limpieza de evidencia → preferencias Pro/cromático encoladas → relectura sin reabrir micrófono. Se conservan las pruebas anteriores de voz, almacenamiento y juegos. Hubo avisos del SDK XML y del receptor nullable preexistente en `PitchLabSessionTest`, sin fallo de compilación.
+
+El caso PCM recorrió los **29 objetivos MIDI 36–64**, con `referenceTone` senoidal sintético a 44.100 Hz, ventana de 4.096 muestras desde el índice 8.000 y `yin-v1` predeterminado. Todos conservaron nota/octava; máximo error absoluto observado **0,04265 cents**. Es una simulación de señal pura, sin transitorios de guitarra, ruta acústica ni teléfono, y no acredita esa exactitud en condiciones físicas.
+
+Comando reproducible (el padre coordina los turnos de Gradle por memoria; no iniciar compilaciones paralelas):
 
 ```powershell
 $env:JAVA_HOME = 'C:\Program Files\Android\Android Studio\jbr'
@@ -34,7 +38,7 @@ Set-Location Plataforma
 .\gradlew.bat :app:testDebugUnitTest --max-workers=1 --no-daemon '-Dorg.gradle.jvmargs=-Xmx768m -Dfile.encoding=UTF-8' '-Pkotlin.compiler.execution.strategy=in-process'
 ```
 
-Si pasa, inspeccionar el informe PCM antes de registrar métricas; no se midieron todavía los 29 objetivos del nuevo caso. Integrar con factory persistente de `MainActivity` del padre, luego compilar e instrumentar en la raíz por turnos. No se ejecutó Android, lint ni APK de A2 en este worktree.
+Informes locales en `Plataforma/app/build/test-results/testDebugUnitTest/`. Integrar con factory persistente de `MainActivity` del padre, luego compilar e instrumentar en la raíz por turnos. Las dos Android A1 actualizadas y el nuevo Android A2 siguen pendientes. No se ejecutó Android, lint ni APK de A2 en este worktree.
 
 ## Datos y compatibilidad
 
