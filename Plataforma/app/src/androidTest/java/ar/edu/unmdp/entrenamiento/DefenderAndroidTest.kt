@@ -1,6 +1,8 @@
 package ar.edu.unmdp.entrenamiento
 
 import android.graphics.Bitmap
+import android.view.View
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.test.*
@@ -26,7 +28,9 @@ class DefenderAndroidTest {
     @Test fun disparoPorPulsacionAciertaUnaVezYLimpiaSeleccion() {
         var now = 0L
         val model = DefenderViewModel(clock = { now })
+        lateinit var hostView: View
         compose.setContent {
+            hostView = LocalView.current
             val ui by model.ui.collectAsStateWithLifecycle()
             DefenderApp(ui, model) { model.home() }
         }
@@ -37,7 +41,7 @@ class DefenderAndroidTest {
         compose.onNodeWithTag("defender-name-${target.name}").performClick()
         // Leave source-time margin for the real down-to-dispatch delay in firePointer.
         compose.runOnIdle { now = 1000L }
-        compose.onNodeWithTag("defender-fire").performTouchInput { click() }
+        tapWithDeviceUptime(hostView, compose.onNodeWithTag("defender-fire").fetchSemanticsNode().boundsInRoot.center)
         compose.onNodeWithTag("defender-score").assertTextEquals("100 pts")
         compose.onNodeWithTag("defender-fire").assertIsNotEnabled()
         compose.onNodeWithTag("defender-target").assertDoesNotExist()
