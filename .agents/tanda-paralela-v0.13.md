@@ -31,7 +31,9 @@ La lectura llegó a **8% restante** (2026-10-24 13:38:56 UTC); se detuvo desarro
 
 - **A3:** rama `trabajo/afinador-a3`, último commit `ff23ede`. Cadena `220e446 → 8fc7469 → dff9316 → a9c760f → c1ddd04 → ff23ede`, ya incorporada a integración. **104 JVM/24 clases aprobadas**, 0 fallos/errores/omisiones, 1 min 04 s. Guiado, repaso, preferencias compatibles y resumen; regresión de criterio de preparación reproducida y corregida. Android controlado escrito, todavía sin compilar/ejecutar. Leer `docs/Demostracion-afinador-A3.md` desde su rama o integración.
 - **D2:** rama `trabajo/defender-d2`, último commit `7cba850`. Cadena `f2ea44c → 0db1ddb → b2b496f → 7cba850`, ya incorporada. **19 JVM aprobadas** (13 anteriores + 6 nuevas), 1 min 46 s. Dos Android nuevos pendientes. Riesgos: comprobar tarjetas/reservas en 360/411 dp, compilar uso de `Rect.overlaps`, completar rótulo explícito de clave/rango/alteración del resumen; no dar el ticket por completo. Leer `docs/Demostracion-defender-D2.md`.
-- **R2:** rama `trabajo/ritmo-r2`, checkpoint `03850a2`. Cadena `aa5deb5 → 3a22ead → 95e6ae4 → 423046b → ee19a13 → 73aa1a0 → 03850a2`, ya incorporada. Primer rojo real por APIs ausentes (1 min 27 s); producción posterior, corpus y Android escritos. **Último turno de verificación aún en curso al escribir este párrafo**; registrar su resultado antes de finalizar el cierre. Leer `docs/Rhythm-Tap-R2.md`.
+- **R2:** rama `trabajo/ritmo-r2`, último commit `abafa16`. Cadena `aa5deb5 → 3a22ead → 95e6ae4 → 423046b → ee19a13 → 73aa1a0 → 03850a2 → abafa16`, ya incorporada. Primer rojo real por APIs ausentes (1 min 27 s); producción posterior, corpus y Android escritos. **12 JVM aprobadas y `compileDebugAndroidTestKotlin` de su rama aprobado**, 1 min 41 s; esto no compila los Android nuevos de A3/D2 ni acredita ejecución Android o integración. Leer `docs/Rhythm-Tap-R2.md`.
+
+Los tres worktrees quedaron limpios, sin procesos Gradle propios ni emulador de esta tanda. No hubo push ni publicación/cierre de issues. El cierre conserva deliberadamente cuota para la próxima intervención del usuario, sin intentar consumir hasta el 5% exacto.
 
 ## Próximo paso al retomar
 
