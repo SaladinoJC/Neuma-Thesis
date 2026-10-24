@@ -1,20 +1,17 @@
 package ar.edu.unmdp.entrenamiento
 
-import android.os.SystemClock
-import android.view.MotionEvent
-import android.view.Window
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import ar.edu.unmdp.entrenamiento.rhythm.AndroidRhythmAudio
+import ar.edu.unmdp.entrenamiento.rhythm.RhythmPhase
 import ar.edu.unmdp.entrenamiento.rhythm.RhythmViewModel
 import ar.edu.unmdp.entrenamiento.rhythm.TapKind
 import kotlinx.coroutines.*
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
-import java.util.concurrent.atomic.AtomicLong
 
 class RhythmAndroidTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
@@ -30,49 +27,51 @@ class RhythmAndroidTest {
         compose.onNodeWithTag("rhythm-metronome").performScrollTo().performClick()
         compose.onNodeWithTag("rhythm-tap-sound").performScrollTo().performClick()
         lateinit var model: RhythmViewModel
-        lateinit var originalCallback: Window.Callback
-        val observedDown = AtomicLong(-1L)
         compose.runOnUiThread {
             model = ViewModelProvider(compose.activity)[RhythmViewModel::class.java]
-            originalCallback = compose.activity.window.callback
-            compose.activity.window.callback = object : Window.Callback by originalCallback {
-                override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-                    if (event.actionMasked == MotionEvent.ACTION_DOWN) {
-                        observedDown.set(event.eventTime)
-                        println("RHYTHM probe ACTION_DOWN eventUptime=${event.eventTime} nowUptime=${SystemClock.uptimeMillis()} phase=${model.ui.value.session.phase} elapsed=${model.ui.value.session.elapsedNanos}")
-                    }
-                    return originalCallback.dispatchTouchEvent(event)
-                }
-            }
         }
         try {
-        compose.onNodeWithTag("rhythm-play").performClick()
-        compose.waitUntil(10_000) { compose.onAllNodesWithTag("rhythm-tap").fetchSemanticsNodes().isNotEmpty() }
-        compose.runOnUiThread {
-            println("RHYTHM probe beforeGesture nowUptime=${SystemClock.uptimeMillis()} phase=${model.ui.value.session.phase} elapsed=${model.ui.value.session.elapsedNanos}")
-        }
-        compose.onNodeWithTag("rhythm-tap").performTouchInput {
-            down(center); advanceEventTime(100); up()
-        }
-        compose.runOnUiThread {
-            println("RHYTHM probe afterGesture nowUptime=${SystemClock.uptimeMillis()} phase=${model.ui.value.session.phase} taps=${model.ui.value.session.taps}")
-        }
-        compose.waitUntil(30_000) { compose.onAllNodesWithTag("rhythm-summary").fetchSemanticsNodes().isNotEmpty() }
-        val result = requireNotNull(model.ui.value.session.result)
-        val projectedDown = observedDown.get().takeIf { it >= 0 }?.let { it * 1_000_000L + result.inputClockOffsetNanos }
-        assertTrue("Expected one real count-in tap. rawDownUptime=${observedDown.get()} projectedDownNanos=$projectedDown countInStart=${result.countInStartNanos} inputOffset=${result.inputClockOffsetNanos} taps=${result.taps}",
-            result.taps.any { it.kind == TapKind.PREPARATION })
-        compose.onNodeWithTag("rhythm-status").performScrollTo().assertTextEquals("Ejercicio completado")
-        compose.onNodeWithText("Tap durante el conteo", substring = true).performScrollTo().assertIsDisplayed()
-        compose.onNodeWithTag("rhythm-repeat").performScrollTo().performClick()
-        compose.onNodeWithTag("rhythm-status").performScrollTo().assertTextEquals("Vista previa · No suena el patrón objetivo")
-        compose.onNodeWithTag("rhythm-play").performClick()
-        compose.waitUntil(10_000) { compose.onAllNodesWithTag("rhythm-tap").fetchSemanticsNodes().isNotEmpty() }
-        compose.activityRule.scenario.moveToState(Lifecycle.State.CREATED)
-        compose.activityRule.scenario.moveToState(Lifecycle.State.RESUMED)
-        compose.onNodeWithTag("rhythm-status").performScrollTo().assertTextEquals("Ejercicio interrumpido")
+            // Automatic Compose idling used to wait out the continuously refreshed 20s
+            // timeline before injecting the gesture. Render explicit frames while the
+            // real audio/monotonic clock keeps running, and inspect the public state.
+            compose.mainClock.autoAdvance = false
+            compose.onNodeWithTag("rhythm-play").performClick()
+            compose.waitUntil(10_000) { model.ui.value.session.phase == RhythmPhase.COUNT_IN }
+            compose.mainClock.advanceTimeBy(64)
+            val tapCenter = compose.onNodeWithTag("rhythm-tap").fetchSemanticsNode().boundsInWindow.center
+            assertEquals(RhythmPhase.COUNT_IN, model.ui.value.session.phase)
+            tapWithDeviceUptime(compose.activity.window.decorView, tapCenter)
+            compose.waitUntil(2_000) { model.ui.value.session.taps.isNotEmpty() }
+            val tap = model.ui.value.session.taps.single()
+            assertEquals(TapKind.PREPARATION, tap.kind)
+            assertNotNull(tap.inputUptimeMillis)
+            assertTrue(tap.relativeNanos < 0)
+
+            compose.waitUntil(30_000) { model.ui.value.session.phase == RhythmPhase.RESULTS }
+            val result = requireNotNull(model.ui.value.session.result)
+            assertTrue(result.completed)
+            assertEquals(listOf(tap), result.taps)
+            compose.mainClock.advanceTimeBy(64)
+            compose.mainClock.autoAdvance = true
+            compose.onNodeWithTag("rhythm-status").performScrollTo().assertTextEquals("Ejercicio completado")
+            compose.onNodeWithText("Tap durante el conteo", substring = true).performScrollTo().assertIsDisplayed()
+            compose.onNodeWithTag("rhythm-repeat").performScrollTo().performClick()
+            compose.onNodeWithTag("rhythm-status").performScrollTo().assertTextEquals("Vista previa · No suena el patrón objetivo")
+            assertEquals(result.score, model.ui.value.session.score)
+            assertTrue(model.ui.value.session.repeated)
+
+            compose.mainClock.autoAdvance = false
+            compose.onNodeWithTag("rhythm-play").performClick()
+            compose.waitUntil(10_000) { model.ui.value.session.phase == RhythmPhase.COUNT_IN }
+            compose.activityRule.scenario.moveToState(Lifecycle.State.CREATED)
+            compose.activityRule.scenario.moveToState(Lifecycle.State.RESUMED)
+            assertFalse(requireNotNull(model.ui.value.session.result).completed)
+            compose.mainClock.advanceTimeBy(64)
+            compose.mainClock.autoAdvance = true
+            compose.onNodeWithTag("rhythm-status").performScrollTo().assertTextEquals("Ejercicio interrumpido")
         } finally {
-            compose.runOnUiThread { compose.activity.window.callback = originalCallback }
+            compose.runOnUiThread { model.background() }
+            compose.mainClock.autoAdvance = true
         }
     }
     @Test fun audioRealAvanzaFramesYLiberaTimelineYTaps() = runBlocking {
