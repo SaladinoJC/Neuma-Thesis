@@ -2,6 +2,7 @@ package ar.edu.unmdp.entrenamiento
 
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.lifecycle.Lifecycle
 import ar.edu.unmdp.entrenamiento.simon.JsonSimonResults
 import ar.edu.unmdp.entrenamiento.simon.SimonResult
 import ar.edu.unmdp.entrenamiento.storage.Demonstration
@@ -15,6 +16,24 @@ import java.io.File
 /** Verifica la integración de los tres módulos sobre el perfil existente. */
 class ParallelFeaturesAndroidTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
+
+    @Test fun defenderPausaAlSalirDePrimerPlanoYReingresaEnPreparacion() {
+        compose.waitUntil(15_000) { compose.activity.hasWindowFocus() }
+        compose.onNodeWithTag("game-defender").performScrollTo().performClick()
+        compose.onNodeWithTag("defender-start").performScrollTo().performClick()
+        compose.onNodeWithTag("defender-target").assertIsDisplayed()
+        compose.activityRule.scenario.moveToState(Lifecycle.State.CREATED)
+        compose.activityRule.scenario.moveToState(Lifecycle.State.RESUMED)
+        compose.onNodeWithTag("defender-paused").assertIsDisplayed()
+        compose.onNodeWithTag("defender-target").assertDoesNotExist()
+        compose.onNodeWithTag("defender-lives").assertTextEquals("♥ 3")
+        compose.onNodeWithTag("defender-resume").performClick()
+        compose.onNodeWithTag("defender-target").assertIsDisplayed()
+        compose.runOnUiThread { compose.activity.onBackPressedDispatcher.onBackPressed() }
+        compose.onNodeWithTag("game-defender").performScrollTo().performClick()
+        compose.onNodeWithTag("defender-start").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithTag("defender-target").assertDoesNotExist()
+    }
 
     @Test fun nuevosFrentesVuelvenAlMenuSinModificarHistorialesPrevios() {
         compose.waitUntil(15_000) { compose.activity.hasWindowFocus() }

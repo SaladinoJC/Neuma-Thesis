@@ -91,7 +91,7 @@ fun DemonstrationApp(ui: DemonstrationUi, model: DemonstrationViewModel, onHome:
                 Text("Si el JSON local no se puede leer, conservá una copia de los archivos originales antes de reiniciar. La copia ZIP no repara ni importa datos.")
                 OutlinedButton(onClick = model::prepareRecovery, enabled = !ui.busy, modifier = Modifier.testTag("data-recovery")) { Text("Exportar originales para recuperación") }
                 Text("Reiniciar perfil local", style = MaterialTheme.typography.titleLarge)
-                Text("Borra historiales, mediciones, rachas y desbloqueos de esta app. Los archivos ya exportados se conservan.")
+                Text("Borra historiales, mediciones, rachas, desbloqueos y configuraciones del afinador de esta app. Los archivos ya exportados se conservan.")
                 OutlinedButton(onClick = { confirm = true }, enabled = !ui.busy, modifier = Modifier.testTag("data-reset")) { Text("Reiniciar datos") }
                 if (ui.busy) CircularProgressIndicator()
                 ui.message?.let { Text("Última operación", style = MaterialTheme.typography.labelLarge); Text(it, modifier = Modifier.testTag("data-message")) }
