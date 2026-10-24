@@ -29,7 +29,7 @@ class RhythmSessionTest {
     @Test fun `corpus semillas y selecciones conservan duraciones apariciones y serializacion`() {
         val fingerprints = mutableSetOf<String>()
         val json = kotlinx.serialization.json.Json
-        for (categories in listOf(setOf(RhythmCategory.QUARTER), setOf(RhythmCategory.EIGHTHS), RhythmCategory.entries.toSet())) {
+        for (categories in listOf(setOf(RhythmCategory.QUARTER), setOf(RhythmCategory.EIGHTHS), setOf(RhythmCategory.QUARTER, RhythmCategory.EIGHTHS))) {
             for (seed in 0L until 30L) {
                 val session = RhythmSession(); session.generate(categories, seed)
                 val score = requireNotNull(session.state.score)

@@ -19,7 +19,15 @@ data class Beat(val numerator: Int, val denominator: Int = 1) {
     fun asDouble(): Double = numerator.toDouble() / denominator
 }
 @Serializable
-enum class RhythmCategory(val code: String, val label: String) { QUARTER("R20", "Negras"), EIGHTHS("R21", "Dos corcheas") }
+enum class RhythmCategory(val code: String, val label: String) {
+    QUARTER("R20", "Negras"), EIGHTHS("R21", "Dos corcheas"),
+    HALF("R01", "Blancas"), WHOLE("R02", "Redondas"),
+    DOTTED_QUARTER_EIGHTH("R09", "Negra con puntillo + corchea"),
+    REST_EIGHTH("R10", "Silencio de corchea + corchea"),
+    EIGHTH_REST("R11", "Corchea + silencio de corchea"),
+    QUARTER_REST("R12", "Silencio de negra"), HALF_REST("R18", "Silencio de blanca"),
+    BAR_REST("R19", "Silencio de compás")
+}
 @Serializable
 data class RhythmNote(val duration: Beat, val rest: Boolean = false, val tieToNext: Boolean = false, val tuplet: Int? = null)
 @Serializable
@@ -47,11 +55,13 @@ enum class RhythmPhase { SETUP, PREVIEW, COUNT_IN, PLAYING, RESULTS }
     val attackIndex: Int? = null, val deltaNanos: Long? = null, val inputUptimeMillis: Long? = null)
 @Serializable data class RhythmAttack(val index: Int, val occurrenceIndex: Int, val offsetNanos: Long,
     val narrowNanos: Long, val wideNanos: Long, val kind: TapKind? = null, val deltaNanos: Long? = null)
+@Serializable data class RhythmSilence(val occurrenceIndex: Int, val startNanos: Long, val endNanos: Long,
+    val extraCount: Int, val respected: Boolean?)
 @Serializable data class RhythmResult(val score: RhythmScore, val completed: Boolean, val taps: List<RhythmTap>,
     val attacks: List<RhythmAttack>, val metronome: Boolean, val tapSound: Boolean, val repeated: Boolean,
     val origin: String = "practice", val timingVersion: String = "rhythm-timing-v1",
     val audioClockSource: String, val clockUncertaintyNanos: Long?, val inputClockOffsetNanos: Long,
-    val countInStartNanos: Long) {
+    val countInStartNanos: Long, val silences: List<RhythmSilence> = emptyList()) {
     val omissions: Int get() = attacks.count { it.kind == TapKind.OMITTED }
     val extras: Int get() = taps.count { it.kind == TapKind.EXTRA }
 }
@@ -70,11 +80,21 @@ class RhythmSession {
     private var uncertainty: Long? = 0L
     private var inputOffset = 0L
     val active: Boolean get() = state.phase == RhythmPhase.COUNT_IN || state.phase == RhythmPhase.PLAYING
-    val executionStartNanos: Long? get() = epoch?.plus(Beat(4).nanos(requireNotNull(state.score).bpm))
+    val executionStartNanos: Long? get() = epoch?.plus(requireNotNull(state.score).let { Beat(it.beatsPerBar).nanos(it.bpm) })
 
-    fun generate(selected: Set<RhythmCategory>, seed: Long) {
+    fun generate(selected: Set<RhythmCategory>, seed: Long, beatsPerBar: Int = 4, maxCandidates: Int = 500,
+        checkCancelled: () -> Unit = {}) {
         if (active) return
-        if (selected.isEmpty()) { state = state.copy(error = "Elegí al menos una categoría."); return }
+        if (selected.isEmpty()) { state = RhythmState(error = "Elegí al menos una categoría."); return }
+        if (beatsPerBar != 4 || selected.any { it != RhythmCategory.QUARTER && it != RhythmCategory.EIGHTHS }) {
+            try {
+                preview(generateSimpleRhythm(selected, seed, beatsPerBar, maxCandidates, checkCancelled))
+            } catch (failure: RhythmGenerationFailure) {
+                epoch = null
+                state = RhythmState(error = failure.message)
+            }
+            return
+        }
         val ordered = selected.sortedBy { it.code }
         val random = Random(seed)
         // R1 has a constructive solution: ten target beats (62.5%) and six connection beats.
@@ -119,7 +139,7 @@ class RhythmSession {
             RhythmAttack(index, owner, at, minOf(60_000_000L, d / 5), minOf(150_000_000L, d * 45 / 100))
         }
         state = state.copy(phase = RhythmPhase.COUNT_IN, taps = emptyList(), attacks = attacks,
-            elapsedNanos = -Beat(4).nanos(score.bpm), result = null, feedback = null, error = null)
+            elapsedNanos = -Beat(score.beatsPerBar).nanos(score.bpm), result = null, feedback = null, error = null)
     }
     fun advance(nowNanos: Long) {
         if (!active) return
@@ -168,7 +188,7 @@ class RhythmSession {
         val score = state.score ?: return
         epoch = null; state = RhythmState(RhythmPhase.PREVIEW, score, repeated = true)
     }
-    private fun endOffsetNanos(): Long = maxOf(Beat(16).nanos(requireNotNull(state.score).bpm),
+    private fun endOffsetNanos(): Long = maxOf(requireNotNull(state.score).let { Beat(it.beatsPerBar * it.bars.size).nanos(it.bpm) },
         state.attacks.lastOrNull()?.let { it.offsetNanos + it.wideNanos + 1 } ?: 0)
     private fun finish(completed: Boolean) {
         state = state.copy(phase = RhythmPhase.RESULTS,
@@ -178,5 +198,22 @@ class RhythmSession {
     private fun result(completed: Boolean) = RhythmResult(requireNotNull(state.score), completed,
         state.taps.toList(), state.attacks.toList(), metronome, tapSound, state.repeated,
         audioClockSource = audioClockSource, clockUncertaintyNanos = uncertainty, inputClockOffsetNanos = inputOffset,
-        countInStartNanos = requireNotNull(epoch))
+        countInStartNanos = requireNotNull(epoch), silences = silenceResults(completed))
+
+    private fun silenceResults(completed: Boolean): List<RhythmSilence> {
+        val score = requireNotNull(state.score)
+        return score.occurrences.flatMap { occurrence ->
+            var position = Beat(occurrence.bar * score.beatsPerBar) + occurrence.beat
+            occurrence.notes.mapNotNull { note ->
+                val start = position.nanos(score.bpm)
+                position += note.duration
+                val end = position.nanos(score.bpm)
+                if (!note.rest) null else {
+                    val extras = state.taps.count { it.kind == TapKind.EXTRA && it.relativeNanos >= start && it.relativeNanos < end }
+                    RhythmSilence(occurrence.index, start, end, extras,
+                        if (completed || state.elapsedNanos >= end) extras == 0 else null)
+                }
+            }
+        }
+    }
 }
