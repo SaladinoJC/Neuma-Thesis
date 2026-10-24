@@ -25,6 +25,14 @@ R2: figuras largas/silencios y métricas 2/4, 3/4, 4/4, factibilidad/cuota y not
 
 D2: N1–N4, clave de fa/mezcla, rangos y alteraciones simples, hasta cuatro enemigos legibles y matching geométrico por grafía. Sin DDA, desbloqueos ni acordes de D3–D7.
 
-## Estado inicial
+## Cierre por reserva de cuota
 
-Agentes trabajando en sus worktrees; todavía sin integración ni nuevas verificaciones. La primera lectura de cuota fue 55% usado/45% restante. Consultar commits y `.agents/estado-prototipo.md` al retomar: este documento se actualizará al cerrar la tanda.
+La lectura llegó a **8% restante** (2026-10-24 13:38:56 UTC); se detuvo desarrollo y se cerraron checkpoints. No hay APK v0.13 verificado ni cambio de entrega: `main` conserva código v0.12; allí se publicará únicamente esta continuidad local. La integración parcial queda en `trabajo/integracion-v0.13`, con los tres módulos incorporados y host/versionado preparado, **sin compilar ni verificar conjuntamente**.
+
+- **A3:** rama `trabajo/afinador-a3`, último commit `ff23ede`. Cadena `220e446 → 8fc7469 → dff9316 → a9c760f → c1ddd04 → ff23ede`, ya incorporada a integración. **104 JVM/24 clases aprobadas**, 0 fallos/errores/omisiones, 1 min 04 s. Guiado, repaso, preferencias compatibles y resumen; regresión de criterio de preparación reproducida y corregida. Android controlado escrito, todavía sin compilar/ejecutar. Leer `docs/Demostracion-afinador-A3.md` desde su rama o integración.
+- **D2:** rama `trabajo/defender-d2`, último commit `7cba850`. Cadena `f2ea44c → 0db1ddb → b2b496f → 7cba850`, ya incorporada. **19 JVM aprobadas** (13 anteriores + 6 nuevas), 1 min 46 s. Dos Android nuevos pendientes. Riesgos: comprobar tarjetas/reservas en 360/411 dp, compilar uso de `Rect.overlaps`, completar rótulo explícito de clave/rango/alteración del resumen; no dar el ticket por completo. Leer `docs/Demostracion-defender-D2.md`.
+- **R2:** rama `trabajo/ritmo-r2`, checkpoint `03850a2`. Cadena `aa5deb5 → 3a22ead → 95e6ae4 → 423046b → ee19a13 → 73aa1a0 → 03850a2`, ya incorporada. Primer rojo real por APIs ausentes (1 min 27 s); producción posterior, corpus y Android escritos. **Último turno de verificación aún en curso al escribir este párrafo**; registrar su resultado antes de finalizar el cierre. Leer `docs/Rhythm-Tap-R2.md`.
+
+## Próximo paso al retomar
+
+Consultar primero el estado y este documento; trabajar sobre la rama de integración, preservando `main` y el APK v0.12. Terminar pendientes concretos, ejecutar suite JVM conjunta, lint y APK/app de pruebas con un worker; después un solo emulador para nuevos recorridos y regresiones. Corregir/integrar antes de generar entrega v0.13. No repetir A3/R2/D2 desde cero ni atribuir a la integración los verdes aislados de sus ramas. Conservar aparte la prueba física pendiente.
