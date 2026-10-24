@@ -7,7 +7,8 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 data class RhythmUiState(val session: RhythmState = RhythmState(), val selected: Set<RhythmCategory> = emptySet(),
-    val metronome: Boolean = true, val tapSound: Boolean = true, val busy: Boolean = false, val error: String? = null)
+    val metronome: Boolean = true, val tapSound: Boolean = true, val busy: Boolean = false, val error: String? = null,
+    val beatsPerBar: Int = 4)
 
 class RhythmViewModel(private val audio: RhythmAudio = AndroidRhythmAudio(),
     private val clock: () -> Long = System::nanoTime,
@@ -27,18 +28,27 @@ class RhythmViewModel(private val audio: RhythmAudio = AndroidRhythmAudio(),
     }
     fun metronome(value: Boolean) { if (!session.active && !ui.value.busy) mutableUi.value = ui.value.copy(metronome = value) }
     fun tapSound(value: Boolean) { if (!session.active && !ui.value.busy) mutableUi.value = ui.value.copy(tapSound = value) }
+    fun meter(beats: Int) {
+        if (beats !in 2..4 || session.active || ui.value.busy || job?.isCompleted == false) return
+        mutableUi.value = ui.value.copy(beatsPerBar = beats, error = null)
+        session.setup(); publish()
+    }
     fun generate(seed: Long = clock()) {
         if (session.active || ui.value.busy || job?.isCompleted == false) return
         val selected = ui.value.selected.toSet()
+        val meter = ui.value.beatsPerBar
         if (selected.isEmpty()) { mutableUi.value = ui.value.copy(error = "Elegí al menos una categoría."); return }
         mutableUi.value = ui.value.copy(busy = true, error = null)
         job = viewModelScope.launch {
             try {
-                val score = withContext(generationDispatcher) {
-                    RhythmSession().apply { generate(selected, seed) }.state.score
+                val generated = withContext(generationDispatcher) {
+                    val context = currentCoroutineContext()
+                    RhythmSession().apply { generate(selected, seed, meter, checkCancelled = { context.ensureActive() }) }.state
                 }
                 ensureActive()
-                session.preview(requireNotNull(score)); publish()
+                if (generated.score != null) session.preview(generated.score)
+                else { session.setup(); mutableUi.value = ui.value.copy(error = generated.error) }
+                publish()
             } catch (cancelled: CancellationException) { throw cancelled }
             catch (failure: Exception) { mutableUi.value = ui.value.copy(error = "No se pudo generar: ${failure.message}") }
             finally { mutableUi.value = ui.value.copy(busy = false) }
@@ -50,7 +60,8 @@ class RhythmViewModel(private val audio: RhythmAudio = AndroidRhythmAudio(),
         mutableUi.value = ui.value.copy(busy = true, error = null)
         job = viewModelScope.launch {
             try {
-                val start = audio.start(requireNotNull(session.state.score).bpm, options.metronome)
+                val score = requireNotNull(session.state.score)
+                val start = audio.start(score.bpm, options.metronome, score.beatsPerBar)
                 ensureActive()
                 inputOffset = clock() - uptimeMillis() * 1_000_000L
                 session.play(start.originNanos, options.metronome, options.tapSound, start.source,

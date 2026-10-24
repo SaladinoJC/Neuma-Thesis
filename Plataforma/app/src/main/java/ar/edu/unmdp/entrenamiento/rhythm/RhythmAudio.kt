@@ -11,6 +11,7 @@ import kotlin.math.sin
 data class RhythmAudioStart(val originNanos: Long, val source: String, val uncertaintyNanos: Long?)
 interface RhythmAudio {
     suspend fun start(bpm: Int, metronome: Boolean): RhythmAudioStart
+    suspend fun start(bpm: Int, metronome: Boolean, beatsPerBar: Int): RhythmAudioStart = start(bpm, metronome)
     fun tap()
     fun stop()
     fun close() = stop()
@@ -25,13 +26,16 @@ class AndroidRhythmAudio : RhythmAudio {
     fun playbackFrames(): Int = synchronized(lock) { timeline?.playbackHeadPosition ?: lastFrames }
     fun activeTracks(): Int = synchronized(lock) { listOfNotNull(timeline, feedback).size }
 
-    override suspend fun start(bpm: Int, metronome: Boolean): RhythmAudioStart = withContext(Dispatchers.IO) {
+    override suspend fun start(bpm: Int, metronome: Boolean): RhythmAudioStart = start(bpm, metronome, 4)
+    override suspend fun start(bpm: Int, metronome: Boolean, beatsPerBar: Int): RhythmAudioStart = withContext(Dispatchers.IO) {
         require(bpm in 40..120)
+        require(beatsPerBar in 2..4)
         val sampleRate = 44100
-        val pcm = ShortArray((20L * 60 * sampleRate / bpm).toInt())
-        for (pulse in 0 until if (metronome) 20 else 4) {
+        val totalPulses = beatsPerBar * 5
+        val pcm = ShortArray((totalPulses.toLong() * 60 * sampleRate / bpm).toInt())
+        for (pulse in 0 until if (metronome) totalPulses else beatsPerBar) {
             currentCoroutineContext().ensureActive()
-            val click = click(sampleRate, if (pulse % 4 == 0) 1300.0 else 900.0)
+            val click = click(sampleRate, if (pulse % beatsPerBar == 0) 1300.0 else 900.0)
             val frame = (pulse.toLong() * 60 * sampleRate / bpm).toInt()
             click.copyInto(pcm, frame, 0, minOf(click.size, pcm.size - frame))
         }
