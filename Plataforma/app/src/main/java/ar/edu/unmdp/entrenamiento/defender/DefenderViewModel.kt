@@ -30,16 +30,9 @@ class DefenderViewModel(private val audio: DefenderAudio = AndroidDefenderAudio(
         publish(); launchTicker()
     }
     fun select(name: DefenderName) { session.select(name); publish() }
-    fun fire() {
-        android.util.Log.i("[DEBUG-d1]", "semantic fire before=${session.state}")
-        session.fire(); publish()
-        android.util.Log.i("[DEBUG-d1]", "semantic fire after=${session.state}")
-    }
+    fun fire() { session.fire(); publish() }
     fun firePointer(eventUptimeMillis: Long, dispatchUptimeMillis: Long, capturedSelection: DefenderName) {
-        val probeNow = clock()
-        android.util.Log.i("[DEBUG-d1]", "pointer event=$eventUptimeMillis dispatch=$dispatchUptimeMillis clock=$probeNow source=${probeNow + eventUptimeMillis - dispatchUptimeMillis} captured=$capturedSelection before=${session.state}")
-        session.fireAt(probeNow + eventUptimeMillis - dispatchUptimeMillis, capturedSelection)
-        android.util.Log.i("[DEBUG-d1]", "pointer after=${session.state}")
+        session.fireAt(clock() + eventUptimeMillis - dispatchUptimeMillis, capturedSelection)
         publish()
         if (session.state.phase == DefenderPhase.RUNNING && ticker?.isActive != true) launchTicker()
     }
