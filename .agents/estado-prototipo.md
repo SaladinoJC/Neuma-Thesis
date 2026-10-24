@@ -1,8 +1,10 @@
 # Estado del prototipo
 
-Última actualización: 2026-10-23.
+Última actualización: 2026-10-24.
 
 ## Decisiones y origen
+
+- **Reanudación de los tres frentes (usuario, 2026-10-24):** «Sigamos con los 3 frentes como dejamos ayer […] tené en cuenta que no se pisen». Se retomaron A2/#10, R1/#16 y D1/#23 con agentes en sus worktrees originales y turnos exclusivos de Gradle; el agente principal mantiene los archivos compartidos e integración en `trabajo/integracion-v0.12-continuacion`. La pausa del 2026-10-23 quedó levantada. Continúa el alcance local, sin push ni cierre de tickets.
 
 - **Trabajo paralelo autorizado (usuario, 2026-10-23):** aceptó «hagamos eso» sobre tres frentes con subagentes y worktrees: A2/#10, R1/#16 y D1/#23. Base común local `c0f9307` (v0.11 y especificaciones antes sin commit), ramas `trabajo/afinador-a2`, `trabajo/ritmo-r1`, `trabajo/defender-d1` en `C:/Users/Juan/Tesis-worktrees/`. Un agente por frente; integración compartida y verificación pesada por turnos a cargo del agente principal. Autorización de implementación local, sin push ni publicación externa. No equivale a implementar los tickets dependientes posteriores en esta misma tanda.
 
@@ -40,6 +42,8 @@
 - **Elecciones técnicas provisionales del agente para instrumentos:** catálogo candidato de la especificación (A: piano/violín/flauta/marimba; B: flauta/clarinete/trompeta/trombón; C: flauta/clarinete/oboe/fagot); Do4 real, dinámica `mf`, OGG mono/44,1 kHz/1,5 s, RMS objetivo 0,08 antes del fade de 80 ms. Primera escucha automática; pantalla vertical; feedback antes de continuar y botones fijos en resumen. No son parámetros pedagógicos calibrados ni decisiones del director.
 
 ## Avance comprobado
+
+- **v0.12 reanudada e integración en verificación (2026-10-24):** checkpoints de ayer y correcciones/documentación actuales reunidos en `trabajo/integracion-v0.12-continuacion`. Suite JVM conjunta: 97 pruebas/22 clases aprobadas; lint 0 errores/14 advertencias; APK de app y pruebas compilados. Suite Android completa en Pixel_6/API 34 en curso: primer fallo en disparo táctil de Defender (espera 100 pts, observa 0); diagnóstico pendiente con probe temporal `50343f3` de su rama, todavía sin incorporar. No hay entrega Android validada aún. Consultar `docs/Verificacion-prototipo-v0.12.md`; el estado pausado siguiente es antecedente.
 
 - **Tanda v0.12 pausada por el usuario (2026-10-23):** pidió dejar el trabajo por hoy por el límite de la ventana de cinco horas. Checkpoints WIP separados para A2/#10, R1/#16 y D1/#23, e integración compartida en `trabajo/integracion-v0.12` (`d6e3d7e`). El código de `main` se mantiene en v0.11; no hay v0.12 integrada ni APK nuevo verificado. Hay verdes parciales y regresiones/correcciones pendientes; leer **`.agents/retomar-paralelo-v0.12.md`** para ramas, hashes, contratos y orden de pruebas. No repetir desde cero ni tratar los tickets como completados. No continuar hasta que el usuario pida retomar.
 
@@ -120,6 +124,8 @@ Pruebas de sesión y ViewModel: límite real de tres escuchas, intentos antes de
 Ejecución final v0.3: 21 pruebas JVM y 11 Android aprobadas, lint sin errores/14 advertencias y APK debug generado; 3 min 50 s en Pixel_6/API 34. Revisión en dos ejes: Spec sin hallazgos; Standards sin incumplimientos documentados, con dos duplicaciones corregidas mediante los componentes PCM/JSON compartidos y un ajuste para conservar la cancelación del timeout al notificar inicio de audio. Registro y APK en `docs/Verificacion-Instrumentos-v0.3.md`; artefacto `Plataforma/app/build/outputs/apk/debug/entrenamiento-auditivo-v0.3.apk` (11.329.014 bytes). No se probó el S22 Ultra ni se midió latencia acústica o eficacia pedagógica.
 
 ## Próximo paso sugerido
+
+**Prioridad actual (2026-10-24):** terminar la suite Android y el diagnóstico del disparo táctil de Defender en la rama de integración; incorporar y retirar el probe temporal según corresponda, verificar las correcciones y documentar resultados. Los tres frentes ya tienen verdes JVM; no reiniciar sus implementaciones. Entrega v0.12 y actualización de `main` pendientes de verificación Android.
 
 **Prioridad al retomar después de la pausa del 2026-10-23:** leer `.agents/retomar-paralelo-v0.12.md`. A2/#10, R1/#16 y D1/#23 ya tienen código WIP en tres worktrees; primero verificar las correcciones y suites pendientes, después integrar junto a `d6e3d7e` y ejecutar comprobaciones completas. Los párrafos siguientes conservan antecedentes; «próximo A2» no significa que deba reimplementarse desde cero. La última entrega comprobada sigue siendo v0.11.
 

@@ -1,6 +1,6 @@
 # Reanudar la tanda paralela v0.12
 
-**Pausada por pedido explícito del usuario el 2026-10-23**, por cercanía del límite de la ventana de cinco horas. No continuar automáticamente hasta que el usuario pida retomar. No hay v0.12 integrada ni verificada. El código de `main` conserva v0.11; el trabajo parcial está guardado en ramas locales.
+**Reanudada por pedido del usuario el 2026-10-24.** Integración actual en `trabajo/integracion-v0.12-continuacion`; consultar primero `.agents/estado-prototipo.md` y `docs/Verificacion-prototipo-v0.12.md`. El resto de este archivo conserva los checkpoints y pendientes de la pausa del 2026-10-23 como antecedente, no como estado actual. `main` todavía conserva v0.11 mientras se verifica Android.
 
 ## Base y distribución
 
