@@ -67,16 +67,16 @@ fun TunerApp(ui: TunerUiState, model: TunerViewModel, onHome: () -> Unit) {
                 Text(state.fixedString?.let { "Cuerda $it fijada" }
                     ?: state.stringNumber?.let { "Cuerda $it detectada" } ?: "Sin cuerda asignada")
                 if (configuration?.mode != TunerMode.GUIDED) {
-                Text("Fijar cuerda · sexta → primera")
-                (configuration?.currentTuning?.notesSixToFirst ?: listOf(40, 45, 50, 55, 59, 64)).mapIndexed { index, midi -> (6 - index) to midi }.chunked(3).forEach { row ->
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        row.forEach { (number, midi) ->
-                            FilterChip(selected = state.fixedString == number, enabled = configuration != null && !ui.configurationBusy, onClick = { model.fixString(number) },
-                                label = { Text("$number · ${noteName(midi)}") })
+                    Text("Fijar cuerda · sexta → primera")
+                    (configuration?.currentTuning?.notesSixToFirst ?: listOf(40, 45, 50, 55, 59, 64)).mapIndexed { index, midi -> (6 - index) to midi }.chunked(3).forEach { row ->
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            row.forEach { (number, midi) ->
+                                FilterChip(selected = state.fixedString == number, enabled = configuration != null && !ui.configurationBusy, onClick = { model.fixString(number) },
+                                    label = { Text("$number · ${noteName(midi)}") })
+                            }
                         }
                     }
-                }
-                if (state.fixedString != null) TextButton(onClick = { model.fixString(null) }) { Text("Liberar cuerda") }
+                    if (state.fixedString != null) TextButton(onClick = { model.fixString(null) }) { Text("Liberar cuerda") }
                 }
                 Text(if (state.running) "Micrófono activo" else "Micrófono detenido", modifier = Modifier.testTag("tuner-status"))
                 Button(onClick = {
