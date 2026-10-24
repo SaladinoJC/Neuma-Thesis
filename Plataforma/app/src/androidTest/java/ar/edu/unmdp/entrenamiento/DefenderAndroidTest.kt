@@ -24,7 +24,8 @@ class DefenderAndroidTest {
     @get:Rule val compose = createComposeRule()
 
     @Test fun disparoPorPulsacionAciertaUnaVezYLimpiaSeleccion() {
-        val model = DefenderViewModel(clock = { 0L })
+        var now = 0L
+        val model = DefenderViewModel(clock = { now })
         compose.setContent {
             val ui by model.ui.collectAsStateWithLifecycle()
             DefenderApp(ui, model) { model.home() }
@@ -34,6 +35,8 @@ class DefenderAndroidTest {
         compose.onNodeWithTag("defender-start").performScrollTo().performClick()
         val target = requireNotNull(model.ui.value.game.enemy).note.name
         compose.onNodeWithTag("defender-name-${target.name}").performClick()
+        // Leave source-time margin for the real down-to-dispatch delay in firePointer.
+        compose.runOnIdle { now = 1000L }
         compose.onNodeWithTag("defender-fire").performTouchInput { click() }
         compose.onNodeWithTag("defender-score").assertTextEquals("100 pts")
         compose.onNodeWithTag("defender-fire").assertIsNotEnabled()
