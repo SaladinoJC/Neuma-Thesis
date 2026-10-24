@@ -1,6 +1,6 @@
 # Plan de incrementos del afinador v1
 
-Estado: puntos de prueba, granularidad y dependencias aprobados por el usuario mediante «Perfecto» el 2026-10-22. Especificación y seis tickets publicados. A1 implementado en software el 2026-10-23, entrega v0.11; prueba física pendiente y ticket aún abierto. A2–A6 pendientes. [Verificación de A1](Verificacion-afinador-v0.11.md).
+Estado: puntos de prueba, granularidad y dependencias aprobados por el usuario mediante «Perfecto» el 2026-10-22. Especificación y seis tickets publicados. A1 y A2 implementados y verificados en software hasta v0.12; prueba física e issues abiertas pendientes. A3 autorizado y en desarrollo el 2026-10-24; A4–A6 pendientes. [Verificación de la entrega](Verificacion-prototipo-v0.12.md).
 
 Fuente: [especificación](Especificacion-afinador-v1.md), basada en el alcance confirmado de [la entrevista](Definicion-afinador.md). Publicado en SaladinoJC/Tesis con `ready-for-agent` y bloqueos nativos. Especificación: [#8](https://github.com/SaladinoJC/Tesis/issues/8), referencia que no debe cerrarse para comenzar. No se modificaron ni cerraron issues anteriores.
 

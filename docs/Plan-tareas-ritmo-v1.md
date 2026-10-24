@@ -1,6 +1,6 @@
 # Plan de incrementos de Rhythm Tap v1
 
-Estado: puntos de prueba, división y dependencias aprobados por el usuario mediante «perfecto» el 2026-10-22. Especificación y seis tickets publicados; implementación pendiente.
+Estado: puntos de prueba, división y dependencias aprobados por el usuario mediante «perfecto» el 2026-10-22. Especificación y seis tickets publicados. R1 implementado y verificado en software en v0.12; R2 autorizado y en desarrollo el 2026-10-24. R3–R6 pendientes; prueba física y cierre de issues pendientes. [Verificación de la entrega](Verificacion-prototipo-v0.12.md).
 
 Fuente: [especificación](Especificacion-ritmo-v1.md). Cada ticket entrega un recorrido ejecutable a través de interfaz, reglas, audio/datos necesarios y verificación. No separar generador, renderizador y evaluador en tickets horizontales que no permitan practicar nada al terminar.
 

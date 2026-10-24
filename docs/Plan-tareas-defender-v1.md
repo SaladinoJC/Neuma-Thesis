@@ -1,6 +1,6 @@
 # Plan de incrementos de Defender v1
 
-Estado: puntos de prueba, siete incrementos y dependencias aprobados por el usuario mediante «perfecto» el 2026-10-22. Especificación y siete tickets publicados; implementación pendiente.
+Estado: puntos de prueba, siete incrementos y dependencias aprobados por el usuario mediante «perfecto» el 2026-10-22. Especificación y siete tickets publicados. D1 implementado y verificado en software en v0.12; D2 autorizado y en desarrollo el 2026-10-24. D3–D7 pendientes; prueba física y cierre de issues pendientes. [Verificación de la entrega](Verificacion-prototipo-v0.12.md).
 
 Fuente: [especificación](Especificacion-defender-v1.md), [entrevista](Definicion-defender.md) y referencia visual aportada por el usuario. Cada incremento entrega un recorrido jugable, con interfaz, reglas, datos necesarios y verificación. Conservar decisiones experimentales identificadas y compatibilidad con las ampliaciones ya integradas.
 
