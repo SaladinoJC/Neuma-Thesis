@@ -23,6 +23,28 @@ import java.io.File
 class DefenderAndroidTest {
     @get:Rule val compose = createComposeRule()
 
+    @Test fun disparoPorPulsacionAciertaUnaVezYLimpiaSeleccion() {
+        val model = DefenderViewModel(clock = { 0L })
+        compose.setContent {
+            val ui by model.ui.collectAsStateWithLifecycle()
+            DefenderApp(ui, model) { model.home() }
+        }
+        compose.onNodeWithTag("defender-note-sound").performScrollTo().performClick()
+        compose.onNodeWithTag("defender-effects-sound").performScrollTo().performClick()
+        compose.onNodeWithTag("defender-start").performScrollTo().performClick()
+        val target = requireNotNull(model.ui.value.game.enemy).note.name
+        compose.onNodeWithTag("defender-name-${target.name}").performClick()
+        compose.onNodeWithTag("defender-fire").performTouchInput { click() }
+        compose.onNodeWithTag("defender-score").assertTextEquals("100 pts")
+        compose.onNodeWithTag("defender-fire").assertIsNotEnabled()
+        compose.onNodeWithTag("defender-target").assertDoesNotExist()
+        compose.runOnIdle {
+            assertEquals(1, model.ui.value.game.results.size)
+            assertEquals(0, model.ui.value.game.failedShots)
+            assertNull(model.ui.value.game.selected)
+            model.home()
+        }
+    }
     @Test fun partidaVerticalCompletaPausaOcultaContenidoYRevisaTresLlegadas() {
         var now = 0L
         val model = DefenderViewModel(clock = { now })

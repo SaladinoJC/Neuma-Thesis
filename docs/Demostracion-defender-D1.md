@@ -1,6 +1,6 @@
-# Defender de notas — incremento D1 / #23 (WIP)
+# Defender de notas — incremento D1 / #23
 
-Estado al detener la sesión del 2026-10-23 por pedido del usuario: implementación en progreso, **sin entrega verificada**. El agente raíz todavía debe integrar la rama y comprobarla. No presentar #23 como completado ni generar APK definitivo con este checkpoint.
+Retomado el 2026-10-24 sobre el checkpoint local `0edf345`. La verificación Android e integración de los tres frentes se realiza en la rama compartida; este documento distingue la comprobación JVM de ese recorrido. No presentar #23 como completado hasta verificar Android ni atribuir prueba física al emulador.
 
 Primer recorrido de práctica: notas naturales Mi4–Fa5 en clave de sol, un enemigo radial, tres vidas y 100 puntos por eliminación. El recorrido no guarda resultados ni modifica desbloqueos. El DDA, las alteraciones y varios enemigos pertenecen a los siguientes tickets.
 
@@ -22,7 +22,7 @@ La composición toma como referencia `docs/imagenes/capturadefender.png`: campo 
 
 El sonido de nota usa `referenceTone`: seno de 600 ms, amplitud 0,2 y fade de 20 ms, con altura/octava reales, temperamento igual y La4=440 Hz. Los efectos son senos de 100 ms y amplitud 0,1: acierto 1.800 Hz, fallo 180 Hz y llegada 90 Hz, con entrada/salida suavizadas. Todo se reproduce como PCM16 mono a 44.100 Hz; cada pista se libera al terminar o cancelar. Son elecciones técnicas provisionales del agente. No hay muestras nuevas de terceros ni micrófono. Las reglas temporales, audibilidad y comodidad táctil requieren comprobación en teléfono; una prueba de emulador no acredita latencia acústica ni eficacia pedagógica.
 
-## Verificación
+## Verificación histórica al pausar el 2026-10-23
 
 - Primer rojo: compilación falló por ausencia de los tipos del dominio/VM, antes de su implementación (59 s).
 - Primer verde real: `:app:testDebugUnitTest --tests '*DefenderSessionTest'` aprobó un tracer test de disparo antes del deadline y empate, y compiló UI/audio (2 min 7 s).
@@ -39,3 +39,12 @@ $env:ANDROID_HOME="$env:LOCALAPPDATA\Android\Sdk"
 ```
 
 El agente raíz integrará entrada al menú y ciclo de vida antes de verificar el APK conjunto. Contrato: `defender.DefenderViewModel()` sin Context, `ui.DefenderApp(ui, model, onHome)`, `prepare()` al entrar, `background()` al pausar Activity, `home()` al salir. El reloj de prueba es inyectable. Resultados/configuración/eventos son serializables en memoria, sin persistencia ni progreso.
+
+## Revisión del 2026-10-24
+
+Se conservaron los contratos y correcciones del checkpoint, incluida preparación real de sesión y recomputación determinista ante un disparo con timestamp anterior al último tick. Se agregó una regresión pública para un disparo justo antes de la tercera llegada entregado después del game over: debe recuperar la vida, eliminar el objetivo, quitar el cierre provisional y terminar posteriormente una sola vez. Los resultados resueltos y el audio no se duplican al repetir el mismo evento.
+
+La prueba Android adicional pulsa físicamente Disparar mediante `performTouchInput`, exige un solo acierto, selección vacía, botón deshabilitado y ningún disparo fallido espurio. El agente principal agrega además una prueba de Activity real para segundo plano, reanudación explícita y salida/reentrada. Estas pruebas Android se ejecutarán en integración; su escritura no equivale a aprobación.
+
+Límite del audio ante entrega tardía: si la llegada ya sonó antes de recibirse un disparo anterior al deadline, la corrección lógica no puede retirar ese sonido. Se deduplica la resolución por enemigo para no emitir un segundo efecto. La prueba de VM documenta este caso; no acredita sincronía acústica.
+Verificación JVM del 2026-10-24: comando `:app:testDebugUnitTest --tests '*Defender*Test'` con un worker, daemon de uso único, heap 768 MiB y compilador Kotlin in-process. Primer corte: compilación aprobada, 12/13 pruebas verdes en 1 min 11 s; la restante falló por igualdad exacta de coordenada Float (`0.82` frente a `0.82000005`). Se corrigió la comparación geométrica a tolerancia `1e-6`, sin modificar trayectorias ni reglas. Corte final: **13/13 JVM aprobadas** (10 sesión, 3 ViewModel), BUILD SUCCESSFUL en 33 s. Los avisos de SDK XML y nulabilidad en el test previo `PitchLabSessionTest` no se trataron como resultados de audio ni errores de Defender. `git diff --check` sin errores. Sin emulador ejecutado por este agente, sin APK definitivo ni prueba S22 Ultra.

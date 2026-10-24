@@ -80,7 +80,7 @@ private fun DefenderSetup(ui: DefenderUiState, model: DefenderViewModel) {
             Switch(checked = ui.effectsSound, onCheckedChange = model::effectsSound, modifier = Modifier.testTag("defender-effects-sound"))
         }
         Button(onClick = { model.start() }, modifier = Modifier.fillMaxWidth().height(56.dp).testTag("defender-start")) { Text("Jugar Defender") }
-        Text("Sin DDA ni desbloqueos en este incremento. El resumen queda en memoria.", color = Muted)
+        Text("Esta práctica no modifica tu progreso. Podés revisar el resumen al terminar.", color = Muted)
     }
 }
 
@@ -222,7 +222,7 @@ private fun DefenderSummary(ui: DefenderUiState, model: DefenderViewModel) {
             style = MaterialTheme.typography.headlineLarge, modifier = Modifier.testTag("defender-summary"))
         Text("${game.points} puntos · ${game.results.count { it.resolution == DefenderResolution.ELIMINATED }} eliminados")
         Text("${game.results.count { it.resolution == DefenderResolution.ARRIVED }} llegadas · ${game.failedShots} disparos fallidos")
-        Text("Práctica · resumen en memoria · sin desbloqueos", color = Muted)
+        Text("Práctica · no modifica tu progreso", color = Muted)
         Text("Semilla ${game.seed} · ${game.configuration.version}", color = Muted, fontSize = 12.sp)
         Button(onClick = { model.start() }, modifier = Modifier.fillMaxWidth()) { Text("Nueva práctica") }
         Text("Revisión", style = MaterialTheme.typography.titleLarge)

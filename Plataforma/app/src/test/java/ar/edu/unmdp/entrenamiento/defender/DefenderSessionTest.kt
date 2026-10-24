@@ -7,6 +7,29 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 class DefenderSessionTest {
+    @Test fun `disparo previo a tercera llegada corrige game over y sigue sin duplicar resultados`() {
+        var now = 0L
+        val session = DefenderSession { now }; session.start(7)
+        now = 24_000; session.tick()
+        val third = requireNotNull(session.state.enemy)
+        assertEquals(1, session.state.lives)
+        session.select(third.note.name)
+        now = third.deadlineMillis + 50; session.tick()
+        assertEquals(DefenderPhase.FINISHED, session.state.phase)
+        session.fireAt(third.deadlineMillis - 1, third.note.name)
+        assertEquals(DefenderPhase.RUNNING, session.state.phase)
+        assertEquals(1, session.state.lives)
+        assertEquals(100, session.state.points)
+        assertEquals(3, session.state.results.size)
+        assertEquals(2, session.state.events.count { it.kind == "ARRIVAL" })
+        assertTrue(session.state.events.none { it.kind == "GAME_OVER" })
+        session.fireAt(third.deadlineMillis - 1, third.note.name)
+        now = 48_000; session.tick()
+        assertEquals(DefenderPhase.FINISHED, session.state.phase)
+        assertEquals(4, session.state.results.size)
+        assertEquals(100, session.state.points)
+        assertEquals(1, session.state.events.count { it.kind == "GAME_OVER" })
+    }
     @Test fun `fallar conserva seleccion y solo una llegada puede quitar vida`() {
         var now = 0L
         val session = DefenderSession { now }; session.start(11)
@@ -74,7 +97,8 @@ class DefenderSessionTest {
             val enemy = requireNotNull(session.state.enemy)
             notes += enemy.note.midi; routes += enemy.entry
             assertTrue(enemy.note.staffStep in 0..8)
-            assertEquals(DefenderPoint(.5f, .82f), enemy.position(10_000))
+            assertEquals(.5f, enemy.position(10_000).x, .000001f)
+            assertEquals(.82f, enemy.position(10_000).y, .000001f)
         }
         assertEquals(setOf(64, 65, 67, 69, 71, 72, 74, 76, 77), notes)
         assertTrue(routes.any { it.x < .5f }); assertTrue(routes.any { it.x > .5f })
