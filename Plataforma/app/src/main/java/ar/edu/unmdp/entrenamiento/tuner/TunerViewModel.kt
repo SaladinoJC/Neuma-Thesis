@@ -7,20 +7,24 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 data class TunerUiState(val tuning: TunerState = TunerState(), val error: String? = null,
-    val configuration: TunerConfigurationState = TunerConfigurationState(TunerConfiguration()), val configurationBusy: Boolean = false)
+    val configuration: TunerConfigurationState = TunerConfigurationState(TunerConfiguration()), val configurationBusy: Boolean = false,
+    val guided: GuidedTunerState = GuidedTunerState())
 
 class TunerViewModel(private val recorder: VoiceCapture = AndroidVoiceCapture(),
     configurationStore: TunerConfigurationStore? = null,
     private val clock: () -> Long = { System.nanoTime() / 1_000_000 }) : ViewModel() {
     private val session = TunerSession()
+    private var guided = GuidedTunerSession()
     private val configuration = TunerConfigurationSession(configurationStore ?: MemoryTunerConfiguration(),
         initialConfiguration = if (configurationStore == null) TunerConfiguration() else null)
     private val mutableUi = MutableStateFlow(TunerUiState(configuration = configuration.state))
     val ui = mutableUi.asStateFlow()
     private var capture: Job? = null
     private var configurationJob: Job? = null
+    private fun guidedMode() = configuration.state.configuration?.mode == TunerMode.GUIDED
+    private fun measurement() = if (guidedMode()) guided.state.measurement else session.state
     private fun publish(error: String? = ui.value.error) {
-        mutableUi.value = ui.value.copy(tuning = session.state, error = error, configuration = configuration.state)
+        mutableUi.value = ui.value.copy(tuning = measurement(), guided = guided.state, error = error, configuration = configuration.state)
     }
     init { if (configurationStore != null) reload() }
     private fun configure(after: () -> Unit = {}, action: suspend () -> Unit) {
@@ -40,7 +44,7 @@ class TunerViewModel(private val recorder: VoiceCapture = AndroidVoiceCapture(),
         operation.start()
     }
     fun reload() = configure { configuration.load() }
-    fun resetDisplay() = reload()
+    fun resetDisplay() { guided = GuidedTunerSession(); reload() }
     suspend fun awaitConfigurationIdle() { capture?.cancelAndJoin(); configurationJob?.join() }
     fun createGuitar(name: String) = configure { configuration.createGuitar(name) }
     fun selectGuitar(id: String) = configure { configuration.selectGuitar(id) }
@@ -49,8 +53,11 @@ class TunerViewModel(private val recorder: VoiceCapture = AndroidVoiceCapture(),
     fun permissionDenied() { publish("Micrófono no autorizado. Podés habilitarlo en Ajustes de Android.") }
     fun criterion(value: TunerCriterion) = configure { configuration.preferences(value, session.state.tracking) }
     fun tracking(value: TunerTracking) = configure { configuration.preferences(session.state.criterion, value) }
+    fun mode(value: TunerMode) = configure { configuration.guidedPreferences(value, configuration.state.configuration!!.finalReview) }
+    fun finalReview(value: Boolean) = configure { configuration.guidedPreferences(configuration.state.configuration!!.mode, value) }
+    fun leavePending() { guided.leavePending(); publish() }
     fun fixString(number: Int?) {
-        if (ui.value.configurationBusy || configuration.state.configuration == null) return
+        if (ui.value.configurationBusy || configuration.state.configuration == null || guidedMode()) return
         if (session.state.tracking == TunerTracking.CHROMATIC) {
             configure(after = { if (session.state.tracking == TunerTracking.STRINGS) session.fixString(number) }) {
                 configuration.preferences(session.state.criterion, TunerTracking.STRINGS)
@@ -59,7 +66,11 @@ class TunerViewModel(private val recorder: VoiceCapture = AndroidVoiceCapture(),
     }
     fun start() {
         if (capture?.isCompleted == false || ui.value.configurationBusy || configuration.state.configuration == null) return
-        session.start(); publish(null)
+        if (guidedMode()) {
+            val setup = requireNotNull(configuration.state.configuration)
+            guided.begin(setup.snapshot(), setup.finalReview)
+        } else session.start()
+        publish(null)
         capture = viewModelScope.launch {
             try {
                 coroutineScope {
@@ -67,14 +78,15 @@ class TunerViewModel(private val recorder: VoiceCapture = AndroidVoiceCapture(),
                     launch {
                         while (isActive) {
                             delay(100)
-                            if (clock() - latest > 250) { session.measure(PitchEstimate(), clock()); publish() }
+                            if (clock() - latest > 250) { measure(PitchEstimate(), clock()); publish() }
                         }
                     }
                     recorder.capture(YinConfiguration()) { estimate, _, _ ->
                         withContext(Dispatchers.Main.immediate) {
                             ensureActive()
-                            if (session.state.running) {
-                                latest = clock(); session.measure(estimate, latest); publish()
+                            if (measurement().running) {
+                                latest = clock(); measure(estimate, latest); publish()
+                                if (guidedMode() && !guided.state.active) capture?.cancel()
                             }
                         }
                     }
@@ -83,9 +95,12 @@ class TunerViewModel(private val recorder: VoiceCapture = AndroidVoiceCapture(),
                 }
             } catch (cancelled: CancellationException) { throw cancelled }
             catch (error: Exception) { publish("No se pudo capturar: ${error.message}") }
-            finally { session.stop(); publish() }
+            finally { session.stop(); guided.interrupt(); publish() }
         }
     }
-    fun stop() { session.stop(); publish(); capture?.cancel() }
+    private fun measure(estimate: PitchEstimate, timeMillis: Long) {
+        if (guidedMode()) guided.measure(estimate, timeMillis) else session.measure(estimate, timeMillis)
+    }
+    fun stop() { session.stop(); guided.interrupt(); publish(); capture?.cancel() }
     override fun onCleared() { stop(); configurationJob?.cancel(); super.onCleared() }
 }

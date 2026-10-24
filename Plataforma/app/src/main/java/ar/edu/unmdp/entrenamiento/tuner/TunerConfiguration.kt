@@ -26,6 +26,8 @@ fun parseTunerNote(text: String): Int {
 @Serializable
 data class GuitarProfile(val id: String, val name: String, val tuningId: String = "standard")
 
+@Serializable enum class TunerMode { FREE, GUIDED }
+
 @Serializable
 data class GuitarTuning(val id: String, val name: String, val notesSixToFirst: List<Int>, val revision: Int = 1) {
     init {
@@ -53,6 +55,8 @@ data class TunerConfiguration(
     val customTunings: List<GuitarTuning> = emptyList(),
     val criterion: TunerCriterion = TunerCriterion.NORMAL,
     val tracking: TunerTracking = TunerTracking.STRINGS,
+    val mode: TunerMode = TunerMode.FREE,
+    val finalReview: Boolean = true,
 ) {
     init {
         require(schemaVersion == 1) { "Versión de configuración del afinador no compatible." }
@@ -117,6 +121,7 @@ class TunerConfigurationSession(private val store: TunerConfigurationStore,
         previous.copy(guitars = previous.guitars.map { if (it.id == previous.currentGuitarId) it.copy(tuningId = id) else it })
     }
     suspend fun preferences(criterion: TunerCriterion, tracking: TunerTracking) = change { it.copy(criterion = criterion, tracking = tracking) }
+    suspend fun guidedPreferences(mode: TunerMode, finalReview: Boolean) = change { it.copy(mode = mode, finalReview = finalReview) }
     suspend fun saveCustom(name: String, notes: List<Int>, id: String? = null) = change { withCustom(it, name, notes, id) }
     suspend fun saveCustomNames(name: String, notes: List<String>, id: String? = null) = change {
         withCustom(it, name, notes.map(::parseTunerNote), id)
