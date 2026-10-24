@@ -9,9 +9,11 @@ enum class DefenderName(val solfege: String, val letter: String, val semitone: I
     SOL("Sol", "G", 7), LA("La", "A", 9), SI("Si", "B", 11)
 }
 @Serializable
-data class DefenderNote(val name: DefenderName, val octave: Int) {
-    val midi: Int get() = (octave + 1) * 12 + name.semitone
-    val staffStep: Int get() = (octave - 4) * 7 + name.ordinal - DefenderName.MI.ordinal
+data class DefenderNote(val name: DefenderName, val octave: Int,
+    val accidental: DefenderAccidental = DefenderAccidental.NATURAL,
+    val clef: DefenderClef = DefenderClef.TREBLE) {
+    val midi: Int get() = (octave + 1) * 12 + name.semitone + accidental.semitones
+    val staffStep: Int get() = octave * 7 + name.ordinal - clef.bottomDiatonic
 }
 @Serializable data class DefenderPoint(val x: Float, val y: Float)
 @Serializable
@@ -26,23 +28,27 @@ data class DefenderEnemy(val id: Int, val note: DefenderNote, val appearedAtMill
 @Serializable enum class DefenderPhase { SETUP, RUNNING, PAUSED, FINISHED, INTERRUPTED }
 @Serializable enum class DefenderResolution { ELIMINATED, ARRIVED }
 @Serializable
-data class DefenderConfiguration(val version: String = "defender-d1-v1", val travelMillis: Long = 10_000,
-    val noteSound: Boolean = true, val effectsSound: Boolean = true, val letterNames: Boolean = false) {
-    init { require(travelMillis == 10_000L) { "D1 usa viaje fijo de 10 segundos." } }
+data class DefenderConfiguration(val version: String = "defender-d2-v1", val travelMillis: Long = 10_000,
+    val noteSound: Boolean = true, val effectsSound: Boolean = true, val letterNames: Boolean = false,
+    val stage: DefenderStage = DefenderStage.N1, val accidentals: Boolean = false, val maxEnemies: Int = 1) {
+    init { require(travelMillis == 10_000L); require(maxEnemies in 1..4) }
 }
 @Serializable
 data class DefenderResult(val enemy: DefenderEnemy, val resolution: DefenderResolution,
     val atMillis: Long, val position: DefenderPoint)
 @Serializable
 data class DefenderEvent(val kind: String, val atMillis: Long, val enemy: DefenderEnemy? = null,
-    val selection: DefenderName? = null)
+    val selection: DefenderName? = null, val accidental: DefenderAccidental = DefenderAccidental.NATURAL)
 @Serializable
 data class DefenderState(val phase: DefenderPhase = DefenderPhase.SETUP, val lives: Int = 3,
-    val points: Int = 0, val selected: DefenderName? = null, val enemy: DefenderEnemy? = null,
+    val points: Int = 0, val selected: DefenderName? = null, val enemies: List<DefenderEnemy> = emptyList(),
+    val selectedAccidental: DefenderAccidental = DefenderAccidental.NATURAL,
     val activeMillis: Long = 0, val failedShots: Int = 0, val feedback: String? = null,
     val seed: Int = 0, val configuration: DefenderConfiguration = DefenderConfiguration(),
     val origin: String = "practice", val results: List<DefenderResult> = emptyList(),
-    val events: List<DefenderEvent> = emptyList())
+    val events: List<DefenderEvent> = emptyList()) {
+    val enemy: DefenderEnemy? get() = enemies.firstOrNull()
+}
 
 /** Timestamp-based arcade. Rendering only observes this session; it cannot cause a collision. */
 class DefenderSession(private val clock: () -> Long = { System.nanoTime() / 1_000_000 }) {
@@ -56,13 +62,10 @@ class DefenderSession(private val clock: () -> Long = { System.nanoTime() / 1_00
     private var feedbackUntil = 0L
     private data class Checkpoint(val state: DefenderState, val nextSpawnAt: Long, val nextId: Int, val feedbackUntil: Long)
     private var checkpoint: Checkpoint? = null
-    private var lastFire: Pair<Long, DefenderName>? = null
-    private val pool = listOf(
-        DefenderNote(DefenderName.MI, 4), DefenderNote(DefenderName.FA, 4), DefenderNote(DefenderName.SOL, 4),
-        DefenderNote(DefenderName.LA, 4), DefenderNote(DefenderName.SI, 4), DefenderNote(DefenderName.DO, 5),
-        DefenderNote(DefenderName.RE, 5), DefenderNote(DefenderName.MI, 5), DefenderNote(DefenderName.FA, 5))
-    private val entries = listOf(DefenderPoint(.23f, .24f), DefenderPoint(.50f, .22f),
-        DefenderPoint(.77f, .24f), DefenderPoint(.22f, .42f), DefenderPoint(.78f, .42f))
+    private var lastFire: Triple<Long, DefenderName, DefenderAccidental>? = null
+    private val entries = listOf(DefenderPoint(.13f, .12f), DefenderPoint(.87f, .12f),
+        DefenderPoint(.37f, .10f), DefenderPoint(.63f, .10f),
+        DefenderPoint(.13f, .36f), DefenderPoint(.87f, .36f))
 
     fun start(seed: Int = 0, configuration: DefenderConfiguration = DefenderConfiguration()) {
         startedAt = clock(); pausedAt = 0; pausedTotal = 0
@@ -80,15 +83,24 @@ class DefenderSession(private val clock: () -> Long = { System.nanoTime() / 1_00
             rememberInput()
         }
     }
+    fun accidental(value: DefenderAccidental) {
+        if (state.phase != DefenderPhase.RUNNING || !state.configuration.accidentals) return
+        tick()
+        if (state.phase == DefenderPhase.RUNNING) {
+            state = state.copy(selectedAccidental = value)
+            rememberInput()
+        }
+    }
     fun fire() {
         val answer = state.selected
         if (answer == null) { tick(); return }
-        fireAt(clock(), answer)
+        fireAt(clock(), answer, state.selectedAccidental)
     }
     /** Source timestamp and selection travel together, including delayed dispatch past a frame tick. */
-    fun fireAt(eventMonotonicMillis: Long, capturedSelection: DefenderName) {
+    fun fireAt(eventMonotonicMillis: Long, capturedSelection: DefenderName,
+        capturedAccidental: DefenderAccidental = DefenderAccidental.NATURAL) {
         if (state.phase !in listOf(DefenderPhase.RUNNING, DefenderPhase.FINISHED)) return
-        if (lastFire == (eventMonotonicMillis to capturedSelection)) return
+        if (lastFire == Triple(eventMonotonicMillis, capturedSelection, capturedAccidental)) return
         val saved = checkpoint ?: return
         if (saved.state.phase != DefenderPhase.RUNNING) return
         val eventTime = eventMonotonicMillis - startedAt - pausedTotal
@@ -100,18 +112,19 @@ class DefenderSession(private val clock: () -> Long = { System.nanoTime() / 1_00
         advance(eventTime)
         if (state.phase != DefenderPhase.RUNNING) return
         val answer = capturedSelection
-        val enemy = state.enemy
-        if (enemy != null && enemy.note.name == answer) {
+        val enemy = defenderMatch(state.enemies, answer, capturedAccidental, state.activeMillis)
+        if (enemy != null) {
             val result = DefenderResult(enemy, DefenderResolution.ELIMINATED, state.activeMillis, enemy.position(state.activeMillis))
-            state = state.copy(enemy = null, selected = null, points = state.points + 100,
+            state = state.copy(enemies = state.enemies.filterNot { it.id == enemy.id }, selected = null,
+                selectedAccidental = DefenderAccidental.NATURAL, points = state.points + 100,
                 results = state.results + result, feedback = null,
-                events = state.events + DefenderEvent("SHOT_HIT", state.activeMillis, enemy, answer))
+                events = state.events + DefenderEvent("SHOT_HIT", state.activeMillis, enemy, answer, capturedAccidental))
         } else {
             state = state.copy(failedShots = state.failedShots + 1, feedback = "No coincide · probá otra nota",
-                events = state.events + DefenderEvent("SHOT_MISS", state.activeMillis, selection = answer))
+                events = state.events + DefenderEvent("SHOT_MISS", state.activeMillis, selection = answer, accidental = capturedAccidental))
             feedbackUntil = state.activeMillis + 1200
         }
-        lastFire = eventMonotonicMillis to capturedSelection
+        lastFire = Triple(eventMonotonicMillis, capturedSelection, capturedAccidental)
         rememberInput()
         advance(present)
     }
@@ -139,7 +152,7 @@ class DefenderSession(private val clock: () -> Long = { System.nanoTime() / 1_00
         if (state.phase !in listOf(DefenderPhase.RUNNING, DefenderPhase.PAUSED)) { rememberInput(); return }
         tick()
         if (state.phase == DefenderPhase.FINISHED) { rememberInput(); return }
-        state = state.copy(phase = DefenderPhase.INTERRUPTED, enemy = null, selected = null,
+        state = state.copy(phase = DefenderPhase.INTERRUPTED, enemies = emptyList(), selected = null,
             events = state.events + DefenderEvent("INTERRUPT", state.activeMillis))
         rememberInput()
     }
@@ -156,26 +169,37 @@ class DefenderSession(private val clock: () -> Long = { System.nanoTime() / 1_00
     }
     private fun advance(target: Long) {
         while (state.phase == DefenderPhase.RUNNING) {
-            val deadline = state.enemy?.deadlineMillis ?: Long.MAX_VALUE
+            val arriving = state.enemies.minWithOrNull(compareBy<DefenderEnemy> { it.deadlineMillis }.thenBy { it.id })
+            val deadline = arriving?.deadlineMillis ?: Long.MAX_VALUE
             val next = minOf(deadline, nextSpawnAt)
             if (next > target) break
             state = state.copy(activeMillis = next)
             if (deadline <= nextSpawnAt) {
-                val enemy = requireNotNull(state.enemy)
+                val enemy = requireNotNull(arriving)
                 val result = DefenderResult(enemy, DefenderResolution.ARRIVED, deadline, enemy.destination)
                 val remaining = state.lives - 1
-                state = state.copy(enemy = null, lives = remaining, results = state.results + result,
+                state = state.copy(enemies = state.enemies.filterNot { it.id == enemy.id }, lives = remaining, results = state.results + result,
                     events = state.events + DefenderEvent("ARRIVAL", deadline, enemy),
                     phase = if (remaining == 0) DefenderPhase.FINISHED else DefenderPhase.RUNNING)
-                if (remaining == 0) state = state.copy(selected = null,
+                if (remaining == 0) state = state.copy(selected = null, enemies = emptyList(),
                     events = state.events + DefenderEvent("GAME_OVER", deadline))
             } else {
-                if (state.enemy == null) {
-                    val id = nextId++
+                if (state.enemies.size < state.configuration.maxEnemies) {
+                    val id = nextId
                     val random = Random(state.seed xor (id * 0x45d9f3b))
-                    val enemy = DefenderEnemy(id, pool[random.nextInt(pool.size)], nextSpawnAt,
-                        state.configuration.travelMillis, entries[random.nextInt(entries.size)])
-                    state = state.copy(enemy = enemy, events = state.events + DefenderEvent("SPAWN", nextSpawnAt, enemy))
+                    val pool = defenderNotePool(state.configuration.stage, state.configuration.accidentals)
+                    val note = pool[random.nextInt(pool.size)]
+                    val routes = entries.shuffled(random).map { entry ->
+                        val destination = if (state.configuration.maxEnemies == 1) DefenderPoint(.5f, .82f)
+                            else DefenderPoint(.5f + (entry.x - .5f) * .55f, .84f)
+                        DefenderEnemy(id, note, nextSpawnAt, state.configuration.travelMillis, entry, destination)
+                    }
+                    val enemy = routes.firstOrNull { defenderHasRoom(it, state.enemies) }
+                    if (enemy != null) {
+                        nextId++
+                        state = state.copy(enemies = state.enemies + enemy,
+                            events = state.events + DefenderEvent("SPAWN", nextSpawnAt, enemy))
+                    }
                 }
                 // An occupied slot consumes its scheduled opportunity. Nothing queues for later.
                 nextSpawnAt += interval(nextSpawnAt)
