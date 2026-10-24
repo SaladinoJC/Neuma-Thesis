@@ -1,6 +1,8 @@
 # Aplicación Android
 
-Versión 0.11: añade **Afinador → Libre**, guitarra estándar, seguimiento automático/cromático, cuerda fijada y Normal/Pro. No guarda desempeño ni PCM. [Recorrido y parámetros](../docs/Demostracion-afinador-v0.11.md). Las funciones de la base v0.10 se conservan; perfiles, guiado y entrenamiento siguen en #10–#14.
+Versión 0.12: incorpora **Afinador con perfiles, seis presets y afinaciones personalizadas**, **Rhythm Tap** de cuatro compases con negras/corcheas y **Defender de notas** en clave de sol. Los tres módulos comparten menú y ciclo de vida; la configuración del afinador participa en exportación JSON, recuperación ZIP y reinicio. Ritmo y Defender muestran resúmenes de práctica en memoria; su persistencia y DDA siguen en los tickets posteriores. [Recorrido](../docs/Demostracion-prototipo-v0.12.md) y [verificación integrada](../docs/Verificacion-prototipo-v0.12.md).
+
+APK: `build/apk-archives/entrenamiento-auditivo-v0.12.apk`. Mismo paquete y certificado debug que v0.11: instalar encima, sin desinstalar. Se conservan las funciones de la base v0.10 y el afinador Libre de v0.11 ([antecedente](../docs/Demostracion-afinador-v0.11.md)). Guiado, referencias y entrenamiento siguen en #11–#14; los criterios Normal/Pro y el DDA actual son experimentales y requieren comprobación física.
 
 ```powershell
 .\gradlew.bat :app:testDebugUnitTest --tests '*tuner*'
@@ -106,6 +108,6 @@ Desde `Plataforma/`, con un emulador iniciado:
 
 El comando comprueba JDK/SDK y que el serial sea un emulador. Conserva log, informes comprimidos, APK, tamaño y SHA-256 en `build/verification/<fecha>/summary.json`. No admite teléfonos físicos: las pruebas Android reinician el perfil de la app. `ANDROID_SERIAL` queda configurado en la sesión de PowerShell; indicarlo nuevamente al cambiar de emulador.
 
-El guardado JSON usa una barrera compartida por directorio, sustitución atómica e identificadores para deduplicar. Exportar el JSON genera una instantánea coherente. Un archivo ilegible o de esquema desconocido se conserva y bloquea nuevas partidas del juego afectado; se puede reintentar la lectura o conservar los originales en ZIP antes de reiniciar. La recuperación copia bytes, no repara ni importa. El ZIP solo incluye los cuatro archivos conocidos y, si existe, `pending-voice-save.json`; nunca grabaciones.
+El guardado JSON usa una barrera compartida por directorio, sustitución atómica e identificadores para deduplicar. Exportar el JSON genera una instantánea coherente. Un archivo ilegible o de esquema desconocido se conserva y bloquea el uso afectado; se puede reintentar la lectura o conservar los originales en ZIP antes de reiniciar. La recuperación copia bytes, no repara ni importa. El ZIP incluye los cinco JSON conocidos que existan (incluido `tuner-configuration.json`), el LEEME y, si corresponde, `pending-voice-save.json`; nunca grabaciones.
 
 `pendingVoiceSave` en el JSON y `pending-voice-save.json` en el ZIP identifican mediciones derivadas pendientes de persistencia. No se mezclan con las sesiones guardadas. El pendiente vive en memoria y **no sobrevive a la muerte del proceso**; reintentar usa el mismo identificador. Reiniciar con confirmación también descarta ese pendiente. No se migra a Room ni se cambia la configuración YIN/DDA en esta entrega.

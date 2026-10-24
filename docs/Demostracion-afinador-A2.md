@@ -1,6 +1,6 @@
 # Afinador A2 — perfiles y afinaciones
 
-Trabajo retomado por el usuario el **2026-10-24**, sobre [#10](https://github.com/SaladinoJC/Tesis/issues/10), con la base A1/v0.11. La implementación local incorpora configuración persistida, editor y contratos de exportación/reinicio y pasó la suite JVM completa. El recorrido Android y la entrega integrada siguen pendientes; este documento no acredita un APK nuevo. No guarda desempeño ni mediciones en el historial de voz. Guiado, referencias y entrenamiento siguen en sus tickets.
+Trabajo retomado por el usuario el **2026-10-24**, sobre [#10](https://github.com/SaladinoJC/Tesis/issues/10), con la base A1/v0.11. La implementación local incorpora configuración persistida, editor y contratos de exportación/reinicio. Está integrada en v0.12 con suite JVM y Android aprobadas en API 34; consultar la [verificación conjunta](Verificacion-prototipo-v0.12.md) y el [recorrido de entrega](Demostracion-prototipo-v0.12.md). No guarda desempeño ni mediciones en el historial de voz. Guiado, referencias y entrenamiento siguen en sus tickets.
 
 ## Contrato previsto para el incremento
 
@@ -38,7 +38,7 @@ Set-Location Plataforma
 .\gradlew.bat :app:testDebugUnitTest --max-workers=1 --no-daemon '-Dorg.gradle.jvmargs=-Xmx768m -Dfile.encoding=UTF-8' '-Pkotlin.compiler.execution.strategy=in-process'
 ```
 
-Informes locales en `Plataforma/app/build/test-results/testDebugUnitTest/`. Integrar con factory persistente de `MainActivity` del padre, luego compilar e instrumentar en la raíz por turnos. Las dos Android A1 actualizadas y el nuevo Android A2 siguen pendientes. No se ejecutó Android, lint ni APK de A2 en este worktree.
+Informes JVM del frente en `Plataforma/app/build/test-results/testDebugUnitTest/` de su worktree. La raíz integró la factory persistente de `MainActivity` y aprobó las dos Android A1 actualizadas y la nueva Android A2 dentro de la suite de 32 casos/API 34. El primer intento A2 falló porque seis aserciones buscaban coincidencia completa donde se esperaba un fragmento; declarar `substring = true` conservó las exigencias y el recorrido completo pasó. No se ejecutó Android, lint ni APK desde este worktree; la entrega y evidencia están en la raíz.
 
 ## Datos y compatibilidad
 

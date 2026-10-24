@@ -1,8 +1,8 @@
 # Demostración v0.12 — afinador, Rhythm Tap y Defender
 
-**Borrador de recorrido: desarrollo pausado por el usuario el 2026-10-23. No hay entrega v0.12 integrada ni APK verificado. Consultar `.agents/estado-prototipo.md` y `.agents/retomar-paralelo-v0.12.md` antes de continuar.**
+**Entrega local integrada, 2026-10-24.** Suite conjunta aprobada: 97 pruebas JVM, 32 Android en API 34 y lint sin errores/14 advertencias. [Evidencia y límites](Verificacion-prototipo-v0.12.md). La prueba física del S22 Ultra sigue pendiente.
 
-Recorrido previsto para los tickets [#10](https://github.com/SaladinoJC/Tesis/issues/10), [#16](https://github.com/SaladinoJC/Tesis/issues/16) y [#23](https://github.com/SaladinoJC/Tesis/issues/23). Falta crear el informe de verificación al integrar y comprobar. Las funciones corresponden a los primeros incrementos de cada frente; no suponen completar los tickets posteriores ni validar eficacia pedagógica.
+Recorrido para los tickets [#10](https://github.com/SaladinoJC/Tesis/issues/10), [#16](https://github.com/SaladinoJC/Tesis/issues/16) y [#23](https://github.com/SaladinoJC/Tesis/issues/23). Las funciones corresponden a los incrementos A2, R1 y D1; no suponen completar los tickets posteriores ni validar eficacia pedagógica. No se publicaron cambios ni se cerraron issues.
 
 ## Instalación
 

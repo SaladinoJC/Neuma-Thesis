@@ -1,6 +1,6 @@
 # Reanudar la tanda paralela v0.12
 
-**Reanudada por pedido del usuario el 2026-10-24.** Integración actual en `trabajo/integracion-v0.12-continuacion`; consultar primero `.agents/estado-prototipo.md` y `docs/Verificacion-prototipo-v0.12.md`. El resto de este archivo conserva los checkpoints y pendientes de la pausa del 2026-10-23 como antecedente, no como estado actual. `main` todavía conserva v0.11 mientras se verifica Android.
+**Tanda reanudada y completada en software el 2026-10-24.** A2/R1/D1 integrados en `trabajo/integracion-v0.12-continuacion` para avance local de `main`; 97 JVM, 32 Android/API 34 y 10 Android/API 36 aprobadas, lint sin errores y APK v0.12 archivado. Consultar primero `.agents/estado-prototipo.md` y `docs/Verificacion-prototipo-v0.12.md`. El resto de este archivo conserva los checkpoints de la pausa del 2026-10-23 como antecedente, **no como tareas pendientes actuales**. Usar la versión integrada como base; las ramas/worktrees de los tres agentes son archivos históricos y algunos tests dependen de infraestructura compartida de la integración. No hubo push ni cierre de issues; S22 Ultra pendiente.
 
 ## Base y distribución
 
