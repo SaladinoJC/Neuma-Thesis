@@ -181,7 +181,7 @@ private fun kindLabel(kind: TapKind?): String = when (kind) {
 }
 
 @Composable
-private fun RhythmBarDrawing(bar: RhythmBar, score: RhythmScore, state: RhythmState, modifier: Modifier) {
+internal fun RhythmBarDrawing(bar: RhythmBar, score: RhythmScore, state: RhythmState, modifier: Modifier) {
     val description = "Compás ${bar.index + 1}, ${score.beatsPerBar}/4: " + bar.occurrences.joinToString("; ") { it.category.label }
     Canvas(modifier.testTag("rhythm-bar-${bar.index}").semantics { contentDescription = description }) {
         drawRect(Panel)
