@@ -104,7 +104,7 @@ class MainActivity : ComponentActivity() {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T = DemonstrationViewModel(data,
                 drain = { labModel.cancelAndJoin(); voiceModel.stopAndJoin(); tunerModel.awaitConfigurationIdle(); simonModel.awaitIdle(); instrumentModel.awaitIdle() },
-                refresh = { simonModel.reload(); instrumentModel.reload(); voiceModel.resetDisplay(); labModel.resetDisplay(); tunerModel.reload() },
+                refresh = { simonModel.reload(); instrumentModel.reload(); voiceModel.resetDisplay(); labModel.resetDisplay(); tunerModel.resetDisplay() },
                 helpSimulation = { instrumentModel.ui.value.simulation }, pendingVoice = voiceModel::pendingForExport,
                 drainForReset = { labModel.cancelAndJoin(); voiceModel.stopAndJoin(); tunerModel.stop(); tunerModel.awaitConfigurationIdle(); simonModel.discardForReset(); instrumentModel.discardForReset() }) as T
         })[DemonstrationViewModel::class.java]

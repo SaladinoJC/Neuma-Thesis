@@ -1,5 +1,7 @@
 # Aplicación Android
 
+Versión 0.12.1: agrega únicamente **Afinador A3 / #11**, con recorrido guiado sexta → primera, revisión final opcional recordada y corrección de cuerdas pendientes. El resumen distingue ambas pasadas y permanece en memoria; recrear, pausar o salir interrumpe la captura sin completar el recorrido. Los cambios de Ritmo R2 y Defender D2 siguen guardados aparte. Ver [guía y verificación A3](../docs/Demostracion-afinador-A3.md). Instalar encima de v0.12 conserva los datos; las tolerancias siguen siendo experimentales.
+
 Versión 0.12: incorpora **Afinador con perfiles, seis presets y afinaciones personalizadas**, **Rhythm Tap** de cuatro compases con negras/corcheas y **Defender de notas** en clave de sol. Los tres módulos comparten menú y ciclo de vida; la configuración del afinador participa en exportación JSON, recuperación ZIP y reinicio. Ritmo y Defender muestran resúmenes de práctica en memoria; su persistencia y DDA siguen en los tickets posteriores. [Recorrido](../docs/Demostracion-prototipo-v0.12.md) y [verificación integrada](../docs/Verificacion-prototipo-v0.12.md).
 
 APK: `build/apk-archives/entrenamiento-auditivo-v0.12.apk`. Mismo paquete y certificado debug que v0.11: instalar encima, sin desinstalar. Se conservan las funciones de la base v0.10 y el afinador Libre de v0.11 ([antecedente](../docs/Demostracion-afinador-v0.11.md)). Guiado, referencias y entrenamiento siguen en #11–#14; los criterios Normal/Pro y el DDA actual son experimentales y requieren comprobación física.

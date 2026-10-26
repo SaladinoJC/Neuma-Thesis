@@ -1,8 +1,10 @@
 # Estado del prototipo
 
-Última actualización: 2026-10-24.
+Última actualización: 2026-10-26.
 
 ## Decisiones y origen
+
+- **Continuación secuencial (usuario, 2026-10-26):** pidió retomar con un solo ticket por vez para cuidar tokens. Esta instrucción reemplaza la modalidad de tres frentes simultáneos. Se eligió A3/#11, guiado y revisión final del afinador; rama local `trabajo/afinador-a3-continuacion`, desde `main` con únicamente los seis checkpoints A3 recuperados. R2/#17 y D2/#24 permanecen guardados, sin continuarlos ni incorporarlos a esta entrega. Versión prevista 0.12.1 para distinguirla de la integración triple 0.13. Sin push ni cambios externos en issues.
 
 - **Segunda tanda y reserva de cuota (usuario, 2026-10-24):** aceptó «Dale» a A3/#11, R2/#17 y D2/#24 mientras prueba v0.12; pidió cortar al quedar menos del 5% de su ventana de cinco horas. Se encontró `rate_limits.primary` (ventana 300 minutos) en el registro local de esta sesión, primera lectura 55% usado/45% restante. El agente consultará `.agents/tools/check-codex-budget.py` entre incrementos, comenzará el cierre al 10% restante y detendrá desarrollo al 5%; la lectura puede tener demora, no es un corte transaccional garantizado. Worktrees nuevos `afinador-a3`, `ritmo-r2`, `defender-d2`, base común `d0f1624`; integración `trabajo/integracion-v0.13`. Un dueño por módulo, host/documentación global del principal y Gradle por turnos. Al cerrar conservar commits WIP y pendientes precisos antes de consumir la reserva; `main`/APK v0.12 siguen como última entrega validada hasta nueva integración comprobada. Sin push ni publicaciones.
 
@@ -44,6 +46,8 @@
 - **Elecciones técnicas provisionales del agente para instrumentos:** catálogo candidato de la especificación (A: piano/violín/flauta/marimba; B: flauta/clarinete/trompeta/trombón; C: flauta/clarinete/oboe/fagot); Do4 real, dinámica `mf`, OGG mono/44,1 kHz/1,5 s, RMS objetivo 0,08 antes del fade de 80 ms. Primera escucha automática; pantalla vertical; feedback antes de continuar y botones fijos en resumen. No son parámetros pedagógicos calibrados ni decisiones del director.
 
 ## Avance comprobado
+
+- **A3/#11 terminado individualmente (2026-10-26):** checkpoints del afinador incorporados a `trabajo/afinador-a3-continuacion`, junto al callback de limpieza de resumen al reiniciar perfil y una prueba Android de ciclo de vida guiado. **104 JVM/24 clases aprobadas**, lint sin errores/14 advertencias, APK y pruebas compilados; **cinco Android seleccionadas aprobadas en Pixel_6/API 34, 77,249 s**. APK `Plataforma/build/apk-archives/entrenamiento-auditivo-v0.12.1.apk` (código 16). Dos pasadas con estimaciones controladas; captura real solo en emulador. Intentos iniciales afectados por ANR de System UI y preparación de permiso; ejecución final desde datos limpios, permiso concedido antes y 2 GiB de RAM. Guía, comandos, hashes y límites en `docs/Demostracion-afinador-A3.md`; evidencia en `Plataforma/build/verification/2026-10-26-A3/`. No se ejecutó toda la suite Android ni API 36. S22 Ultra/guitarra real pendiente. R2/D2 siguen guardados sin nuevos cambios; no hubo push ni cierre de issues. `main` conserva v0.12 y la integración triple 0.13 continúa sin acreditarse.
 
 - **Segunda tanda guardada por reserva de cuota (2026-10-24):** A3/#11, R2/#17 y D2/#24 con checkpoints independientes incorporados a `trabajo/integracion-v0.13`, todavía sin verificación conjunta ni APK nuevo. Se cerró al llegar a aproximadamente 8% restante conforme al margen anunciado al usuario. A3: 104 JVM de su rama aprobadas; D2: 19 JVM del módulo aprobadas; R2: 12 JVM y compilación de sus pruebas Android aprobadas. Ningún recorrido Android nuevo fue ejecutado y la integración no se compiló; no sumar estos conteos aislados como si fueran una suite conjunta. Tres worktrees limpios, sin compilaciones activas. Consultar `.agents/tanda-paralela-v0.13.md` para hashes, riesgos y próximo paso. `main` conserva código/APK v0.12 y recibe solo continuidad documental; los verdes parciales no acreditan v0.13. No reanudar automáticamente hasta que el usuario pida continuar.
 
@@ -129,7 +133,7 @@ Ejecución final v0.3: 21 pruebas JVM y 11 Android aprobadas, lint sin errores/1
 
 ## Próximo paso sugerido
 
-**Al retomar la segunda tanda después del cierre por cuota (2026-10-24):** leer `.agents/tanda-paralela-v0.13.md`. Reanudar los checkpoints A3/R2/D2 y verificar integración/Android antes de entregar v0.13; conservar `main`/APK v0.12 hasta aprobar los checks. Los párrafos siguientes son antecedentes de la entrega anterior.
+**Prioridad vigente (2026-10-26):** un solo ticket por vez, sin agentes ni frentes simultáneos. A3/#11 está terminado en software en la rama actual; no reimplementarlo. Probar v0.12.1 en S22 Ultra cuando el usuario pueda, instalando encima sin desinstalar. En la siguiente sesión continuar únicamente **R2/#17**, recuperando su checkpoint y pendientes de `.agents/tanda-paralela-v0.13.md`; D2/#24 permanece guardado hasta terminar R2. Partir de A3 verificado e incorporar solo R2, sin tomar la integración triple como entrega validada. No iniciar otro ticket en el cierre de esta sesión. Los párrafos siguientes son antecedentes y su modalidad paralela queda reemplazada por esta decisión.
 
 **Prioridad actual (2026-10-24):** probar la entrega v0.12 en S22 Ultra cuando el usuario pueda, instalando encima sin desinstalar; registrar afinación de guitarra, condiciones de audio/entrada y legibilidad. Esta tanda de A2/R1/D1 está terminada en software; no reiniciar sus implementaciones ni usar las ramas WIP antiguas como base nueva. A3/#11, R2/#17 y D2/#24 son los siguientes incrementos de cada frente, fuera de esta tanda autorizada; consultar sus tickets y dependencias antes de continuar. El registro siguiente de la pausa se conserva como antecedente.
 
