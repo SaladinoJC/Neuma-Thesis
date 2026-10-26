@@ -1,5 +1,7 @@
 # Tanda A3 / R2 / D2
 
+> Continuidad 2026-10-26: la modalidad paralela y el próximo paso de integración de este registro son antecedentes. La instrucción vigente es un ticket por vez, sin subagentes. A3 y R2 ya se terminaron individualmente en v0.12.1/v0.12.2; D2 se completó y verificó sobre esa base en `trabajo/defender-d2-continuacion`, entrega v0.12.3. Consultar primero `.agents/estado-prototipo.md` para el resultado actual, sin volver a incorporar la integración triple no verificada.
+
 Autorizada por el usuario el 2026-10-24 al aceptar los siguientes tres tickets mientras prueba v0.12. Base verificada común: `d0f1624`. Sin push ni cambios externos en issues. Última entrega validada al iniciar: v0.12, en `main` y en `Plataforma/build/apk-archives/`.
 
 | Frente | Rama | Worktree | Dueño |

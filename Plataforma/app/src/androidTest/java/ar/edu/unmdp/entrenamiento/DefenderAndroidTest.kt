@@ -25,15 +25,79 @@ import java.io.File
 class DefenderAndroidTest {
     @get:Rule val compose = createComposeRule()
 
+    @Test fun controlesDeAlteracionConservanErrorYReinicianNaturalTrasAcierto() {
+        var now = 0L
+        val model = DefenderViewModel(clock = { now })
+        lateinit var hostView: View
+        compose.setContent {
+            hostView = LocalView.current
+            val ui by model.ui.collectAsStateWithLifecycle()
+            DefenderApp(ui, model) { model.home() }
+        }
+        compose.runOnIdle {
+            model.stage(DefenderStage.N4); model.accidentals(true); model.letterNames(true)
+            model.noteSound(false); model.effectsSound(false); model.start(14)
+        }
+        val note = requireNotNull(model.ui.value.game.enemy).note
+        val wrong = DefenderAccidental.entries.first { it != note.accidental }
+        compose.onNodeWithTag("defender-accidental-NATURAL").assertIsSelected()
+        compose.onNodeWithTag("defender-name-${note.name.name}").assertTextEquals(note.name.letter).performClick()
+        compose.onNodeWithTag("defender-accidental-${wrong.name}").performClick()
+        compose.runOnIdle { now = 1000L }
+        tapWithDeviceUptime(hostView, compose.onNodeWithTag("defender-fire").fetchSemanticsNode().boundsInRoot.center)
+        compose.onNodeWithTag("defender-score").assertTextEquals("0 pts")
+        compose.onNodeWithTag("defender-lives").assertTextEquals("♥ 3")
+        compose.onNodeWithTag("defender-accidental-${wrong.name}").assertIsSelected()
+        compose.onNodeWithTag("defender-fire").assertIsEnabled()
+        screenshot("d2-controles-alteraciones")
+        compose.onNodeWithTag("defender-accidental-${note.accidental.name}").performClick()
+        compose.runOnIdle { now = 2000L }
+        tapWithDeviceUptime(hostView, compose.onNodeWithTag("defender-fire").fetchSemanticsNode().boundsInRoot.center)
+        compose.onNodeWithTag("defender-score").assertTextEquals("100 pts")
+        compose.onNodeWithTag("defender-accidental-NATURAL").assertIsSelected()
+        compose.onNodeWithTag("defender-fire").assertIsNotEnabled()
+        compose.runOnIdle {
+            assertEquals(1, model.ui.value.game.failedShots)
+            assertEquals(1, model.ui.value.game.results.size)
+            model.home()
+        }
+    }
+
+    @Test fun resumenIdentificaRangoClaveAlteracionesYPerdidas() {
+        var now = 0L
+        val model = DefenderViewModel(clock = { now })
+        compose.setContent {
+            val ui by model.ui.collectAsStateWithLifecycle()
+            DefenderApp(ui, model) { model.home() }
+        }
+        compose.runOnIdle {
+            model.stage(DefenderStage.N3); model.accidentals(true)
+            model.noteSound(false); model.effectsSound(false)
+            model.start(14)
+            now = 100_000; model.tick()
+        }
+        compose.onNodeWithText("N3 · Fa ampliada").assertExists()
+        compose.onNodeWithText("Clave de fa · rango Do2–Mi4").assertExists()
+        compose.onNodeWithText("Alteraciones: naturales, bemoles y sostenidos").assertExists()
+        compose.onNodeWithText("3 llegadas · 0 disparos fallidos").assertExists()
+        screenshot("d2-resumen-fa-alteraciones")
+        compose.onAllNodesWithText("Llegó a la base").assertCountEquals(3)
+        compose.onAllNodesWithText("Llegó a la base")[2].performScrollTo()
+        screenshot("d2-revision-perdidas")
+        compose.runOnIdle { model.home() }
+    }
+
     @Test fun cuatroPentagramasIndependientesYPausaEnPracticaMixta() {
         var chosenSeed: Int? = null
         for (seed in 0..30) {
             var clock = 0L
             val session = DefenderSession { clock }
-            session.start(seed, DefenderConfiguration(stage = DefenderStage.N4, maxEnemies = 4))
+            session.start(seed, DefenderConfiguration(stage = DefenderStage.N4, accidentals = true, maxEnemies = 4))
             for (time in 0L..100000L step 1000) {
                 clock = time; session.tick()
-                if (time < 90000) session.state.enemy?.let { session.select(it.note.name); session.fire() }
+                if (time < 90000) session.state.enemy?.let {
+                    session.select(it.note.name); session.accidental(it.note.accidental); session.fire()
+                }
                 if (session.state.enemies.size == 4) { chosenSeed = seed; break }
             }
             if (chosenSeed != null) break
@@ -46,17 +110,24 @@ class DefenderAndroidTest {
             DefenderApp(ui, model) { model.home() }
         }
         compose.runOnIdle {
-            model.stage(DefenderStage.N4); model.noteSound(false); model.effectsSound(false)
+            model.stage(DefenderStage.N4); model.accidentals(true); model.noteSound(false); model.effectsSound(false)
             model.start(requireNotNull(chosenSeed))
             for (time in 0L..100000L step 1000) {
                 now = time; model.tick()
-                if (time < 90000) model.ui.value.game.enemy?.let { model.select(it.note.name); model.fire() }
+                if (time < 90000) model.ui.value.game.enemy?.let {
+                    model.select(it.note.name); model.accidental(it.note.accidental); model.fire()
+                }
                 if (model.ui.value.game.enemies.size == 4) break
             }
         }
         compose.onAllNodesWithTag("defender-target").assertCountEquals(4)
-        val bounds = compose.onAllNodesWithTag("defender-target").fetchSemanticsNodes().map { it.boundsInRoot }
+        val arena = compose.onNodeWithTag("defender-arena").fetchSemanticsNode().boundsInRoot
+        val bounds = compose.onAllNodesWithTag("defender-enemy").fetchSemanticsNodes().map { it.boundsInRoot }
+        assertEquals(4, bounds.size)
+        bounds.forEach { assertTrue("Cada pentagrama y nave debe quedar en el campo", arena.contains(it.topLeft) && arena.contains(it.bottomRight)) }
         for (i in bounds.indices) for (j in i + 1 until bounds.size) assertFalse(bounds[i].overlaps(bounds[j]))
+        compose.onNodeWithTag("defender-fire").assertIsDisplayed()
+        compose.onNodeWithTag("defender-accidental-SHARP").assertIsDisplayed()
         screenshot("d2-cuatro-mixta")
         compose.onNodeWithTag("defender-pause").performClick()
         compose.onAllNodesWithTag("defender-target").assertCountEquals(0)
@@ -155,7 +226,7 @@ class DefenderAndroidTest {
 
     private fun screenshot(name: String) {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        val directory = File(context.getExternalFilesDir(null), "defender-d1").apply { mkdirs() }
+        val directory = File(context.getExternalFilesDir(null), "defender-d2").apply { mkdirs() }
         File(directory, "$name.png").outputStream().use {
             compose.onRoot().captureToImage().asAndroidBitmap().compress(Bitmap.CompressFormat.PNG, 100, it)
         }

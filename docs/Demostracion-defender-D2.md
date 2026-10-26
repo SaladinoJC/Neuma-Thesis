@@ -1,47 +1,53 @@
-# Defender D2 / #24 — ampliación de práctica (WIP)
+# Defender D2 / #24 — práctica ampliada
 
-Tanda local autorizada por el usuario mediante «Dale» el 2026-10-24, retomando tres frentes separados y con corte al llegar al 5 % de cuota. Base `d0f1624` (v0.12 comprobada). Rama `trabajo/defender-d2`, worktree `C:/Users/Juan/Tesis-worktrees/defender-d2`. No publicar ni dar #24 por completo mientras falte la verificación Android integrada.
+Continuación individual autorizada por el usuario el 2026-10-26 mediante «dale, vamos con eso». Rama local `trabajo/defender-d2-continuacion`, sobre A3/R2 verificados y el análisis documental de Glisso. Se recuperaron únicamente los cuatro checkpoints D2 (`f2ea44c`, `0db1ddb`, `b2b496f`, `7cba850`). La integración triple v0.13 no se utiliza como entrega validada. Versión 0.12.3/código 18, sin cambios externos en GitHub.
 
-## Comportamiento implementado, JVM comprobado y Android pendiente
+## Comportamiento
 
-- Preparación: N1 sol Mi4–Fa5, N2 sol La3–Do6, N3 fa Do2–Mi4, N4 mezcla de ambos rangos ampliados. Todas en práctica, sin desbloqueos ni DDA.
-- Alteraciones simples opcionales: naturales, bemoles y sostenidos explícitos e independientes. La altura absoluta incluye la alteración; matching exige letra y alteración escrita sin octava. La respuesta empieza en natural y vuelve a natural al acertar; un fallo conserva letra/alteración.
-- Cupo manual 1–4 (UI inicial 4). El constructor de configuración conserva cupo 1 para reproducir el recorrido D1 y sus pruebas. `state.enemy` sigue ofreciendo el primer enemigo como alias de compatibilidad; `state.enemies` es la colección autoritativa.
-- Apariciones deterministas con semilla/ID, viaje fijo de 10 s y curva de D1. Cada oportunidad ocupada o sin espacio se descarta, sin ráfagas acumuladas. Las reservas rectangulares comprueban la vida compartida completa de cada trayectoria, mediante intersección de intervalos de movimiento relativo en ambos ejes. No dependen del tick/frame.
-- Duplicados escritos permitidos: una respuesta elimina uno, elegido por distancia euclídea a la frontera común de base (segmento normalizado x=0,25–0,75; y=0,84), desempate por aparición/ID. No usa menor tiempo restante.
-- UI dibuja clave de sol/fa vectorial, alteración y hasta dos líneas adicionales. Tarjetas compactas con cupo múltiple, solución y revisión por nota/grafía/clave. Pausa oculta todos los objetivos; salir y game over cancelan los vivos restantes sin contarlos como llegadas.
+- Preparación: N1 sol Mi4–Fa5; N2 sol La3–Do6; N3 fa Do2–Mi4; N4 mezcla de los dos rangos ampliados. Hasta dos líneas adicionales. Todas son prácticas; no hay desbloqueos, DDA ni historial de Defender todavía (D3/#25).
+- Alteraciones simples opcionales e independientes: natural, bemol y sostenido. Se responde por nombre y alteración escritos, sin octava; un enarmónico con otra escritura no es válido. La respuesta comienza en natural; acertar limpia la selección y vuelve a natural, fallar conserva ambas partes sin quitar vida. Nombres Do–Si o C–B.
+- Cupo configurable 1–4, predeterminado de interfaz 4; solo aparecen enemigos cuando hay espacio reservado para la trayectoria completa. Una oportunidad ocupada se descarta sin acumular ráfagas. La configuración sin argumentos de la sesión conserva cupo 1 para reproducir D1.
+- Duplicados permitidos: se elimina uno por disparo, según distancia geométrica normalizada a la frontera de base x=0,25–0,75/y=0,84, con desempate por aparición/ID. El banco de distintas velocidades prueba matching, sin introducir DDA en la práctica.
+- Tres vidas; solo las llegadas quitan una. Viaje fijo 10 s, curva de aparición 4→2,5 s y 100 puntos por acierto son parámetros experimentales. Pausa oculta objetivos y congela tiempo/audio; el tercer impacto termina y cancela los enemigos restantes sin contarlos como llegadas.
+- Resumen en memoria: etapa, clave/rango y opción de alteraciones; revisión por nota y octava, grafía en ambos sistemas de nombres, clave, alteración y eliminado/llegada. No sobrevive a cerrar el proceso. Los cancelados no se presentan como pérdidas.
 
-## Audio y condiciones
+## Audio
 
-No se añaden muestras ni recursos de terceros. Se conserva `referenceTone`, seno de 600 ms, PCM16 mono a 44,1 kHz, amplitud 0,2, fades de 20 ms, temperamento igual/La4=440 Hz. El corpus completo, incluidas alteraciones extremas, ocupa MIDI 35–85, dentro del rango 24–96 admitido por el sintetizador. Es síntesis en octava real, no transposición de samples inexistentes. Nota solo al acertar y efectos independientes, con liberación al cancelar como en D1.
+Se conserva la síntesis propia `referenceTone`: seno de 600 ms, PCM16 mono/44,1 kHz, amplitud 0,2, fades de 20 ms y La4=440 Hz/temperamento igual. El corpus completo con alteraciones abarca MIDI 35–85, dentro del rango 24–96 admitido. No se incorporan recursos de terceros ni se cambia de octava para suplir muestras. Sonido de nota al acertar y efectos independientes; cancelación/liberación conservadas. El avance de frames de AudioTrack acredita reproducción en emulador, no audibilidad o latencia física.
 
-## Verificación y continuidad
+## Repetir la verificación
 
-Se escribieron seis pruebas JVM nuevas de corpus/rangos, matching enarmónico/geométrico con velocidades distintas, reservas cruzadas, respuesta completa, llegadas/cancelación y cuatro simultáneos alcanzables. Corte real del 2026-10-24 sobre `b2b496f`: **19/19 JVM aprobadas** (6 `DefenderExpandedTest`, 10 `DefenderSessionTest`, 3 `DefenderViewModelTest`), BUILD SUCCESSFUL en 1 min 46 s, con compilación productiva de sesión/VM/UI. Se usó el comando de abajo con heap 768 MiB, un worker e in-process, sin emulador concurrente. Avisos previos de SDK XML y nulabilidad en `PitchLabSessionTest`, sin error. No se ejecutó suite JVM ajena a Defender ni lint/APK en este worktree.
-
-Dos Android nuevas escritas: alcanzar cuatro objetivos reproduciblemente, comprobar sus rectángulos sin intersección y pausa; mostrar extremos de sol/fa con bemol/sostenido y reproducir PCM real. Mantienen el helper `tapWithDeviceUptime` de v0.12 para el recorrido táctil anterior. **Android todavía no ejecutado; su legibilidad no está acreditada.**
-
-Comando, desde `Plataforma/` con JAVA_HOME/ANDROID_HOME configurados:
+Desde `Plataforma/`, con JDK y SDK configurados:
 
 ```powershell
-.\gradlew.bat :app:testDebugUnitTest --tests '*Defender*Test' --max-workers=1 --no-daemon '-Dorg.gradle.jvmargs=-Xmx768m -Dfile.encoding=UTF-8' '-Pkotlin.compiler.execution.strategy=in-process' --console=plain
+$env:JAVA_HOME = 'C:\Program Files\Android\Android Studio\jbr'
+$env:ANDROID_HOME = "$env:LOCALAPPDATA\Android\Sdk"
+.\gradlew.bat :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleDebugAndroidTest --max-workers=1 --no-daemon '-Dorg.gradle.jvmargs=-Xmx768m -XX:+UseSerialGC -Dfile.encoding=UTF-8' '-Pkotlin.compiler.execution.strategy=in-process' --console=plain
 ```
 
-Integración posterior a cargo del agente principal: suite completa JVM, lint, APK/appAndroidTest, Android API 34 y capturas reales; revisar especialmente tamaño de pentagramas con cuatro tarjetas y controles de alteraciones en vertical. No se modificaron host, versión, almacenamiento compartido, README ni estado global. Prueba S22 Ultra, audibilidad, latencia acústica y comodidad física pendientes; no atribuir eficacia pedagógica al recorrido.
+Usar únicamente un emulador de pruebas: la integración reinicia su perfil. Instalar ambos APK, desbloquear la pantalla y conceder `android.permission.RECORD_AUDIO` antes de los recorridos de afinador. Ejecutar `am instrument` con serial explícito y las clases `DefenderAndroidTest`, `ParallelFeaturesAndroidTest`, `GuidedTunerAndroidTest`, `GuidedTunerLifecycleAndroidTest`, `RhythmAndroidTest` y `RhythmR2AndroidTest`, todas bajo `ar.edu.unmdp.entrenamiento`, runner `ar.edu.unmdp.entrenamiento.test/androidx.test.runner.AndroidJUnitRunner`.
 
-## Checkpoint de cierre por cuota
+Para comprobar el ancho de 360 dp en Pixel_6/API 34/densidad 420: `adb -s emulator-5554 shell wm size 945x2100`; repetir cuatro enemigos, controles alterados y resumen. Restaurar con `wm size reset`. Las capturas se exportan a `/sdcard/Android/data/ar.edu.unmdp.entrenamiento/files/defender-d2/`.
 
-El agente principal indicó cierre de desarrollo al quedar 19 % de cuota compartida, para reservar integración/guardado antes del corte del 5 %. No se desarrolló D3 ni se corrieron nuevos builds después del verde anterior.
+## Recorrido físico pendiente
 
-Commits, en orden sobre `d0f1624`: `f2ea44c` dominio/corpus/tests; `0db1ddb` VM/UI/configuración/notación; `b2b496f` Android/reservas/documentación; commit siguiente de cierre solo documental. Worktree limpio al entregarlo.
+Instalar v0.12.3 encima de la anterior sin desinstalar. Desde Defender, elegir cada etapa y probar naturales y alteraciones; revisar extremos con dos líneas adicionales en ambas claves, controles Do–Si/C–B y legibilidad con cuatro enemigos. Acertar, fallar sin perder vida, comprobar selección/natural, pausar/reanudar y perder tres vidas; revisar soluciones y resumen. Salir al menú y volver: ofrece preparación, sin un desbloqueo ficticio. Comprobar volumen multimedia, sonido/efectos por separado y que el menú conserve los módulos y datos anteriores.
 
-Contratos conservados: `DefenderViewModel()` sin Context; `ui` StateFlow; `DefenderApp(ui, model, onHome)`; `prepare()/background()/home()` con el comportamiento del host v0.12. `firePointer` admite la alteración capturada como cuarto argumento opcional natural; llamadas anteriores siguen válidas. La sesión tiene `state.enemies` y alias `state.enemy` del primero; configuración sin argumentos mantiene cupo 1, VM/UI inicia cupo 4. No se cambian historial/exportación ni micrófono.
+Registrar modelo, Android, versión, ruta de audio y condiciones en S22 Ultra. No se midió latencia acústica ni se calibró eficacia pedagógica.
 
-Riesgos y pendientes concretos:
+## Verificación 2026-10-26
 
-- Dos Android nuevas **escritas pero no compiladas ni ejecutadas**; validar disponibilidad de `Rect.overlaps` y colección de cuatro nodos contra la versión Compose del proyecto al compilar appAndroidTest. La JVM no compila fuentes instrumentadas.
-- Tarjetas multienemigo: ancho 0,235 y alto 0,17 del campo; reservas lógicas 0,245 × 0,205. La JVM confirma ausencia de intersección de centros/reservas y posibilidad de llegar a cuatro; falta inspeccionar clave, alteración, líneas y nave decorativa a 360/411 dp. Si se agrandan tarjetas para legibilidad, agrandar reservas coherentemente y revisar cuatro alcanzables.
-- El segmento de base x=0,25–0,75/y=0,84 se dibuja con cupo múltiple y sirve a matching geométrico; D1/cupo 1 conserva destino central anterior. Comprobar posición visual del impacto y texto de solución con varias llegadas cercanas.
-- El resumen muestra grafía/octava y pentagrama con clave, pero todavía no tiene rótulo textual dedicado de etapa/alteraciones/clave. Los datos están en `configuration` y cada `DefenderNote`; revisar esa presentación para el criterio de resumen de #24 antes de darlo por completo.
-- Los tests de distintos tiempos de viaje ejercitan el matching público con enemigos construidos en el límite, mientras que esta práctica ofrece viaje fijo 10 s. No presentar ese banco como DDA aplicado.
-- Salida/game over vacían vivos sin sumarlos como llegadas; aún no se agregaron eventos específicos de cancelación de cada enemigo. La persistencia/reproducción ampliada pertenece a los siguientes incrementos; conservar esta limitación al evaluar trazabilidad.
+- **116 JVM en 26 clases aprobadas**, cero fallos/errores/omitidas. Incluye 19 de Defender: corpus de extremos/grafías/claves, matching, reservas futuras, llegadas/cancelación, selección y reloj.
+- **Lint: 0 errores, 14 advertencias**; app y APK de pruebas compilados. Build final completo: **5 min 01 s**, un worker, heap 768 MiB e in-process. Se conserva el aviso anterior de nulabilidad en `PitchLabSessionTest`, sin error de compilación.
+- **15 Android diferentes aprobadas en Pixel_6/API 34**, con 2 GiB de RAM configurados. Siete de Defender: cuatro enemigos mixtos/alterados y pausa, controles táctiles C–B/alteraciones, resumen y tres pérdidas, audio de extremos y efectos, acierto por pulsación y partida completa. Otras ocho conservan guiado/recreación del afinador, R1/R2/audio y navegación/ciclo de vida/compatibilidad de datos.
+- Primera tanda final: **12/15 en 187,706 s**; las tres fallidas esperaban foco. Se comprobó con `dumpsys window` y captura que `com.android.systemui` tenía un diálogo ANR. Cerrado el aviso, **las tres afectadas aprobaron en 71,649 s**, sin cambiar el APK ni sus aserciones. No se presenta la primera tanda como totalmente aprobada.
+- A **360 dp (945×2100 px, densidad 420)** se repitieron cuatro enemigos, controles y resumen: **3/3 en 16,639 s**, sin cambiar APK. Son repeticiones de pruebas ya contadas, no tres pruebas diferentes adicionales. Pantalla restaurada y emulador detenido al terminar.
+- Antes de corregir el resumen se ejecutaron seis Android: **5/6**, con fallo real por ausencia de «N3 · Fa ampliada»; el mismo test pasó después de agregar etapa/rango/alteraciones. Ese rojo se conserva por separado.
+
+Evidencia local: `Plataforma/build/verification/2026-10-26-D2/`, con `summary.json`, logs de compilación/instrumentación, resultados JVM, lint, crash de JVM y captura del ANR. Primer build interrumpido por `EXCEPTION_ACCESS_VIOLATION` nativa en un thread G1 de JBR 21.0.6, antes de correr pruebas. Cambiar solo el recolector a `UseSerialGC` permitió el primer build completo (6 min 54 s); el build final volvió a aprobar con ese comando. Es un workaround local, sin atribuir corrección del runtime ni cambiar `gradle.properties`.
+
+Revisión con `design-taste-frontend`, adaptada a Kotlin/Compose nativo: se conservan referencia espacial, paleta, tipografía y controles; la pregunta principal es qué nota responder antes de llegar a base. No se aplica el inspector HTML/Chrome. Se inspeccionaron cuatro enemigos, controles y resúmenes a ambos anchos, además de extremos de sol/fa con alteraciones (renderer sin cambios entre primer y último build). Pentagramas/naves comprobados dentro del campo y sin intersección en el recorrido controlado; controles visibles y revisión desplazable. [Cuatro enemigos a 411 dp](imagenes/defender-d2/411dp/d2-cuatro-mixta.png), [a 360 dp](imagenes/defender-d2/360dp/d2-cuatro-mixta.png) y [resumen](imagenes/defender-d2/360dp/d2-resumen-fa-alteraciones.png). La comodidad física y escalas de fuente distintas siguen sin medirse.
+
+APK: `Plataforma/build/apk-archives/entrenamiento-auditivo-v0.12.3.apk`, **12.472.627 bytes**, SHA-256 `C9A6E9FC0DAA7B090877194E68C9063381157C02DEC7C486CAF6439A831C6701`. Certificado SHA-256 igual al de v0.12.2, comprobado con `apksigner`: permite actualización encima sin desinstalar.
+
+No se ejecutó toda la suite Android ni API 36; no se probó S22 Ultra ni se midió latencia acústica o eficacia pedagógica. A3/R2 se conservan, sin avanzar A4/R3/D3 ni las propuestas de Glisso.

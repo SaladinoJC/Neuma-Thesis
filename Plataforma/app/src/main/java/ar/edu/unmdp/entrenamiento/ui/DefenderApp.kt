@@ -200,7 +200,7 @@ private fun DefenderArena(game: DefenderState, modifier: Modifier) {
             val cardWidth = if (game.configuration.maxEnemies == 1) minOf(136.dp, maxWidth * .45f) else maxWidth * .235f
             val cardHeight = if (game.configuration.maxEnemies == 1) minOf(116.dp, maxHeight * .35f) else maxHeight * .17f
             Column(Modifier.offset(x = maxWidth * point.x - cardWidth / 2, y = maxHeight * point.y - cardHeight / 2)
-                .width(cardWidth), horizontalAlignment = Alignment.CenterHorizontally) {
+                .width(cardWidth).testTag("defender-enemy"), horizontalAlignment = Alignment.CenterHorizontally) {
                 NoteStaff(enemy.note, Modifier.fillMaxWidth().height(cardHeight).testTag("defender-target"))
                 Text("▟▙", color = Pink, fontSize = 12.sp, fontWeight = FontWeight.Black)
             }
@@ -283,17 +283,33 @@ private fun DefenderSummary(ui: DefenderUiState, model: DefenderViewModel) {
             style = MaterialTheme.typography.headlineLarge, modifier = Modifier.testTag("defender-summary"))
         Text("${game.points} puntos · ${game.results.count { it.resolution == DefenderResolution.ELIMINATED }} eliminados")
         Text("${game.results.count { it.resolution == DefenderResolution.ARRIVED }} llegadas · ${game.failedShots} disparos fallidos")
+        Text(game.configuration.stage.label, color = DefenderCyan, fontWeight = FontWeight.Bold)
+        Text(when (game.configuration.stage) {
+            DefenderStage.N1 -> "Clave de sol · rango Mi4–Fa5"
+            DefenderStage.N2 -> "Clave de sol · rango La3–Do6"
+            DefenderStage.N3 -> "Clave de fa · rango Do2–Mi4"
+            DefenderStage.N4 -> "Claves de sol y fa · rangos La3–Do6 / Do2–Mi4"
+        })
+        Text(if (game.configuration.accidentals) "Alteraciones: naturales, bemoles y sostenidos"
+            else "Alteraciones: solo naturales")
         Text("Práctica · no modifica tu progreso", color = Muted)
         Text("Semilla ${game.seed} · ${game.configuration.version}", color = Muted, fontSize = 12.sp)
         Button(onClick = { model.start() }, modifier = Modifier.fillMaxWidth()) { Text("Nueva práctica") }
         Text("Revisión", style = MaterialTheme.typography.titleLarge)
         game.results.forEach { result ->
+            val note = result.enemy.note
+            val symbol = if (note.accidental == DefenderAccidental.NATURAL) "" else note.accidental.symbol
             Surface(color = Panel, shape = RoundedCornerShape(8.dp)) {
                 Row(Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     NoteStaff(result.enemy.note, Modifier.width(110.dp).height(84.dp))
                     Column {
-                        Text("${result.enemy.note.name.solfege}${if (result.enemy.note.accidental == DefenderAccidental.NATURAL) "" else result.enemy.note.accidental.symbol}${result.enemy.note.octave} · ${result.enemy.note.name.letter}", fontWeight = FontWeight.Bold)
+                        Text("${note.name.solfege}$symbol${note.octave} · ${note.name.letter}$symbol${note.octave}", fontWeight = FontWeight.Bold)
+                        Text("Clave de ${note.clef.label.lowercase()} · ${when (note.accidental) {
+                            DefenderAccidental.NATURAL -> "natural"
+                            DefenderAccidental.FLAT -> "bemol"
+                            DefenderAccidental.SHARP -> "sostenido"
+                        }}", color = Muted, fontSize = 12.sp)
                         Text(if (result.resolution == DefenderResolution.ELIMINATED) "Eliminado" else "Llegó a la base", color = Muted)
                     }
                 }
