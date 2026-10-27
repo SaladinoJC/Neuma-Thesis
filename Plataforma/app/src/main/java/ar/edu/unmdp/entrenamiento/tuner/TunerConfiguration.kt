@@ -57,6 +57,7 @@ data class TunerConfiguration(
     val tracking: TunerTracking = TunerTracking.STRINGS,
     val mode: TunerMode = TunerMode.FREE,
     val finalReview: Boolean = true,
+    val referenceTimbre: ReferenceTimbre = ReferenceTimbre.GUITAR,
 ) {
     init {
         require(schemaVersion == 1) { "Versión de configuración del afinador no compatible." }
@@ -122,6 +123,7 @@ class TunerConfigurationSession(private val store: TunerConfigurationStore,
     }
     suspend fun preferences(criterion: TunerCriterion, tracking: TunerTracking) = change { it.copy(criterion = criterion, tracking = tracking) }
     suspend fun guidedPreferences(mode: TunerMode, finalReview: Boolean) = change { it.copy(mode = mode, finalReview = finalReview) }
+    suspend fun referenceTimbre(value: ReferenceTimbre) = change { it.copy(referenceTimbre = value) }
     suspend fun saveCustom(name: String, notes: List<Int>, id: String? = null) = change { withCustom(it, name, notes, id) }
     suspend fun saveCustomNames(name: String, notes: List<String>, id: String? = null) = change {
         withCustom(it, name, notes.map(::parseTunerNote), id)

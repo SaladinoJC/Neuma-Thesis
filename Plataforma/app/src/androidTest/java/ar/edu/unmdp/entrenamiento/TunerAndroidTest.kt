@@ -44,11 +44,11 @@ class TunerAndroidTest {
             compose.onAllNodesWithTag("tuner-start").fetchSemanticsNodes().any { !it.config.contains(SemanticsProperties.Disabled) }
         }
         compose.onNodeWithTag("tuner-configuration-open").performScrollTo().performClick()
-        compose.onNodeWithText("Pro ±2 cents").performClick()
+        compose.onNodeWithText("Pro ±2 cents").performScrollTo().performClick()
         compose.waitUntil(10_000) {
             compose.onAllNodesWithTag("tuner-start").fetchSemanticsNodes().any { !it.config.contains(SemanticsProperties.Disabled) }
         }
-        compose.onNodeWithText("6 · Mi2").performClick()
+        compose.onNodeWithText("6 · Mi2").performScrollTo().performClick()
         compose.onNodeWithText("Objetivo: Mi2").assertExists()
         compose.onNodeWithTag("tuner-start").performScrollTo().performClick()
         compose.onNodeWithTag("tuner-status").assertTextEquals("Micrófono activo")

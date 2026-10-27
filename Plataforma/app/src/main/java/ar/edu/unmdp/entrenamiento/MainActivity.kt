@@ -61,6 +61,7 @@ class MainActivity : ComponentActivity() {
         tuner = ViewModelProvider(this, object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T = TunerViewModel(
+                referencePlayer = ar.edu.unmdp.entrenamiento.audio.AndroidTunerReferencePlayer(applicationContext),
                 configurationStore = JsonTunerConfiguration(File(filesDir, "tuner-configuration.json"))) as T
         })[TunerViewModel::class.java]
         defender = ViewModelProvider(this)[DefenderViewModel::class.java]

@@ -38,7 +38,7 @@ class GuidedTunerSession {
         state = state.copy(measurement = meter.state, farWarning = false)
     }
     fun measure(estimate: PitchEstimate, timeMillis: Long) {
-        if (!state.active) return
+        if (!state.active || !state.measurement.running) return
         meter.measure(estimate, timeMillis)
         val cents = meter.state.cents
         val continuous = lastTime?.let { timeMillis > it && timeMillis - it <= 250 } ?: false
@@ -80,5 +80,15 @@ class GuidedTunerSession {
         if (!state.active) return
         meter.stop(); farSince = null; lastTime = null
         state = state.copy(phase = GuidedPhase.INTERRUPTED, measurement = meter.state, farWarning = false)
+    }
+    fun suspendMeasurement() {
+        if (!state.active) return
+        meter.stop(); farSince = null; lastTime = null
+        state = state.copy(measurement = meter.state, farWarning = false)
+    }
+    fun resumeMeasurement() {
+        if (!state.active) return
+        meter.start(); farSince = null; lastTime = null
+        state = state.copy(measurement = meter.state, farWarning = false)
     }
 }

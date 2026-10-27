@@ -1,5 +1,7 @@
 # Aplicación Android
 
+Versión 0.12.4: agrega **Afinador A4 / #12**, referencias de guitarra eléctrica limpia, piano y tono puro en Do2–Mi4, con timbre recordado. Suspende y libera captura antes de reproducir, descarta lecturas previas y retoma la misma cuerda guiada sin acumular estabilidad; salir o detener cancela la reanudación. Conserva A3, R2 y D2. Ver [audio y procedencia](../docs/Audio-referencias-afinador-A4.md) y [guía/verificación A4](../docs/Demostracion-afinador-A4.md). La audibilidad y el margen acústico en teléfono siguen pendientes.
+
 Versión 0.12.3: agrega **Defender D2 / #24**, práctica N1–N4 con clave de sol/fa, hasta dos líneas adicionales, alteraciones simples opcionales y cupo de uno a cuatro enemigos. Responde por nombre y alteración escrita; un acierto elimina solo el duplicado más próximo a la base. El resumen distingue etapa, rango, clave, alteración y pérdidas. Conserva A3 y R2; DDA, desbloqueos e historial de Defender continúan en D3. Ver [guía y verificación D2](../docs/Demostracion-defender-D2.md).
 
 Versión 0.12.2: agrega **Rhythm Tap R2 / #17**, con compases 2/4, 3/4 y 4/4, blancas, redondas, negra con puntillo y silencios básicos. La generación comprueba cabida y cuota antes de la búsqueda; el resumen distingue ataques y silencios. Conserva el afinador A3 de 0.12.1 y Defender D1. Sin DDA ni historial de ritmo todavía. Ver [guía y verificación R2](../docs/Rhythm-Tap-R2.md).
@@ -8,7 +10,7 @@ Versión 0.12.1: agrega únicamente **Afinador A3 / #11**, con recorrido guiado 
 
 Versión 0.12: incorpora **Afinador con perfiles, seis presets y afinaciones personalizadas**, **Rhythm Tap** de cuatro compases con negras/corcheas y **Defender de notas** en clave de sol. Los tres módulos comparten menú y ciclo de vida; la configuración del afinador participa en exportación JSON, recuperación ZIP y reinicio. Ritmo y Defender muestran resúmenes de práctica en memoria; su persistencia y DDA siguen en los tickets posteriores. [Recorrido](../docs/Demostracion-prototipo-v0.12.md) y [verificación integrada](../docs/Verificacion-prototipo-v0.12.md).
 
-APK actual: `build/apk-archives/entrenamiento-auditivo-v0.12.3.apk`. Mismo paquete y certificado debug: instalar encima, sin desinstalar. Se conservan las funciones previas, incluido el afinador Libre de v0.11 ([antecedente](../docs/Demostracion-afinador-v0.11.md)). Referencias, entrenamiento y seguimiento siguen en #12–#14; los criterios Normal/Pro y el DDA actual son experimentales y requieren comprobación física.
+APK actual: `build/apk-archives/entrenamiento-auditivo-v0.12.4.apk`. Mismo paquete y certificado debug: instalar encima, sin desinstalar. Se conservan las funciones previas, incluido el afinador Libre de v0.11 ([antecedente](../docs/Demostracion-afinador-v0.11.md)). Entrenamiento y seguimiento siguen en #13–#14; los criterios Normal/Pro y el DDA actual son experimentales y requieren comprobación física.
 
 ```powershell
 .\gradlew.bat :app:testDebugUnitTest --tests '*tuner*'

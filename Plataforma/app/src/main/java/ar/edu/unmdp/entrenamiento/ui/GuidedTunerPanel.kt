@@ -40,7 +40,7 @@ fun GuidedTunerPanel(ui: TunerUiState, model: TunerViewModel) {
     if (guided.farWarning) Text("Muy lejos, revisar cuerda correcta", color = MaterialTheme.colorScheme.error,
         modifier = Modifier.testTag("tuner-guided-warning"))
     if (guided.phase == GuidedPhase.REVIEW) {
-        OutlinedButton(onClick = model::leavePending, modifier = Modifier.testTag("tuner-guided-pending")) {
+        OutlinedButton(onClick = model::leavePending, enabled = !ui.configurationBusy && !ui.referenceBusy, modifier = Modifier.testTag("tuner-guided-pending")) {
             Text("Dejar pendiente y continuar")
         }
     }

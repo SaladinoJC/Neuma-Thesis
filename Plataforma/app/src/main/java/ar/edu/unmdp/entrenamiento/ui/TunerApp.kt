@@ -38,18 +38,18 @@ fun TunerApp(ui: TunerUiState, model: TunerViewModel, onHome: () -> Unit) {
                 Text("Afinador", style = MaterialTheme.typography.headlineLarge)
                 Text(configuration?.let { "${if (it.mode == TunerMode.FREE) "Libre" else "Guiado"} · ${it.currentGuitar.name} · ${it.currentTuning.name}" } ?: "Configuración no disponible",
                     style = MaterialTheme.typography.titleMedium, modifier = Modifier.testTag("tuner-setup"))
-                TunerConfigurationPanel(ui, model)
-                GuidedTunerPanel(ui, model)
+                TunerConfigurationPanel(ui.copy(configurationBusy = ui.configurationBusy || ui.referenceBusy), model)
+                GuidedTunerPanel(ui.copy(configurationBusy = ui.configurationBusy || ui.referenceBusy), model)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     TunerCriterion.entries.forEach { criterion ->
-                        FilterChip(selected = configuration?.criterion == criterion, enabled = configuration != null && !ui.configurationBusy, onClick = { model.criterion(criterion) },
+                        FilterChip(selected = configuration?.criterion == criterion, enabled = configuration != null && !ui.configurationBusy && !ui.referenceBusy, onClick = { model.criterion(criterion) },
                             label = { Text(if (criterion == TunerCriterion.NORMAL) "Normal ±5 cents" else "Pro ±2 cents") })
                     }
                 }
                 if (configuration?.mode != TunerMode.GUIDED) Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    FilterChip(selected = state.tracking == TunerTracking.CHROMATIC, enabled = configuration != null && !ui.configurationBusy,
+                    FilterChip(selected = state.tracking == TunerTracking.CHROMATIC, enabled = configuration != null && !ui.configurationBusy && !ui.referenceBusy,
                         onClick = { model.tracking(TunerTracking.CHROMATIC) }, label = { Text("Cromático") })
-                    FilterChip(selected = state.tracking == TunerTracking.STRINGS, enabled = configuration != null && !ui.configurationBusy,
+                    FilterChip(selected = state.tracking == TunerTracking.STRINGS, enabled = configuration != null && !ui.configurationBusy && !ui.referenceBusy,
                         onClick = { model.tracking(TunerTracking.STRINGS) }, label = { Text("Cuerdas") })
                 }
                 Text(state.measuredMidi?.let(::noteName) ?: "Sin tono válido",
@@ -71,19 +71,20 @@ fun TunerApp(ui: TunerUiState, model: TunerViewModel, onHome: () -> Unit) {
                     (configuration?.currentTuning?.notesSixToFirst ?: listOf(40, 45, 50, 55, 59, 64)).mapIndexed { index, midi -> (6 - index) to midi }.chunked(3).forEach { row ->
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             row.forEach { (number, midi) ->
-                                FilterChip(selected = state.fixedString == number, enabled = configuration != null && !ui.configurationBusy, onClick = { model.fixString(number) },
+                                FilterChip(selected = state.fixedString == number, enabled = configuration != null && !ui.configurationBusy && !ui.referenceBusy, onClick = { model.fixString(number) },
                                     label = { Text("$number · ${noteName(midi)}") })
                             }
                         }
                     }
-                    if (state.fixedString != null) TextButton(onClick = { model.fixString(null) }) { Text("Liberar cuerda") }
+                    if (state.fixedString != null) TextButton(onClick = { model.fixString(null) }, enabled = !ui.configurationBusy && !ui.referenceBusy) { Text("Liberar cuerda") }
                 }
+                TunerReferencePanel(ui, model)
                 Text(if (state.running) "Micrófono activo" else "Micrófono detenido", modifier = Modifier.testTag("tuner-status"))
                 Button(onClick = {
                     if (context.checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) model.start()
                     else permission.launch(Manifest.permission.RECORD_AUDIO)
-                }, enabled = !state.running && configuration != null && !ui.configurationBusy, modifier = Modifier.testTag("tuner-start")) { Text("Iniciar micrófono") }
-                OutlinedButton(onClick = model::stop, enabled = state.running, modifier = Modifier.testTag("tuner-stop")) { Text("Detener micrófono") }
+                }, enabled = !state.running && configuration != null && !ui.configurationBusy && !ui.referenceBusy, modifier = Modifier.testTag("tuner-start")) { Text("Iniciar micrófono") }
+                OutlinedButton(onClick = model::stop, enabled = state.running || ui.referenceBusy, modifier = Modifier.testTag("tuner-stop")) { Text("Detener audio y micrófono") }
                 ui.error?.let { Text(it, color = MaterialTheme.colorScheme.error) }
                 TextButton(onClick = { context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, "package:${context.packageName}".toUri())) }) { Text("Permisos en Ajustes") }
                 Text("Después de autorizar el permiso, pulsá Iniciar micrófono. No se guardan mediciones ni audio.", color = Muted)
