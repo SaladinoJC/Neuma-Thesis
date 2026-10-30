@@ -46,7 +46,7 @@ fun DemonstrationApp(ui: DemonstrationUi, model: DemonstrationViewModel, onHome:
                 verticalArrangement = Arrangement.spacedBy(14.dp)) {
                 TextButton(onClick = onHome, enabled = !ui.busy) { Text("Volver al menú") }
                 Text("Datos y demostración", style = MaterialTheme.typography.headlineMedium)
-                Text("Se conservan partidas, progreso, mediciones de voz, configuraciones, recorridos del afinador con seguimiento activo y ejercicios de Rhythm Tap con su partitura y resultados. Defender muestra su resumen de práctica sin guardarlo todavía.")
+                Text("Se conservan partidas, progreso, mediciones del laboratorio de voz, configuraciones, recorridos del afinador con seguimiento activo, Rhythm Tap, Defender y rondas de intervalos vocales. Las mediciones derivadas no contienen grabaciones de audio.")
                 OutlinedButton(onClick = onPitchLab, enabled = !ui.busy, modifier = Modifier.testTag("pitch-lab-open")) { Text("Pruebas sintéticas de tono") }
                 Text("Escenarios de desbloqueo", style = MaterialTheme.typography.titleLarge)
                 Text("DATOS SIMULADOS · Se ejecutan en memoria, sin audio ni cambios en tu perfil.")

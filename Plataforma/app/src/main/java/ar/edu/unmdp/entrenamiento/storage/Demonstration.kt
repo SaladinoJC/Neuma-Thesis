@@ -35,13 +35,16 @@ data class DemonstrationExport(val schemaVersion: Int = 1, val appVersion: Strin
     val rhythm: List<RhythmRecord> = emptyList(), val pendingRhythmSaves: List<RhythmRecord> = emptyList(),
     val rhythmProgress: RhythmProgress? = null, val defender: List<DefenderRecord> = emptyList(),
     val defenderProgress: DefenderProgress? = null, val pendingDefenderSaves: List<DefenderRecord> = emptyList(),
-    val defenderProgressByVariant: Map<String, DefenderProgress> = emptyMap())
+    val defenderProgressByVariant: Map<String, DefenderProgress> = emptyMap(),
+    val vocalIntervals: List<VocalIntervalRecord> = emptyList(),
+    val pendingVocalIntervalSaves: List<VocalIntervalRecord> = emptyList(),
+    val vocalIntervalProgress: VocalProgress? = null)
 
 /** Accessed after sessions have drained their pending actions on the menu. */
 class Demonstration(private val directory: File) {
     private val profile = ProfileFiles.inDirectory(directory)
     private val json = Json { encodeDefaults = true; prettyPrint = true }
-    private val names = listOf("simon-results.json", "instrument-results.json", "voice-results.json", "pitch-lab-results.json", "tuner-configuration.json", "tuner-results.json", "rhythm-results.json", "defender-results.json")
+    private val names = listOf("simon-results.json", "instrument-results.json", "voice-results.json", "pitch-lab-results.json", "tuner-configuration.json", "tuner-results.json", "rhythm-results.json", "defender-results.json", "vocal-interval-results.json")
     private val marker = File(directory, "reset-pending")
     init {
         if (marker.exists()) runBlocking(Dispatchers.IO) { profile.transaction {
@@ -52,7 +55,7 @@ class Demonstration(private val directory: File) {
         names.forEach { name -> val file = File(directory, name); check(!file.exists() || file.delete()) { "No se pudo borrar $name" } }
         check(!marker.exists() || marker.delete()) { "No se pudo completar el reinicio." }
     }
-    suspend fun export(version: String, simulation: ProgressSimulation? = null, helpSimulation: InstrumentResult? = null, ddaScenarios: DdaBenchReport? = null, pendingVoiceSave: VoiceResult? = null, pendingTunerSaves: List<TunerResult> = emptyList(), pendingRhythmSaves: List<RhythmRecord> = emptyList(), pendingDefenderSaves: List<DefenderRecord> = emptyList()): String = withContext(Dispatchers.IO) {
+    suspend fun export(version: String, simulation: ProgressSimulation? = null, helpSimulation: InstrumentResult? = null, ddaScenarios: DdaBenchReport? = null, pendingVoiceSave: VoiceResult? = null, pendingTunerSaves: List<TunerResult> = emptyList(), pendingRhythmSaves: List<RhythmRecord> = emptyList(), pendingDefenderSaves: List<DefenderRecord> = emptyList(), pendingVocalIntervalSaves: List<VocalIntervalRecord> = emptyList()): String = withContext(Dispatchers.IO) {
         profile.transaction {
             val simon = JsonSimonResults(File(directory, names[0])).all()
             val instruments = JsonInstrumentResults(File(directory, names[1])).all()
@@ -60,6 +63,7 @@ class Demonstration(private val directory: File) {
             val pitchTests = JsonPitchLabResults(File(directory, names[3])).all()
             val rhythm = JsonRhythmResults(File(directory, names[6])).all()
             val defender = JsonDefenderResults(File(directory, names[7])).all()
+            val vocal = JsonVocalIntervalResults(File(directory, names[8])).all()
             val data = DemonstrationExport(appVersion = version, exportedAtMillis = System.currentTimeMillis(),
                 simon = simon, instruments = instruments, voice = voice,
                 simonProgress = progression(simon.map { ProgressEntry(it.id, it.scale.ordinal, it.origin, it.completed, it.mastery) }),
@@ -69,12 +73,14 @@ class Demonstration(private val directory: File) {
                 tuner = JsonTunerResults(File(directory, names[5])).all(), pendingTunerSaves = pendingTunerSaves,
                 rhythm = rhythm, pendingRhythmSaves = pendingRhythmSaves, rhythmProgress = rhythmProgress(rhythm),
                 defender = defender, defenderProgress = defenderProgress(defender), pendingDefenderSaves = pendingDefenderSaves,
-                defenderProgressByVariant = listOf("notes", "chords").associateWith { defenderProgress(defender, it) })
+                defenderProgressByVariant = listOf("notes", "chords").associateWith { defenderProgress(defender, it) },
+                vocalIntervals = vocal, vocalIntervalProgress = vocalProgress(vocal),
+                pendingVocalIntervalSaves = pendingVocalIntervalSaves)
             json.encodeToString(DemonstrationExport.serializer(), data)
         }
     }
     /** Copia los archivos conocidos sin interpretarlos ni reemplazar los originales dañados. */
-    suspend fun writeRecovery(output: OutputStream, pendingVoiceSave: VoiceResult? = null, pendingTunerSaves: List<TunerResult> = emptyList(), pendingRhythmSaves: List<RhythmRecord> = emptyList(), pendingDefenderSaves: List<DefenderRecord> = emptyList()) = withContext(Dispatchers.IO) { profile.transaction {
+    suspend fun writeRecovery(output: OutputStream, pendingVoiceSave: VoiceResult? = null, pendingTunerSaves: List<TunerResult> = emptyList(), pendingRhythmSaves: List<RhythmRecord> = emptyList(), pendingDefenderSaves: List<DefenderRecord> = emptyList(), pendingVocalIntervalSaves: List<VocalIntervalRecord> = emptyList()) = withContext(Dispatchers.IO) { profile.transaction {
         ZipOutputStream(output).use { zip ->
             names.forEach { name ->
                 val file = File(directory, name)
@@ -102,6 +108,11 @@ class Demonstration(private val directory: File) {
             if (pendingDefenderSaves.isNotEmpty()) {
                 zip.putNextEntry(ZipEntry("pending-defender-saves.json"))
                 zip.write(json.encodeToString(ListSerializer(DefenderRecord.serializer()), pendingDefenderSaves).toByteArray(Charsets.UTF_8))
+                zip.closeEntry()
+            }
+            if (pendingVocalIntervalSaves.isNotEmpty()) {
+                zip.putNextEntry(ZipEntry("pending-vocal-interval-saves.json"))
+                zip.write(json.encodeToString(ListSerializer(VocalIntervalRecord.serializer()), pendingVocalIntervalSaves).toByteArray(Charsets.UTF_8))
                 zip.closeEntry()
             }
             zip.putNextEntry(ZipEntry("LEEME.txt"))

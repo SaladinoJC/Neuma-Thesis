@@ -9,6 +9,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.LaunchedEffect
@@ -49,6 +51,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var model: SimonViewModel
     private lateinit var instruments: InstrumentViewModel
     private lateinit var voice: VoiceViewModel
+    private lateinit var vocal: VocalIntervalViewModel
     private lateinit var pitchLab: PitchLabViewModel
     private lateinit var tuner: TunerViewModel
     private lateinit var defender: DefenderViewModel
@@ -102,6 +105,11 @@ class MainActivity : ComponentActivity() {
             override fun <T : ViewModel> create(modelClass: Class<T>): T =
                 VoiceViewModel(JsonVoiceResults(File(filesDir, "voice-results.json"))) as T
         })[VoiceViewModel::class.java]
+        vocal = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T = VocalIntervalViewModel(
+                resultsStore = JsonVocalIntervalResults(File(filesDir, "vocal-interval-results.json")), automaticInitially = true) as T
+        })[VocalIntervalViewModel::class.java]
         pitchLab = ViewModelProvider(this, object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T = PitchLabViewModel(PitchLabSession(
@@ -112,19 +120,21 @@ class MainActivity : ComponentActivity() {
         val simonModel = model
         val instrumentModel = instruments
         val voiceModel = voice
+        val vocalModel = vocal
         val tunerModel = tuner
         val rhythmModel = rhythm
         val defenderModel = defender
         val demonstration = ViewModelProvider(this, object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T = DemonstrationViewModel(data,
-                drain = { labModel.cancelAndJoin(); voiceModel.stopAndJoin(); rhythmModel.stopAndJoin(); defenderModel.stopAndJoin(); tunerModel.awaitConfigurationIdle(); simonModel.awaitIdle(); instrumentModel.awaitIdle() },
-                refresh = { simonModel.reload(); instrumentModel.reload(); voiceModel.resetDisplay(); labModel.resetDisplay(); tunerModel.resetDisplay(); rhythmModel.resetDisplay(); defenderModel.resetDisplay() },
+                drain = { vocalModel.stopAndJoin(); labModel.cancelAndJoin(); voiceModel.stopAndJoin(); rhythmModel.stopAndJoin(); defenderModel.stopAndJoin(); tunerModel.awaitConfigurationIdle(); simonModel.awaitIdle(); instrumentModel.awaitIdle() },
+                refresh = { vocalModel.resetDisplay(); simonModel.reload(); instrumentModel.reload(); voiceModel.resetDisplay(); labModel.resetDisplay(); tunerModel.resetDisplay(); rhythmModel.resetDisplay(); defenderModel.resetDisplay() },
                 helpSimulation = { instrumentModel.ui.value.simulation }, pendingVoice = voiceModel::pendingForExport,
                 pendingTuner = tunerModel::pendingForExport,
                 pendingRhythm = rhythmModel::pendingForExport,
                 pendingDefender = defenderModel::pendingForExport,
-                drainForReset = { labModel.cancelAndJoin(); voiceModel.stopAndJoin(); rhythmModel.stopAndJoin(); defenderModel.stopAndJoin(); tunerModel.stop(); tunerModel.awaitConfigurationIdle(); simonModel.discardForReset(); instrumentModel.discardForReset() }) as T
+                pendingVocalIntervals = vocalModel::pendingForExport,
+                drainForReset = { vocalModel.stopAndJoin(); labModel.cancelAndJoin(); voiceModel.stopAndJoin(); rhythmModel.stopAndJoin(); defenderModel.stopAndJoin(); tunerModel.stop(); tunerModel.awaitConfigurationIdle(); simonModel.discardForReset(); instrumentModel.discardForReset() }) as T
         })[DemonstrationViewModel::class.java]
         val history = ViewModelProvider(this, object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
@@ -136,6 +146,7 @@ class MainActivity : ComponentActivity() {
             val ui by model.ui.collectAsStateWithLifecycle()
             val instrumentUi by instruments.ui.collectAsStateWithLifecycle()
             val voiceUi by voice.ui.collectAsStateWithLifecycle()
+            val vocalUi by vocal.ui.collectAsStateWithLifecycle()
             val dataUi by demonstration.ui.collectAsStateWithLifecycle()
             val historyUi by history.ui.collectAsStateWithLifecycle()
             val pitchUi by pitchLab.ui.collectAsStateWithLifecycle()
@@ -147,7 +158,7 @@ class MainActivity : ComponentActivity() {
                 requestedOrientation = if (ui.screen == AppScreen.MENU || instrumentUi.open || auxiliary.isNotEmpty())
                     ActivityInfo.SCREEN_ORIENTATION_PORTRAIT else ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
                 WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars =
-                    auxiliary in setOf("rhythm", "tuner", "data", "defender")
+                    auxiliary in setOf("rhythm", "tuner", "data", "defender", "vocal")
             }
             if (auxiliary == "rhythm") RhythmApp(rhythmUi, rhythm, reduceMotion = gardenMenu.reduceMotion,
                 onData = { rhythm.home(); auxiliary = "data" }) {
@@ -162,6 +173,10 @@ class MainActivity : ComponentActivity() {
             else if (auxiliary == "tuner") ar.edu.unmdp.entrenamiento.ui.TunerApp(tunerUi, tuner) {
                 tuner.stop()
                 auxiliary = ""
+            }
+            else if (auxiliary == "vocal") ar.edu.unmdp.entrenamiento.ui.VocalIntervalApp(vocalUi, vocal,
+                onData = { lifecycleScope.launch { vocal.stopAndJoin(); auxiliary = "data" } }) {
+                lifecycleScope.launch { vocal.stopAndJoin(); auxiliary = "" }
             }
             else if (auxiliary == "voice") VoiceApp(voiceUi, voice) {
                 voice.stop()
@@ -180,7 +195,8 @@ class MainActivity : ComponentActivity() {
                 onGuidedTuner = { if (tunerUi.configuration.configuration != null) tuner.mode(ar.edu.unmdp.entrenamiento.tuner.TunerMode.GUIDED); auxiliary = "tuner" },
                 onTrainingTuner = { if (tunerUi.configuration.configuration != null) tuner.mode(ar.edu.unmdp.entrenamiento.tuner.TunerMode.TRAINING); auxiliary = "tuner" },
                 onDefender = { defender.prepare(); auxiliary = "defender" },
-                onRhythm = { auxiliary = "rhythm" }, menuState = gardenMenu, instrumentProgress = instrumentUi.progress)
+                onRhythm = { auxiliary = "rhythm" }, menuState = gardenMenu, instrumentProgress = instrumentUi.progress,
+                onVocalIntervals = { auxiliary = "vocal" })
         }
     }
 
@@ -195,6 +211,7 @@ class MainActivity : ComponentActivity() {
         if (::defender.isInitialized) defender.background()
         if (::tuner.isInitialized) tuner.stop()
         if (::voice.isInitialized) voice.stop()
+        if (::vocal.isInitialized) vocal.background()
         if (::pitchLab.isInitialized) pitchLab.cancel()
         super.onPause()
     }

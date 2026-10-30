@@ -17,7 +17,7 @@ internal fun ComposeTestRule.showMenuDestination(tag: String) {
         "history-open", "game-voice", "data-open" ->
             onNodeWithTag("garden-more").performScrollTo().performClick()
         else -> {
-            val page = listOf("game-simon", "game-instruments", "game-rhythm", "game-defender").indexOf(tag)
+            val page = listOf("game-simon", "game-instruments", "game-rhythm", "game-defender", "game-vocal-intervals").indexOf(tag)
             require(page >= 0) { "Destino desconocido: $tag" }
             onNodeWithTag("garden-section-JUEGOS").performScrollTo().performClick()
             onNodeWithTag("garden-index").performScrollTo().performClick()

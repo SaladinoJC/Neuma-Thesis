@@ -58,6 +58,7 @@ private val gardenGames = listOf(
     GardenGame("Instrumentos", "Reconocimiento de instrumentos", "Escuchá y descubrí qué instrumento está sonando.", R.drawable.garden_instruments, "game-instruments"),
     GardenGame("Rhythm Tap", "Pulso y lectura", "Leé cuatro compases y marcá el ritmo.", R.drawable.garden_rhythm, "game-rhythm"),
     GardenGame("Defender", "Lectura musical", "Reconocé notas y acordes para proteger el árbol.", R.drawable.garden_defender, "game-defender"),
+    GardenGame("Intervalos vocales", "Escucha y voz", "Escuchá dos notas y cantá el intervalo entre ellas.", R.drawable.garden_instruments, "game-vocal-intervals"),
 )
 internal val gardenTitle = FontFamily(Font(R.font.garden_fraunces, FontWeight.SemiBold))
 internal val gardenBody = FontFamily(Font(R.font.garden_nunito_sans))
@@ -175,13 +176,14 @@ fun MusicGardenMenu(state: GardenMenuState, simon: SimonUiState, instrumentProgr
                             }
                             if (state.section == GardenSection.JUEGOS || (state.section == GardenSection.LOGROS && state.showProgress)) {
                                 val current = if (state.section == GardenSection.JUEGOS) state.game else state.progressGame
+                                val pageCount = if (state.section == GardenSection.JUEGOS) gardenGames.size else 4
                                 Row(Modifier.fillMaxWidth().padding(top = 12.dp), verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.SpaceBetween) {
                                     PaperArrow(false, current > 0, reduced, "garden-previous") {
                                         if (state.section == GardenSection.JUEGOS) state.game-- else state.progressGame--
                                     }
-                                    TextButton(onClick = { index = true }, modifier = Modifier.testTag("garden-index")) { Text("${current + 1} de 4", fontSize = 14.sp) }
-                                    PaperArrow(true, current < 3, reduced, "garden-next") {
+                                    TextButton(onClick = { index = true }, modifier = Modifier.testTag("garden-index")) { Text("${current + 1} de $pageCount", fontSize = 14.sp) }
+                                    PaperArrow(true, current < pageCount - 1, reduced, "garden-next") {
                                         if (state.section == GardenSection.JUEGOS) state.game++ else state.progressGame++
                                     }
                                 }
@@ -196,7 +198,8 @@ fun MusicGardenMenu(state: GardenMenuState, simon: SimonUiState, instrumentProgr
             }
         }
         if (index) AlertDialog(onDismissRequest = { index = false }, title = { Text("Índice", fontFamily = gardenTitle) },
-            text = { Column { gardenGames.forEachIndexed { number, game ->
+            text = { Column(Modifier.verticalScroll(rememberScrollState())) {
+                (if (state.section == GardenSection.JUEGOS) gardenGames else gardenGames.take(4)).forEachIndexed { number, game ->
                 TextButton(onClick = { if (state.section == GardenSection.JUEGOS) state.game = number else state.progressGame = number; index = false },
                     modifier = Modifier.fillMaxWidth().testTag("garden-index-$number")) { Text(game.title) }
             } } }, confirmButton = { TextButton(onClick = { index = false }) { Text("Cerrar") } })

@@ -57,14 +57,14 @@ class GardenMenuAndroidTest {
     }
 
     @Test fun paginaYSeccionSobrevivenRecreacionYSegundoPlanoSinCircular() {
-        compose.showMenuDestination("game-defender")
+        compose.showMenuDestination("game-vocal-intervals")
         compose.onNodeWithTag("garden-next").performScrollTo().assertIsNotEnabled()
         compose.activityRule.scenario.recreate()
         compose.onNodeWithTag("garden-section-JUEGOS").assertIsSelected()
-        compose.onNodeWithTag("game-defender").assertExists()
+        compose.onNodeWithTag("game-vocal-intervals").assertExists()
         compose.activityRule.scenario.moveToState(Lifecycle.State.CREATED)
         compose.activityRule.scenario.moveToState(Lifecycle.State.RESUMED)
-        compose.onNodeWithTag("game-defender").assertExists()
+        compose.onNodeWithTag("game-vocal-intervals").assertExists()
         compose.showMenuDestination("game-simon")
         compose.onNodeWithTag("garden-previous").performScrollTo().assertIsNotEnabled()
         compose.onNodeWithTag("garden-next").performClick()

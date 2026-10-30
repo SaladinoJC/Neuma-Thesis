@@ -1,5 +1,46 @@
 # Inventario inicial de assets — Music Garden
 
+**Intervalos vocales V6 (2026-10-30):** Producción libre no reproduce referencia
+ni agrega archivos de audio. Selección, ancla propia, objetivo, historial y panel
+son Compose con tema/tokens/fuentes existentes. Portada compartida provisional
+conservada. Sin assets, formatos/dimensiones/licencias, dependencias o animaciones
+nuevos; solo mediciones derivadas, sin guardar voz. [Guía V6](../docs/Intervalos-vocales-V6.md).
+
+**Intervalos vocales V5 (2026-10-30):** ayuda auditiva, historial y panel son UI
+Compose con tokens/fuentes/tema existentes. Ancla dada reproduce una sola nota
+mediante `ReferenceTone.kt`/`AndroidReferencePlayer.kt`, PCM sintetizado propio de
+600 ms en memoria, sin segunda nota ni nuevos archivos de audio. Portada compartida
+provisional conservada. Sin nuevos assets, formatos, dimensiones, licencias,
+fuentes o animaciones; no se guarda voz.
+
+**Intervalos vocales V4 (2026-10-30):** panel `ui/VocalProgressApp.kt` y controles
+de series son código Compose con tokens/fuentes/tema existentes. No se agregan
+archivos de assets, audio, iconos, fuentes ni animaciones. Conserva portada
+compartida y referencia sintetizada de V2; notación textual desde semitonos
+estructurados, sin imágenes o emojis como sustitutos de partituras.
+
+**Intervalos vocales V3 (2026-10-30):** historial, detalle y estados de guardado
+solo agregan UI en Compose (`ui/VocalIntervalHistoryApp.kt`) con tokens/tema/fuentes
+existentes. Sin archivos de assets nuevos ni cambios de formatos/dimensiones/
+procedencia. Portada provisional compartida y referencia sintetizada de V2
+conservadas; sin grabaciones ni nuevos archivos PCM.
+
+## Intervalos vocales V2 — reutilización (2026-10-30)
+
+No se agregan archivos raster, fuentes, iconos ni dependencias. La quinta portada
+reutiliza `MG3-N-001` / `res/drawable-nodpi/garden_instruments.webp` (WebP 768×512,
+PNG fuente conservado en el registro de MG3-N-001), estático, como escena musical
+**provisional compartida**, sin presentarla como ilustración vocal final. Procedencia
+y condiciones conservadas; no se modifica el asset. Pantalla de juego: tema/tokens
+y fuentes existentes, sin nueva ilustración ni animación. Selección, referencia,
+ancla, segunda nota, resultado e interrupción se representan mediante controles/texto.
+
+Audio reutilizado: `voice/ReferenceTone.kt` y `AndroidReferencePlayer.kt`, código propio
+editable, PCM16 mono 44.100 Hz generado en memoria, 26.460 muestras/600 ms por nota,
+fades de 20 ms y amplitud 0,2. Dos reproducciones separadas por espera programada
+de 150 ms, sin almacenar PCM ni incorporar muestras externas. La procedencia del
+audio es código propio; sin licencia de terceros añadida. [Guía V2](../docs/Intervalos-vocales-V2.md).
+
 ## Defender D5 — séptimas e inversiones desde datos (2026-10-30)
 
 | ID | Editable / formato y dimensiones | Propósito y estados | Origen / condiciones |

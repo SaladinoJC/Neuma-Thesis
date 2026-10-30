@@ -1,5 +1,46 @@
 # Music Garden — Dirección artística y sistema visual
 
+**Intervalos vocales V6 (2026-10-30):** Producción libre reutiliza selector,
+capturas, historial y panel con tema/tokens, papel/verdes y Fraunces/Nunito Sans.
+Omite escucha y registro de referencia; mensajes indican ancla propia y segunda
+nota. Bloqueo sin prerrequisito, permiso explícito, controles ≥48 dp y scroll.
+Sin nuevos assets/dependencias/animaciones; portada compartida provisional
+conservada. Dimensiones/texto 200 %/TalkBack/capturas Android pendientes por
+no emular. [Contrato V6](Intervalos-vocales-V6.md).
+
+**Intervalos vocales V5 (2026-10-30):** selector Imitación/Ancla dada, mensajes
+de una sola nota objetivo y procedencia del ancla en historial/inspector con
+tema/tokens y Fraunces/Nunito Sans existentes. Panel filtra por ayuda; estado
+sin accesos disponible sin selector vacío. Controles ≥48 dp y scroll; permiso
+disponible en preparación, sin iniciar captura. Sin assets/dependencias/animaciones
+nuevos. Capturas/tamaños/texto 200 %/TalkBack nativos pendientes sin emular.
+[Flujo V5](Intervalos-vocales-V5.md).
+
+**Intervalos vocales V4 (2026-10-30):** controles Práctica/Progresión, series de
+cinco rondas y panel de progreso/inspección/simulación reutilizan tema/tokens,
+papel/verde y Fraunces/Nunito Sans. Funciones/reglas fuera del flujo de canto;
+`FuzzyRuleDetails` compartido. Sin assets/dependencias/animaciones nuevas; portada
+compartida provisional conservada. Tamaños, texto 200 %, TalkBack y capturas
+nativas siguen pendientes sin emulador. [Criterios V4](Intervalos-vocales-V4.md).
+
+**Intervalos vocales V3 (2026-10-30):** historial y detalle paginados, estados de
+guardado/pendiente/error y acceso a exportación reutilizan tema, papel/verde,
+tokens y Fraunces/Nunito Sans. Sin nuevos assets, fuentes, iconos, dependencias
+o animaciones; portada compartida provisional de V2 conservada. Controles ≥48 dp,
+scroll y diagnósticos bajo despliegue explícito. Historial vacío/cargando/lista/
+detalle/pendiente preparados; revisión nativa de tamaños/texto 200 %/TalkBack
+pendiente sin emulador. [Flujo y límites V3](Intervalos-vocales-V3.md).
+
+**Intervalos vocales V2 (2026-10-30):** nueva práctica manual con papel/verde,
+Fraunces/Nunito Sans, tema y tokens compartidos con el afinador. Selectores,
+dos etapas de captura, feedback numérico en cents y resumen desplazable;
+controles con mínimo 48 dp y fila de dirección desplazable. Sin animaciones,
+dependencias, fuentes ni bitmaps nuevos. Quinta portada reutiliza provisionalmente
+la escena de Instrumentos; no se presenta como arte vocal final. Logros conserva
+sus cuatro páginas sin inventar progreso vocal. Revisión nativa de estados,
+411/360/320 dp, texto 200 %, TalkBack y audio **pendiente**, sin abrir emulador.
+[Flujo y criterios de V2](Intervalos-vocales-V2.md).
+
 **Defender D5 (2026-10-30):** acordes de tres/cuatro voces e inversiones en sol/fa/mezcla, siempre desde datos estructurados. Pentagrama con cabezas alternadas en segundas, columnas de alteraciones y viewport ampliado; tarjetas/reservas mayores, calidades en fila desplazable. Se conservan papel, verdes/tokens, Fraunces/Nunito Sans, tema y gráficos de D3, sin nuevas imágenes, fuentes, bibliotecas o animaciones. Preparación, respuesta, resumen, pérdidas, historial e inspector adaptados; validación nativa de estados, cuatro objetivos, 411/360/320 dp, texto 200 %, foco/TalkBack y sonido **pendiente** por la orden de no emular. Persisten los gráficos simplificados y vidas textuales provisionales de D3. [Guía y límites D5](Demostracion-defender-D5.md).
 
 **Defender D4, tríadas nativas (2026-10-30):** se reutilizan tema, tokens, tipografías y gráficos de D3. El pentagrama recibe tres voces estructuradas, plica común, alteraciones en columnas y líneas adicionales; tarjetas/reservas ampliadas para acordes. Preparación, respuesta, resumen, historial e inspector distinguen variantes/calidades. Sin nuevas imágenes, fuentes, bibliotecas ni animaciones. Se conserva la desviación provisional de D3 (árbol/polillas simplificados y vidas textuales). Legibilidad de cuatro objetivos, estados/dimensiones/texto ampliado y audio Android **pendientes**, sin emulador por instrucción del usuario. [Guía D4](Demostracion-defender-D4.md).

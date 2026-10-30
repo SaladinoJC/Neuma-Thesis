@@ -55,11 +55,11 @@ fun SimonApp(ui: SimonUiState, onSimon: () -> Unit, onScale: (Scale) -> Unit,
     onAutomatic: () -> Unit = {}, onVoice: () -> Unit = {}, onData: () -> Unit = {}, onHistory: () -> Unit = {}, onRetryStorage: () -> Unit = {}, onTuner: () -> Unit = {},
     onRhythm: () -> Unit = {}, onDefender: () -> Unit = {}, menuState: GardenMenuState? = null,
     instrumentProgress: ar.edu.unmdp.entrenamiento.progress.Progress = ar.edu.unmdp.entrenamiento.progress.Progress(),
-    onGuidedTuner: () -> Unit = onTuner, onTrainingTuner: () -> Unit = onTuner) {
+    onGuidedTuner: () -> Unit = onTuner, onTrainingTuner: () -> Unit = onTuner, onVocalIntervals: () -> Unit = {}) {
     if (ui.screen == AppScreen.MENU) {
         val garden = menuState ?: androidx.compose.runtime.remember { GardenMenuState() }
         MusicGardenMenu(garden, ui, instrumentProgress,
-            onPlay = { when (it) { 0 -> onSimon(); 1 -> onInstruments(); 2 -> onRhythm(); 3 -> onDefender() } },
+            onPlay = { when (it) { 0 -> onSimon(); 1 -> onInstruments(); 2 -> onRhythm(); 3 -> onDefender(); 4 -> onVocalIntervals() } },
             onTuner, onGuidedTuner, onHistory, onVoice, onData, onRetryStorage, onTrainingTuner)
         return
     }
