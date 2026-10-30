@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.storage.VocalIntervalExportTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-30T22:46:59.008Z" hostname="DESKTOP-PP49S64" time="0.077">
+  <properties/>
+  <testcase name="saved vocal rounds export separately from the technical lab and participate in recovery and reset" classname="ar.edu.unmdp.entrenamiento.storage.VocalIntervalExportTest" time="0.043"/>
+  <testcase name="data actions forward pending vocal snapshots to both JSON and recovery ZIP" classname="ar.edu.unmdp.entrenamiento.storage.VocalIntervalExportTest" time="0.033"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

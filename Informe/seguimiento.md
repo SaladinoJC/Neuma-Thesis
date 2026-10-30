@@ -1,5 +1,95 @@
 # Seguimiento de escritura
 
+## Intervalos vocales V6: producción libre — 2026-10-30
+
+Capítulos 10/11 incorporan la candidata 0.12.20: cero reproducción, ancla propia,
+dos capturas, acceso por hito de ancla dada y progreso independiente. Historial
+con referencias MIDI nulas y cero escuchas; compatibilidad V5 y selección explícita
+de ayuda. Selección automática global pendiente. 292 JVM aprobadas (11 nuevas),
+ruta sintética de 750 rondas/25 objetivos por cada modo, sin estudiantes ni
+medición acústica. Dos Android nuevas compiladas, sin ejecución
+por no emular. Guía `docs/Intervalos-vocales-V6.md`, evidencia
+`docs/evidencias/intervalos-vocales-v6/`. Tres pasadas XeLaTeX: 41 páginas, sin
+errores/referencias indefinidas/desbordes horizontales; cinco avisos verticales
+y bibliografía vacía. Páginas físicas 28/29/33/34 revisadas visualmente.
+PDF SHA-256 `b7a0ee22158521e551f1ff39bd9016b36f28da865d1baa61e39f5fab8a2a8532`.
+Portada, estilo, agradecimientos y protocolo oficial preservados; parámetros
+experimentales sin calibrar. Validación nativa y acústica pendientes.
+
+## Intervalos vocales V5: ancla dada — 2026-10-30
+
+Capítulos 10/11 incorporan la candidata 0.12.19: referencia única, captura del
+objetivo, procedencia del ancla, prerrequisito de imitación y progreso independiente.
+Compatibilidad de perfiles V4 y selección explícita de ayuda; producción libre
+y selección automática global pendientes. 281 JVM aprobadas (18 nuevas), ruta
+sintética de 500 rondas para 25 objetivos por modo, sin estudiantes ni medición
+acústica. Dos Android nuevas compiladas, ninguna ejecutada por no emular.
+Guía `docs/Intervalos-vocales-V5.md`, evidencia
+`docs/evidencias/intervalos-vocales-v5/`. Tres pasadas XeLaTeX: 40 páginas, sin
+errores/referencias indefinidas/desbordes horizontales; cinco avisos verticales
+y bibliografía vacía. Páginas físicas 28/29/32/33 revisadas visualmente.
+PDF SHA-256 `238a7d6f538b7936701e8c40cd0eed2a8d694be8bfa2e0a04ad9642567567ac7`;
+PDF/log/capturas conservados en la evidencia local. Portada, estilo,
+agradecimientos y protocolo oficial preservados. Reglas experimentales sin calibrar.
+
+## Intervalos vocales V4: series Mamdani en imitación — 2026-10-30
+
+Capítulos 10/11 incorporan la candidata 0.12.18: adaptación entre rondas de una
+partida de cinco, progresión por intervalo/dirección y commit atómico con snapshots.
+Se distingue la práctica manual y se dejan pendientes los otros dos andamiajes.
+263 JVM aprobadas (14 nuevas), ruta sintética de 250 rondas/25 objetivos; sin
+presentarla como desempeño de estudiantes. Dos Android nuevas preparadas y
+compiladas, ninguna ejecutada. Reglas y métricas son elecciones experimentales,
+sin CA validada ni calibración. Guía `docs/Intervalos-vocales-V4.md`, evidencia
+`docs/evidencias/intervalos-vocales-v4/`. Tres pasadas XeLaTeX: 39 páginas, sin
+errores/referencias indefinidas/desbordes horizontales; cinco avisos verticales
+y bibliografía vacía. Páginas físicas 27/28/32 revisadas; PDF/log/capturas y SHA-256
+en la evidencia local. Se preservan portada, estilo, agradecimientos y protocolo oficial.
+
+## Intervalos vocales V3: persistencia y recuperación — 2026-10-30
+
+Capítulos 10/11 ampliados con esquema del noveno archivo, historial, guardados
+pendientes, reintento, exportación JSON/ZIP y drenaje/reset de 0.12.17.
+249 pruebas JVM aprobadas (10 nuevas); dos Android adicionales preparadas y
+compiladas, sin ejecutar por la orden de no emular. Guía y evidencia:
+`docs/Intervalos-vocales-V3.md` y `docs/evidencias/intervalos-vocales-v3/`.
+Texto distingue V2 en memoria de V3 persistida y deja pendientes DDA/progresión,
+captura abierta tras muerte de proceso, hardware y estudiantes. Tres pasadas
+XeLaTeX: 38 páginas, sin errores/referencias indefinidas/desbordes horizontales;
+cinco avisos verticales y bibliografía vacía. Páginas físicas 27/30/31 revisadas;
+PDF/log/capturas y SHA-256 conservados en la evidencia local. Portada, estilo,
+agradecimientos y protocolo oficial conservados.
+
+## Intervalos vocales V2: ronda manual integrada — 2026-10-30
+
+Se actualizan capítulos 10/11 con el flujo implementado de 0.12.16: referencia,
+capturas separadas, permiso, ciclo de vida y resultado relativo en memoria.
+239 pruebas JVM sin fallos (11 nuevas), dos Android preparadas para navegación
+y resumen con señal controlada; no se ejecutan por la orden de no emular.
+El texto distingue la integración V2 de la limitación histórica de V1 y mantiene
+pendientes persistencia/exportación, DDA/progresión, hardware y estudiantes.
+Guía `docs/Intervalos-vocales-V2.md`, evidencia `docs/evidencias/intervalos-vocales-v2/`.
+Tres pasadas XeLaTeX, PDF de 38 páginas, sin errores/referencias indefinidas ni
+desbordes horizontales; seis avisos verticales y bibliografía vacía. Páginas
+físicas 26/27/30 revisadas; PDF/log/capturas y SHA-256 en la evidencia local.
+Sin cambios de estilo, portada, agradecimientos ni protocolo.
+
+## Intervalos vocales V1: núcleo de imitación — 2026-10-30
+
+Registro técnico y verificación parcial incorporados a capítulos 10/11 con
+`thesis-writing`, a partir del código y los reportes JVM de este incremento.
+228 pruebas sin fallos (10 nuevas); relación relativa al ancla, sostenido y
+conservación de serie. El caso PCM sinusoidal → YIN → sesión es exclusivamente
+sintético. Contrato y límites en `docs/Intervalos-vocales-V1.md`, evidencia en
+`docs/evidencias/intervalos-vocales-v1/`. Se explicita que aún no hay un juego
+vocal conectado a la interfaz ni DDA/progresión/persistencia vocales.
+Parámetros provisionales del agente, sin calibración ni eficacia pedagógica.
+No se alteran portada, estilo, acuerdos de alcance, agradecimientos ni protocolo.
+Tres pasadas XeLaTeX: PDF de 36 páginas, sin errores, referencias indefinidas
+ni desbordes horizontales; cuatro avisos verticales y bibliografía vacía.
+Páginas físicas 25/26/29 inspeccionadas. PDF/log/capturas y SHA-256 conservados
+en la evidencia local; síntesis duradera en el directorio del incremento.
+
 ## Agradecimientos: primer borrador personal — 2026-10-30
 
 Entrevista `grilling` Q1–Q16 y autorización explícita para guardar guía y preparar borrador.

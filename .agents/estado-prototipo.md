@@ -2,6 +2,312 @@
 
 Última actualización: 2026-10-30.
 
+## Intervalos vocales V6 — producción libre
+
+Usuario: «dale, segui con eso», tras ofrecer producción libre como siguiente
+modo vocal. Implementada **0.12.20/código 35**: no reproduce referencia, el usuario
+elige su nota inicial al cantar y completa ancla/objetivo en dos capturas explícitas.
+Evalúa intervalo relativo sin exigir afinación absoluta ni plegar errores de
+octava. UI omite escucha y registro de referencia; historial conserva ancla propia,
+cero escuchas y referencias MIDI nulas. No se inventa un MIDI para el ancla cantada.
+
+El hito de ancla dada habilita nivel 3 por intervalo/dirección; tolerancia, racha
+y evidencia independientes en `freeProductionIntervals`. Mismas series de cinco,
+Mamdani y commit atómico; práctica sin crédito. Compatibilidad V5, JSON/ZIP/reset
+en los mismos nueve archivos; inspección/simulaciones por modo. Ruta completa
+sintética **750 rondas, 250 por modo y 25 objetivos por modo**, sin hardware,
+estudiantes o escritura al perfil. Parámetros experimentales sin calibrar.
+
+**292 JVM aprobadas (11 nuevas)**, sin fallos/errores/omisiones. Lint **0 errores/
+10 avisos**; app y AndroidTest ensamblados en **4 min 1 s**. Dos Android nuevas
+compiladas, sin ejecutar. **Recuento directo actual: diez métodos `@Test` en
+`VocalIntervalAndroidTest`**; corrige los totales vocales históricos sobreestimados
+(V5 tenía ocho, no diez). No agregar casos solo para sostener esos totales.
+**370 fuentes/configuraciones** cotejadas por SHA-256; **149 assets** idénticos a V5.
+Gradle offline/un worker/1536 MiB/SerialGC/dos procesadores/BelowNormal.
+Candidata sin instalar:
+`Plataforma/build/apk-archives/neuma-v0.12.20-intervalos-vocales-v6-prueba-sin-emulador.apk`,
+**15.305.656 bytes**, SHA-256
+`7c617dd076f7d547b6d19785f317edf9d8dfdeeebcc3158fe8cb4e8610f3f40c`.
+Metadatos/código nuevo y firma compatible con V5 comprobados.
+
+Guía `docs/Intervalos-vocales-V6.md`; síntesis/XML/manifiesto en
+`docs/evidencias/intervalos-vocales-v6/`, logs/fuentes/banco/PDF en
+`Plataforma/build/verification/2026-10-30-vocal-v6/`. Informe: tres pasadas XeLaTeX,
+**41 páginas**, sin errores/referencias indefinidas/desbordes horizontales; cinco
+avisos verticales y bibliografía vacía. Páginas físicas 28/29/33/34 inspeccionadas.
+Capítulos 10/11, seguimiento, ficha, README y arte/inventario actualizados.
+Music Garden conserva tokens/papel/verdes/Fraunces/Nunito Sans y componentes;
+sin assets/dependencias/animaciones nuevas. Portada compartida provisional
+conservada. Sin inspección nativa de dimensiones/texto 200 %/TalkBack ni voz real.
+No emulador, instalación, subagentes, push, publicación ni cambios de issues o
+protocolo oficial; Personaje pausado.
+
+**Próximo pendiente vocal:** política global de selección automática de ayuda
+por intervalo/dirección. Los tres recorridos están implementados y se eligen
+explícitamente; no repetir V1–V6 ni dar por terminada esa gobernanza de la ficha.
+D6/#28 sigue pendiente. Cuando el usuario permita emular, ejecutar los diez casos
+vocales actuales y regresiones; revisar 411/360/320 dp y 320/texto 200 %, permisos,
+capturas/liberación, pausa/timeout, historial/panel/JSON/ZIP/reset, TalkBack y voz
+real. Última validación Android completa 0.12.10; candidata actual V6 0.12.20.
+Las entradas siguientes son antecedentes históricos.
+
+## Intervalos vocales V5 — ancla dada
+
+Usuario: «Dale, vamos con ancla dada». Implementada **0.12.19/código 34**:
+segundo andamiaje seleccionable, una referencia sonora del ancla y una única
+captura del objetivo. Evaluación relativa a la frecuencia reproducida, sin plegar
+errores de octava ni inventar mediciones de ancla cantada. Historial/exportación
+distinguen procedencia y ayuda auditiva. Permiso solicitado explícitamente antes
+de iniciar; concederlo no inicia captura automáticamente.
+
+El hito de imitación abre ese intervalo/dirección en ancla dada. Tolerancia,
+racha e hitos propios, sin transferir desempeño; mismas series de cinco rondas,
+Mamdani y confirmación atómica. Práctica manual sin avance. Perfiles V4 compatibles,
+nueve archivos, JSON/ZIP/reset integrados; panel y simulaciones por andamiaje.
+Selección explícita de ayuda; producción libre y selección automática global
+siguen pendientes. Parámetros experimentales del agente, sin calibración.
+
+**281 JVM aprobadas (18 nuevas)**; ruta sintética de **500 rondas**, 250 por modo,
+25 objetivos por modo. Lint **0 errores/10 avisos**, app/AndroidTest ensamblados en
+**3 min 16 s**. Dos Android nuevas compiladas, diez vocales preparadas en total,
+ninguna ejecutada. **368 fuentes/configuraciones** cotejadas por SHA-256 y
+**149 assets** idénticos a V4. Gradle offline, un worker, 1536 MiB, SerialGC,
+dos procesadores y BelowNormal. Candidata sin instalar:
+`Plataforma/build/apk-archives/neuma-v0.12.19-intervalos-vocales-v5-prueba-sin-emulador.apk`,
+**15.305.656 bytes**, SHA-256
+`eed2ede208a50ba282df44c8547f4f9db549c92a3a7106c72992c1a085069f0e`.
+Metadatos, código empaquetado y firma compatible con V4 verificados.
+
+Guía `docs/Intervalos-vocales-V5.md`; evidencia duradera en
+`docs/evidencias/intervalos-vocales-v5/` y logs/snapshot/banco completo en
+`Plataforma/build/verification/2026-10-30-vocal-v5/`. Informe: tres pasadas XeLaTeX,
+**40 páginas**, sin errores/referencias indefinidas/desbordes horizontales; cinco
+avisos verticales y bibliografía vacía. Páginas físicas 28/29/32/33 inspeccionadas.
+Ficha, README, arte/inventario y capítulos 10/11/seguimiento actualizados.
+Music Garden conserva tokens, papel/verdes, fuentes y componentes; sin assets,
+dependencias o animaciones nuevas. Portada compartida provisional conservada.
+Android, dimensiones/texto ampliado, TalkBack, voz real y eficacia siguen sin
+validar. No emulador, instalación, subagentes, push, publicación ni cambios de
+issues/protocolo oficial. Personaje pausado.
+
+**Próximo frente vocal:** producción libre y su acceso según la ficha; posteriormente
+selección automática global de ayuda. D6/#28 sigue pendiente. Cuando el usuario
+permita emular, ejecutar las diez vocales y regresiones anteriores; revisar
+411/360/320 dp y 320/texto 200 %, permisos, ciclo de vida, historial/JSON/ZIP/reset,
+TalkBack y voz real. Última validación Android completa: 0.12.10; candidata actual
+V5 0.12.19. Las entradas siguientes son antecedentes históricos.
+
+## Intervalos vocales V4 — series Mamdani y progreso en imitación
+
+Usuario: «ok, metele», tras proponer DDA/progresión. Se implementa **0.12.18/código 33**,
+limitado al andamiaje **1/imitación**: partidas de cinco rondas, adaptación de
+tolerancia entre rondas e hitos por intervalo/dirección. Ancla dada/producción
+libre todavía pendientes. Se mantienen no emular, sin subagentes y Personaje pausado.
+
+Modo Progresión predeterminado en la app; Práctica manual sin avance conserva V3.
+Mamdani común, cinco reglas vocales, entradas del error absoluto medio y dispersión
+en el sostenido final. Configuración experimental del agente: precisión=1−MAE/100,
+regularidad=1−desviación/35 (ambas limitadas 0–1), centroide de 1001 puntos,
+alto ≥0,70/medio ≥0,40; tolerancia inicial 50, rango 30–80, paso ±5 solo para la siguiente
+ronda. Alto exige más que entrar en tolerancia. No se implementa CA validada.
+
+Dos series de cinco rondas elegibles altas registran hito por intervalo firmado.
+Orden provisional: unísono/octavas → cuartas/quintas → terceras/sextas → segundas/
+séptimas → tritonos, 25 objetivos en total; cada etapa requiere todos los hitos
+de la anterior. Direcciones separadas; accesos permanentes. Manual, bloqueados,
+ordinales repetidos/fuera de orden, tolerancia ajena, interrupciones y protocolo
+abreviado no conceden avance. Serie parcial rompe su racha al empezar otra;
+pasar a segundo plano cierra incluso entre rondas, sin reanudar automáticamente.
+
+Resultado+decisión/snapshots/configuración se confirman juntos en el mismo archivo
+vocal, sin décimo archivo. Pendientes no avanzan el estado visible; reintento por
+UUID no duplica decisiones. Perfiles V3 siguen siendo manuales sin avance retroactivo.
+JSON agrega `vocalIntervalProgress`; ZIP/reset siguen con nueve archivos.
+Panel Progreso y DDA con funciones/reglas/centroide/deltas y seis escenarios aislados,
+sin guardar simulaciones como desempeño. Historial expone origen/serie/decisión.
+
+**263 JVM aprobadas (14 nuevas)**. Ruta pública sintética de **250 rondas para 25
+objetivos**, sin voz real ni eficacia acreditada. Dos Android nuevas compiladas;
+ocho vocales preparadas en total, ninguna ejecutada. Lint **0 errores/10 avisos**,
+app/AndroidTest ensamblados en **3 min 25 s**, offline/un worker/1536 MiB/SerialGC/
+dos procesadores/BelowNormal. **365 fuentes/configuraciones** idénticas a lo probado,
+**149 assets** iguales a V3. Candidata
+`Plataforma/build/apk-archives/neuma-v0.12.18-intervalos-vocales-v4-prueba-sin-emulador.apk`,
+**15.289.272 bytes**, SHA-256
+`ca5f835849fd173e4df3d4ba2e22f327cded56ad1c7e04be10cef81bfb79c9c8`;
+metadatos/código nuevo y firma compatible con V3 verificados. Informe: tres pasadas,
+**39 páginas**, sin errores/referencias indefinidas/desbordes horizontales, cinco
+avisos verticales y bibliografía vacía; páginas 27/28/32 inspeccionadas.
+Síntesis en `docs/evidencias/intervalos-vocales-v4/`;
+logs/snapshot/banco completo en `Plataforma/build/verification/2026-10-30-vocal-v4/`.
+Guía `docs/Intervalos-vocales-V4.md`; ficha, README, arte/inventario y capítulos
+10/11/seguimiento actualizados. Sin assets, dependencias ni animaciones nuevas;
+tema/tokens/fuentes y portada compartida provisional conservados. Capturas/tamaños/
+texto 200 %/TalkBack/sonido nativos pendientes. Sin instalar, push, publicación,
+modificación de issues o protocolo oficial. Las reglas no están calibradas.
+
+**Próximo frente vocal:** definir el incremento de ancla dada/producción libre
+conforme la ficha; no darlos por implementados ni repetir V1–V4. Cuando el usuario
+permita emular, ejecutar las ocho vocales, regresiones anteriores y revisar
+411/360/320 dp y 320/texto 200 %, panel real/simulado, permisos, ciclo de vida,
+historial/JSON/ZIP/reset y voz real. D6/#28 sigue pendiente. Última entrega completa
+validada Android sigue siendo 0.12.10; candidata más reciente V4 0.12.18.
+
+## Intervalos vocales V3 — persistencia/exportación verificadas en host
+
+Usuario: «sigamos con lo que puedas», tras entregar V2 y dejar persistencia/
+exportación como próximo incremento. Se implementa V3, **0.12.17/código 32**,
+sin emulador, subagentes, instalación ni publicación; Personaje sigue pausado.
+
+Rondas completas/interrumpidas se guardan por UUID estable en
+`vocal-interval-results.json`, **noveno archivo** del perfil. No se mezclan con
+el laboratorio `voice-results.json`. Registro con referencia/escuchas completas,
+origen manual/andamiaje 1, fechas, versiones, dispositivo, configuración YIN/tasa
+y serie derivada completa, ahora con procesamiento/periodicidad/RMS saneados.
+No se guarda PCM. Historial/detalle paginados, estados guardado/pendiente/error,
+reintento idempotente y bloqueo de otra ronda mientras haya pendiente/almacenamiento
+ocupado. Conserva pendientes en memoria y exportables; no hay checkpoint de captura
+abierta ni garantía de conservar memoria tras muerte de proceso.
+
+JSON agrega `vocalIntervals` y `pendingVocalIntervalSaves`, con listas vacías por
+defecto para exportaciones antiguas. ZIP conserva el nuevo original sin parsear
+y agrega `pending-vocal-interval-saves.json` cuando corresponde. Corrupción o
+esquema incompatible no reemplazan originales; no se implementa importación.
+Drenaje/reinicio esperan almacenamiento y limpian los nueve archivos/copias en
+memoria después del reset solicitado. Perfiles antiguos funcionan sin migración.
+
+**249 JVM aprobadas, 10 nuevas**, incluidos reapertura/serie/telemetría, commit
+incierto/reintento, bloqueo, interrupción única, originales dañados/incompatibles,
+ZIP con pendientes, reset/drenaje, lectura tardía, saneamiento y callbacks de Datos.
+Dos Android nuevas preparadas/compiladas; cuatro vocales en total, sin ejecutar.
+Lint **0 errores/10 avisos**, app/AndroidTest ensamblados en **3 min 17 s**, offline/
+un worker/1536 MiB/SerialGC/dos procesadores/BelowNormal. **360 fuentes/configuraciones**
+idénticas por SHA-256 a lo probado; **149 assets** iguales a V2. Candidata
+`Plataforma/build/apk-archives/neuma-v0.12.17-intervalos-vocales-v3-prueba-sin-emulador.apk`,
+**15.240.120 bytes**, SHA-256
+`e7dd2e2122ae3dbea337229016b0438d949b845dead145f6578aaa912ca80718`,
+metadatos/código nuevo y firma compatible con V2 verificados. Sin instalar.
+
+Guía `docs/Intervalos-vocales-V3.md`; evidencia `docs/evidencias/intervalos-vocales-v3/`;
+logs, snapshot, PDF/capturas en `Plataforma/build/verification/2026-10-30-vocal-v3/`.
+Informe: tres pasadas, **38 páginas**, sin errores/referencias indefinidas/desbordes
+horizontales; cinco avisos verticales, bibliografía vacía, páginas 27/30/31 inspeccionadas.
+Music Garden conserva tema/tokens/fuentes/portada compartida provisional de V2;
+sin assets, dependencias o animaciones nuevas. Historial vacío/cargando/lista/
+detalle/pendiente/error preparados; tamaños/texto 200 %/TalkBack aún sin revisión
+nativa. Ficha, README, arte/inventario y capítulos 10/11/seguimiento actualizados.
+Sin push, cambios de issues ni protocolo oficial; parámetros siguen experimentales.
+
+**Próximo pendiente vocal:** DDA Mamdani inspeccionable y progresión por intervalo,
+revisando la ficha que conserva umbrales/promedio móvil anteriores. V1/V2/V3 ya
+implementados, no repetirlos. Cuando el usuario habilite emular, ejecutar las
+cuatro vocales, Datos/historial/JSON/ZIP/reset y regresiones anteriores; revisar
+411/360/320 dp y 320/texto 200 %, ciclo de vida, TalkBack y voz real. D6/#28 sigue
+pendiente; última entrega completa validada Android continúa siendo 0.12.10.
+
+## Intervalos vocales V2 — ronda manual conectada, Android pendiente
+
+Usuario: «dale, hacelo» después de proponer conectar V1 a una ronda jugable con
+referencia y micrófono. Se implementa V2 sin emulador ni subagentes; Personaje
+continúa pausado. **0.12.16/código 31**, candidata de prueba sin validación Android.
+
+Quinta portada de Juegos/índice; imitación manual con selección de intervalo,
+dirección y referencia (por defecto quinta ascendente/La3). Reutiliza referencia
+sinusoidal y capturador YIN de Android. Referencia completa antes de cantar;
+dos capturas separadas con liberación entre etapas, acciones serializadas y
+generación contra callbacks antiguos. Cancelaciones repetidas conservan la
+espera de liberación del recurso anterior. Permiso concedido no inicia captura
+automática. Ciclo de vida interrumpe, no reanuda; volver al menú espera limpieza.
+Timeout global 60 s incluso sin callbacks, mediciones completas sin recorte del
+laboratorio, feedback continuo relativo en segunda nota y resumen en memoria.
+
+**239 JVM sin fallos (11 nuevas)**, incluidos flujo completo, fallos, selección,
+timeout, liberación lenta/cancelaciones repetidas y callbacks tardíos. Dos Android
+preparadas y compiladas para navegación y resumen sintético; sin ejecutar. Guía
+`docs/Intervalos-vocales-V2.md`; evidencia duradera
+`docs/evidencias/intervalos-vocales-v2/`; logs/snapshot completos en
+`Plataforma/build/verification/2026-10-30-vocal-v2/`. Lint **0 errores/10 avisos**,
+app y AndroidTest ensamblados. Host final **3 min 32 s**, offline/un worker/1536 MiB/
+SerialGC/dos procesadores/BelowNormal. **356 fuentes/configuraciones** idénticas
+por SHA-256 a lo probado; **149 assets** idénticos a D5. APK archivado
+`Plataforma/build/apk-archives/neuma-v0.12.16-intervalos-vocales-v2-prueba-sin-emulador.apk`,
+**15.888.475 bytes**, SHA-256
+`add1cf61345f419856adc2b8ea0cedd264ad5600b9600253168e4ce1b882dcf0`,
+metadatos/código vocal y firma compatible con D5 comprobados. Informe: tres
+pasadas, **38 páginas**, sin errores/referencias indefinidas/desbordes horizontales,
+seis avisos verticales y bibliografía vacía; páginas físicas 26/27/30 inspeccionadas.
+
+Music Garden con tema/tokens/fuentes existentes, controles de 48 dp, scroll
+vertical, fila de dirección desplazable y regiones accesibles de estado, sin
+animaciones nuevas. Portada vocal reutiliza **provisionalmente** la ilustración
+de Instrumentos; no es arte vocal final. Sin bitmaps, fuentes o dependencias
+nuevos. Sin revisión nativa de capturas/tamaños/texto 200 %/TalkBack/audio.
+
+Sin persistencia/exportación ni DDA/progresión vocales todavía; no escribe perfil
+ni audio. Resumen en memoria hasta Nueva ronda, reinicio o muerte de proceso.
+Los ocho archivos existentes se conservan; drenaje/reinicio incluyen el modelo
+vocal. Intervalos/registros y parámetros de V1 son elecciones experimentales del
+agente, sin currículum ni calibración acreditados. Logros no inventa progreso vocal.
+Ficha/README/arte/inventario y capítulos 10/11/seguimiento actualizados. Sin push,
+publicación, instalación, cambios de issues ni protocolo oficial.
+
+**Próximo incremento vocal:** persistencia/exportación y recuperación del resultado
+antes de incorporar DDA Mamdani inspeccionable y progresión por intervalo. Cuando
+el usuario habilite emular, ejecutar las dos Android, regresión de menú y pendientes
+anteriores, con 411/360/320 dp, 320/texto 200 %, permisos, pausa/recreación, TalkBack
+y sonido real. No reimplementar V1/V2/R6/D3/D4/D5. D6/#28 permanece pendiente.
+La candidata más reciente es V2 0.12.16; última validada Android: 0.12.10.
+
+## Intervalos vocales V1 — núcleo verificado en JVM, integración pendiente
+
+Usuario: «continuá con lo que haya pendiente». Se retoma la prioridad vocal
+expresada en la entrevista del informe; el usuario confirma explícitamente
+«Seguir con el ejercicio vocal» en la consulta frente a D6 durante esta sesión.
+Esto confirma el frente, sin aprobar una nueva especificación completa.
+Continúan **sin emulador, sin subagentes y Personaje pausado**.
+
+`VocalIntervalSession` implementa una ronda manual de imitación: adquirir ancla
+cantada sostenida, comenzar explícitamente la segunda nota y evaluar el salto
+relativo firmado, sin plegar errores de octava. Conserva serie temporal y configuración;
+silencio/discontinuidad reinician el sostenido; timeout, salida o límite de datos
+interrumpen sin resultado musical. Núcleo puro sin pantalla ni escritura al perfil.
+Parámetros del agente, experimentales: 500 ms, hueco máximo 100 ms, amplitud
+35 cents, tolerancia ±50 cents, 55–1000 Hz, límite 60 s/10.000 mediciones.
+No se implementan aún DDA Mamdani, CA, progresión, ML u Oboe.
+
+**228 JVM sin fallos, 10 nuevas**; primer caso rojo por API ausente y verde posterior.
+Casos públicos de relación ascendente/descendente/unísono/transposición, error
+de octava, señal inválida, discontinuidad, ataque inestable, timeout,
+interrupción, callbacks antiguos y límite de datos. PCM sinusoidal → YIN → sesión:
+cuarta de **500,027915 cents**, error **+0,027915 cents** en ese único caso sintético,
+sin acreditar precisión vocal ni latencia física. Guía `docs/Intervalos-vocales-V1.md`;
+evidencia `docs/evidencias/intervalos-vocales-v1/` y logs locales
+`Plataforma/build/verification/2026-10-30-vocal-v1/`. Lint **0 errores/10 avisos**
+en esta ejecución offline; app y AndroidTest ensamblados, sin ejecutar Android.
+Host final **2 min 14 s**, un worker/1536 MiB/SerialGC/dos procesadores/BelowNormal.
+352 fuentes/configuraciones comparadas: 351 SHA-256 idénticos; una diferencia
+exclusivamente de línea vacía final en `EarTunerApp.kt` de la copia de verificación,
+sin cambio funcional; snapshot exacto de lo probado conservado. Informe: tres
+pasadas XeLaTeX, **36 páginas**, sin errores ni desbordes horizontales, cuatro
+avisos verticales y bibliografía vacía; páginas físicas 25/26/29 inspeccionadas.
+
+No se modifican pantallas, assets, tokens, marca ni animaciones; Music Garden vigente.
+**Todavía no es un juego disponible en la app**, no se instala ni se genera nueva
+entrega de usuario: candidata vigente D5 0.12.15, última validada Android 0.12.10.
+Ficha, README y registro técnico/plan de los capítulos 10/11 actualizados.
+Sin push, publicación, cambios de issues ni modificación del protocolo oficial.
+
+**Próximo paso vocal:** integrar referencia y captura en una ronda de imitación
+jugable, con permiso, sostenido sin vibrato, separación de etapas, pausa/cancelación
+y errores visibles. Consumir las estimaciones completas del capturador, no la serie
+reducida del laboratorio (200 ms); serializar acciones y descartar callbacks de
+capturas anteriores. Después persistencia/exportación y DDA Mamdani inspeccionable.
+Android solo cuando el usuario lo permita. D6/#28 y los pendientes Android
+R6/D3/D4/D5 y anteriores siguen disponibles; no reimplementar esos incrementos.
+El promedio móvil de la ficha no sustituye la decisión Mamdani; la discrepancia
+académica Oboe/ML sigue en `Informe/contraste-protocolo.md`.
+
 ## Agradecimientos del informe — 2026-10-30
 
 Tras entrevista Q1–Q16, usuario autoriza guía y primer borrador. Guía persistente:
@@ -329,6 +635,40 @@ Pruebas de sesión y ViewModel: límite real de tres escuchas, intentos antes de
 Ejecución final v0.3: 21 pruebas JVM y 11 Android aprobadas, lint sin errores/14 advertencias y APK debug generado; 3 min 50 s en Pixel_6/API 34. Revisión en dos ejes: Spec sin hallazgos; Standards sin incumplimientos documentados, con dos duplicaciones corregidas mediante los componentes PCM/JSON compartidos y un ajuste para conservar la cancelación del timeout al notificar inicio de audio. Registro y APK en `docs/Verificacion-Instrumentos-v0.3.md`; artefacto `Plataforma/app/build/outputs/apk/debug/entrenamiento-auditivo-v0.3.apk` (11.329.014 bytes). No se probó el S22 Ultra ni se midió latencia acústica o eficacia pedagógica.
 
 ## Próximo paso sugerido
+
+**Prioridad vigente tras V6 vocal, 2026-10-30:** producción libre implementada
+en 0.12.20 con progreso independiente, 292 JVM aprobadas y lint sin errores.
+Los tres andamiajes se eligen explícitamente; queda selección automática global
+de ayuda. Validación nativa/acústica pendiente; diez casos vocales actuales
+compilados, sin ejecutar. Mantener no emular, sin subagentes y Personaje pausado.
+D6/#28 pendiente. Las prioridades anteriores quedan como antecedentes.
+
+**Prioridad vigente tras V5 vocal, 2026-10-30:** ancla dada implementada en
+0.12.19 con progreso independiente, 281 JVM aprobadas y lint sin errores.
+Siguiente modo pendiente: producción libre; falta también selección automática
+global de ayuda. Mantener no emular, sin subagentes y Personaje pausado.
+D6/#28 pendiente. Las prioridades anteriores quedan como antecedentes.
+
+**Prioridad vigente tras V4 vocal, 2026-10-30:** series de imitación con Mamdani,
+hitos y panel implementados en 0.12.18, 263 JVM aprobadas. Siguiente pendiente vocal:
+andamiajes ancla dada/producción libre, todavía por definir como incremento. No
+abrir emulador hasta nueva autorización. Los párrafos siguientes son antecedentes.
+
+**Prioridad vigente tras V3 vocal, 2026-10-30:** persistencia, historial y exportación
+implementados en 0.12.17 con 249 JVM aprobadas. Próximo frente vocal DDA Mamdani/
+progresión, revisando la ficha. Android permanece pendiente: conservar la orden
+de no emular. Los siguientes párrafos son antecedentes superados.
+
+**Prioridad vigente tras V2 vocal, 2026-10-30:** ronda manual conectada en 0.12.16,
+239 JVM aprobadas; siguiente incremento vocal persistencia/exportación antes de
+DDA/progresión. Android sigue pendiente por la orden de no emular. D6 queda
+disponible para otra prioridad explícita. Los párrafos siguientes son antecedentes.
+
+**Prioridad vigente tras V1 vocal, 2026-10-30:** núcleo de imitación implementado,
+228 JVM aprobadas. Próximo incremento: ronda vocal jugable con referencia/captura,
+permiso y ciclo de vida; después persistencia y DDA. D6/#28 sigue pendiente.
+Conservar la prohibición de emular y los pendientes Android de D5 y anteriores.
+Los próximos pasos de los párrafos siguientes son antecedentes superados.
 
 **Prioridad vigente tras D5, 2026-10-30:** D5/#27 implementado en 0.12.15 con **218 JVM sin fallos**, sin Android por pedido del usuario. Siguiente en la ruta Defender D6/#28; conservar también la prioridad vocal expresada en la entrevista y tomar el próximo frente del pedido del usuario. No reimplementar R6/D3/D4/D5. Revisiones de interfaz/persistencia/audio nativos pendientes, incluyendo las anteriores, cuando el usuario permita abrir el emulador. Personaje pausado y sin subagentes. Los siguientes próximos pasos son antecedentes superados.
 

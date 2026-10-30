@@ -123,5 +123,142 @@ la plica común y dispone las alteraciones en columnas. La guía
 \texttt{docs/Demostracion-defender-D5.md} documenta el catálogo y los límites
 de estas elecciones técnicas. Los prerrequisitos siguen siendo experimentales
 y la revisión de legibilidad y audio en Android continúa pendiente.
+\section{Núcleo de intervalos vocales: imitación manual}
+El primer incremento vocal separa la evaluación de una ronda del acceso al
+micrófono y de la interfaz. La sesión recibe estimaciones de frecuencia del
+YIN existente y adquiere primero una nota ancla sostenida. Una acción explícita
+inicia la segunda nota, lo que permite representar también el unísono sin
+introducir todavía un detector de ataques.
+
+El intervalo se obtiene mediante $1200\log_2(f_2/f_1)$ y se compara con el
+objetivo expresado en semitonos. Esta relación permite trasladar ambas notas
+de registro dentro del rango admitido; un cambio de octava en una sola nota
+conserva su error. La adquisición utiliza una ventana continua de estimaciones
+y una mediana en escala logarítmica. Como configuración experimental se eligen
+500 ms de sostenido, separación máxima de 100 ms entre estimaciones, variación
+máxima de 35 cents en la ventana y tolerancia final de 50 cents.
+
+La serie de mediciones conserva tiempos, etapas, frecuencias y desviaciones.
+Silencio o discontinuidad reinician el sostenido; interrumpir la ronda no
+produce un acierto ni un error musical. En V1 el núcleo todavía no estaba
+conectado como juego: reproducción, captura coordinada, persistencia, DDA
+Mamdani y progresión quedaban pendientes. La guía
+\texttt{docs/Intervalos-vocales-V1.md} registra el contrato y los parámetros,
+sin atribuir calibración vocal ni eficacia pedagógica a esta implementación.
+
+\subsection{Integración de una ronda manual: incremento V2}
+La candidata local 0.12.16 incorpora una quinta página de Juegos para acceder
+a la práctica vocal. El usuario selecciona el intervalo y escucha las dos
+notas de referencia antes de iniciar el micrófono. El modelo coordina la
+reproducción y la captura existentes; adquirir la primera nota libera el
+capturador y exige una acción explícita para medir la segunda. Esta segunda
+captura utiliza ventanas nuevas, evitando arrastrar el audio de la etapa previa.
+
+Las acciones y las estimaciones se procesan secuencialmente en el contexto
+del modelo. Una generación invalida callbacks de operaciones canceladas y
+la operación siguiente espera la liberación del recurso anterior. Pausar,
+cancelar o abandonar interrumpe sin otorgar un resultado musical incompleto.
+Un temporizador limita la ronda incluso durante silencio o espera entre notas.
+Solicitar permiso es una acción separada: concederlo no inicia captura automática.
+
+La pantalla reutiliza tema, tokens y tipografías de Music Garden y muestra
+desviación relativa en cents durante la segunda nota. En V2 el resumen se
+conservaba solo en memoria, sin persistencia, exportación, DDA ni progreso vocales.
+Los intervalos y registros se ofrecen como selección manual experimental,
+sin representar un currículum validado. La guía
+\texttt{docs/Intervalos-vocales-V2.md} identifica el flujo, la candidata y
+las verificaciones nativas pendientes por la restricción de no emular.
+
+\subsection{Persistencia e historial vocal: incremento V3}
+La candidata 0.12.17 incorpora el resultado vocal al perfil mediante un archivo
+propio. Este registro se mantiene separado del laboratorio técnico de voz,
+de modo que una medición libre no se presenta como una ronda del juego.
+El identificador se asigna al iniciar la primera captura y permanece estable
+durante el guardado y sus reintentos. Se registran tanto rondas completas
+como interrupciones; escuchar sin comenzar a cantar no crea una ronda.
+
+El cierre conserva la selección de referencia, las condiciones de análisis,
+el dispositivo y la serie derivada de estimaciones. El almacenamiento reutiliza
+la sustitución de archivo y la transacción del perfil existentes. Si falla,
+la copia pendiente sigue en memoria y bloquea una ronda nueva hasta recuperarla.
+El historial muestra resultados, detalle y mediciones por bloques; no almacena audio.
+
+La exportación JSON agrega listas separadas de resultados vocales y pendientes.
+El ZIP de recuperación copia el archivo original sin interpretarlo e incluye
+pendientes serializados, conservando originales dañados. El reinicio incorpora
+el nuevo archivo después de drenar las operaciones. La guía
+\texttt{docs/Intervalos-vocales-V3.md} describe el esquema y los límites: no hay
+importación, checkpoint de una captura abierta ni garantía de conservar pendientes
+en memoria tras muerte del proceso. En V3, DDA y progresión seguían pendientes.
+
+\subsection{Adaptación y progresión vocal: incremento V4}
+La candidata 0.12.18 incorpora una partida de cinco rondas de imitación del
+mismo intervalo y dirección. El DDA modifica la tolerancia entre rondas de
+esa serie, manteniendo congelado el criterio mientras se canta. La inferencia
+Mamdani reutiliza el motor compartido y considera el error absoluto medio
+y la dispersión del sostenido final. Sus entradas normalizadas, funciones,
+reglas activadas y centroide quedan disponibles en un panel de inspección.
+
+La configuración experimental comienza en 50 cents y aplica pasos de hasta
+5, dentro de 30 a 80 cents. Dos series altas de cinco rondas elegibles otorgan
+un hito para ese intervalo con dirección; la práctica manual queda separada.
+El orden provisional de acceso comienza con unísono y octavas y continúa con
+cuartas/quintas, terceras/sextas, segundas/séptimas y tritonos. Esta organización
+no se presenta como un currículum validado. En V4 los otros andamiajes auditivos
+de la ficha todavía no estaban implementados.
+
+La decisión y el resultado se guardan en una sola sustitución del archivo
+vocal. Se conserva la configuración y los snapshots de progreso antes y después;
+los reintentos no cuentan otra vez una decisión confirmada. El panel incluye
+simulaciones con almacenamiento aislado y la exportación incorpora el progreso
+confirmado.
+
+La guía \texttt{docs/Intervalos-vocales-V4.md} registra las métricas,
+prerrequisitos, límites y elecciones provisionales de esta configuración.
+
+\subsection{Ancla dada: incremento V5}
+La candidata 0.12.19 incorpora el segundo andamiaje: reproducir solamente
+el ancla e indicar el intervalo por nombre. El usuario canta una única nota
+objetivo. La sesión evalúa su relación con la frecuencia reproducida, conservando
+la procedencia del ancla y sin generar mediciones vocales de una nota no cantada.
+La elección de registro se realiza antes de escuchar; un error de octava en
+la respuesta no se pliega para considerarlo equivalente.
+
+El hito de imitación habilita ancla dada para ese intervalo y dirección.
+Su tolerancia, racha y hito propios se almacenan en un mapa independiente,
+sin transferir el desempeño observado en imitación. Se reutilizan las series
+y reglas Mamdani experimentales, con confirmación atómica de resultado y decisión.
+La práctica manual permite ensayar sin otorgar avance automático.
+
+El historial y la exportación distinguen ambos andamiajes y la procedencia
+reproducida o cantada del ancla. Los perfiles anteriores mantienen sus datos
+de imitación sin acreditar respuestas del nuevo modo. El panel filtra decisiones
+y simulaciones por ayuda auditiva; las simulaciones usan memoria aislada.
+
+La guía \texttt{docs/Intervalos-vocales-V5.md} registra el flujo y sus límites.
+En V5, producción libre y una política global de selección automática de ayuda
+seguían pendientes; se mantenía la selección explícita de andamiaje.
+
+\subsection{Producción libre: incremento V6}
+La candidata 0.12.20 incorpora el tercer andamiaje: el sistema indica el intervalo
+y su dirección, sin reproducir notas. El usuario elige una nota inicial y canta
+ancla y objetivo en dos capturas explícitas. La evaluación relativa reutiliza
+la frecuencia sostenida del ancla cantada, sin exigir su afinación absoluta ni
+plegar errores de octava. La interfaz omite los controles de escucha y registro
+de referencia.
+
+El hito de ancla dada habilita producción libre para ese intervalo y dirección.
+Tolerancia, racha y evidencia propias se conservan en un tercer mapa, sin
+transferir desempeño. Las series y reglas Mamdani experimentales mantienen el
+criterio durante cada ronda; la práctica manual sigue sin conceder avance.
+
+Cada registro libre conserva cero escuchas y referencias MIDI nulas, junto a
+las mediciones derivadas de ambas capturas. Los perfiles V5 cargan con progreso
+libre vacío; sus hitos pueden habilitar acceso sin acreditar respuestas nuevas.
+Historial, panel y exportación distinguen los tres modos. La guía
+\texttt{docs/Intervalos-vocales-V6.md} documenta el contrato y sus límites.
+La selección automática global de ayuda sigue pendiente: los tres recorridos
+están implementados con elección explícita de andamiaje.
+
 \section{Estructura del código}
 \pendiente{Presentar módulos y responsabilidades; referenciar versiones concretas del repositorio.}

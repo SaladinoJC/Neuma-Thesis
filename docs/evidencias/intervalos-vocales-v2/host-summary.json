@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-30T18:22:31.544412-03:00",
+  "status": "host-passed-android-pending",
+  "version": "0.12.16",
+  "versionCode": 31,
+  "increment": "vocal-intervals-v2-playable-manual",
+  "jvm": {
+    "tests": 239,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "newJvmTests": 11,
+  "lint": {
+    "errors": 0,
+    "warnings": 10
+  },
+  "assemblies": {
+    "app": "passed",
+    "androidTest": "passed"
+  },
+  "newAndroidTestsCompiled": 2,
+  "androidTestsExecuted": false,
+  "emulatorStarted": false,
+  "installed": false,
+  "sourceFilesVerifiedBySha256": 356,
+  "sourceManifestSha256": "bfd44c5cb4c82ba76f40325141859534de25afcb5a9a70112b7053e711922df9",
+  "runtimeAssetsIdenticalToD5": 149,
+  "signatureCompatibleWithD5": true,
+  "signerCertificateSha256": "4e9a10f84ec8218fb0927606a0c84617c3753a452e0c772b1bae1bd377a0c90a",
+  "apkMetadataVerified": true,
+  "packagedVocalCodeVerified": true,
+  "apk": {
+    "path": "Plataforma/build/apk-archives/neuma-v0.12.16-intervalos-vocales-v2-prueba-sin-emulador.apk",
+    "bytes": 15888475,
+    "sha256": "add1cf61345f419856adc2b8ea0cedd264ad5600b9600253168e4ce1b882dcf0"
+  },
+  "execution": {
+    "offline": true,
+    "workers": 1,
+    "heapMiB": 1536,
+    "gc": "SerialGC",
+    "activeProcessorCount": 2,
+    "priority": "BelowNormal"
+  },
+  "gradleDuration": "3m 32s",
+  "informe": {
+    "pages": 38,
+    "latexPasses": 3,
+    "visuallyReviewedPages": [
+      26,
+      27,
+      30
+    ],
+    "pdfSha256": "3db01abdf83e91d92d9490fdd5622f18bdbdccf0b90f1a5a3949d77860aec18e",
+    "overfullBoxes": 0,
+    "underfullBoxes": 6
+  },
+  "profileFiles": 8,
+  "vocalPersistence": false,
+  "vocalDda": false,
+  "pending": [
+    "Android UI tests, 411/360/320dp and 320dp font200%, TalkBack",
+    "Real voice, reference audibility, permission and lifecycle on Android",
+    "Vocal persistence/export, then Mamdani DDA/progression; Defender D6; earlier Android checks"
+  ],
+  "notes": [
+    "Manual practice; synthetic verification only, no vocal accuracy or educational efficacy claim",
+    "Music Garden and existing assets reused; no new dependency or runtime asset",
+    "No push, issue or protocol edits, emulator, installation or publication"
+  ]
+}

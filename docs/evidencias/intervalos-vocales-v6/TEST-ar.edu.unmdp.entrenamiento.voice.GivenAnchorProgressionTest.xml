@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.voice.GivenAnchorProgressionTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-30T22:47:00.936Z" hostname="DESKTOP-PP49S64" time="0.495">
+  <properties/>
+  <testcase name="given access follows the matching signed imitation interval only" classname="ar.edu.unmdp.entrenamiento.voice.GivenAnchorProgressionTest" time="0.009"/>
+  <testcase name="full given route uses five hundred isolated rounds for both scaffolding levels" classname="ar.edu.unmdp.entrenamiento.voice.GivenAnchorProgressionTest" time="0.3"/>
+  <testcase name="series cannot mix a sung anchor and given anchor context" classname="ar.edu.unmdp.entrenamiento.voice.GivenAnchorProgressionTest" time="0.008"/>
+  <testcase name="wrong anchor provenance or reference cannot grant given progress" classname="ar.edu.unmdp.entrenamiento.voice.GivenAnchorProgressionTest" time="0.007"/>
+  <testcase name="given decisions survive uncertain commit reopen export and reset independently" classname="ar.edu.unmdp.entrenamiento.voice.GivenAnchorProgressionTest" time="0.11"/>
+  <testcase name="imitation grants access but never transfers tolerance streak or mastery" classname="ar.edu.unmdp.entrenamiento.voice.GivenAnchorProgressionTest" time="0.009"/>
+  <testcase name="V4 snapshots load with given access but no inherited given performance" classname="ar.edu.unmdp.entrenamiento.voice.GivenAnchorProgressionTest" time="0.028"/>
+  <testcase name="manual poor octave and interruption scenarios grant no given mastery" classname="ar.edu.unmdp.entrenamiento.voice.GivenAnchorProgressionTest" time="0.021"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

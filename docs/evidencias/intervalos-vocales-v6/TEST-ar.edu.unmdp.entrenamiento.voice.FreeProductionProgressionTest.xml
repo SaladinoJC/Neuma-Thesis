@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.voice.FreeProductionProgressionTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-30T22:47:00.003Z" hostname="DESKTOP-PP49S64" time="0.877">
+  <properties/>
+  <testcase name="free poor octave interrupted and manual signals grant no free mastery" classname="ar.edu.unmdp.entrenamiento.voice.FreeProductionProgressionTest" time="0.044"/>
+  <testcase name="abandoning a partial free series resets only its streak and preserves previous mastery" classname="ar.edu.unmdp.entrenamiento.voice.FreeProductionProgressionTest" time="0.024"/>
+  <testcase name="full free route masters twenty five signed objectives separately in seven hundred fifty rounds" classname="ar.edu.unmdp.entrenamiento.voice.FreeProductionProgressionTest" time="0.664"/>
+  <testcase name="V5 snapshots grant only free access then uncertain free save reopens and exports exactly once" classname="ar.edu.unmdp.entrenamiento.voice.FreeProductionProgressionTest" time="0.11"/>
+  <testcase name="free series rejects mixed help and an anchor that was provided instead of sung" classname="ar.edu.unmdp.entrenamiento.voice.FreeProductionProgressionTest" time="0.02"/>
+  <testcase name="free production requires matching given mastery and keeps all three performances independent" classname="ar.edu.unmdp.entrenamiento.voice.FreeProductionProgressionTest" time="0.015"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

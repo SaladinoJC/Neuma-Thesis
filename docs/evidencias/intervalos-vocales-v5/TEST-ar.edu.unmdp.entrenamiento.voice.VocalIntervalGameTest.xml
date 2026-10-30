@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.voice.VocalIntervalGameTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-10-30T22:27:18.539Z" hostname="DESKTOP-PP49S64" time="0.095">
+  <properties/>
+  <testcase name="timeout while waiting for second note closes without inventing a musical score" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalGameTest" time="0.047"/>
+  <testcase name="descending reference matches selection and a changed register invalidates the previous listening" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalGameTest" time="0.003"/>
+  <testcase name="rapid repeated cancellation cannot bypass an unfinished audio release" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalGameTest" time="0.004"/>
+  <testcase name="cancelled reference releases audio before another action and never enables singing" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalGameTest" time="0.005"/>
+  <testcase name="capture permission failure is visible and a new round requires a fresh reference" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalGameTest" time="0.004"/>
+  <testcase name="new round cannot silently discard an acquired anchor while waiting for the second note" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalGameTest" time="0.006"/>
+  <testcase name="unexpected capture end is not mistaken for a sustained note" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalGameTest" time="0.003"/>
+  <testcase name="callback delivered during cancelled capture cleanup cannot change the interrupted result" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalGameTest" time="0.005"/>
+  <testcase name="target capture waits for first recorder release and wrong stable target produces feedback" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalGameTest" time="0.007"/>
+  <testcase name="player listens then sings two separately captured notes and sees the relative result" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalGameTest" time="0.007"/>
+  <testcase name="failed second reference note leaves microphone unavailable until a complete replay" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalGameTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

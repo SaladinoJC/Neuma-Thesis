@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.voice.VocalProgressionTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-10-30T22:27:18.816Z" hostname="DESKTOP-PP49S64" time="0.311">
+  <properties/>
+  <testcase name="retry after an uncertain commit confirms the original decision only once" classname="ar.edu.unmdp.entrenamiento.voice.VocalProgressionTest" time="0.012"/>
+  <testcase name="decisions snapshots and progression survive JSON reopen export duplicate and reset" classname="ar.edu.unmdp.entrenamiento.voice.VocalProgressionTest" time="0.088"/>
+  <testcase name="whole synthetic route uses public sessions and masters all signed intervals" classname="ar.edu.unmdp.entrenamiento.voice.VocalProgressionTest" time="0.155"/>
+  <testcase name="curriculum needs both octave directions and acquired access survives a poor series" classname="ar.edu.unmdp.entrenamiento.voice.VocalProgressionTest" time="0.017"/>
+  <testcase name="poor octave interrupted and manual scenarios never grant mastery" classname="ar.edu.unmdp.entrenamiento.voice.VocalProgressionTest" time="0.011"/>
+  <testcase name="regularity affects inference even when the stable note is within tolerance" classname="ar.edu.unmdp.entrenamiento.voice.VocalProgressionTest" time="0.003"/>
+  <testcase name="locked stale or repeated series ordinals do not change recommendations" classname="ar.edu.unmdp.entrenamiento.voice.VocalProgressionTest" time="0.003"/>
+  <testcase name="two complete high series master their own interval and preserve inspected decisions" classname="ar.edu.unmdp.entrenamiento.voice.VocalProgressionTest" time="0.009"/>
+  <testcase name="interruption and shorter holding protocol never supply unlock evidence" classname="ar.edu.unmdp.entrenamiento.voice.VocalProgressionTest" time="0.004"/>
+  <testcase name="incomplete series cannot bridge two high series into a mastery hit" classname="ar.edu.unmdp.entrenamiento.voice.VocalProgressionTest" time="0.007"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

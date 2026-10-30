@@ -1,0 +1,1762 @@
+[
+  {
+    "path": "app/build.gradle.kts",
+    "sha256": "64347300d01a5d51651874e32e950a9184293577ab6b01f86b2d18a25113ebd6",
+    "verifiedSha256": "64347300d01a5d51651874e32e950a9184293577ab6b01f86b2d18a25113ebd6"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/DataRecoveryAndroidTest.kt",
+    "sha256": "6aefbeebec3ff0aec494e4bab35e5c782571b29025c19d0fb670fe8db9fb45b2",
+    "verifiedSha256": "6aefbeebec3ff0aec494e4bab35e5c782571b29025c19d0fb670fe8db9fb45b2"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/DdaBenchAndroidTest.kt",
+    "sha256": "df73189d82a437842a0dada92030bbaff4c9cfa28e17b35910b8fc62d8d25c48",
+    "verifiedSha256": "df73189d82a437842a0dada92030bbaff4c9cfa28e17b35910b8fc62d8d25c48"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/DefenderAndroidTest.kt",
+    "sha256": "7b77294075b1d7b9aea24e54f8496a5232fc79e457c3db4e1303edc34d5e604e",
+    "verifiedSha256": "7b77294075b1d7b9aea24e54f8496a5232fc79e457c3db4e1303edc34d5e604e"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/DefenderD3AndroidTest.kt",
+    "sha256": "74be98b518451e049da355054c8a4460976af647b72c0e0337ce7517701c6c92",
+    "verifiedSha256": "74be98b518451e049da355054c8a4460976af647b72c0e0337ce7517701c6c92"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/DefenderD4AndroidTest.kt",
+    "sha256": "f803db07a316b91af781e5b42bd38f38e913bc940943f16e1c55a094359aabaf",
+    "verifiedSha256": "f803db07a316b91af781e5b42bd38f38e913bc940943f16e1c55a094359aabaf"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/DefenderD5AndroidTest.kt",
+    "sha256": "ba6d3015a31f1d38d8cff0f81872d612a017eaba972961187537c6e46c6761bb",
+    "verifiedSha256": "ba6d3015a31f1d38d8cff0f81872d612a017eaba972961187537c6e46c6761bb"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/DemonstrationAndroidTest.kt",
+    "sha256": "40afee9f627d3a970ffba46bae9c096d66e1d6810566fffe98a5690ef5db168b",
+    "verifiedSha256": "40afee9f627d3a970ffba46bae9c096d66e1d6810566fffe98a5690ef5db168b"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/DeviceTouch.kt",
+    "sha256": "7cc209995b4103c321b41e5bd31c73fe46456e5023476bfdb9b27eb450b7f0a6",
+    "verifiedSha256": "7cc209995b4103c321b41e5bd31c73fe46456e5023476bfdb9b27eb450b7f0a6"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/EarTunerAndroidTest.kt",
+    "sha256": "752eb4a0c14976585b83ffad60fd75c18246d0201e219a744b9f37040fc1378c",
+    "verifiedSha256": "752eb4a0c14976585b83ffad60fd75c18246d0201e219a744b9f37040fc1378c"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/GardenMenuAndroidTest.kt",
+    "sha256": "e4c843155c12f8fea5054d71cf6d6195802fc356f071f4af93ec99dc28c9f1d2",
+    "verifiedSha256": "e4c843155c12f8fea5054d71cf6d6195802fc356f071f4af93ec99dc28c9f1d2"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/GuidedTunerAndroidTest.kt",
+    "sha256": "f2401c0a569bd622294a09cfc793fdc7d6724bad2d5310ec434d663e4144b094",
+    "verifiedSha256": "f2401c0a569bd622294a09cfc793fdc7d6724bad2d5310ec434d663e4144b094"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/GuidedTunerLifecycleAndroidTest.kt",
+    "sha256": "e7bd32c37474eb3973991f83d2c57f62dc21ff93e805279ba29797abd7b40015",
+    "verifiedSha256": "e7bd32c37474eb3973991f83d2c57f62dc21ff93e805279ba29797abd7b40015"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/HistoryAndroidTest.kt",
+    "sha256": "33efcb0d3252cd6ca164252a14695ef508e2a3bbd4b22b0dbdcd32045be734fb",
+    "verifiedSha256": "33efcb0d3252cd6ca164252a14695ef508e2a3bbd4b22b0dbdcd32045be734fb"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/InstrumentAndroidTest.kt",
+    "sha256": "c79120c8f9d721b256e22837d87fbf5d2e8689a84eef062992e62699b4bf6789",
+    "verifiedSha256": "c79120c8f9d721b256e22837d87fbf5d2e8689a84eef062992e62699b4bf6789"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/InstrumentDdaAndroidTest.kt",
+    "sha256": "23197204f99d23cc7df75c5a5e764900be46794946750939f558ac1a16a27d95",
+    "verifiedSha256": "23197204f99d23cc7df75c5a5e764900be46794946750939f558ac1a16a27d95"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/MenuNavigation.kt",
+    "sha256": "6294f372b448b61455c7d7502dbce233984afcb8db3780577b5e5d3808221eba",
+    "verifiedSha256": "6294f372b448b61455c7d7502dbce233984afcb8db3780577b5e5d3808221eba"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/ParallelFeaturesAndroidTest.kt",
+    "sha256": "fe115ae8ed59a84608a54e2b6da7fe58995c9360ad539d212a61b3b7bcc2ba6e",
+    "verifiedSha256": "fe115ae8ed59a84608a54e2b6da7fe58995c9360ad539d212a61b3b7bcc2ba6e"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/PianoInputAndroidTest.kt",
+    "sha256": "d538ed5372fa58789110d46f95ca311ec60e0a329066ccb4aca0a2b96e4b2ae3",
+    "verifiedSha256": "d538ed5372fa58789110d46f95ca311ec60e0a329066ccb4aca0a2b96e4b2ae3"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/PitchLabAndroidTest.kt",
+    "sha256": "619be7cd585c1d7155fddbea5b79368b9b1be3d8e1b5c9f3a2787dbf9f6d3d7f",
+    "verifiedSha256": "619be7cd585c1d7155fddbea5b79368b9b1be3d8e1b5c9f3a2787dbf9f6d3d7f"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/RhythmAndroidTest.kt",
+    "sha256": "6751a3b052aa8e3e7c41992929ae82d1d52df0b2e5e386e5a88cf240be8caebe",
+    "verifiedSha256": "6751a3b052aa8e3e7c41992929ae82d1d52df0b2e5e386e5a88cf240be8caebe"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/RhythmEngravingAndroidTest.kt",
+    "sha256": "8409f4a6d2d2ecf0106d567aea1385597272b6e06f5bfede6ffb1b3d09c79603",
+    "verifiedSha256": "8409f4a6d2d2ecf0106d567aea1385597272b6e06f5bfede6ffb1b3d09c79603"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/RhythmEvidence.kt",
+    "sha256": "e76135f367afe90ae400b679cc15fa01b5347448c12310cbfa51e9ebd8afea23",
+    "verifiedSha256": "e76135f367afe90ae400b679cc15fa01b5347448c12310cbfa51e9ebd8afea23"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/RhythmHistoryAndroidTest.kt",
+    "sha256": "40136b6b5c09d0a2f737e66240c75235f95c141229a7eb5aaff236368ad8c4f0",
+    "verifiedSha256": "40136b6b5c09d0a2f737e66240c75235f95c141229a7eb5aaff236368ad8c4f0"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/RhythmHistoryNavigationAndroidTest.kt",
+    "sha256": "39aa27c097043393b75c050d4f49fa7897fb2212aa860606ab8f5634ac8caf34",
+    "verifiedSha256": "39aa27c097043393b75c050d4f49fa7897fb2212aa860606ab8f5634ac8caf34"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/RhythmNotationAndroidTest.kt",
+    "sha256": "73af017575d615675d09c31feb5c3b24b37a706aed686b4e4f16aac6c086ade2",
+    "verifiedSha256": "73af017575d615675d09c31feb5c3b24b37a706aed686b4e4f16aac6c086ade2"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/RhythmProgressionAndroidTest.kt",
+    "sha256": "40c8c3763f715b5873ea935e75135e18a3e066707bba08674fceeee3fa5ca185",
+    "verifiedSha256": "40c8c3763f715b5873ea935e75135e18a3e066707bba08674fceeee3fa5ca185"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/RhythmR2AndroidTest.kt",
+    "sha256": "efe934f224954ad1f2fa2eaa76bfdb282dc5151799d10f066f8a602f0d9ebca6",
+    "verifiedSha256": "efe934f224954ad1f2fa2eaa76bfdb282dc5151799d10f066f8a602f0d9ebca6"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/RhythmR3AndroidTest.kt",
+    "sha256": "f9d8de0a16e0ede4e8d82f198800b57791dfad982f5df02cd119a8b180856f7b",
+    "verifiedSha256": "f9d8de0a16e0ede4e8d82f198800b57791dfad982f5df02cd119a8b180856f7b"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/RhythmR4AndroidTest.kt",
+    "sha256": "230cd37cd9ea6e478fa15608a33ba09bee348ee2a199fa9bdde22c2325e852cf",
+    "verifiedSha256": "230cd37cd9ea6e478fa15608a33ba09bee348ee2a199fa9bdde22c2325e852cf"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/SimonAndroidTest.kt",
+    "sha256": "630f4fb004fe57496ac0a1264e090303d655d45165423f7faf13a14e99fee934",
+    "verifiedSha256": "630f4fb004fe57496ac0a1264e090303d655d45165423f7faf13a14e99fee934"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/TunerAndroidTest.kt",
+    "sha256": "00fcda107ac3daf514b8f8c0625817f7017cabc5660981c1a1310991e651f3a3",
+    "verifiedSha256": "00fcda107ac3daf514b8f8c0625817f7017cabc5660981c1a1310991e651f3a3"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/TunerConfigurationAndroidTest.kt",
+    "sha256": "06a1f0fee425c37a3c800495f626684df874b08f86134e7361034d49f0ca1ee2",
+    "verifiedSha256": "06a1f0fee425c37a3c800495f626684df874b08f86134e7361034d49f0ca1ee2"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/TunerHistoryAndroidTest.kt",
+    "sha256": "91303be1d13b094e61fc4eb6a4d517dff014d3c02b3dba052016cc0996e11828",
+    "verifiedSha256": "91303be1d13b094e61fc4eb6a4d517dff014d3c02b3dba052016cc0996e11828"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/TunerReferenceAndroidTest.kt",
+    "sha256": "a5424b9cf0d459fe7633e4382566c8265f4cb08ef93d119488f546033adfe1f8",
+    "verifiedSha256": "a5424b9cf0d459fe7633e4382566c8265f4cb08ef93d119488f546033adfe1f8"
+  },
+  {
+    "path": "app/src/androidTest/java/ar/edu/unmdp/entrenamiento/VoiceReferenceAndroidTest.kt",
+    "sha256": "2a8540b09f8fd5c49d196b2c674e737a814c7468e67a3df47ecd6ae8ba90e9ae",
+    "verifiedSha256": "2a8540b09f8fd5c49d196b2c674e737a814c7468e67a3df47ecd6ae8ba90e9ae"
+  },
+  {
+    "path": "app/src/main/AndroidManifest.xml",
+    "sha256": "5de0a670450d6aa912527d7f12eb616ff70a7dfe1baa974694c4e848814b231e",
+    "verifiedSha256": "5de0a670450d6aa912527d7f12eb616ff70a7dfe1baa974694c4e848814b231e"
+  },
+  {
+    "path": "app/src/main/assets/instruments/bassoon_c4_mf.ogg",
+    "sha256": "98e672eb30d11c385da98b18b380c1c47647ccbf77abca56c06f361e6b7ee0a6",
+    "verifiedSha256": "98e672eb30d11c385da98b18b380c1c47647ccbf77abca56c06f361e6b7ee0a6"
+  },
+  {
+    "path": "app/src/main/assets/instruments/clarinet_c4_mf.ogg",
+    "sha256": "3c424a4d14d6388bf536cf73ebd36f49f075647694680c1e879e412bc9b94402",
+    "verifiedSha256": "3c424a4d14d6388bf536cf73ebd36f49f075647694680c1e879e412bc9b94402"
+  },
+  {
+    "path": "app/src/main/assets/instruments/flute_c4_mf.ogg",
+    "sha256": "acc9e3429549359d0b970d74d4304ef1c177d1d699f4c688f2c7d3b1603b7547",
+    "verifiedSha256": "acc9e3429549359d0b970d74d4304ef1c177d1d699f4c688f2c7d3b1603b7547"
+  },
+  {
+    "path": "app/src/main/assets/instruments/manifest.json",
+    "sha256": "a89642a5e810381e6ff89e6cbf826a9430ee1bf11e230465824fe4a2befe0451",
+    "verifiedSha256": "a89642a5e810381e6ff89e6cbf826a9430ee1bf11e230465824fe4a2befe0451"
+  },
+  {
+    "path": "app/src/main/assets/instruments/marimba_c4_mf.ogg",
+    "sha256": "6a5228f61a6321802f48cd7e6b5172a52b78b2bbf79901c49d34e300b36eac29",
+    "verifiedSha256": "6a5228f61a6321802f48cd7e6b5172a52b78b2bbf79901c49d34e300b36eac29"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/bassoon_60_mf.ogg",
+    "sha256": "fd92e38dda12e04390d356819462e5631605850bf5224ea78f82395a3ba9767c",
+    "verifiedSha256": "fd92e38dda12e04390d356819462e5631605850bf5224ea78f82395a3ba9767c"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/bassoon_62_mf.ogg",
+    "sha256": "f9905a61e22e6c0695ebfdb8900fc78a4bb3a4d09594d4cc6d00b5f5154a6fc8",
+    "verifiedSha256": "f9905a61e22e6c0695ebfdb8900fc78a4bb3a4d09594d4cc6d00b5f5154a6fc8"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/bassoon_64_mf.ogg",
+    "sha256": "82d59b900a6ff47f0e55f70ab132295f1f8c39ef1e26c5ef96a2e616745376bd",
+    "verifiedSha256": "82d59b900a6ff47f0e55f70ab132295f1f8c39ef1e26c5ef96a2e616745376bd"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/bassoon_67_mf.ogg",
+    "sha256": "c60cc35a4c9e0b443520d492257228f1eab58d6a23022ced6cf8c2eccbfbf038",
+    "verifiedSha256": "c60cc35a4c9e0b443520d492257228f1eab58d6a23022ced6cf8c2eccbfbf038"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/bassoon_69_mf.ogg",
+    "sha256": "3ff7afe1d56ccecdaab6051aeae1bf66fa6b8c35d2870c1d4dc5e8aaa1bcf022",
+    "verifiedSha256": "3ff7afe1d56ccecdaab6051aeae1bf66fa6b8c35d2870c1d4dc5e8aaa1bcf022"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/clarinet_60_mf.ogg",
+    "sha256": "903e883998dab62673c7e0c15976e88486ad107e99af7a9152d2356e358261fa",
+    "verifiedSha256": "903e883998dab62673c7e0c15976e88486ad107e99af7a9152d2356e358261fa"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/clarinet_62_mf.ogg",
+    "sha256": "fa7410611ba3772a814942969b3cc4dea794d8aa812843f622dc33a139c2cfa6",
+    "verifiedSha256": "fa7410611ba3772a814942969b3cc4dea794d8aa812843f622dc33a139c2cfa6"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/clarinet_64_mf.ogg",
+    "sha256": "711642cfe03e49f8a8f37d8150084b16812d8b407f461243de62ea51fc2c5ae3",
+    "verifiedSha256": "711642cfe03e49f8a8f37d8150084b16812d8b407f461243de62ea51fc2c5ae3"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/clarinet_67_mf.ogg",
+    "sha256": "b96ee79cdce55cca73582b044a14cb3c68dcc65d73aa4b31e5fb8f0d41b511e1",
+    "verifiedSha256": "b96ee79cdce55cca73582b044a14cb3c68dcc65d73aa4b31e5fb8f0d41b511e1"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/clarinet_69_mf.ogg",
+    "sha256": "d3d87f749b580a7390cb10c3be2c75271c995cea98bfc55eab29fe6e3ee6f737",
+    "verifiedSha256": "d3d87f749b580a7390cb10c3be2c75271c995cea98bfc55eab29fe6e3ee6f737"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/flute_60_mf.ogg",
+    "sha256": "1ca1524be1c154a1b197d9a65ad0961954ce1194f0725265fedad7c1a5953564",
+    "verifiedSha256": "1ca1524be1c154a1b197d9a65ad0961954ce1194f0725265fedad7c1a5953564"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/flute_62_mf.ogg",
+    "sha256": "f06d88924af5aa46e5d03eeda3f1b24839d589fe5322704387c62e83d8c9886a",
+    "verifiedSha256": "f06d88924af5aa46e5d03eeda3f1b24839d589fe5322704387c62e83d8c9886a"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/flute_64_mf.ogg",
+    "sha256": "46319d063a21bff63bcd519b9f251bc5e41b4df0fd8662ac3f87ae7c3a8a2d13",
+    "verifiedSha256": "46319d063a21bff63bcd519b9f251bc5e41b4df0fd8662ac3f87ae7c3a8a2d13"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/flute_67_mf.ogg",
+    "sha256": "cf5cc54fe7b129bcd3aa31ab4fffa555c5a3c9114a041589952596047a34f3a7",
+    "verifiedSha256": "cf5cc54fe7b129bcd3aa31ab4fffa555c5a3c9114a041589952596047a34f3a7"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/flute_69_mf.ogg",
+    "sha256": "b5f4695b7a380a9888d25181ccc662e53f262955c65e8d5ddca890a78fb0226c",
+    "verifiedSha256": "b5f4695b7a380a9888d25181ccc662e53f262955c65e8d5ddca890a78fb0226c"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/manifest.json",
+    "sha256": "2dfa640f9cbe95c3a8d8dc691280173fe5bd775daa3b0f5af41e6f989991b6c3",
+    "verifiedSha256": "2dfa640f9cbe95c3a8d8dc691280173fe5bd775daa3b0f5af41e6f989991b6c3"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/marimba_60_mf.ogg",
+    "sha256": "319006c03ff54837132e95b2d75e7e131c30173a1682a7dedcdb41ed83382b15",
+    "verifiedSha256": "319006c03ff54837132e95b2d75e7e131c30173a1682a7dedcdb41ed83382b15"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/marimba_62_mf.ogg",
+    "sha256": "24a63e9244e87fb88461e685c9cee2743b4560ba894c512a2eeb3aff3c5eb91a",
+    "verifiedSha256": "24a63e9244e87fb88461e685c9cee2743b4560ba894c512a2eeb3aff3c5eb91a"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/marimba_64_mf.ogg",
+    "sha256": "833e4da17882a2d3ef78cdc08fb6d877070d1facb3967815affd2a1aab07e90b",
+    "verifiedSha256": "833e4da17882a2d3ef78cdc08fb6d877070d1facb3967815affd2a1aab07e90b"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/marimba_67_mf.ogg",
+    "sha256": "4d9c4c854ef747b64ec5b90e56c3466e1e80c3422f14142f6cf2306a96f296c9",
+    "verifiedSha256": "4d9c4c854ef747b64ec5b90e56c3466e1e80c3422f14142f6cf2306a96f296c9"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/marimba_69_mf.ogg",
+    "sha256": "280f8b1bbc905c1a85e626639e30b3e9558abfc7ca27c14e87d29f9d1a0c4a79",
+    "verifiedSha256": "280f8b1bbc905c1a85e626639e30b3e9558abfc7ca27c14e87d29f9d1a0c4a79"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/oboe_60_mf.ogg",
+    "sha256": "96133814e299fdf50ae8ba44b2fded84ea7a61c37acb39bb6ccbd2b9f4a38969",
+    "verifiedSha256": "96133814e299fdf50ae8ba44b2fded84ea7a61c37acb39bb6ccbd2b9f4a38969"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/oboe_62_mf.ogg",
+    "sha256": "a775418018223e3c64ff7be5409ff7cdc640d4018046f04611912305e7c22b09",
+    "verifiedSha256": "a775418018223e3c64ff7be5409ff7cdc640d4018046f04611912305e7c22b09"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/oboe_64_mf.ogg",
+    "sha256": "f638517d9420b2e18ed03f68fb08611d2ebbb36bc014d676d2aaae332777294d",
+    "verifiedSha256": "f638517d9420b2e18ed03f68fb08611d2ebbb36bc014d676d2aaae332777294d"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/oboe_67_mf.ogg",
+    "sha256": "9faaad9ec3f1578948d6236f42da1f18a722ee3a6da20849783712099298011d",
+    "verifiedSha256": "9faaad9ec3f1578948d6236f42da1f18a722ee3a6da20849783712099298011d"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/oboe_69_mf.ogg",
+    "sha256": "f6fd7c8bd1b3b625f0aa760457f1b359fe13000a7e7f8010b584e06751b41a74",
+    "verifiedSha256": "f6fd7c8bd1b3b625f0aa760457f1b359fe13000a7e7f8010b584e06751b41a74"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/piano_60_mf.ogg",
+    "sha256": "bb0212be8a7df2d81bca42c2cfce4555f8782fb7b28995c95621074f83e2a0c5",
+    "verifiedSha256": "bb0212be8a7df2d81bca42c2cfce4555f8782fb7b28995c95621074f83e2a0c5"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/piano_62_mf.ogg",
+    "sha256": "d64901190d8a711b76c6d44d4cfb702432e679a5d43662cc5952dda2f15b9add",
+    "verifiedSha256": "d64901190d8a711b76c6d44d4cfb702432e679a5d43662cc5952dda2f15b9add"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/piano_64_mf.ogg",
+    "sha256": "71a03b7329d7072661ac45ed89a49a233a17524b967715006eed1d4aec6cec17",
+    "verifiedSha256": "71a03b7329d7072661ac45ed89a49a233a17524b967715006eed1d4aec6cec17"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/piano_67_mf.ogg",
+    "sha256": "42471566bcd82cae625e967dbd81608b3868a985d50c9626f9208f43195e2de1",
+    "verifiedSha256": "42471566bcd82cae625e967dbd81608b3868a985d50c9626f9208f43195e2de1"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/piano_69_mf.ogg",
+    "sha256": "3aa4cfdedc627e1483dc0c1d88178806883eaf5a6821a4a244bf97b2919244fd",
+    "verifiedSha256": "3aa4cfdedc627e1483dc0c1d88178806883eaf5a6821a4a244bf97b2919244fd"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/trombone_60_mf.ogg",
+    "sha256": "c7a1fe98618b1487e462a88dbd59a6355efe562a7b34233e533921700479429a",
+    "verifiedSha256": "c7a1fe98618b1487e462a88dbd59a6355efe562a7b34233e533921700479429a"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/trombone_62_mf.ogg",
+    "sha256": "9b008115709918cb77805445242d892374232d3785a035867742d7594de4045c",
+    "verifiedSha256": "9b008115709918cb77805445242d892374232d3785a035867742d7594de4045c"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/trombone_64_mf.ogg",
+    "sha256": "bb8e51d00e3c0bb0adf41c1dc09038762d964a3d63c0fbc5f11fea4f4f9841bb",
+    "verifiedSha256": "bb8e51d00e3c0bb0adf41c1dc09038762d964a3d63c0fbc5f11fea4f4f9841bb"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/trombone_67_mf.ogg",
+    "sha256": "88547ef2c765bea44b429452065ccba71e86e62f693435c7bdd0ea730511649d",
+    "verifiedSha256": "88547ef2c765bea44b429452065ccba71e86e62f693435c7bdd0ea730511649d"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/trombone_69_mf.ogg",
+    "sha256": "33d33b4b985db37b00866f24e0b18c8d01dfa55cbfdf89f8d5b90a4dedf885a9",
+    "verifiedSha256": "33d33b4b985db37b00866f24e0b18c8d01dfa55cbfdf89f8d5b90a4dedf885a9"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/trumpet_60_mf.ogg",
+    "sha256": "1bf40ffb883957109c77edcb1a1369d347532aab55394b8d97138e26f3bf229c",
+    "verifiedSha256": "1bf40ffb883957109c77edcb1a1369d347532aab55394b8d97138e26f3bf229c"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/trumpet_62_mf.ogg",
+    "sha256": "1fecd9fce9c50c5797c55092ee12177c5e469f22386bab4cf7ea8efa64d3fcad",
+    "verifiedSha256": "1fecd9fce9c50c5797c55092ee12177c5e469f22386bab4cf7ea8efa64d3fcad"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/trumpet_64_mf.ogg",
+    "sha256": "366c85d89dfbc5e4dad13bb2a02c9447f6e4d7b1298e7696cd5eb23da56e5f62",
+    "verifiedSha256": "366c85d89dfbc5e4dad13bb2a02c9447f6e4d7b1298e7696cd5eb23da56e5f62"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/trumpet_67_mf.ogg",
+    "sha256": "85a796d03d58839f4e6e91f2a3726946cfe39e90626cfa9ca81b3f7a741e25fc",
+    "verifiedSha256": "85a796d03d58839f4e6e91f2a3726946cfe39e90626cfa9ca81b3f7a741e25fc"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/trumpet_69_mf.ogg",
+    "sha256": "d4f77c88b123330d07f2e49e5fbbd1bc66eb6524839151b2a871a48c806d4dd7",
+    "verifiedSha256": "d4f77c88b123330d07f2e49e5fbbd1bc66eb6524839151b2a871a48c806d4dd7"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/violin_60_mf.ogg",
+    "sha256": "66f9fe8d471554c4981c79eb13362c093e372f9c379961972a88d288b2ebced3",
+    "verifiedSha256": "66f9fe8d471554c4981c79eb13362c093e372f9c379961972a88d288b2ebced3"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/violin_62_mf.ogg",
+    "sha256": "db99148be15eccc040f1b75c403fbfca119814eb363cfc58bfe1094e680dac11",
+    "verifiedSha256": "db99148be15eccc040f1b75c403fbfca119814eb363cfc58bfe1094e680dac11"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/violin_64_mf.ogg",
+    "sha256": "220bd38bad36af7f08a5c8dd6c1388bfeaa12f69b45f516e4fd5b19fe4b68b20",
+    "verifiedSha256": "220bd38bad36af7f08a5c8dd6c1388bfeaa12f69b45f516e4fd5b19fe4b68b20"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/violin_67_mf.ogg",
+    "sha256": "d0fdb9e6c5d718287b252ae6b662f88a3a9a0609fe4a4cac82d3c7552e53c0f3",
+    "verifiedSha256": "d0fdb9e6c5d718287b252ae6b662f88a3a9a0609fe4a4cac82d3c7552e53c0f3"
+  },
+  {
+    "path": "app/src/main/assets/instruments/melody/violin_69_mf.ogg",
+    "sha256": "2e02e9508ff335dd3f00c915533b88af1fba11cfffb60d768914980fe0f8b65e",
+    "verifiedSha256": "2e02e9508ff335dd3f00c915533b88af1fba11cfffb60d768914980fe0f8b65e"
+  },
+  {
+    "path": "app/src/main/assets/instruments/oboe_c4_mf.ogg",
+    "sha256": "ec7429ed9b4c4fd261e8a32b17a97d8ba50740d16a6c2f2c461246e0a141c01c",
+    "verifiedSha256": "ec7429ed9b4c4fd261e8a32b17a97d8ba50740d16a6c2f2c461246e0a141c01c"
+  },
+  {
+    "path": "app/src/main/assets/instruments/piano_c4_mf.ogg",
+    "sha256": "5fd2972fd42691f36d10d3c28b0a2422b5e8da3823d2063e1b5952e6caeff836",
+    "verifiedSha256": "5fd2972fd42691f36d10d3c28b0a2422b5e8da3823d2063e1b5952e6caeff836"
+  },
+  {
+    "path": "app/src/main/assets/instruments/trombone_c4_mf.ogg",
+    "sha256": "054765466510c5183599027cfcf8bcbce96c363bab5291d14c9d041d6c408e86",
+    "verifiedSha256": "054765466510c5183599027cfcf8bcbce96c363bab5291d14c9d041d6c408e86"
+  },
+  {
+    "path": "app/src/main/assets/instruments/trumpet_c4_mf.ogg",
+    "sha256": "43d322a1380eecc26f3d837ff0fab668c7ad8b163020ba7ecd905a359ba2ac25",
+    "verifiedSha256": "43d322a1380eecc26f3d837ff0fab668c7ad8b163020ba7ecd905a359ba2ac25"
+  },
+  {
+    "path": "app/src/main/assets/instruments/violin_c4_mf.ogg",
+    "sha256": "9b3ed6a24a9dcf6913e76a36b12cab05b9f18f646160ca9030d951b7fc8279df",
+    "verifiedSha256": "9b3ed6a24a9dcf6913e76a36b12cab05b9f18f646160ca9030d951b7fc8279df"
+  },
+  {
+    "path": "app/src/main/assets/music-garden/licenses/fraunces-OFL.txt",
+    "sha256": "bdf4c22802eaf804f998195871c6b8938aac2ac14b2d78a8bd66a6f1eced833b",
+    "verifiedSha256": "bdf4c22802eaf804f998195871c6b8938aac2ac14b2d78a8bd66a6f1eced833b"
+  },
+  {
+    "path": "app/src/main/assets/music-garden/licenses/nunito-sans-OFL.txt",
+    "sha256": "efbb0c9e864cef973982d9a17567e6be5c3d1759695574586f3f18c7ecca064b",
+    "verifiedSha256": "efbb0c9e864cef973982d9a17567e6be5c3d1759695574586f3f18c7ecca064b"
+  },
+  {
+    "path": "app/src/main/assets/piano/manifest.json",
+    "sha256": "da2f9bea2288b00fd940ce4d4846f5c03417fca5cc8f681ec98e38a5add3991b",
+    "verifiedSha256": "da2f9bea2288b00fd940ce4d4846f5c03417fca5cc8f681ec98e38a5add3991b"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_60.ogg",
+    "sha256": "5b5a753833dd589f4d809516536a634d17aa60d1220ff01088e53e18e12ef110",
+    "verifiedSha256": "5b5a753833dd589f4d809516536a634d17aa60d1220ff01088e53e18e12ef110"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_61.ogg",
+    "sha256": "bf79fc72d7e45224bc5a742b3d48f06dfddee11dd24ffa2935a8a3881998d215",
+    "verifiedSha256": "bf79fc72d7e45224bc5a742b3d48f06dfddee11dd24ffa2935a8a3881998d215"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_62.ogg",
+    "sha256": "898b40309b6ee5aaa3f1435cf1ec85a76e5ebd6adcc0e1b1265f40c3fca96be5",
+    "verifiedSha256": "898b40309b6ee5aaa3f1435cf1ec85a76e5ebd6adcc0e1b1265f40c3fca96be5"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_63.ogg",
+    "sha256": "2b28ea78789af6e2fe141e1e1a303f8b479bc56fa82e4b3f2ae1a77a74396396",
+    "verifiedSha256": "2b28ea78789af6e2fe141e1e1a303f8b479bc56fa82e4b3f2ae1a77a74396396"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_64.ogg",
+    "sha256": "c404b3d14f2d04e25efe9fb88937248fb09fbed64ff489ba6dfb077c958181f4",
+    "verifiedSha256": "c404b3d14f2d04e25efe9fb88937248fb09fbed64ff489ba6dfb077c958181f4"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_65.ogg",
+    "sha256": "029f9850198e9a62b80d7b611599378b70e09a9ae3eed64794cd86043d524fff",
+    "verifiedSha256": "029f9850198e9a62b80d7b611599378b70e09a9ae3eed64794cd86043d524fff"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_66.ogg",
+    "sha256": "4c1350f799ebcb863f97073852454b9c788370aa343b7e4d2727c16ea1f517c8",
+    "verifiedSha256": "4c1350f799ebcb863f97073852454b9c788370aa343b7e4d2727c16ea1f517c8"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_67.ogg",
+    "sha256": "71aac6024b7904e67a62b1eed7b1913bc5a6a478ecca49ceda8072a5c2b705bd",
+    "verifiedSha256": "71aac6024b7904e67a62b1eed7b1913bc5a6a478ecca49ceda8072a5c2b705bd"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_68.ogg",
+    "sha256": "76c4f30f8804a504bdc18463b32e8ddd64835848d569e8520f2174097997af91",
+    "verifiedSha256": "76c4f30f8804a504bdc18463b32e8ddd64835848d569e8520f2174097997af91"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_69.ogg",
+    "sha256": "7fb287e6847114624892c5eabb1c287afb288c675e38e15c2ab612a2df521959",
+    "verifiedSha256": "7fb287e6847114624892c5eabb1c287afb288c675e38e15c2ab612a2df521959"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_70.ogg",
+    "sha256": "9c96bc323a639510e7f1d45fd1c4cf6ea6bded2d19ce1378cecad290ededd8f5",
+    "verifiedSha256": "9c96bc323a639510e7f1d45fd1c4cf6ea6bded2d19ce1378cecad290ededd8f5"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_71.ogg",
+    "sha256": "9250bd2c74e341f83543195ad099ae659a951d7ab800d150ce343c1a58e42094",
+    "verifiedSha256": "9250bd2c74e341f83543195ad099ae659a951d7ab800d150ce343c1a58e42094"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_72.ogg",
+    "sha256": "e34323d9889e19ab9e59eb830a2d5c763d3eac76a0b6b415cd0e341ad7b99b1c",
+    "verifiedSha256": "e34323d9889e19ab9e59eb830a2d5c763d3eac76a0b6b415cd0e341ad7b99b1c"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_73.ogg",
+    "sha256": "3e2dad727ebae50fe5a2e71306397fdef202c5a656eb213b6479ed879b262643",
+    "verifiedSha256": "3e2dad727ebae50fe5a2e71306397fdef202c5a656eb213b6479ed879b262643"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_74.ogg",
+    "sha256": "e9cb4eb344e9884eeb65313ce8516c8f21d576ca6b37bf69ba992b428c7f459a",
+    "verifiedSha256": "e9cb4eb344e9884eeb65313ce8516c8f21d576ca6b37bf69ba992b428c7f459a"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_75.ogg",
+    "sha256": "a7d72100310dd7dd703e112416cc78d48e87680e103f9681dbe41d1582500b78",
+    "verifiedSha256": "a7d72100310dd7dd703e112416cc78d48e87680e103f9681dbe41d1582500b78"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_76.ogg",
+    "sha256": "19e2162cc173d1c89180ed237a00859aecd4edd4ecdc0e6dd5762444ae39aa2a",
+    "verifiedSha256": "19e2162cc173d1c89180ed237a00859aecd4edd4ecdc0e6dd5762444ae39aa2a"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_77.ogg",
+    "sha256": "04567cf7ce2d2be155de6d3e3c588ebf620550dc2d661eb68cdebbea32b9f555",
+    "verifiedSha256": "04567cf7ce2d2be155de6d3e3c588ebf620550dc2d661eb68cdebbea32b9f555"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_78.ogg",
+    "sha256": "f23345b47f313e33e59d87156c416e525703c8f61a0f50a7d32567b506c5e961",
+    "verifiedSha256": "f23345b47f313e33e59d87156c416e525703c8f61a0f50a7d32567b506c5e961"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_79.ogg",
+    "sha256": "b208582e3dd392bb058d4c71982a68ad011308b86ee388a6c3d8a8bb580f7389",
+    "verifiedSha256": "b208582e3dd392bb058d4c71982a68ad011308b86ee388a6c3d8a8bb580f7389"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_80.ogg",
+    "sha256": "ad6a9be95cc678baea865ad8df7f2ead8c4ae682394cbb7b834e1966a4ca2caa",
+    "verifiedSha256": "ad6a9be95cc678baea865ad8df7f2ead8c4ae682394cbb7b834e1966a4ca2caa"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_81.ogg",
+    "sha256": "73c6f83b5d3ffaef8768e33471a8535e3317566d32f2c70b411ee519dc9e1fc5",
+    "verifiedSha256": "73c6f83b5d3ffaef8768e33471a8535e3317566d32f2c70b411ee519dc9e1fc5"
+  },
+  {
+    "path": "app/src/main/assets/piano/mf_82.ogg",
+    "sha256": "50fd4b9e6665e4495e0bf1327a24146f1e6c4797f13332d7c366d22fc27d3347",
+    "verifiedSha256": "50fd4b9e6665e4495e0bf1327a24146f1e6c4797f13332d7c366d22fc27d3347"
+  },
+  {
+    "path": "app/src/main/assets/rhythm/ACADEMICO-LICENSE.txt",
+    "sha256": "da623fe9d67fd535caf746690c6678cda62ce23b44cf23453b2d71f3e6961720",
+    "verifiedSha256": "da623fe9d67fd535caf746690c6678cda62ce23b44cf23453b2d71f3e6961720"
+  },
+  {
+    "path": "app/src/main/assets/rhythm/BRAVURA-LICENSE.txt",
+    "sha256": "eaf7e8faffbe4e404fc19e625c89cef03992dc736051ae7e2fefe205cd6c93db",
+    "verifiedSha256": "eaf7e8faffbe4e404fc19e625c89cef03992dc736051ae7e2fefe205cd6c93db"
+  },
+  {
+    "path": "app/src/main/assets/rhythm/VEXFLOW-AUTHORS.md",
+    "sha256": "13fd7d3378abd6dc3337105f00d8ea1cbb4a009c0e6d4452a1df38929fdaee18",
+    "verifiedSha256": "13fd7d3378abd6dc3337105f00d8ea1cbb4a009c0e6d4452a1df38929fdaee18"
+  },
+  {
+    "path": "app/src/main/assets/rhythm/VEXFLOW-LICENSE.txt",
+    "sha256": "5522a52057a68b081dd3e06a878584b565c6a3f7e7ddb154dd24f25b5630216f",
+    "verifiedSha256": "5522a52057a68b081dd3e06a878584b565c6a3f7e7ddb154dd24f25b5630216f"
+  },
+  {
+    "path": "app/src/main/assets/rhythm/score.html",
+    "sha256": "4b5f9813ac94a175b7cef1dfba88bfc5a0316f64e76287c94feb837c797e9e40",
+    "verifiedSha256": "4b5f9813ac94a175b7cef1dfba88bfc5a0316f64e76287c94feb837c797e9e40"
+  },
+  {
+    "path": "app/src/main/assets/rhythm/score.js",
+    "sha256": "f3b9e3c4a9f0aa9f86b8cb477a409e888bfb4551ff8adbd08f395618749d1527",
+    "verifiedSha256": "f3b9e3c4a9f0aa9f86b8cb477a409e888bfb4551ff8adbd08f395618749d1527"
+  },
+  {
+    "path": "app/src/main/assets/rhythm/vexflow-bravura-5.0.0.js",
+    "sha256": "2d4451bf31c877cf289cf173452b77a6b08e362e3cdf75a1136e485eed3c0f89",
+    "verifiedSha256": "2d4451bf31c877cf289cf173452b77a6b08e362e3cdf75a1136e485eed3c0f89"
+  },
+  {
+    "path": "app/src/main/assets/tuner/LEEME.txt",
+    "sha256": "e090fa4398fcb795b84031863d561ebe78be068f3c76ac80aa53a03d6144d459",
+    "verifiedSha256": "e090fa4398fcb795b84031863d561ebe78be068f3c76ac80aa53a03d6144d459"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_36.ogg",
+    "sha256": "a8eb4f4bd60f3bf85b6141b1fdc09b4dd06446cadbc7d7f1044560791c8e64c6",
+    "verifiedSha256": "a8eb4f4bd60f3bf85b6141b1fdc09b4dd06446cadbc7d7f1044560791c8e64c6"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_37.ogg",
+    "sha256": "774082f2a1a7e17adc25002f9a92ee9dae48c1d86192b8301218bf229d5d8aad",
+    "verifiedSha256": "774082f2a1a7e17adc25002f9a92ee9dae48c1d86192b8301218bf229d5d8aad"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_38.ogg",
+    "sha256": "87c7929ed79d3bd556a28315b7091b4583cea3eff3ebdd614e9ad4c319f232af",
+    "verifiedSha256": "87c7929ed79d3bd556a28315b7091b4583cea3eff3ebdd614e9ad4c319f232af"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_39.ogg",
+    "sha256": "b0b63e03cc5f4258146ba03b306a8f676029392b31a23924ba2a1ee14fa09ee7",
+    "verifiedSha256": "b0b63e03cc5f4258146ba03b306a8f676029392b31a23924ba2a1ee14fa09ee7"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_40.ogg",
+    "sha256": "6fc3678165fadf9dce1f6ad449a81e89eda95db9881b008dc7a17098fa898c83",
+    "verifiedSha256": "6fc3678165fadf9dce1f6ad449a81e89eda95db9881b008dc7a17098fa898c83"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_41.ogg",
+    "sha256": "c5ca35d82c288cc48d5265398dc8cbc36071809b66a80a2078e12dc7b5cebe18",
+    "verifiedSha256": "c5ca35d82c288cc48d5265398dc8cbc36071809b66a80a2078e12dc7b5cebe18"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_42.ogg",
+    "sha256": "a0ae08404afbd4b5f28a0be47bdd389af1b656a033211feda9cb9588e333d362",
+    "verifiedSha256": "a0ae08404afbd4b5f28a0be47bdd389af1b656a033211feda9cb9588e333d362"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_43.ogg",
+    "sha256": "f19bd1c7f4985093a5edf82521c002dc0c0ca26e92db81a7858c280b63ec9b88",
+    "verifiedSha256": "f19bd1c7f4985093a5edf82521c002dc0c0ca26e92db81a7858c280b63ec9b88"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_44.ogg",
+    "sha256": "4c4065ff275afeef4adc5993306549d6119636bb9809b0f119bb15eff145d6d5",
+    "verifiedSha256": "4c4065ff275afeef4adc5993306549d6119636bb9809b0f119bb15eff145d6d5"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_45.ogg",
+    "sha256": "3810cce3b9cce6c4cb4ffbbc8136aede5a89688a9e2bcc370d7fd3010cd55f54",
+    "verifiedSha256": "3810cce3b9cce6c4cb4ffbbc8136aede5a89688a9e2bcc370d7fd3010cd55f54"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_46.ogg",
+    "sha256": "e3adfb446f6db8de4f2566dc1cf47cd8099008020cc331e3516f2c6aa53f1364",
+    "verifiedSha256": "e3adfb446f6db8de4f2566dc1cf47cd8099008020cc331e3516f2c6aa53f1364"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_47.ogg",
+    "sha256": "7efd05f89b4db5a059541bd265e0dc8a89ece1d705352bb3b9293065b273e610",
+    "verifiedSha256": "7efd05f89b4db5a059541bd265e0dc8a89ece1d705352bb3b9293065b273e610"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_48.ogg",
+    "sha256": "1afba729f77e8eb45c4f82bd6fbb100be5b903dc789aef7540e69ad44b1b5120",
+    "verifiedSha256": "1afba729f77e8eb45c4f82bd6fbb100be5b903dc789aef7540e69ad44b1b5120"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_49.ogg",
+    "sha256": "b7b5cdc975495a6fc6e4c100b85a4a626e73ebab3a2c747ab7a7de2418343ea5",
+    "verifiedSha256": "b7b5cdc975495a6fc6e4c100b85a4a626e73ebab3a2c747ab7a7de2418343ea5"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_50.ogg",
+    "sha256": "c43327fcfc9740288fe73548a71aa734d2b14714b1d451337a82201e99fd0b13",
+    "verifiedSha256": "c43327fcfc9740288fe73548a71aa734d2b14714b1d451337a82201e99fd0b13"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_51.ogg",
+    "sha256": "460dd3f7be2fdcdf6bae8a832a2e1a3af926909f1bf9ae8478b0d0f7b3707ff9",
+    "verifiedSha256": "460dd3f7be2fdcdf6bae8a832a2e1a3af926909f1bf9ae8478b0d0f7b3707ff9"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_52.ogg",
+    "sha256": "9d9108b3798be45793aa487f643c8eb0e769671e43abaa66b0e5027ab7791d6f",
+    "verifiedSha256": "9d9108b3798be45793aa487f643c8eb0e769671e43abaa66b0e5027ab7791d6f"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_53.ogg",
+    "sha256": "f4f630a2867b362f56bbbbd27fbd17b72d2bd42fb2b768010889f8aa79874a25",
+    "verifiedSha256": "f4f630a2867b362f56bbbbd27fbd17b72d2bd42fb2b768010889f8aa79874a25"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_54.ogg",
+    "sha256": "e661bfa3403ffe993b26d6bc8d2d31366f2cce04431b191276dcfca823dfc78c",
+    "verifiedSha256": "e661bfa3403ffe993b26d6bc8d2d31366f2cce04431b191276dcfca823dfc78c"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_55.ogg",
+    "sha256": "2ef931ff226fde66838a4d6a272be12c4642c4d466630abf09158fda6d79590b",
+    "verifiedSha256": "2ef931ff226fde66838a4d6a272be12c4642c4d466630abf09158fda6d79590b"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_56.ogg",
+    "sha256": "9e2ff95e6df93b32fe91f34624c424979da7c19d97ed189e8daff559f1018b47",
+    "verifiedSha256": "9e2ff95e6df93b32fe91f34624c424979da7c19d97ed189e8daff559f1018b47"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_57.ogg",
+    "sha256": "f4cb3d7d2c3c9bc77fe8523b353027f65d0c153f1e4cbfaf94428a3e9db3f07e",
+    "verifiedSha256": "f4cb3d7d2c3c9bc77fe8523b353027f65d0c153f1e4cbfaf94428a3e9db3f07e"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_58.ogg",
+    "sha256": "cf57cae481791068d361ea70d684c6334c81e5c48dbfb8ed0c969e32533a183d",
+    "verifiedSha256": "cf57cae481791068d361ea70d684c6334c81e5c48dbfb8ed0c969e32533a183d"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_59.ogg",
+    "sha256": "c2739da6da37f3906e49ad95dade47c9daa2a2763bed924d630d5ac7bfb62ac6",
+    "verifiedSha256": "c2739da6da37f3906e49ad95dade47c9daa2a2763bed924d630d5ac7bfb62ac6"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_60.ogg",
+    "sha256": "91764e9c6f6ff62462878863c9465c2edf8b76d44e9deeda4894135cfe54892f",
+    "verifiedSha256": "91764e9c6f6ff62462878863c9465c2edf8b76d44e9deeda4894135cfe54892f"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_61.ogg",
+    "sha256": "0cfbc510c43fff01892dcf0b2d2c4ea57ba518e7f1cb756c3bf41cba48c91bab",
+    "verifiedSha256": "0cfbc510c43fff01892dcf0b2d2c4ea57ba518e7f1cb756c3bf41cba48c91bab"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_62.ogg",
+    "sha256": "7686fe53ef060c2dc997d865b0f8c9c5e07bd1b1af5e0ebbee6c4f4f29e02060",
+    "verifiedSha256": "7686fe53ef060c2dc997d865b0f8c9c5e07bd1b1af5e0ebbee6c4f4f29e02060"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_63.ogg",
+    "sha256": "815c64f55d9fa159a8d29bc1af4a8f7a050a79cc19ef230c134d5f690d524a49",
+    "verifiedSha256": "815c64f55d9fa159a8d29bc1af4a8f7a050a79cc19ef230c134d5f690d524a49"
+  },
+  {
+    "path": "app/src/main/assets/tuner/guitar_64.ogg",
+    "sha256": "02fe6b2ba18d1ff437f0c9999a79a7c54d3f08b6580fbca6e8b718240a92fd58",
+    "verifiedSha256": "02fe6b2ba18d1ff437f0c9999a79a7c54d3f08b6580fbca6e8b718240a92fd58"
+  },
+  {
+    "path": "app/src/main/assets/tuner/manifest.json",
+    "sha256": "7fecc8af5fae4a931ecbed0f7be9b37569abb836f587d1611166252d7d37b2c4",
+    "verifiedSha256": "7fecc8af5fae4a931ecbed0f7be9b37569abb836f587d1611166252d7d37b2c4"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_36.ogg",
+    "sha256": "5d102fd43a7d9f11078b0507a489a4ea263a69d937debf777e9b09beeb30bafc",
+    "verifiedSha256": "5d102fd43a7d9f11078b0507a489a4ea263a69d937debf777e9b09beeb30bafc"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_37.ogg",
+    "sha256": "68a413191a43689d9e5402865c5a5ae0f4c412d51f448dba6dd6b22bd7d96521",
+    "verifiedSha256": "68a413191a43689d9e5402865c5a5ae0f4c412d51f448dba6dd6b22bd7d96521"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_38.ogg",
+    "sha256": "eff4b392b539c275d7f43abd128e91a94ab0a63ba8cb368a165950bb980af0b4",
+    "verifiedSha256": "eff4b392b539c275d7f43abd128e91a94ab0a63ba8cb368a165950bb980af0b4"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_39.ogg",
+    "sha256": "f0ebd10fb7051757ac70c49828e3271aa9cbd9fa5d863a2130fc21342aea2ba0",
+    "verifiedSha256": "f0ebd10fb7051757ac70c49828e3271aa9cbd9fa5d863a2130fc21342aea2ba0"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_40.ogg",
+    "sha256": "2e74e40ec2940e6125e8d02bd6deb73751955b8cd704aac1946e3733dba9c6e7",
+    "verifiedSha256": "2e74e40ec2940e6125e8d02bd6deb73751955b8cd704aac1946e3733dba9c6e7"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_41.ogg",
+    "sha256": "8ab0fa4ee4aaad0921382d068dda175eeb8a770fcd1df7d85a6005fc7d4cc4c2",
+    "verifiedSha256": "8ab0fa4ee4aaad0921382d068dda175eeb8a770fcd1df7d85a6005fc7d4cc4c2"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_42.ogg",
+    "sha256": "aa5f3437cf8d63ccf69a6e9998cec32db7ccb9e0b3e33a85ebac44701d79d747",
+    "verifiedSha256": "aa5f3437cf8d63ccf69a6e9998cec32db7ccb9e0b3e33a85ebac44701d79d747"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_43.ogg",
+    "sha256": "ea700bd7affdb869e1c67f23df8a2ccdd901624ad59a2d0b0ead48ff97d4a1f1",
+    "verifiedSha256": "ea700bd7affdb869e1c67f23df8a2ccdd901624ad59a2d0b0ead48ff97d4a1f1"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_44.ogg",
+    "sha256": "e5273b27634d82332d0adf070f481a3542362ebd0358c399351f9f0d333e7e06",
+    "verifiedSha256": "e5273b27634d82332d0adf070f481a3542362ebd0358c399351f9f0d333e7e06"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_45.ogg",
+    "sha256": "870f2dc9598309fce3b19114d2fdb58b736c7e2a6aac5d66171d54f0883f4a12",
+    "verifiedSha256": "870f2dc9598309fce3b19114d2fdb58b736c7e2a6aac5d66171d54f0883f4a12"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_46.ogg",
+    "sha256": "d602565cdc6694eaf9670b9afc5d197220ef38bb8e4aee933a8100763ccec396",
+    "verifiedSha256": "d602565cdc6694eaf9670b9afc5d197220ef38bb8e4aee933a8100763ccec396"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_47.ogg",
+    "sha256": "8659ef62954da546aadfdc0063d852bf78cc6136684fc3c9de13ad739e6314f4",
+    "verifiedSha256": "8659ef62954da546aadfdc0063d852bf78cc6136684fc3c9de13ad739e6314f4"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_48.ogg",
+    "sha256": "806c1cde44a0a33761fd3269389f543aea90f89d1f6ae25ce73413ee02f5b0f0",
+    "verifiedSha256": "806c1cde44a0a33761fd3269389f543aea90f89d1f6ae25ce73413ee02f5b0f0"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_49.ogg",
+    "sha256": "adacf7175b6d275bd2620d6e03b692faf0968dbf4452f8550d8e5952d68a5b2e",
+    "verifiedSha256": "adacf7175b6d275bd2620d6e03b692faf0968dbf4452f8550d8e5952d68a5b2e"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_50.ogg",
+    "sha256": "a10d7a7e558f5987148ff265650df6efad996c966d305a675317ffec783c2e17",
+    "verifiedSha256": "a10d7a7e558f5987148ff265650df6efad996c966d305a675317ffec783c2e17"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_51.ogg",
+    "sha256": "93e8aaa50f328f89a4e982c64a5ef037917854411e2ac0ce3e525a9daa4e3138",
+    "verifiedSha256": "93e8aaa50f328f89a4e982c64a5ef037917854411e2ac0ce3e525a9daa4e3138"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_52.ogg",
+    "sha256": "6ecec5dc514ed254c99809d136ec5c0460ce6d89146d02e1c9d0faa554dca349",
+    "verifiedSha256": "6ecec5dc514ed254c99809d136ec5c0460ce6d89146d02e1c9d0faa554dca349"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_53.ogg",
+    "sha256": "229a0c171478703ac0f0fdb9831ca0856358e57e061572965dfedc47fedadb74",
+    "verifiedSha256": "229a0c171478703ac0f0fdb9831ca0856358e57e061572965dfedc47fedadb74"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_54.ogg",
+    "sha256": "0c8c158920f102d2b27419cdf68f6188b1186a774c83b22df8a2beef2eb0f8f7",
+    "verifiedSha256": "0c8c158920f102d2b27419cdf68f6188b1186a774c83b22df8a2beef2eb0f8f7"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_55.ogg",
+    "sha256": "471079f1582a2f2906315222f3a1ab82c67b0c5e27fdc295df0cfafd411892c3",
+    "verifiedSha256": "471079f1582a2f2906315222f3a1ab82c67b0c5e27fdc295df0cfafd411892c3"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_56.ogg",
+    "sha256": "837d0f92cd4d8e5536bd14a4ef7d9778965438c7ff342d0d3513fae19a2e3e4d",
+    "verifiedSha256": "837d0f92cd4d8e5536bd14a4ef7d9778965438c7ff342d0d3513fae19a2e3e4d"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_57.ogg",
+    "sha256": "9ff4f4ee3612a2dd49b12497515d3343c1c75f60a8c7ab55bc99aef6d8ebf45c",
+    "verifiedSha256": "9ff4f4ee3612a2dd49b12497515d3343c1c75f60a8c7ab55bc99aef6d8ebf45c"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_58.ogg",
+    "sha256": "e4d7491ac49074e860439ce83751ffe99014983e3c8349d787c9ab1eb2b22cd2",
+    "verifiedSha256": "e4d7491ac49074e860439ce83751ffe99014983e3c8349d787c9ab1eb2b22cd2"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_59.ogg",
+    "sha256": "466d8bbbf3676af18d0680c5f6fe54eb698e48dff718bee9e4f1beba519e1dd3",
+    "verifiedSha256": "466d8bbbf3676af18d0680c5f6fe54eb698e48dff718bee9e4f1beba519e1dd3"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_60.ogg",
+    "sha256": "923bb422d2698d12dca45f17f2374b82ff764841e1b4480ae3cbb98373bd5cd8",
+    "verifiedSha256": "923bb422d2698d12dca45f17f2374b82ff764841e1b4480ae3cbb98373bd5cd8"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_61.ogg",
+    "sha256": "3afde76a1890eb8db33c3a2432c7e187d798dc717ee1564fa561d5353130a8cb",
+    "verifiedSha256": "3afde76a1890eb8db33c3a2432c7e187d798dc717ee1564fa561d5353130a8cb"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_62.ogg",
+    "sha256": "adce2e7bb77e193b6b51944190e69a0484e11187c1afadc046d4e0a8b3ebb2c5",
+    "verifiedSha256": "adce2e7bb77e193b6b51944190e69a0484e11187c1afadc046d4e0a8b3ebb2c5"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_63.ogg",
+    "sha256": "efed28f87ba6e86df78d2b487fcedf43fa1697ae73bd9ad9351c7b5c0dc24a66",
+    "verifiedSha256": "efed28f87ba6e86df78d2b487fcedf43fa1697ae73bd9ad9351c7b5c0dc24a66"
+  },
+  {
+    "path": "app/src/main/assets/tuner/piano_64.ogg",
+    "sha256": "1e6b65471ea4053d7e6e24eaf063b95e3133774d2242a7ac3fd97228e8995954",
+    "verifiedSha256": "1e6b65471ea4053d7e6e24eaf063b95e3133774d2242a7ac3fd97228e8995954"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/MainActivity.kt",
+    "sha256": "2c46885337651d00df2cb0612861f08bd45b2ec5b4ec4e12c7af616e7e78c211",
+    "verifiedSha256": "2c46885337651d00df2cb0612861f08bd45b2ec5b4ec4e12c7af616e7e78c211"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/audio/AndroidInstrumentPlayer.kt",
+    "sha256": "2638ce0ff9787ed0f915181c48ee8d7d1b1a226a08f1f563661cdef9874fddf9",
+    "verifiedSha256": "2638ce0ff9787ed0f915181c48ee8d7d1b1a226a08f1f563661cdef9874fddf9"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/audio/AndroidNotePlayer.kt",
+    "sha256": "dda7ee9c8cd3fd60c4b23116f2824533253e50c589968a1485242f7ac78e385b",
+    "verifiedSha256": "dda7ee9c8cd3fd60c4b23116f2824533253e50c589968a1485242f7ac78e385b"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/audio/AndroidSamplePlayer.kt",
+    "sha256": "b01f4bc83279bbad25e61c7da58789da8c142f617d2280401919978aa854bdcd",
+    "verifiedSha256": "b01f4bc83279bbad25e61c7da58789da8c142f617d2280401919978aa854bdcd"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/audio/AndroidTunerReferencePlayer.kt",
+    "sha256": "deb05a809cae36d1a834d7690e6186f1e0c74c012ee8f67a880a9637695baddf",
+    "verifiedSha256": "deb05a809cae36d1a834d7690e6186f1e0c74c012ee8f67a880a9637695baddf"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/dda/Mamdani.kt",
+    "sha256": "85b34ad63fd57753d869b257373effa621c6e4cc3f06973ec7e8774edff011f0",
+    "verifiedSha256": "85b34ad63fd57753d869b257373effa621c6e4cc3f06973ec7e8774edff011f0"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/defender/DefenderAudio.kt",
+    "sha256": "cce7c56fa93404e5047be6590c569ec91d80a79c8f25fd92aa5ccefaa330df2a",
+    "verifiedSha256": "cce7c56fa93404e5047be6590c569ec91d80a79c8f25fd92aa5ccefaa330df2a"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/defender/DefenderChords.kt",
+    "sha256": "25cd6e23a7ff80d78ef124f390a54761e11bbc0fd6aab644e44777a957b7c5f0",
+    "verifiedSha256": "25cd6e23a7ff80d78ef124f390a54761e11bbc0fd6aab644e44777a957b7c5f0"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/defender/DefenderDda.kt",
+    "sha256": "bc9b92d0c18c1a38e760bbcdce05274149538fe3518228eef059fcc9043699ad",
+    "verifiedSha256": "bc9b92d0c18c1a38e760bbcdce05274149538fe3518228eef059fcc9043699ad"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/defender/DefenderHistory.kt",
+    "sha256": "b15b6c668b976f0ec728887113918dbe3e153c91bbbe82896970417cb9680ba5",
+    "verifiedSha256": "b15b6c668b976f0ec728887113918dbe3e153c91bbbe82896970417cb9680ba5"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/defender/DefenderMusic.kt",
+    "sha256": "572d25c568c09b1bf84de6f3caffeace34d2d2240ecc235817d757a491ce0a4a",
+    "verifiedSha256": "572d25c568c09b1bf84de6f3caffeace34d2d2240ecc235817d757a491ce0a4a"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/defender/DefenderScenarios.kt",
+    "sha256": "e31adbe291b290b8d41eb62697d8e6b7f88b3edc8ecb409bcefa4d28654943a3",
+    "verifiedSha256": "e31adbe291b290b8d41eb62697d8e6b7f88b3edc8ecb409bcefa4d28654943a3"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/defender/DefenderSession.kt",
+    "sha256": "f3f237debbef216fbfd5fa1148a63ede2c933b59bcd45c6f79dc28f0da91d382",
+    "verifiedSha256": "f3f237debbef216fbfd5fa1148a63ede2c933b59bcd45c6f79dc28f0da91d382"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/defender/DefenderViewModel.kt",
+    "sha256": "5f8081a66385a4d7ef5547f6644b35cc59460d5a7af5f2f4830400ae48fdf98c",
+    "verifiedSha256": "5f8081a66385a4d7ef5547f6644b35cc59460d5a7af5f2f4830400ae48fdf98c"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/history/HistorySession.kt",
+    "sha256": "6c56e8fe57096f0a244214731229ed0e048ed634b59da670bb137c86151e10a7",
+    "verifiedSha256": "6c56e8fe57096f0a244214731229ed0e048ed634b59da670bb137c86151e10a7"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/instruments/InstrumentDda.kt",
+    "sha256": "ce9bca43bf3adc5533a3ec5ea1dec421813ad44a8b288aae17c620197fad12ed",
+    "verifiedSha256": "ce9bca43bf3adc5533a3ec5ea1dec421813ad44a8b288aae17c620197fad12ed"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/instruments/InstrumentDdaScenario.kt",
+    "sha256": "7a9f4793b419497c64965ec110e5049659fec63bd48c75713c6b644447e50485",
+    "verifiedSha256": "7a9f4793b419497c64965ec110e5049659fec63bd48c75713c6b644447e50485"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/instruments/InstrumentMelody.kt",
+    "sha256": "c94d84f3ce2274e8b995bec9b9d0661758f5260b4f1e43460f61cf2e569ab366",
+    "verifiedSha256": "c94d84f3ce2274e8b995bec9b9d0661758f5260b4f1e43460f61cf2e569ab366"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/instruments/InstrumentResults.kt",
+    "sha256": "63219aec9f8baf67658c5741549c83be4fd05f86dbf35846cc73ae225cf86a51",
+    "verifiedSha256": "63219aec9f8baf67658c5741549c83be4fd05f86dbf35846cc73ae225cf86a51"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/instruments/InstrumentSession.kt",
+    "sha256": "0a8ac3d977cf9149ac135338e805253120019b1bf436145ec1d99002e379421a",
+    "verifiedSha256": "0a8ac3d977cf9149ac135338e805253120019b1bf436145ec1d99002e379421a"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/progress/Progression.kt",
+    "sha256": "b34cbe81669bccf989a20a73b4e3aa132949651f574250e8f957d1f504f4c6f1",
+    "verifiedSha256": "b34cbe81669bccf989a20a73b4e3aa132949651f574250e8f957d1f504f4c6f1"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/rhythm/JsonRhythmResults.kt",
+    "sha256": "a244738172d6867fa1f1023a0e37521a2311098d8bcca269e7a4aa5174bf314c",
+    "verifiedSha256": "a244738172d6867fa1f1023a0e37521a2311098d8bcca269e7a4aa5174bf314c"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmAudio.kt",
+    "sha256": "f373e08bfd7e590c7827fc3bb7784240f6a64ce214686ebd54845e9fa45abe7b",
+    "verifiedSha256": "f373e08bfd7e590c7827fc3bb7784240f6a64ce214686ebd54845e9fa45abe7b"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmDdaScenarios.kt",
+    "sha256": "25a1c561af69b0675747fd17c557e212b2bf42ad8e7ef4b7014b98c3a2379b12",
+    "verifiedSha256": "25a1c561af69b0675747fd17c557e212b2bf42ad8e7ef4b7014b98c3a2379b12"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmGeneration.kt",
+    "sha256": "230af6de88fd033d84cd7ba6998e6eda158d6ad62ad9dd803e79fbdc98432cdc",
+    "verifiedSha256": "230af6de88fd033d84cd7ba6998e6eda158d6ad62ad9dd803e79fbdc98432cdc"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmHistorySession.kt",
+    "sha256": "99d9ed68aa599bf6506214cb16d2ed6ceee3f6a84ee9307b37e3a20d4e63ad0f",
+    "verifiedSha256": "99d9ed68aa599bf6506214cb16d2ed6ceee3f6a84ee9307b37e3a20d4e63ad0f"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmNotation.kt",
+    "sha256": "05f45b465cdf7c2797a0ce56a1d1f580dfefd275faab5560398fe2aa55849031",
+    "verifiedSha256": "05f45b465cdf7c2797a0ce56a1d1f580dfefd275faab5560398fe2aa55849031"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmProgression.kt",
+    "sha256": "c223d088ed5d887d25de73c6813f3a708fc3f1a640539e56d50c9713d83e260d",
+    "verifiedSha256": "c223d088ed5d887d25de73c6813f3a708fc3f1a640539e56d50c9713d83e260d"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmSession.kt",
+    "sha256": "e7392f7798714cdad4c551f9769f8000d12bbec303dd726e90ece7ed096d1e88",
+    "verifiedSha256": "e7392f7798714cdad4c551f9769f8000d12bbec303dd726e90ece7ed096d1e88"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmViewModel.kt",
+    "sha256": "c51ce0407b1c465c43f1faafc8dab6898e786d015bd59b2a21d34d88bc9c8df4",
+    "verifiedSha256": "c51ce0407b1c465c43f1faafc8dab6898e786d015bd59b2a21d34d88bc9c8df4"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/simon/SimonResults.kt",
+    "sha256": "67190b942411b03488449974fb28ba2905415bcdcaeeba6223543f9d9ad594d2",
+    "verifiedSha256": "67190b942411b03488449974fb28ba2905415bcdcaeeba6223543f9d9ad594d2"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/simon/SimonSession.kt",
+    "sha256": "9074a6c7621181c6d9f29c9eb4b1777a8706be62bdbf3acc6ad4259f991c918c",
+    "verifiedSha256": "9074a6c7621181c6d9f29c9eb4b1777a8706be62bdbf3acc6ad4259f991c918c"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/storage/DdaScenarios.kt",
+    "sha256": "fa3a8abb62ea42485f2bceb3f6dda2387659bd5efdd4c58551b858a98c3870a0",
+    "verifiedSha256": "fa3a8abb62ea42485f2bceb3f6dda2387659bd5efdd4c58551b858a98c3870a0"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/storage/Demonstration.kt",
+    "sha256": "40c11a446545bac0223905653be6e54027f94a3db83d50942fbe562d8d4f55d8",
+    "verifiedSha256": "40c11a446545bac0223905653be6e54027f94a3db83d50942fbe562d8d4f55d8"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/storage/JsonResultsFile.kt",
+    "sha256": "41864dd1c0a44c3c5aafbcfe68a54dff2bd65975592d5bf93666643f3f35d28d",
+    "verifiedSha256": "41864dd1c0a44c3c5aafbcfe68a54dff2bd65975592d5bf93666643f3f35d28d"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/storage/ProfileFiles.kt",
+    "sha256": "8551cd75fdb24a76704bf5f5f65892ee5f37de3240ce2ec89f02039f4aedb026",
+    "verifiedSha256": "8551cd75fdb24a76704bf5f5f65892ee5f37de3240ce2ec89f02039f4aedb026"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/tuner/EarTunerSession.kt",
+    "sha256": "67024fb92674466df6c70d69adc36f98274db992fe09043d672fa6a5725c54ca",
+    "verifiedSha256": "67024fb92674466df6c70d69adc36f98274db992fe09043d672fa6a5725c54ca"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/tuner/GuidedTunerSession.kt",
+    "sha256": "b6862afe79797c6c78a92c8122bb1184a71fc392d7d40d74db038592e1c727ae",
+    "verifiedSha256": "b6862afe79797c6c78a92c8122bb1184a71fc392d7d40d74db038592e1c727ae"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/tuner/JsonTunerConfiguration.kt",
+    "sha256": "ecdcbfda4a2fa1d374df4cc3dbd78cb4ccb59020b90b28b1e5d7f01c7da334e0",
+    "verifiedSha256": "ecdcbfda4a2fa1d374df4cc3dbd78cb4ccb59020b90b28b1e5d7f01c7da334e0"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/tuner/JsonTunerResults.kt",
+    "sha256": "a26ec681c328f998ccdc0916bd3abbd75ab0c8736603a5e761e1ac96c88a5fe7",
+    "verifiedSha256": "a26ec681c328f998ccdc0916bd3abbd75ab0c8736603a5e761e1ac96c88a5fe7"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/tuner/TunerConfiguration.kt",
+    "sha256": "3b0f3ae0c5604b529c9b2b1235a46dd75e616e58e585ce0112e3f23dc70b7044",
+    "verifiedSha256": "3b0f3ae0c5604b529c9b2b1235a46dd75e616e58e585ce0112e3f23dc70b7044"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/tuner/TunerHistorySession.kt",
+    "sha256": "8338d45a434675ebb6d80889df4b2f9fe04b03ca817b21dcb90770ff28089cff",
+    "verifiedSha256": "8338d45a434675ebb6d80889df4b2f9fe04b03ca817b21dcb90770ff28089cff"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/tuner/TunerReference.kt",
+    "sha256": "f99cfefb2a87806d9ad2a9ad044abffea1dc54624ff633b7d9e25ec703542e5b",
+    "verifiedSha256": "f99cfefb2a87806d9ad2a9ad044abffea1dc54624ff633b7d9e25ec703542e5b"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/tuner/TunerSession.kt",
+    "sha256": "e151cf5b744b9861c54f0768ae100eedb73f58385fff1bf4cb8dcdd4c5528aa8",
+    "verifiedSha256": "e151cf5b744b9861c54f0768ae100eedb73f58385fff1bf4cb8dcdd4c5528aa8"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/tuner/TunerViewModel.kt",
+    "sha256": "a1dcf0cfbb050ec317c45bf1ccaae5071ec671ae69ed120f41cfff187271b929",
+    "verifiedSha256": "a1dcf0cfbb050ec317c45bf1ccaae5071ec671ae69ed120f41cfff187271b929"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/DefenderApp.kt",
+    "sha256": "75a3d69db9eacfb3c75124cd08f0d8fb8a50ccba761cea364e59f432dcc828ae",
+    "verifiedSha256": "75a3d69db9eacfb3c75124cd08f0d8fb8a50ccba761cea364e59f432dcc828ae"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/DefenderHistoryApp.kt",
+    "sha256": "3bf42bbead5e60d48df6b8d20e83a37287e4442d54364c3556d3bc6c988518ea",
+    "verifiedSha256": "3bf42bbead5e60d48df6b8d20e83a37287e4442d54364c3556d3bc6c988518ea"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/DefenderInspectorApp.kt",
+    "sha256": "7022ab0c3020f48e4528ac6beb83b733cebbdf8f72758e2940d26cef1d599a76",
+    "verifiedSha256": "7022ab0c3020f48e4528ac6beb83b733cebbdf8f72758e2940d26cef1d599a76"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/DemonstrationApp.kt",
+    "sha256": "23e5d5ab5d658d2a41aef3c7fe4eed8bce323ade20e4f1ae2dc01b2b24130d2e",
+    "verifiedSha256": "23e5d5ab5d658d2a41aef3c7fe4eed8bce323ade20e4f1ae2dc01b2b24130d2e"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/DemonstrationViewModel.kt",
+    "sha256": "3666b76443a98d137c42aa5b882e90d29347d71390884f30ae4f430a8d0a2fcb",
+    "verifiedSha256": "3666b76443a98d137c42aa5b882e90d29347d71390884f30ae4f430a8d0a2fcb"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/EarTunerApp.kt",
+    "sha256": "44a3aae8eeda46a34d46321c455578e0d182c708296f67acc069de8bb27ee4ab",
+    "verifiedSha256": "c7da47a679e9992d6558a75d3ec2b10c287df09d96d7eeb91210896e92040562"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/FuzzyRuleDetails.kt",
+    "sha256": "3d2750f01cf7ddc03eabb8b74bec989dc31dd6809f1669010a6c654c8a30062d",
+    "verifiedSha256": "3d2750f01cf7ddc03eabb8b74bec989dc31dd6809f1669010a6c654c8a30062d"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/GardenTokens.kt",
+    "sha256": "05b560664f5317abc897575c3510a7ad0356228773714d651e743779ecbbcf16",
+    "verifiedSha256": "05b560664f5317abc897575c3510a7ad0356228773714d651e743779ecbbcf16"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/GuidedTunerPanel.kt",
+    "sha256": "81ade29fb661537eab8d0ce3e9b8e2760a44a49fbfd0e7f0a2adf9fedded8edd",
+    "verifiedSha256": "81ade29fb661537eab8d0ce3e9b8e2760a44a49fbfd0e7f0a2adf9fedded8edd"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/HistoryApp.kt",
+    "sha256": "d3642f0a7cdeb97bba1d177f75e21426d2d3e3f962696e234ccf3ba6310cea65",
+    "verifiedSha256": "d3642f0a7cdeb97bba1d177f75e21426d2d3e3f962696e234ccf3ba6310cea65"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/HistoryViewModel.kt",
+    "sha256": "f5a6b7cb4d9f8dd70f27ba698ce71613baee86a2cd8128eed8625e4eff93d465",
+    "verifiedSha256": "f5a6b7cb4d9f8dd70f27ba698ce71613baee86a2cd8128eed8625e4eff93d465"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/InstrumentApp.kt",
+    "sha256": "03aa5048b96daead0e8e299225300399b76f32d4f102d4d80da08ea03360d9a1",
+    "verifiedSha256": "03aa5048b96daead0e8e299225300399b76f32d4f102d4d80da08ea03360d9a1"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/InstrumentDdaInspector.kt",
+    "sha256": "3cc36b035317ee383a0b4df6d1c6d6f422f6acf637d5122207b4b01699fd88a0",
+    "verifiedSha256": "3cc36b035317ee383a0b4df6d1c6d6f422f6acf637d5122207b4b01699fd88a0"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/InstrumentViewModel.kt",
+    "sha256": "09cbd231227342918da33862c56b86fb2ecfeafa26d4323c9ec2f064dd178da1",
+    "verifiedSha256": "09cbd231227342918da33862c56b86fb2ecfeafa26d4323c9ec2f064dd178da1"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/MasteryDetails.kt",
+    "sha256": "dca31fc1fe71f48ad0ad9cb8f67d34a528b90ac31cf6c9162c0b3be2049acaa7",
+    "verifiedSha256": "dca31fc1fe71f48ad0ad9cb8f67d34a528b90ac31cf6c9162c0b3be2049acaa7"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/MusicGardenMenu.kt",
+    "sha256": "296b294b49eb954849b79f0137b75958eaf33bf38bea8d2f5e48cc5e29ff454f",
+    "verifiedSha256": "296b294b49eb954849b79f0137b75958eaf33bf38bea8d2f5e48cc5e29ff454f"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/PianoKeyboard.kt",
+    "sha256": "9f7842f17f17bdabce8acb79b64131ac9c92f273d38a893b06c573c052491acf",
+    "verifiedSha256": "9f7842f17f17bdabce8acb79b64131ac9c92f273d38a893b06c573c052491acf"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/PitchLabApp.kt",
+    "sha256": "b94b10525f72916e4917e0768b7aac19ca69241a269a2422717030a388553f41",
+    "verifiedSha256": "b94b10525f72916e4917e0768b7aac19ca69241a269a2422717030a388553f41"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/PitchLabViewModel.kt",
+    "sha256": "222e7dd7895a559db5d9c1d43b45a73c7a7ef42f1be37e20889108618ea2da42",
+    "verifiedSha256": "222e7dd7895a559db5d9c1d43b45a73c7a7ef42f1be37e20889108618ea2da42"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/ProgressSummary.kt",
+    "sha256": "61a25f0ccee8ba3ee5ea6ea5e623248d6c6ac2e50041a6d1d31c0b63507c117a",
+    "verifiedSha256": "61a25f0ccee8ba3ee5ea6ea5e623248d6c6ac2e50041a6d1d31c0b63507c117a"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/RhythmApp.kt",
+    "sha256": "67b031f8ac6089145f555fc3fd32906c525e9d078a43bb2252c2deafb6ffddea",
+    "verifiedSha256": "67b031f8ac6089145f555fc3fd32906c525e9d078a43bb2252c2deafb6ffddea"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/RhythmHistoryApp.kt",
+    "sha256": "19fb927f8a70eb941197401756ae5e84f9ddec461fc8b95cb42a8453f134fa92",
+    "verifiedSha256": "19fb927f8a70eb941197401756ae5e84f9ddec461fc8b95cb42a8453f134fa92"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/RhythmProgressApp.kt",
+    "sha256": "2c48a1ff3c687f12d93ea5e2fa6ee9fe3b16dcddfeae0e543ff5027729ad62ac",
+    "verifiedSha256": "2c48a1ff3c687f12d93ea5e2fa6ee9fe3b16dcddfeae0e543ff5027729ad62ac"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/RhythmResultSummary.kt",
+    "sha256": "467326889eb3fa25cff5632c5658d078fc613e4d0c8bc86cc59e82a556ba37ae",
+    "verifiedSha256": "467326889eb3fa25cff5632c5658d078fc613e4d0c8bc86cc59e82a556ba37ae"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/RhythmScoreView.kt",
+    "sha256": "094d99ab79ea43d9277615fde60fb3a4fc8bc668272af48810a0e044bda32574",
+    "verifiedSha256": "094d99ab79ea43d9277615fde60fb3a4fc8bc668272af48810a0e044bda32574"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/SimonApp.kt",
+    "sha256": "b1b62915226a7ec5dbeabbd88be1604be4f40695ab35c30223b79729e50cd023",
+    "verifiedSha256": "b1b62915226a7ec5dbeabbd88be1604be4f40695ab35c30223b79729e50cd023"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/SimonViewModel.kt",
+    "sha256": "d0280aeb62c88fee887af0e7a67da95489087bdc0f2d7e5c266681f00d17c870",
+    "verifiedSha256": "d0280aeb62c88fee887af0e7a67da95489087bdc0f2d7e5c266681f00d17c870"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/TunerApp.kt",
+    "sha256": "1795573d298d6a85caddcd6132be0c4b1000c7faa23c4a9a98846cdff5c34470",
+    "verifiedSha256": "1795573d298d6a85caddcd6132be0c4b1000c7faa23c4a9a98846cdff5c34470"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/TunerConfigurationPanel.kt",
+    "sha256": "8af532ff58b210ae4f382792d565f20f060a08d55f0a388669b322cd8b8e70bc",
+    "verifiedSha256": "8af532ff58b210ae4f382792d565f20f060a08d55f0a388669b322cd8b8e70bc"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/TunerGardenTheme.kt",
+    "sha256": "86d551602349211070907aa5bb6f78b031b8b2a5ab9786444a49b1bf764411bc",
+    "verifiedSha256": "86d551602349211070907aa5bb6f78b031b8b2a5ab9786444a49b1bf764411bc"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/TunerHistoryApp.kt",
+    "sha256": "99c10ba245e0dd1d870139085aeac14c7e91584b7ee6dc65fcf3e112eb97487d",
+    "verifiedSha256": "99c10ba245e0dd1d870139085aeac14c7e91584b7ee6dc65fcf3e112eb97487d"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/TunerReferencePanel.kt",
+    "sha256": "852360ca6918e8eed112616741aecab06b88d051b36fbcb598f2e9c807a04d44",
+    "verifiedSha256": "852360ca6918e8eed112616741aecab06b88d051b36fbcb598f2e9c807a04d44"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/VoiceApp.kt",
+    "sha256": "a524c3f3e582d766994036c63fa867ceb7b0eb36984fb02fd60fb21ef1a77435",
+    "verifiedSha256": "a524c3f3e582d766994036c63fa867ceb7b0eb36984fb02fd60fb21ef1a77435"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/VoicePlot.kt",
+    "sha256": "9ee469051665e8b26b991b05da21cc08e6f222ee0cd701d76d634b3c9804332d",
+    "verifiedSha256": "9ee469051665e8b26b991b05da21cc08e6f222ee0cd701d76d634b3c9804332d"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/voice/AndroidReferencePlayer.kt",
+    "sha256": "387b4ddda3cc636a631a8abb09f54904b4a2d8de8495f8b5a3ec25ea799dbb06",
+    "verifiedSha256": "387b4ddda3cc636a631a8abb09f54904b4a2d8de8495f8b5a3ec25ea799dbb06"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/voice/AndroidVoiceCapture.kt",
+    "sha256": "91af47816a16d6373a6c5df502a2ee1d66ef0ea824eee34bfbea230ea0c4e47a",
+    "verifiedSha256": "91af47816a16d6373a6c5df502a2ee1d66ef0ea824eee34bfbea230ea0c4e47a"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/voice/PitchLab.kt",
+    "sha256": "3a2be0dd8f6be4816f51bebe95ceff558d3acc064134315ce56a9689c2c9ad73",
+    "verifiedSha256": "3a2be0dd8f6be4816f51bebe95ceff558d3acc064134315ce56a9689c2c9ad73"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/voice/ReferenceTone.kt",
+    "sha256": "95251c2bd6189c6452d99ff84958e4bf3e231c7ff6c42d585cee820a2e8d6a97",
+    "verifiedSha256": "95251c2bd6189c6452d99ff84958e4bf3e231c7ff6c42d585cee820a2e8d6a97"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/voice/VocalIntervalSession.kt",
+    "sha256": "b1847cd56e81e47d1e30058a1b6b92fc07f325c0b76eec588e511ce76a22ad43",
+    "verifiedSha256": "b1847cd56e81e47d1e30058a1b6b92fc07f325c0b76eec588e511ce76a22ad43"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/voice/VoiceResults.kt",
+    "sha256": "04335b27e374fa755713fa4c16efe6232ce2d939b6d0bcf2ef47ee0c98d506e4",
+    "verifiedSha256": "04335b27e374fa755713fa4c16efe6232ce2d939b6d0bcf2ef47ee0c98d506e4"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/voice/VoiceViewModel.kt",
+    "sha256": "8563a55a5b4554043f4dbd3c8e7f9ee80ef70370e37c1e68c38865acb81a66a1",
+    "verifiedSha256": "8563a55a5b4554043f4dbd3c8e7f9ee80ef70370e37c1e68c38865acb81a66a1"
+  },
+  {
+    "path": "app/src/main/java/ar/edu/unmdp/entrenamiento/voice/YinEstimator.kt",
+    "sha256": "f3e4943f3edacbea54a63b6ea7ee06b6455db917ac3e1c25e77821495b224da7",
+    "verifiedSha256": "f3e4943f3edacbea54a63b6ea7ee06b6455db917ac3e1c25e77821495b224da7"
+  },
+  {
+    "path": "app/src/main/res/drawable-nodpi/garden_book.webp",
+    "sha256": "874f613c169fced68008d9e977e11f734fd3e4df4e3604dd01fe7d580a8f5457",
+    "verifiedSha256": "874f613c169fced68008d9e977e11f734fd3e4df4e3604dd01fe7d580a8f5457"
+  },
+  {
+    "path": "app/src/main/res/drawable-nodpi/garden_character.webp",
+    "sha256": "6254edd95be700f0a873686caacb294f00a91dcb6d45c68bc7660777af42b59f",
+    "verifiedSha256": "6254edd95be700f0a873686caacb294f00a91dcb6d45c68bc7660777af42b59f"
+  },
+  {
+    "path": "app/src/main/res/drawable-nodpi/garden_controls.webp",
+    "sha256": "5b19d0ab807d761e5b1352f57c40216f482334469639a086d9d8eeb8f897967f",
+    "verifiedSha256": "5b19d0ab807d761e5b1352f57c40216f482334469639a086d9d8eeb8f897967f"
+  },
+  {
+    "path": "app/src/main/res/drawable-nodpi/garden_defender.webp",
+    "sha256": "fcbb6aa439943911bef47a3afbcd298818d0f57325829c7d82fe739765572cfd",
+    "verifiedSha256": "fcbb6aa439943911bef47a3afbcd298818d0f57325829c7d82fe739765572cfd"
+  },
+  {
+    "path": "app/src/main/res/drawable-nodpi/garden_garden.webp",
+    "sha256": "e1871d179056ecb63f5bed86e37a7f49cde15c05be739cdedffcf79c87afb558",
+    "verifiedSha256": "e1871d179056ecb63f5bed86e37a7f49cde15c05be739cdedffcf79c87afb558"
+  },
+  {
+    "path": "app/src/main/res/drawable-nodpi/garden_instruments.webp",
+    "sha256": "d65b31fbd376d030faced095dbb0679aa8ca93901998b2f73efa1d3b01add4c5",
+    "verifiedSha256": "d65b31fbd376d030faced095dbb0679aa8ca93901998b2f73efa1d3b01add4c5"
+  },
+  {
+    "path": "app/src/main/res/drawable-nodpi/garden_rhythm.webp",
+    "sha256": "a2ec5fc259587b44f1f870ff2bf7ffc807ffbdb34b3ce53e0290e30ed5f82c5b",
+    "verifiedSha256": "a2ec5fc259587b44f1f870ff2bf7ffc807ffbdb34b3ce53e0290e30ed5f82c5b"
+  },
+  {
+    "path": "app/src/main/res/drawable-nodpi/garden_simon.webp",
+    "sha256": "1cb622dc8d367d07841f13b2c757fc6b5a605712c1f96bd4d0f448cd942b410b",
+    "verifiedSha256": "1cb622dc8d367d07841f13b2c757fc6b5a605712c1f96bd4d0f448cd942b410b"
+  },
+  {
+    "path": "app/src/main/res/drawable-nodpi/neuma_logo_horizontal.png",
+    "sha256": "1cac27d9ecfba3a4365379f46253b2dc547b7d4076caf6b0066924cb5f112e20",
+    "verifiedSha256": "1cac27d9ecfba3a4365379f46253b2dc547b7d4076caf6b0066924cb5f112e20"
+  },
+  {
+    "path": "app/src/main/res/drawable/ic_launcher.xml",
+    "sha256": "8b8a303f26bd128e465c1e5e8de4b1d5cbb8fd52161f01720c77573351612425",
+    "verifiedSha256": "8b8a303f26bd128e465c1e5e8de4b1d5cbb8fd52161f01720c77573351612425"
+  },
+  {
+    "path": "app/src/main/res/drawable/neuma_launch_background.xml",
+    "sha256": "738415615bde5211d9fdafae6c797d8618a07dae352ef8a3bc71c3cda3d4db48",
+    "verifiedSha256": "738415615bde5211d9fdafae6c797d8618a07dae352ef8a3bc71c3cda3d4db48"
+  },
+  {
+    "path": "app/src/main/res/drawable/neuma_launcher_foreground.xml",
+    "sha256": "bd579d8703c856b6b9b41e08550363514dd8d802b9852964a5ed386d71cb1ff2",
+    "verifiedSha256": "bd579d8703c856b6b9b41e08550363514dd8d802b9852964a5ed386d71cb1ff2"
+  },
+  {
+    "path": "app/src/main/res/drawable/neuma_launcher_monochrome.xml",
+    "sha256": "2b0004597d0141c22e6b73fb3d3338f6f8251cf33390409b791b73a418b6baa0",
+    "verifiedSha256": "2b0004597d0141c22e6b73fb3d3338f6f8251cf33390409b791b73a418b6baa0"
+  },
+  {
+    "path": "app/src/main/res/drawable/neuma_splash_symbol.xml",
+    "sha256": "ee44c27479c0f564adc2e7fc44b05281dce1be4386848bc5d415b252bd711f74",
+    "verifiedSha256": "ee44c27479c0f564adc2e7fc44b05281dce1be4386848bc5d415b252bd711f74"
+  },
+  {
+    "path": "app/src/main/res/drawable/neuma_symbol.xml",
+    "sha256": "649b7e6707657d85eb4ad9319a2418b7098af71368d93a49dc5fceb9a08c49f8",
+    "verifiedSha256": "649b7e6707657d85eb4ad9319a2418b7098af71368d93a49dc5fceb9a08c49f8"
+  },
+  {
+    "path": "app/src/main/res/font/garden_fraunces.ttf",
+    "sha256": "177ff6c0f14e5550a3c624247cd1189611d4eb65d000b14944c63d967958abbb",
+    "verifiedSha256": "177ff6c0f14e5550a3c624247cd1189611d4eb65d000b14944c63d967958abbb"
+  },
+  {
+    "path": "app/src/main/res/font/garden_nunito_sans.ttf",
+    "sha256": "f934d7142fb4784bf828da485b7dcbd90c0c80d514e9d49a5da0ed3a1ae2491d",
+    "verifiedSha256": "f934d7142fb4784bf828da485b7dcbd90c0c80d514e9d49a5da0ed3a1ae2491d"
+  },
+  {
+    "path": "app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+    "sha256": "6f5e11a968469fdff0c680fc10330ff7c20eac12d84792e29c10052e4943cd7d",
+    "verifiedSha256": "6f5e11a968469fdff0c680fc10330ff7c20eac12d84792e29c10052e4943cd7d"
+  },
+  {
+    "path": "app/src/main/res/mipmap-anydpi-v33/ic_launcher.xml",
+    "sha256": "2b6bb0070d13ba616aec03b0d10ecf476323d22b48588620bd4e2c14a981e2b8",
+    "verifiedSha256": "2b6bb0070d13ba616aec03b0d10ecf476323d22b48588620bd4e2c14a981e2b8"
+  },
+  {
+    "path": "app/src/main/res/values-v27/styles.xml",
+    "sha256": "d26b05dff9affb167d4184a600dde97a52bb7367e197c8ba0d66115bd440abd2",
+    "verifiedSha256": "d26b05dff9affb167d4184a600dde97a52bb7367e197c8ba0d66115bd440abd2"
+  },
+  {
+    "path": "app/src/main/res/values-v31/styles.xml",
+    "sha256": "00c0cb7da1526fbe8e1fcc104b2e0e02755b1f752b28183b4eb4909bae984755",
+    "verifiedSha256": "00c0cb7da1526fbe8e1fcc104b2e0e02755b1f752b28183b4eb4909bae984755"
+  },
+  {
+    "path": "app/src/main/res/values/neuma_brand.xml",
+    "sha256": "a64e1740f48846cb84a1aedf1074c5d8dd7213c125e053eabeaf63d0d3e3dee7",
+    "verifiedSha256": "a64e1740f48846cb84a1aedf1074c5d8dd7213c125e053eabeaf63d0d3e3dee7"
+  },
+  {
+    "path": "app/src/main/res/values/strings.xml",
+    "sha256": "63705d25ede187b57b9c45604927bbd272bc1a06b81343010a0a757d801f8f77",
+    "verifiedSha256": "63705d25ede187b57b9c45604927bbd272bc1a06b81343010a0a757d801f8f77"
+  },
+  {
+    "path": "app/src/main/res/values/styles.xml",
+    "sha256": "482f9f733a0b6bdfa24171b0c8a4a4c75c061c6d0ec9f0f050fed5a617be17f4",
+    "verifiedSha256": "482f9f733a0b6bdfa24171b0c8a4a4c75c061c6d0ec9f0f050fed5a617be17f4"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/defender/DefenderChordAudioTest.kt",
+    "sha256": "5b3c356fe83d1e4abdf4c98b7e47d1f542ee56681ca74612a5f3091d8cee34ac",
+    "verifiedSha256": "5b3c356fe83d1e4abdf4c98b7e47d1f542ee56681ca74612a5f3091d8cee34ac"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/defender/DefenderChordHistoryTest.kt",
+    "sha256": "f5c4bb483bd2ab7aa65c6d78ca0c362064de102664c65f78205f154f59768839",
+    "verifiedSha256": "f5c4bb483bd2ab7aa65c6d78ca0c362064de102664c65f78205f154f59768839"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/defender/DefenderChordViewModelTest.kt",
+    "sha256": "5889cfec5e60f238a40f7beb106a215196021fc36a6bbfd31960ed7ed4685a1b",
+    "verifiedSha256": "5889cfec5e60f238a40f7beb106a215196021fc36a6bbfd31960ed7ed4685a1b"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/defender/DefenderChordsTest.kt",
+    "sha256": "0501f4465bc28b32188fb02ad67f35657dbe698c660671a9b8f5c23ac4f10854",
+    "verifiedSha256": "0501f4465bc28b32188fb02ad67f35657dbe698c660671a9b8f5c23ac4f10854"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/defender/DefenderD3ViewModelTest.kt",
+    "sha256": "4c19e32db699b31202e8b93a0ab4687849bce23281ba3cca2c2d9e01b4dd1283",
+    "verifiedSha256": "4c19e32db699b31202e8b93a0ab4687849bce23281ba3cca2c2d9e01b4dd1283"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/defender/DefenderD5MusicTest.kt",
+    "sha256": "9f2ffa5c6205db301ae2399b7bf523ef25a3bedafa5c01e8bbbe545bfcec2283",
+    "verifiedSha256": "9f2ffa5c6205db301ae2399b7bf523ef25a3bedafa5c01e8bbbe545bfcec2283"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/defender/DefenderD5ProgressTest.kt",
+    "sha256": "5a7c83e1bc7820db6e47711ea39ecf09e7abfa24ec33a0b560359fb54e0923b4",
+    "verifiedSha256": "5a7c83e1bc7820db6e47711ea39ecf09e7abfa24ec33a0b560359fb54e0923b4"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/defender/DefenderD5ViewModelTest.kt",
+    "sha256": "cf998a65e702dce791536a23e04f8466eed5d23f701ded57ce1332ae67e28602",
+    "verifiedSha256": "cf998a65e702dce791536a23e04f8466eed5d23f701ded57ce1332ae67e28602"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/defender/DefenderDdaTest.kt",
+    "sha256": "7e2855acf84f2061188b1939a5bdf7bb8aedc5de79c905909f3aac2669071ba6",
+    "verifiedSha256": "7e2855acf84f2061188b1939a5bdf7bb8aedc5de79c905909f3aac2669071ba6"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/defender/DefenderExpandedTest.kt",
+    "sha256": "6a7ceaf70875ca81067c3ff6d474ae229a4fc963d9ab29142fd765eef53d1a2a",
+    "verifiedSha256": "6a7ceaf70875ca81067c3ff6d474ae229a4fc963d9ab29142fd765eef53d1a2a"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/defender/DefenderHistoryTest.kt",
+    "sha256": "7b171fe3e4435f6a33077acd41249c2032ae2bded4492387e84fde7b619b6578",
+    "verifiedSha256": "7b171fe3e4435f6a33077acd41249c2032ae2bded4492387e84fde7b619b6578"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/defender/DefenderSessionTest.kt",
+    "sha256": "88ab04bb35d39b0d0693b3629f93681e6d9a9b2aced0af88dc4df882aba30d3e",
+    "verifiedSha256": "88ab04bb35d39b0d0693b3629f93681e6d9a9b2aced0af88dc4df882aba30d3e"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/defender/DefenderViewModelTest.kt",
+    "sha256": "fd579bb93d1e5522e6fab07a777421a099366647d700e1f099987f3c52322e73",
+    "verifiedSha256": "fd579bb93d1e5522e6fab07a777421a099366647d700e1f099987f3c52322e73"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/history/HistorySessionTest.kt",
+    "sha256": "fd63abe10a8935786ed64075d771ecdf5d44cc19e274f96d5a23add1248e65d4",
+    "verifiedSha256": "fd63abe10a8935786ed64075d771ecdf5d44cc19e274f96d5a23add1248e65d4"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/instruments/InstrumentDdaSessionTest.kt",
+    "sha256": "a3f705334f0aab980d018ac2d101fca31b59b546da43f66d5680e1e0d6146ec7",
+    "verifiedSha256": "a3f705334f0aab980d018ac2d101fca31b59b546da43f66d5680e1e0d6146ec7"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/instruments/InstrumentProgressionTest.kt",
+    "sha256": "bb39d27f2dd1143651d855815a0f8964deb342a79718a86bef86b65da7032639",
+    "verifiedSha256": "bb39d27f2dd1143651d855815a0f8964deb342a79718a86bef86b65da7032639"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/instruments/InstrumentSessionTest.kt",
+    "sha256": "d39f54fa3c0c4e3573b86db302d2e79bae88d6416cefcd4c3c296e5f982dd002",
+    "verifiedSha256": "d39f54fa3c0c4e3573b86db302d2e79bae88d6416cefcd4c3c296e5f982dd002"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmEngravingTest.kt",
+    "sha256": "aa536f214d534507140f5fd8616cd7e74e584fd80d9d518d7d06db503165bac2",
+    "verifiedSha256": "aa536f214d534507140f5fd8616cd7e74e584fd80d9d518d7d06db503165bac2"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmHistoryTest.kt",
+    "sha256": "f2d29a89fa33d2b3eb89833f54eb1099827a1b434e65fd6544d1f37a94183a03",
+    "verifiedSha256": "f2d29a89fa33d2b3eb89833f54eb1099827a1b434e65fd6544d1f37a94183a03"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmHistoryViewModelTest.kt",
+    "sha256": "24fc19bc18eb95b0d7c7e7a7c9e83b0d76dad461850b437ba74313e022336b0e",
+    "verifiedSha256": "24fc19bc18eb95b0d7c7e7a7c9e83b0d76dad461850b437ba74313e022336b0e"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmNotationTest.kt",
+    "sha256": "ff8e16627d37e1eb86f8ab38522efa5f2dbca8883dc99552a1b346cfd06cb030",
+    "verifiedSha256": "ff8e16627d37e1eb86f8ab38522efa5f2dbca8883dc99552a1b346cfd06cb030"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmProgressionTest.kt",
+    "sha256": "7951920dcf1cf48a686ca16a193c6bd05493b531ecca2156027df80afbb8c842",
+    "verifiedSha256": "7951920dcf1cf48a686ca16a193c6bd05493b531ecca2156027df80afbb8c842"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmProgressionViewModelTest.kt",
+    "sha256": "7ea36c0d63d49f3ea88b08d10a183cd9b005e15f382a46c7001ddee4db742dd5",
+    "verifiedSha256": "7ea36c0d63d49f3ea88b08d10a183cd9b005e15f382a46c7001ddee4db742dd5"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmR2Test.kt",
+    "sha256": "a3dec89932dce4ee9ef31c18bab325b0bbe8bf8cc94ee35b1276939d2a5c816d",
+    "verifiedSha256": "a3dec89932dce4ee9ef31c18bab325b0bbe8bf8cc94ee35b1276939d2a5c816d"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmR3Test.kt",
+    "sha256": "000181d5f688fc648603d348ad5afa61aad07b84fb1a6e3925b6ba84ff762bfb",
+    "verifiedSha256": "000181d5f688fc648603d348ad5afa61aad07b84fb1a6e3925b6ba84ff762bfb"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmR4Test.kt",
+    "sha256": "180aa76a6b4e7f678475a3abd537fd141ae8d68704b838ced79d4c477e39a430",
+    "verifiedSha256": "180aa76a6b4e7f678475a3abd537fd141ae8d68704b838ced79d4c477e39a430"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmSessionTest.kt",
+    "sha256": "a0822c27e3b5bdd59a6a19c338f70ae1c7ea16c29ddcd7d53d1a564c5dd4bc8f",
+    "verifiedSha256": "a0822c27e3b5bdd59a6a19c338f70ae1c7ea16c29ddcd7d53d1a564c5dd4bc8f"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmViewModelTest.kt",
+    "sha256": "326079b7e97bb5364dfe2c122faae06714b2a27a1d8c0290a19bf361a0360c84",
+    "verifiedSha256": "326079b7e97bb5364dfe2c122faae06714b2a27a1d8c0290a19bf361a0360c84"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/simon/ProgressionSessionTest.kt",
+    "sha256": "de183676f64898bc1502489ebd574480a4d9b5af87b1a86f5903d00302a364e9",
+    "verifiedSha256": "de183676f64898bc1502489ebd574480a4d9b5af87b1a86f5903d00302a364e9"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/simon/SimonSessionTest.kt",
+    "sha256": "24990da291cf7d6c18a5e2d37f90cc8d39653f00a2b7c05bfdce29fa711054de",
+    "verifiedSha256": "24990da291cf7d6c18a5e2d37f90cc8d39653f00a2b7c05bfdce29fa711054de"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/storage/DataResilienceTest.kt",
+    "sha256": "291e7dfd0a11f71525a6b2c9f4295f5d4f7abb287295e5fc2469492f139d36d8",
+    "verifiedSha256": "291e7dfd0a11f71525a6b2c9f4295f5d4f7abb287295e5fc2469492f139d36d8"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/storage/DdaScenarioTest.kt",
+    "sha256": "cb5a066c7ac79fe5ff518821652cf6a408114a7e2e718c9addaf1f1a03bac5d6",
+    "verifiedSha256": "cb5a066c7ac79fe5ff518821652cf6a408114a7e2e718c9addaf1f1a03bac5d6"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/storage/DemonstrationTest.kt",
+    "sha256": "88b3c73c357e0b69824c01c9084bd128c6a2db7ef82408327bbbea49e8b9a55d",
+    "verifiedSha256": "88b3c73c357e0b69824c01c9084bd128c6a2db7ef82408327bbbea49e8b9a55d"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/storage/RhythmExportTest.kt",
+    "sha256": "0503de9d1a07540fd4118c158ac8161d5968a110ad726be2a207993772779961",
+    "verifiedSha256": "0503de9d1a07540fd4118c158ac8161d5968a110ad726be2a207993772779961"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/storage/TunerExportTest.kt",
+    "sha256": "3d97c7daa38af37cde76b14055acec25e2121b16ce2a7bfdefdb52cd3242f706",
+    "verifiedSha256": "3d97c7daa38af37cde76b14055acec25e2121b16ce2a7bfdefdb52cd3242f706"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/tuner/EarTunerTest.kt",
+    "sha256": "73982b0eb99ab6cfd73a03ec65ef3bf5a2b65ff216a47b363ffde5cb8826aa98",
+    "verifiedSha256": "73982b0eb99ab6cfd73a03ec65ef3bf5a2b65ff216a47b363ffde5cb8826aa98"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/tuner/EarTunerViewModelTest.kt",
+    "sha256": "c2fc69e47280c0dea3fd6c201152d444fcba55c26a6bc290a088e57c076a36b6",
+    "verifiedSha256": "c2fc69e47280c0dea3fd6c201152d444fcba55c26a6bc290a088e57c076a36b6"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/tuner/GuidedTunerTest.kt",
+    "sha256": "e51d6f60283ffa8b600ccfc816ba7a810cf651276a216eebbfae1e4fb168a016",
+    "verifiedSha256": "e51d6f60283ffa8b600ccfc816ba7a810cf651276a216eebbfae1e4fb168a016"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/tuner/GuidedTunerViewModelTest.kt",
+    "sha256": "0a188755e1796ec7949a8dfc0d3f558b43b82a82bc13df35f6e8c3c2e1b69b84",
+    "verifiedSha256": "0a188755e1796ec7949a8dfc0d3f558b43b82a82bc13df35f6e8c3c2e1b69b84"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/tuner/TunerCaptureTest.kt",
+    "sha256": "035a4df86e1605d8365c0b29034da7c296ef01e9b2ac66849166dba09c847d7d",
+    "verifiedSha256": "035a4df86e1605d8365c0b29034da7c296ef01e9b2ac66849166dba09c847d7d"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/tuner/TunerConfigurationTest.kt",
+    "sha256": "86f8cf7b97d61c15faec4153ac445ddcf7b804c3eafb3200c22c3e7de1bb2f5c",
+    "verifiedSha256": "86f8cf7b97d61c15faec4153ac445ddcf7b804c3eafb3200c22c3e7de1bb2f5c"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/tuner/TunerHistoryTest.kt",
+    "sha256": "d1c79692698b400e5839a440a8ad58bb5715896ab985d41853e8d238becb8168",
+    "verifiedSha256": "d1c79692698b400e5839a440a8ad58bb5715896ab985d41853e8d238becb8168"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/tuner/TunerHistoryViewModelTest.kt",
+    "sha256": "5637477d0e6b5a548c81f3112002e4ed9ee2e43794f443891613501569044477",
+    "verifiedSha256": "5637477d0e6b5a548c81f3112002e4ed9ee2e43794f443891613501569044477"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/tuner/TunerReferenceTest.kt",
+    "sha256": "1c3df2e64db8931ada5fa8a6c85c28e97fea6e2d927f917ca64ebb6a2f30ef21",
+    "verifiedSha256": "1c3df2e64db8931ada5fa8a6c85c28e97fea6e2d927f917ca64ebb6a2f30ef21"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/tuner/TunerSessionTest.kt",
+    "sha256": "e9481ea52e4aaf06d6e75549dfd1250a974e5f3c235bca956faed03b43db92e5",
+    "verifiedSha256": "e9481ea52e4aaf06d6e75549dfd1250a974e5f3c235bca956faed03b43db92e5"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/ui/DemonstrationViewModelTest.kt",
+    "sha256": "4053e039a1bdc538beb87cdb75d5b197c00cb223f803ae4f8e54440fcaf6ffce",
+    "verifiedSha256": "4053e039a1bdc538beb87cdb75d5b197c00cb223f803ae4f8e54440fcaf6ffce"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/ui/InstrumentViewModelTest.kt",
+    "sha256": "80e50b9a4342c16c6ac9395e85acce9099561d70884aa351322f7f04c974f351",
+    "verifiedSha256": "80e50b9a4342c16c6ac9395e85acce9099561d70884aa351322f7f04c974f351"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/ui/SimonViewModelTest.kt",
+    "sha256": "d7a6574f44f87056eb69edef44a1a3308f4dbd95c43c0f1bcbb5308932308531",
+    "verifiedSha256": "d7a6574f44f87056eb69edef44a1a3308f4dbd95c43c0f1bcbb5308932308531"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/voice/PitchLabSessionTest.kt",
+    "sha256": "de5a5e21d9206612fd1eb256c460439508da417846eb5d56e761adeed227a00d",
+    "verifiedSha256": "de5a5e21d9206612fd1eb256c460439508da417846eb5d56e761adeed227a00d"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/voice/VocalIntervalSessionTest.kt",
+    "sha256": "88606f1c83f2fab90d2939b8707d6aceef8afea5177ab0c4740f0d6def9084c1",
+    "verifiedSha256": "88606f1c83f2fab90d2939b8707d6aceef8afea5177ab0c4740f0d6def9084c1"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/voice/VoiceSessionTest.kt",
+    "sha256": "8e8f37899b63ff869f8c104d2921fdf24044b4f48af7dc89ace045dc2a7ed779",
+    "verifiedSha256": "8e8f37899b63ff869f8c104d2921fdf24044b4f48af7dc89ace045dc2a7ed779"
+  },
+  {
+    "path": "app/src/test/java/ar/edu/unmdp/entrenamiento/voice/YinTest.kt",
+    "sha256": "88bee1cd5a1849489505aea0aee90e9b90733bbac6dd226c7263c1f950362a9e",
+    "verifiedSha256": "88bee1cd5a1849489505aea0aee90e9b90733bbac6dd226c7263c1f950362a9e"
+  },
+  {
+    "path": "build.gradle.kts",
+    "sha256": "3ae1ef13ec96e355fa8cba23cb2ca5b49499b0604b52cd4cf3f28aa1851cc4cf",
+    "verifiedSha256": "3ae1ef13ec96e355fa8cba23cb2ca5b49499b0604b52cd4cf3f28aa1851cc4cf"
+  },
+  {
+    "path": "gradle.properties",
+    "sha256": "fa078c27c9e4bde28a029d673875b028884505efa436b68cf60e1ac0be5b679b",
+    "verifiedSha256": "fa078c27c9e4bde28a029d673875b028884505efa436b68cf60e1ac0be5b679b"
+  },
+  {
+    "path": "settings.gradle.kts",
+    "sha256": "4f1f4bd30a56dce746cb63f54d64ee83c2f1a78d020c110bc355109dc27af1af",
+    "verifiedSha256": "4f1f4bd30a56dce746cb63f54d64ee83c2f1a78d020c110bc355109dc27af1af"
+  }
+]

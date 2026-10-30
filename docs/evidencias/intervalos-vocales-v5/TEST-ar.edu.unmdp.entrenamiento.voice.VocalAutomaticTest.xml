@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.voice.VocalAutomaticTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-30T22:27:18.491Z" hostname="DESKTOP-PP49S64" time="0.046">
+  <properties/>
+  <testcase name="background between rounds closes a partial series and another starts at ordinal one" classname="ar.edu.unmdp.entrenamiento.voice.VocalAutomaticTest" time="0.008"/>
+  <testcase name="automatic series changes only future tolerance and records five linked rounds" classname="ar.edu.unmdp.entrenamiento.voice.VocalAutomaticTest" time="0.022"/>
+  <testcase name="unreadable history prevents automatic series and simulation writes no player record" classname="ar.edu.unmdp.entrenamiento.voice.VocalAutomaticTest" time="0.008"/>
+  <testcase name="pending automatic result blocks continuation until its single decision is confirmed" classname="ar.edu.unmdp.entrenamiento.voice.VocalAutomaticTest" time="0.008"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.voice.FreeProductionGameTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-30T22:46:59.903Z" hostname="DESKTOP-PP49S64" time="0.098">
+  <properties/>
+  <testcase name="manual free success grants no access and switching help requires a fresh reference" classname="ar.edu.unmdp.entrenamiento.voice.FreeProductionGameTest" time="0.021"/>
+  <testcase name="free production sings a chosen anchor and target without any reference playback" classname="ar.edu.unmdp.entrenamiento.voice.FreeProductionGameTest" time="0.007"/>
+  <testcase name="free series uses two captures per round and only adapts its own future tolerance" classname="ar.edu.unmdp.entrenamiento.voice.FreeProductionGameTest" time="0.059"/>
+  <testcase name="background rejects late free input and a failed save retains the same recoverable record" classname="ar.edu.unmdp.entrenamiento.voice.FreeProductionGameTest" time="0.007"/>
+  <testcase name="silence times out between freely sung notes without starting the second capture" classname="ar.edu.unmdp.entrenamiento.voice.FreeProductionGameTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
