@@ -1,5 +1,7 @@
 # Defender — definición del primer alcance
 
+> Actualización visual confirmada por el usuario el 2026-10-26 (Music Garden, Q1–Q4): la presentación objetivo pasa a jardín de papel recortado con tinta, árbol guardián sin rostro, polillas de alas vegetales y acción «Tocar». Ver [dirección artística](ART_DIRECTION.md). Las referencias espaciales, naves y «Disparar» de la entrevista que sigue conservan su valor histórico y funcional; el estilo visual fue reemplazado. No cambian trayectorias, matching, vidas, tiempos ni DDA. Los dibujos concretos siguen pendientes de revisión y la interfaz actual todavía es espacial.
+
 Estado: síntesis y valores iniciales confirmados mediante «perfeto»; puntos de prueba, siete incrementos y dependencias aprobados mediante «perfecto» el 2026-10-22. Especificación #22 y tickets #23–#29 publicados; implementación pendiente.
 
 ## Intención confirmada

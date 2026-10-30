@@ -12,14 +12,26 @@ import java.util.Locale
 @Composable
 fun GuidedTunerPanel(ui: TunerUiState, model: TunerViewModel) {
     val configuration = ui.configuration.configuration ?: return
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+    TunerModeSelector(ui, model)
+    if (configuration.mode != TunerMode.GUIDED) return
+    GuidedTunerContent(ui, model)
+}
+
+@Composable
+fun TunerModeSelector(ui: TunerUiState, model: TunerViewModel) {
+    val configuration = ui.configuration.configuration ?: return
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         TunerMode.entries.forEach { mode ->
             FilterChip(selected = configuration.mode == mode, enabled = !ui.configurationBusy,
-                onClick = { model.mode(mode) }, label = { Text(if (mode == TunerMode.FREE) "Libre" else "Guiado") },
+                onClick = { model.mode(mode) }, label = { Text(mode.label) },
                 modifier = Modifier.testTag("tuner-mode-${mode.name}"))
         }
     }
-    if (configuration.mode != TunerMode.GUIDED) return
+}
+
+@Composable
+private fun GuidedTunerContent(ui: TunerUiState, model: TunerViewModel) {
+    val configuration = ui.configuration.configuration ?: return
     Text("Objetivos · " + configuration.currentTuning.notesSixToFirst.mapIndexed { index, midi ->
         "${6 - index}: ${noteName(midi)}"
     }.joinToString(" · "), modifier = Modifier.testTag("tuner-guided-targets"))
@@ -48,7 +60,7 @@ fun GuidedTunerPanel(ui: TunerUiState, model: TunerViewModel) {
         Text("Resumen del recorrido · ${guided.setup?.guitar?.name} · ${guided.setup?.tuning?.name}",
             style = MaterialTheme.typography.titleMedium, modifier = Modifier.testTag("tuner-guided-summary"))
         Text("Criterio del recorrido: ${if (guided.setup?.criterion == TunerCriterion.PRO) "Pro ±2" else "Normal ±5"} cents")
-        Text("Solo en memoria. Primera pasada y revisión se conservan separadas.", color = Muted)
+        Text("Primera pasada, revisión y correcciones se conservan separadas. El guardado depende de la opción elegida al iniciar.", color = GardenTokens.TextSecondary)
         listOf("Primera pasada" to guided.firstPass, "Revisión" to guided.review, "Correcciones" to guided.corrections).forEach { (title, results) ->
             if (results.isNotEmpty()) {
                 Text(title)

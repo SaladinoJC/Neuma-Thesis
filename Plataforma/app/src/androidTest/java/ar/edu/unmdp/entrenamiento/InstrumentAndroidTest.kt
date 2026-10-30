@@ -20,7 +20,7 @@ class InstrumentAndroidTest {
 
     @org.junit.Before
     fun awaitAppWindow() {
-        compose.waitUntil(15_000) { compose.activity.hasWindowFocus() }
+        compose.awaitGardenMenu()
         compose.waitForIdle()
     }
 
@@ -28,7 +28,7 @@ class InstrumentAndroidTest {
     @Test
     fun instrumentosPermiteJugarDiezPreguntasYConservaElHistorialAlReabrir() {
         screenshot("menu")
-        compose.onNodeWithTag("game-instruments").performClick()
+        compose.openMenuDestination("game-instruments")
         compose.onNodeWithTag("level-C").performScrollTo().performClick()
         screenshot("preparacion")
         compose.onNodeWithText("Jugar instrumentos").performClick()
@@ -63,28 +63,31 @@ class InstrumentAndroidTest {
         compose.onNodeWithText("10 preguntas respondidas").assertIsDisplayed()
         screenshot("resumen")
         compose.onNodeWithText("Volver al menú").performClick()
+        compose.openMenuDestination("history-open")
+        compose.onNodeWithTag("history-game-INSTRUMENTS").performClick()
+        compose.onNodeWithTag("history-level-2").performScrollTo().performClick()
+        compose.onAllNodesWithText("Ver detalle").onFirst().performClick()
         compose.activityRule.scenario.recreate()
-        compose.waitUntil(10_000) {
-            compose.onAllNodesWithText("Instrumentos · Nivel C · Completada", substring = true).fetchSemanticsNodes().isNotEmpty()
-        }
+        compose.onNodeWithText("Completada").assertExists()
+        compose.onNodeWithText("Nivel C", substring = true).assertExists()
         assertEquals(Configuration.ORIENTATION_PORTRAIT, compose.activity.resources.configuration.orientation)
     }
 
     @Test
     fun nivelesManualesYSalidaDurantePresentacionConservanUnaInterrupcion() {
-        compose.onNodeWithTag("game-instruments").performClick()
+        compose.openMenuDestination("game-instruments")
         for (level in listOf("A", "B", "C")) compose.onNodeWithTag("level-$level").performScrollTo().assertIsDisplayed()
         compose.onNodeWithTag("level-A").performScrollTo().performClick()
         compose.onNodeWithText("Jugar instrumentos").performClick()
         compose.activityRule.scenario.recreate()
         compose.onNodeWithContentDescription("Volver al menú").performClick()
-        compose.waitUntil(10_000) {
-            compose.onAllNodesWithText("Instrumentos · Nivel A · Interrumpida").fetchSemanticsNodes().isNotEmpty()
-        }
+        compose.openMenuDestination("history-open")
+        compose.onNodeWithTag("history-game-INSTRUMENTS").performClick()
+        compose.onNodeWithTag("history-level-0").performScrollTo().performClick()
+        compose.onAllNodesWithText("Interrumpida").onFirst().performClick()
         compose.activityRule.scenario.recreate()
-        compose.waitUntil(10_000) {
-            compose.onAllNodesWithText("Instrumentos · Nivel A · Interrumpida").fetchSemanticsNodes().isNotEmpty()
-        }
+        compose.onNodeWithText("Interrumpida").assertExists()
+        compose.onNodeWithText("Nivel A", substring = true).assertExists()
     }
 
     private fun screenshot(name: String) {

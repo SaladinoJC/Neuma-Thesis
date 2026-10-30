@@ -1,6 +1,6 @@
 # Afinador de instrumentos con entrenamiento de oído — especificación v1
 
-Estado: alcance funcional, puntos de prueba y división en seis incrementos aprobados por el usuario el 2026-10-22. A1 implementado en software en v0.11 el 2026-10-23; A2–A6 y prueba física pendientes. [Verificación de A1](Verificacion-afinador-v0.11.md).
+Estado: alcance funcional, puntos de prueba y división en seis incrementos aprobados por el usuario el 2026-10-22. A1–A6 implementados en software hasta v0.12.7 el 2026-10-29; prueba física pendiente e issues sin cerrar. [Verificación A6](Demostracion-afinador-A6.md) y [antecedente A1](Verificacion-afinador-v0.11.md).
 
 Publicada como [issue #8](https://github.com/SaladinoJC/Tesis/issues/8); [plan de implementación y tickets #9–#14](Plan-tareas-afinador-v1.md).
 

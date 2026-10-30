@@ -1,5 +1,7 @@
 # Rhythm Tap, generador y renderizador — definición
 
+**Actualización confirmada por el usuario, 2026-10-29:** tras investigar Glisso, autoriza scroll lateral continuo, fondo integrado y acierto verde por nota; solicita VexFlow si es viable. Sustituye las menciones posteriores a renglones/seguimiento vertical como presentación principal. No cambia el reloj, audio, evaluación, catálogo ni reglas de práctica. [Implementación y verificación](Rhythm-Tap-lectura-lateral.md); ventanas estáticas por pulso con reducción de movimiento y alternativa nativa ante fallo.
+
 Estado: síntesis funcional y valores experimentales iniciales confirmados mediante «ok»; puntos de prueba y seis incrementos aprobados mediante «perfecto» el 2026-10-22. Especificación #15 y tickets #16–#21 publicados. Implementación pendiente.
 
 ## Dirección confirmada por el usuario (2026-10-22)

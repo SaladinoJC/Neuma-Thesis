@@ -1,0 +1,114 @@
+{
+  "date": "2026-10-30T13:23:41.707458-03:00",
+  "status": "host-passed-android-pending",
+  "version": "0.12.14",
+  "versionCode": 29,
+  "issue": "https://github.com/SaladinoJC/Tesis/issues/26",
+  "jvm": {
+    "tests": 209,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "newJvmTests": 13,
+  "jvmExecution": "executed",
+  "lint": {
+    "errors": 0,
+    "warnings": 17,
+    "issuesById": {
+      "AndroidGradlePluginVersion": 1,
+      "GradleDependency": 7,
+      "LockedOrientationActivity": 1,
+      "NewerVersionAvailable": 3,
+      "DiscouragedApi": 1,
+      "DataExtractionRules": 1,
+      "ObsoleteSdkInt": 1,
+      "UnusedResources": 1,
+      "MonochromeLauncherIcon": 1
+    }
+  },
+  "assemblies": {
+    "app": "passed",
+    "androidTest": "passed"
+  },
+  "newAndroidTestsCompiled": 2,
+  "androidTestsExecuted": false,
+  "emulatorStarted": false,
+  "gradleDuration": "5m 58s",
+  "previousCompleteBuildDuration": "6m 19s",
+  "sourceFilesVerified": 346,
+  "sourceManifestSha256": "fc0f1b3bfcee035279c63ac1735b9fa1247d01d9268b4e41ed802e689b99f29d",
+  "runtimeAssetsIdenticalToD3": 149,
+  "profileFiles": 8,
+  "catalog": {
+    "voicings": 115,
+    "byQuality": [
+      {
+        "quality": "MAJOR",
+        "voicings": 31,
+        "answers": 17
+      },
+      {
+        "quality": "MINOR",
+        "voicings": 32,
+        "answers": 17
+      },
+      {
+        "quality": "DIMINISHED",
+        "voicings": 28,
+        "answers": 15
+      },
+      {
+        "quality": "AUGMENTED",
+        "voicings": 24,
+        "answers": 13
+      }
+    ]
+  },
+  "syntheticRouteGames": 8,
+  "execution": {
+    "offline": true,
+    "workers": 1,
+    "heapMiB": 1536,
+    "gc": "SerialGC",
+    "activeProcessorCount": 2,
+    "priority": "BelowNormal",
+    "daemon": "single-use"
+  },
+  "apk": {
+    "path": "Plataforma/build/apk-archives/neuma-v0.12.14-defender-d4-prueba-sin-emulador.apk",
+    "bytes": 15265361,
+    "sha256": "0ffa063af2a83d779be5c56c15039129d5f0d5d4069cfe24c96f5adbf2cbb718"
+  },
+  "pending": [
+    "Android D4/D3 tests and D1/D2 regression",
+    "Visual review 411/360/320 dp and 320 dp font 200%, four targets, reduced motion, TalkBack",
+    "Native export/recovery/reset and JSON on Android",
+    "Earlier R6/rhythm layout/Neuma brand Android checks",
+    "Physical phone and acoustic checks"
+  ],
+  "notes": [
+    "Separate notes/chords progress in one file; no PCM persisted",
+    "Exact written root and quality identity excludes octave and rejects enharmonic substitution",
+    "Audio spectrum assertions cover four qualities on natural C, not hardware",
+    "Summary sealing inherited from D3",
+    "No push, publication, issue edits or Personaje implementation"
+  ],
+  "signerCertificateSha256": "4e9a10f84ec8218fb0927606a0c84617c3753a452e0c772b1bae1bd377a0c90a",
+  "signatureCompatibleWithD3": true,
+  "apkMetadataVerified": true,
+  "informe": {
+    "pages": 34,
+    "latexPasses": 3,
+    "errors": 0,
+    "overfullBoxes": 0,
+    "undefinedReferences": 0,
+    "underfullVboxes": 4,
+    "bibliography": "empty",
+    "visuallyReviewedPdfPages": [
+      25,
+      27
+    ],
+    "pdfSha256": "ed257a36bb0470986e147930e1ea7fe3d70570ef3d232f9a0832788275883e14"
+  }
+}

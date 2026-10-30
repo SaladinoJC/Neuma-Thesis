@@ -68,7 +68,7 @@ fun TunerConfigurationPanel(ui: TunerUiState, model: TunerViewModel) {
                     label = { Text("Cuerda ${6 - index} · nota y octava") },
                     modifier = Modifier.fillMaxWidth().testTag("tuner-custom-note-${6 - index}"))
             }
-            Text("Seis alturas entre Do2 y Mi4. Ejemplos: Mi2, F#3, Sib3. Se respeta el orden de las cuerdas.", color = Muted)
+            Text("Seis alturas entre Do2 y Mi4. Ejemplos: Mi2, F#3, Sib3. Se respeta el orden de las cuerdas.", color = GardenTokens.TextSecondary)
             Button(onClick = { savingTuning = true; model.saveCustom(tuningName, notes.toList(), editingId) }, enabled = !ui.configurationBusy,
                 modifier = Modifier.testTag("tuner-custom-save")) { Text("Guardar afinación") }
             ui.configuration.error?.let {
@@ -76,6 +76,6 @@ fun TunerConfigurationPanel(ui: TunerUiState, model: TunerViewModel) {
             }
             TextButton(onClick = { editing = false }, enabled = !ui.configurationBusy) { Text("Cerrar editor") }
         }
-        Text("Cambiar configuración detiene el micrófono. No se guardan resultados de práctica.", color = Muted)
+        Text("Cambiar configuración detiene el micrófono. Si el seguimiento estaba activo, se conserva el recorrido interrumpido.", color = GardenTokens.TextSecondary)
     }
 }

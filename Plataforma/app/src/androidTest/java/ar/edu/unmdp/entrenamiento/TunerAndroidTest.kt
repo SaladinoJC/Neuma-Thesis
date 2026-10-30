@@ -31,10 +31,10 @@ class TunerAndroidTest {
     }
     @Test fun capturaRealPausaRecreacionYCierreNoEscribenHistorialDeVoz() {
         grant()
-        compose.waitUntil(15_000) { compose.activity.hasWindowFocus() }
+        compose.awaitGardenMenu()
         val voiceFile = File(compose.activity.filesDir, "voice-results.json")
         val before = if (voiceFile.exists()) voiceFile.readBytes() else null
-        compose.onNodeWithTag("game-tuner").performScrollTo().performClick()
+        compose.openMenuDestination("game-tuner")
         compose.waitUntil(10_000) {
             compose.onAllNodesWithTag("tuner-start").fetchSemanticsNodes().any { !it.config.contains(SemanticsProperties.Disabled) }
         }
@@ -62,7 +62,7 @@ class TunerAndroidTest {
         compose.onNodeWithTag("tuner-status").performScrollTo().assertTextEquals("Micrófono detenido")
         compose.onNodeWithTag("tuner-start").performScrollTo().performClick()
         compose.onNodeWithText("Volver al menú").performScrollTo().performClick()
-        compose.onNodeWithTag("game-tuner").performScrollTo().performClick()
+        compose.openMenuDestination("game-tuner")
         compose.onNodeWithTag("tuner-status").performScrollTo().assertTextEquals("Micrófono detenido")
         if (before == null) assertFalse(voiceFile.exists()) else assertArrayEquals(before, voiceFile.readBytes())
     }

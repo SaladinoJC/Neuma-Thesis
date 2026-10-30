@@ -18,8 +18,8 @@ class ParallelFeaturesAndroidTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
 
     @Test fun defenderPausaAlSalirDePrimerPlanoYReingresaEnPreparacion() {
-        compose.waitUntil(15_000) { compose.activity.hasWindowFocus() }
-        compose.onNodeWithTag("game-defender").performScrollTo().performClick()
+        compose.awaitGardenMenu()
+        compose.openMenuDestination("game-defender")
         compose.onNodeWithTag("defender-start").performScrollTo().performClick()
         // El ticker real sigue activo; las aserciones sincronizadas se hacen en pausa.
         compose.activityRule.scenario.moveToState(Lifecycle.State.CREATED)
@@ -29,13 +29,13 @@ class ParallelFeaturesAndroidTest {
         compose.onNodeWithTag("defender-lives").assertTextEquals("♥ 3")
         compose.onNodeWithTag("defender-resume").performClick()
         compose.runOnUiThread { compose.activity.onBackPressedDispatcher.onBackPressed() }
-        compose.onNodeWithTag("game-defender").performScrollTo().performClick()
+        compose.openMenuDestination("game-defender")
         compose.onNodeWithTag("defender-start").performScrollTo().assertIsDisplayed()
         compose.onNodeWithTag("defender-target").assertDoesNotExist()
     }
 
     @Test fun nuevosFrentesVuelvenAlMenuSinModificarHistorialesPrevios() {
-        compose.waitUntil(15_000) { compose.activity.hasWindowFocus() }
+        compose.awaitGardenMenu()
         val data = Demonstration(compose.activity.filesDir)
         val before = runBlocking {
             data.reset()
@@ -44,7 +44,7 @@ class ParallelFeaturesAndroidTest {
             Json.parseToJsonElement(data.export("integration-before")).jsonObject
         }
         listOf("game-tuner", "game-rhythm", "game-defender").forEach { tag ->
-            compose.onNodeWithTag(tag).performScrollTo().performClick()
+            compose.openMenuDestination(tag)
             compose.waitForIdle()
             assertEquals(android.content.res.Configuration.ORIENTATION_PORTRAIT,
                 compose.activity.resources.configuration.orientation)

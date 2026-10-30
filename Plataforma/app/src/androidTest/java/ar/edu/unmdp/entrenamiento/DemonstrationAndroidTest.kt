@@ -17,7 +17,7 @@ class DemonstrationAndroidTest {
 
     @org.junit.Before
     fun awaitAppWindow() {
-        compose.waitUntil(15_000) { compose.activity.hasWindowFocus() }
+        compose.awaitGardenMenu()
         compose.waitForIdle()
     }
 
@@ -25,7 +25,7 @@ class DemonstrationAndroidTest {
     @Test fun escenariosNoModificanPerfilYReinicioRequiereConfirmacion() {
         val data = Demonstration(compose.activity.filesDir)
         val before = runBlocking { Json.parseToJsonElement(data.export("test")).jsonObject }
-        compose.onNodeWithTag("data-open").performScrollTo().performClick()
+        compose.openMenuDestination("data-open")
         compose.onNodeWithTag("progress-two-high").performScrollTo().performClick()
         compose.waitUntil(15_000) { compose.onAllNodesWithTag("simulated-simon-progress").fetchSemanticsNodes().isNotEmpty() }
         compose.onNodeWithTag("simulated-simon-progress").performScrollTo().assertTextContains("nivel 2", substring = true)
@@ -39,14 +39,14 @@ class DemonstrationAndroidTest {
         val reset = runBlocking { Json.parseToJsonElement(data.export("test")).jsonObject }
         for (key in listOf("simon", "instruments", "voice")) assertTrue(reset.getValue(key).jsonArray.isEmpty())
         compose.onNodeWithText("Volver al menú").performScrollTo().performClick()
-        compose.onNodeWithTag("game-simon").performScrollTo().performClick()
+        compose.openMenuDestination("game-simon")
         compose.onNodeWithText("Próxima: Pentatónica").assertIsDisplayed()
     }
 
     @Test fun capturaRealDelEmuladorSeLiberaAlSalirYGuardaMedicionesSinAudio() {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         instrumentation.uiAutomation.grantRuntimePermission(compose.activity.packageName, Manifest.permission.RECORD_AUDIO)
-        compose.onNodeWithTag("game-voice").performScrollTo().performClick()
+        compose.openMenuDestination("game-voice")
         compose.onNodeWithTag("voice-start").performScrollTo().performClick()
         compose.waitUntil(10_000) { compose.onAllNodesWithText("Micrófono activo").fetchSemanticsNodes().isNotEmpty() }
         // Allow AudioRecord to supply actual PCM; silence is a legitimate emulator result.
@@ -68,13 +68,13 @@ class DemonstrationAndroidTest {
         compose.onNodeWithTag("voice-start").performScrollTo().performClick()
         compose.waitUntil(10_000) { compose.onAllNodesWithText("Micrófono activo").fetchSemanticsNodes().isNotEmpty() }
         compose.onNodeWithText("Volver al menú").performScrollTo().performClick()
-        compose.onNodeWithTag("game-voice").performScrollTo().performClick()
+        compose.openMenuDestination("game-voice")
         compose.waitUntil(10_000) { compose.onAllNodesWithText("Micrófono detenido").fetchSemanticsNodes().isNotEmpty() }
     }
     @Test fun cancelarSelectorDeExportacionConservaPerfil() {
         val data = Demonstration(compose.activity.filesDir)
         val before = runBlocking { Json.parseToJsonElement(data.export("test")).jsonObject }
-        compose.onNodeWithTag("data-open").performScrollTo().performClick()
+        compose.openMenuDestination("data-open")
         compose.onNodeWithTag("data-export").performScrollTo().performClick()
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         // El arranque en frío del proveedor externo no es latencia de esta aplicación.

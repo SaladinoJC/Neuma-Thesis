@@ -39,14 +39,14 @@ fun DemonstrationApp(ui: DemonstrationUi, model: DemonstrationViewModel, onHome:
     LaunchedEffect(ui.pickerReady) {
         if (ui.pickerReady) { model.pickerLaunched(); picker.launch("entrenamiento-auditivo-${System.currentTimeMillis()}.json") }
     }
-    MaterialTheme(colorScheme = darkColorScheme(primary = Pink, background = Night, surface = Panel)) {
+    TunerGardenTheme {
         BackHandler { if (!ui.busy) onHome() }
         Scaffold(snackbarHost = { SnackbarHost(snackbar, Modifier.testTag("operation-snackbar")) }) { padding ->
             Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(20.dp),
                 verticalArrangement = Arrangement.spacedBy(14.dp)) {
                 TextButton(onClick = onHome, enabled = !ui.busy) { Text("Volver al menú") }
                 Text("Datos y demostración", style = MaterialTheme.typography.headlineMedium)
-                Text("Se conservan partidas, progreso, mediciones de voz y configuraciones del afinador. Rhythm Tap y Defender muestran resúmenes de práctica sin guardarlos todavía.")
+                Text("Se conservan partidas, progreso, mediciones de voz, configuraciones, recorridos del afinador con seguimiento activo y ejercicios de Rhythm Tap con su partitura y resultados. Defender muestra su resumen de práctica sin guardarlo todavía.")
                 OutlinedButton(onClick = onPitchLab, enabled = !ui.busy, modifier = Modifier.testTag("pitch-lab-open")) { Text("Pruebas sintéticas de tono") }
                 Text("Escenarios de desbloqueo", style = MaterialTheme.typography.titleLarge)
                 Text("DATOS SIMULADOS · Se ejecutan en memoria, sin audio ni cambios en tu perfil.")
@@ -98,7 +98,7 @@ fun DemonstrationApp(ui: DemonstrationUi, model: DemonstrationViewModel, onHome:
             }
         }
         if (confirm) AlertDialog(onDismissRequest = { confirm = false }, title = { Text("¿Reiniciar todos los datos locales?") },
-            text = { Text("Se borrarán partidas, mediciones, progreso, guitarras y afinaciones personalizadas. Esta acción no se puede deshacer.") },
+            text = { Text("Se borrarán partidas, mediciones, progreso, historial del afinador, guardados pendientes, guitarras y afinaciones personalizadas. Esta acción no se puede deshacer.") },
             confirmButton = { TextButton(onClick = { confirm = false; model.reset() }, modifier = Modifier.testTag("data-reset-confirm")) { Text("Borrar y reiniciar") } },
             dismissButton = { TextButton(onClick = { confirm = false }) { Text("Cancelar") } })
     }

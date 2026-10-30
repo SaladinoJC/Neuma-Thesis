@@ -53,7 +53,16 @@ fun SimonApp(ui: SimonUiState, onSimon: () -> Unit, onScale: (Scale) -> Unit,
     onStart: () -> Unit, onAnswer: (Int) -> Unit, onHome: () -> Unit,
     onInstruments: () -> Unit = {}, instrumentHistory: List<InstrumentResult> = emptyList(),
     onAutomatic: () -> Unit = {}, onVoice: () -> Unit = {}, onData: () -> Unit = {}, onHistory: () -> Unit = {}, onRetryStorage: () -> Unit = {}, onTuner: () -> Unit = {},
-    onRhythm: () -> Unit = {}, onDefender: () -> Unit = {}) {
+    onRhythm: () -> Unit = {}, onDefender: () -> Unit = {}, menuState: GardenMenuState? = null,
+    instrumentProgress: ar.edu.unmdp.entrenamiento.progress.Progress = ar.edu.unmdp.entrenamiento.progress.Progress(),
+    onGuidedTuner: () -> Unit = onTuner, onTrainingTuner: () -> Unit = onTuner) {
+    if (ui.screen == AppScreen.MENU) {
+        val garden = menuState ?: androidx.compose.runtime.remember { GardenMenuState() }
+        MusicGardenMenu(garden, ui, instrumentProgress,
+            onPlay = { when (it) { 0 -> onSimon(); 1 -> onInstruments(); 2 -> onRhythm(); 3 -> onDefender() } },
+            onTuner, onGuidedTuner, onHistory, onVoice, onData, onRetryStorage, onTrainingTuner)
+        return
+    }
     MaterialTheme(colorScheme = darkColorScheme(primary = Pink, secondary = Lavender,
         background = Night, surface = Panel, onSurface = SoftWhite, onBackground = SoftWhite, onPrimary = Night)) {
         BackHandler(enabled = ui.screen != AppScreen.MENU, onBack = onHome)
@@ -67,7 +76,7 @@ fun SimonApp(ui: SimonUiState, onSimon: () -> Unit, onScale: (Scale) -> Unit,
                         TextButton(onClick = onHome) { Text("Volver al menú") }
                     }
                 } else when (ui.screen) {
-                    AppScreen.MENU -> MainMenu(ui, onSimon, onInstruments, instrumentHistory, onVoice, onData, onHistory, onTuner, onRhythm, onDefender)
+                    AppScreen.MENU -> Unit
                     AppScreen.SIMON_SETUP -> Setup(ui, onScale, onStart, onHome, onAutomatic)
                     AppScreen.SIMON_GAME -> Game(ui, onAnswer, onHome, onStart)
                 }
@@ -79,97 +88,6 @@ fun SimonApp(ui: SimonUiState, onSimon: () -> Unit, onScale: (Scale) -> Unit,
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun MainMenu(ui: SimonUiState, onSimon: () -> Unit, onInstruments: () -> Unit, instrumentHistory: List<InstrumentResult>, onVoice: () -> Unit, onData: () -> Unit, onHistory: () -> Unit, onTuner: () -> Unit,
-    onRhythm: () -> Unit, onDefender: () -> Unit) {
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(22.dp),
-        verticalArrangement = Arrangement.spacedBy(14.dp)) {
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween) {
-            Text("♫", color = Lavender, fontSize = 32.sp)
-        }
-        Box(Modifier.fillMaxWidth().height(200.dp), contentAlignment = Alignment.Center) {
-            SoundWaves(Modifier.fillMaxSize())
-            Column(horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text("Entrená tu oído", color = SoftWhite, fontSize = 36.sp, lineHeight = 40.sp,
-                    textAlign = TextAlign.Center, fontWeight = FontWeight.ExtraBold)
-                Text("Versión ${BuildConfig.VERSION_NAME}", color = Color(0xFFBBDCF0), fontSize = 14.sp)
-            }
-        }
-        Text("ELEGÍ TU PRÓXIMO DESAFÍO", color = Muted, fontSize = 10.sp, letterSpacing = 1.5.sp)
-        MenuCard("Simón dice musical", "Recordá y repetí notas en el piano", Pink, "♫",
-            "Disponible", Modifier.testTag("game-simon"), onClick = onSimon)
-        MenuCard("¿Qué instrumento es?", "Descubrí el instrumento por su sonido",
-            Color(0xFF71AAFF), "≋", "Disponible", Modifier.testTag("game-instruments"), onClick = onInstruments)
-        MenuCard("Afiná tu voz", "Explorá las notas que cantás", Color(0xFF63D9B0), "♪", "Prueba técnica", Modifier.testTag("game-voice"), onClick = onVoice)
-        MenuCard("Afinador", "Guitarras y afinaciones · Normal y Pro", Lavender, "♮", "Disponible", Modifier.testTag("game-tuner"), onClick = onTuner)
-        MenuCard("Rhythm Tap", "Leé cuatro compases y marcá el ritmo", Color(0xFFFFC879), "♩", "Práctica", Modifier.testTag("game-rhythm"), onClick = onRhythm)
-        MenuCard("Defender de notas", "Reconocé notas y defendé tu nave", Color(0xFF79D8E8), "☆", "Práctica", Modifier.testTag("game-defender"), onClick = onDefender)
-        OutlinedButton(onClick = onData, modifier = Modifier.fillMaxWidth().testTag("data-open")) { Text("Datos y demostración") }
-        OutlinedButton(onClick = onHistory, modifier = Modifier.fillMaxWidth().testTag("history-open")) { Text("Ver todos los resultados") }
-        if (ui.history.isNotEmpty()) {
-            Text("Últimas partidas de Simón", fontWeight = FontWeight.SemiBold)
-            ui.history.take(5).forEach { HistoryCard(it) }
-        }
-        if (instrumentHistory.isNotEmpty()) {
-            Text("Últimas partidas de instrumentos", fontWeight = FontWeight.SemiBold)
-            instrumentHistory.take(5).forEach { result ->
-                Surface(color = Panel, shape = RoundedCornerShape(12.dp), modifier = Modifier.fillMaxWidth()) {
-                    Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        Text("Instrumentos · ${result.level.label} · ${if (result.completed) "Completada" else "Interrumpida"}",
-                            color = Color(0xFF86B9FF), fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
-                        Text("${result.answers.count { it.correct }} / ${result.answers.size} aciertos · " +
-                            SimpleDateFormat("dd/MM HH:mm", Locale.getDefault()).format(Date(result.finishedAtMillis)), color = Muted, fontSize = 12.sp)
-                        Text(if (result.origin == "automatic") "Automática · Ayuda adaptable" else "Práctica manual", color = Muted, fontSize = 12.sp)
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun MenuCard(title: String, subtitle: String, accent: Color, symbol: String,
-    badge: String, modifier: Modifier = Modifier, onClick: (() -> Unit)? = null) {
-    Surface(onClick = { onClick?.invoke() }, enabled = onClick != null,
-        modifier = modifier.fillMaxWidth(), shape = RoundedCornerShape(20.dp),
-        color = accent.copy(alpha = if (onClick != null) 0.16f else 0.08f),
-        border = BorderStroke(if (onClick != null) 1.5.dp else 1.dp, accent.copy(alpha = 0.5f))) {
-        Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-            Box(Modifier.size(56.dp).clip(RoundedCornerShape(14.dp))
-                .background(Brush.linearGradient(listOf(accent, accent.copy(alpha = 0.5f)))),
-                contentAlignment = Alignment.Center) { Text(symbol, fontSize = 34.sp, color = SoftWhite) }
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text(title, color = SoftWhite, fontWeight = FontWeight.Bold, fontSize = 17.sp)
-                Text(subtitle, color = Muted, fontSize = 12.sp, lineHeight = 16.sp)
-                Text(badge, color = accent, fontSize = 10.sp, fontWeight = FontWeight.SemiBold)
-            }
-            if (onClick != null) Text("›", color = accent, fontSize = 30.sp)
-        }
-    }
-}
-
-@Composable
-private fun SoundWaves(modifier: Modifier) {
-    Canvas(modifier) {
-        for (line in 0..5) {
-            val path = Path()
-            for (step in 0..80) {
-                val x = size.width * step / 80
-                val y = size.height * 0.78f + sin(step * 0.085 + line * 0.18).toFloat() *
-                    size.height * 0.12f + line * 5.dp.toPx()
-                if (step == 0) path.moveTo(x, y) else path.lineTo(x, y)
-            }
-            drawPath(path, Brush.horizontalGradient(listOf(Lavender.copy(alpha = 0.08f),
-                Color(0xFF38C5DC).copy(alpha = 0.25f))),
-                style = androidx.compose.ui.graphics.drawscope.Stroke(1.dp.toPx()))
-        }
-        drawCircle(Lavender.copy(alpha = 0.07f), size.width * 0.22f, Offset(size.width * 0.07f, size.height * 0.25f))
     }
 }
 

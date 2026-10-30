@@ -1,0 +1,26 @@
+[
+  {
+    "file": "instruments.webp",
+    "width": 768,
+    "height": 512,
+    "bytes": 62314
+  },
+  {
+    "file": "rhythm.webp",
+    "width": 768,
+    "height": 512,
+    "bytes": 44832
+  },
+  {
+    "file": "defender.webp",
+    "width": 768,
+    "height": 512,
+    "bytes": 62658
+  },
+  {
+    "file": "character.webp",
+    "width": 512,
+    "height": 768,
+    "bytes": 41612
+  }
+]

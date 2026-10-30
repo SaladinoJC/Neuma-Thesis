@@ -3,7 +3,9 @@
 *.bat text eol=crlf
 *.jar binary
 *.png binary
+*.pdf binary
 *.ogg binary
 *.aiff binary
 *.doc binary
 *.xlsx binary
+**/*-OFL.txt whitespace=-blank-at-eol

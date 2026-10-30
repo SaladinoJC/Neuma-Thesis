@@ -1,0 +1,127 @@
+\chapter{Implementación}
+\label{cap:implementacion}
+\section{Tecnologías implementadas}
+\pendiente{Describir cómo se aplicaron las tecnologías del capítulo de herramientas.}
+\section{Decisiones técnicas relevantes}
+\pendiente{Explicar alternativas, criterios de selección, dificultades y soluciones con evidencia.}
+\subsection{Progresión de Rhythm Tap: incremento R6}
+\label{sec:implementacion-ritmo-r6}
+El incremento local 0.12.12 del 30 de octubre de 2026 incorpora adaptación
+entre ejercicios y desbloqueo de categorías rítmicas. La práctica permite
+seleccionar cualquier categoría y un tempo manual; la progresión admite
+categorías desbloqueadas y utiliza el menor tempo recomendado de la selección.
+El tempo no cambia durante una ejecución. Dos resultados altos elegibles por
+categoría permiten aumentar cinco BPM en el siguiente ejercicio y registrar
+evidencia para habilitar sus dependientes. El inicio a 60 BPM, el techo de
+120 BPM y las funciones difusas constituyen una configuración experimental
+del prototipo, sin validación pedagógica.
+
+La implementación reutiliza el motor Mamdani y separa las métricas de ritmo
+de las utilizadas en reconocimiento tímbrico. La precisión considera ataques
+a tiempo e intervalos de silencio respetados; el control considera golpes
+extra atribuibles. Solo las apariciones objetivo aportan evidencia por
+categoría. Las repeticiones se detectan mediante una huella del contenido
+musical que no depende de la semilla ni del identificador del intento.
+Las simulaciones utilizan sesiones y almacenamiento en memoria separados del
+perfil del estudiante.
+
+Para coordinar resultado y progreso se decidió conservar ambos en el mismo
+archivo JSON de ritmo. La decisión se calcula dentro de la transacción del
+perfil y se confirma con una única sustitución del archivo, evitando una
+segunda escritura independiente del progreso. Se conservan los estados
+anterior y posterior, configuración, reglas activadas y revisión evaluada.
+Las revisiones tardías del último intento se recalculan desde su estado
+anterior sin retirar avances adquiridos. Si ya existe un intento posterior,
+se actualiza la evaluación musical pero se conserva la decisión que sirvió
+para continuar, identificando su revisión. Esta política es una elección
+técnica provisional del incremento.
+
+La guía \texttt{docs/Rhythm-Tap-R6.md} identifica el ticket, las fuentes de
+código y las verificaciones reproducibles. La integración visual y los
+recorridos Android de este incremento permanecen pendientes; su implementación
+no acredita sincronía acústica ni eficacia del entrenamiento.
+\subsection{Cierre de entrada y persistencia de Defender: incremento D3}
+\label{sec:implementacion-defender-d3}
+El incremento local 0.12.13 incorpora adaptación intrapartida del tiempo de
+viaje y progreso persistente de lectura de notas. El motor utiliza los últimos
+cinco enemigos resueltos, incluyendo las llegadas, y considera supervivencia,
+precisión y fracción del viaje consumida. Un ajuste modifica únicamente los
+enemigos futuros; los visibles conservan su trayectoria y plazo. La progresión
+entre etapas exige partidas completas, evidencia mínima y dos resultados
+altos del mismo objetivo; la mezcla requiere evidencia de cada clave por
+separado. Las reglas y los valores de tiempo son experimentales.
+
+El tratamiento de entrada distingue la hora original de pulsación del momento
+en que la interfaz la entrega. Una corrección tardía de la tercera llegada
+puede devolver la partida al estado activo. Para coordinar este comportamiento
+con la persistencia se decidió guardar el resumen inicialmente como provisional,
+sin otorgar progreso. La navegación que cierra el resumen sella la entrada y
+confirma una nueva revisión del mismo intento, junto con su avance. Si antes
+de ese cierre se corrige la llegada y luego se abandona, se conserva una
+interrupción. No se introduce una compensación temporal arbitraria para
+decidir la validez de la respuesta.
+
+El archivo propio de Defender conserva eventos, configuración, resoluciones,
+decisiones y estados de progreso antes y después de la confirmación. Reutiliza
+la sustitución atómica y la barrera por perfil. Exportación, recuperación y
+reinicio incluyen este octavo archivo y los pendientes en memoria. Los
+escenarios sintéticos usan sesiones y almacenamiento separados del perfil.
+La guía \texttt{docs/Demostracion-defender-D3.md} documenta las decisiones
+técnicas provisionales y su verificación de host. La adaptación de interfaz
+a Music Garden está implementada, con inspección visual Android pendiente.
+\subsection{Grafía y progreso independiente de tríadas: incremento D4}
+\label{sec:implementacion-defender-d4}
+El incremento local 0.12.14 amplía Defender con tríadas mayores, menores,
+disminuidas y aumentadas, en estado fundamental y clave de sol. El modelo
+conserva la raíz escrita y las tres voces. La construcción determina primero
+las letras de tercera y quinta y luego sus alteraciones según los intervalos
+requeridos. Se excluyen las realizaciones que requieren dobles alteraciones;
+el catálogo queda acotado a dos líneas adicionales por extremo.
+
+La identidad de respuesta comprende letra de raíz, alteración y calidad,
+sin octava. Dos raíces enarmónicas pueden compartir alturas MIDI y requerir
+respuestas distintas. Esta identidad también evita objetivos simultáneos
+equivalentes en registros diferentes. Notación, solución y sonido se derivan
+del mismo acorde; el acierto reproduce tres sinusoides simultáneas, promediadas
+en una pista PCM, sin muestras externas ni captura de micrófono.
+
+La sesión, el ajuste del viaje y el cierre provisional reutilizan D3.
+La progresión agrega una cadena de cuatro calidades independiente de las
+etapas de notas. Resultado y avance siguen en el archivo propio de Defender,
+con lectura compatible de registros anteriores que carecen de campos de
+acorde. La exportación conserva el avance previo de notas y agrega el
+desglose por variante. Son elecciones técnicas del incremento; los umbrales
+difusos siguen siendo experimentales. La guía
+\texttt{docs/Demostracion-defender-D4.md} registra alcance y verificaciones.
+La interfaz nativa, el audio en dispositivo y la evaluación pedagógica
+permanecen pendientes.
+\subsection{Inversiones y evidencia por objetivo: incremento D5}
+\label{sec:implementacion-defender-d5}
+El incremento local 0.12.15 agrega cuatro calidades de séptima, inversiones
+cerradas y lectura en fa y mezcla a la variante de acordes por nombre.
+La raíz escrita se conserva como identidad conceptual y las voces guardan
+sus octavas efectivas; el bajo deja de coincidir necesariamente con la raíz.
+El modelo rota las voces elevadas una octava, sin omisiones ni duplicaciones,
+y comprueba la grafía y los límites del pentagrama antes del sorteo.
+La respuesta sigue siendo raíz y calidad. La síntesis reproduce las tres o
+cuatro alturas de la disposición mostrada.
+
+La progresión identifica cada combinación de calidad, inversión y contexto
+de claves. El grafo comprende 84 objetivos: las ocho fundamentales en sol
+permiten acceder a fa y primeras inversiones; las ocho fundamentales en fa
+permiten acceder a mezcla. Las inversiones requieren su antecedente en el
+mismo contexto. Una partida en mezcla exige evidencia mínima y resultado
+alto de ambas claves. Esta separación evita atribuir a una inversión o
+clave el desempeño observado únicamente en otra.
+
+Para conservar los perfiles anteriores, el mapa de calidades de D4 se utiliza
+solo como evidencia de fundamentales en sol. Los demás contextos se almacenan
+con identificadores propios en el mismo archivo de Defender; no se agrega
+otro archivo al perfil. La lectura conserva las decisiones ya registradas.
+El pentagrama desplaza las cabezas de segundas escritas a lados opuestos de
+la plica común y dispone las alteraciones en columnas. La guía
+\texttt{docs/Demostracion-defender-D5.md} documenta el catálogo y los límites
+de estas elecciones técnicas. Los prerrequisitos siguen siendo experimentales
+y la revisión de legibilidad y audio en Android continúa pendiente.
+\section{Estructura del código}
+\pendiente{Presentar módulos y responsabilidades; referenciar versiones concretas del repositorio.}

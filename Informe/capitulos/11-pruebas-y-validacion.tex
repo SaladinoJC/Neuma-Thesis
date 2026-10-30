@@ -1,0 +1,83 @@
+\chapter{Pruebas y validación}
+\label{cap:pruebas}
+\section{Plan de pruebas}
+\pendiente{Vincular requerimientos, casos, entornos y criterios de aceptación.}
+\subsection{Casos del incremento rítmico R6}
+El plan del incremento descrito en la sección~\ref{sec:implementacion-ritmo-r6}
+verifica las acciones de la sesión pública con tiempo, audio y almacenamiento
+controlados. Comprende dos resultados altos, omisiones, silencios con golpes
+extra, mezcla a tempo inferior, práctica y repetición, techo de tempo,
+reapertura, revisiones tardías, guardados concurrentes, exportación y reinicio.
+Los fallos y reintentos de escritura se comprueban sin atribuir progreso a
+resultados todavía pendientes. Un banco sintético independiente permite
+inspeccionar las decisiones sin modificar el perfil real.
+
+La ejecución en Android debe comprobar además los controles, el texto
+ampliado, el acceso al panel y el recorrido de dos ejercicios con desbloqueo
+y repetición. Estas pruebas se prepararon pero no se ejecutaron en esta sesión
+por solicitud del usuario de no abrir el emulador. Las pruebas JVM y las
+simulaciones no sustituyen la comprobación del dispositivo ni una evaluación
+con estudiantes. Los resultados y límites del host se registran en la guía
+del incremento y su evidencia, separadamente de esas verificaciones pendientes.
+\subsection{Casos del incremento de Defender D3}
+El plan correspondiente a la sección~\ref{sec:implementacion-defender-d3}
+comprueba enfriamiento, límites de viaje, conservación de plazos de enemigos
+visibles y cómputo de pérdidas e intentos globales. La sesión pública se
+ejercita con reloj y audio controlados. Para persistencia se verifican
+idempotencia, concurrencia, lectura suspendida, datos incompatibles,
+exportación y recuperación junto a los datos de ritmo.
+
+Un caso específico finaliza aparentemente la partida por tercera llegada,
+entrega después una respuesta con timestamp previo al plazo y abandona la
+ejecución reabierta. El resultado confirmado debe ser una interrupción y no
+debe sumar progreso. Los ocho escenarios de inspección son sintéticos y no
+se escriben en el perfil real. Las pruebas Android de desbloqueo, reapertura
+y simulación quedaron preparadas y compiladas, sin ejecución por solicitud
+del usuario de mantener cerrado el emulador. La evidencia seleccionada de host
+se conserva en \texttt{docs/evidencias/defender-d3/}; las medidas físicas y la
+validación con estudiantes continúan pendientes.
+\subsection{Casos de tríadas de Defender D4}
+Los casos de la sección~\ref{sec:implementacion-defender-d4} verifican el
+catálogo de voces, intervalos, grafías y límites de pentagrama. La sesión
+pública comprueba respuesta completa, rechazo de raíz enarmónica distinta,
+conservación tras error, limpieza tras acierto, unicidad de objetivos y
+timestamp con calidad capturada. La prueba de síntesis examina las tres
+frecuencias de cada calidad sobre Do natural y los límites PCM; no constituye
+una medición acústica del dispositivo.
+
+Los casos de persistencia y ViewModel verifican progresos separados, dos
+resultados altos con cierre confirmado, reapertura, exportación, recuperación,
+reinicio y lectura de registros del formato previo. La ruta completa de
+calidades se genera con sesiones sintéticas aisladas del perfil. La evidencia
+seleccionada se conserva en \path{docs/evidencias/defender-d4/}.
+Dos casos Android preparados comprueban el recorrido de tríadas y la
+simulación aislada; su ejecución, la legibilidad con cuatro objetivos y
+texto ampliado, el sonido físico y TalkBack quedan pendientes por el pedido
+de mantener cerrado el emulador. No se infieren resultados de aprendizaje
+desde estas pruebas de software.
+\subsection{Casos de séptimas e inversiones de Defender D5}
+El plan de la sección~\ref{sec:implementacion-defender-d5} recorre las
+combinaciones de calidad, inversión y clave, comprobando altura, grafía,
+orden de voces, disposición cerrada y límites de líneas adicionales.
+También verifica el desplazamiento de cabezas contiguas, la respuesta por
+raíz frente a un bajo diferente y la unicidad entre objetivos vivos.
+El banco PCM examina las voces de los extremos de cada contexto de clave
+simple con señales sintéticas; no mide el altavoz ni la latencia del teléfono.
+
+Una ruta aislada de 168 partidas recorre los 84 objetivos mediante la sesión
+pública, con reloj y almacenamiento controlados. Comprueba la alcanzabilidad
+del grafo y la evidencia por clave sin modificar el perfil real.
+Otros casos verifican que una inversión diferente o una mezcla sin fa no
+otorguen progreso, así como lectura de perfiles anteriores, reapertura y
+exportación de séptimas invertidas. La evidencia seleccionada se conserva
+en \texttt{docs/evidencias/defender-d5/}.
+Los recorridos Android se prepararon para séptimas en fa, mezcla, pausa y
+reapertura; solo se compilan por el pedido de mantener cerrado el emulador.
+La legibilidad con cuatro objetivos, el texto ampliado, la reproducción
+física y la evaluación con estudiantes permanecen pendientes.
+\section{Resultados obtenidos}
+\pendiente{Incorporar resultados comprobables con versión, fecha, datos, dispositivo y condiciones.
+Separar pruebas automatizadas, simulación, medición física y evaluación con estudiantes.}
+\section{Métricas de calidad}
+\pendiente{Definir métricas y métodos antes de interpretarlas. La demostración funcional
+por sí sola no acredita precisión acústica ni eficacia pedagógica.}

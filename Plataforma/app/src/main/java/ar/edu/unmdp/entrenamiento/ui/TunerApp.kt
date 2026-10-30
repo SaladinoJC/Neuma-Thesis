@@ -22,6 +22,11 @@ import java.util.Locale
 
 @Composable
 fun TunerApp(ui: TunerUiState, model: TunerViewModel, onHome: () -> Unit) {
+    if (ui.historyOpen) { TunerHistoryApp(ui, model); return }
+    if (ui.configuration.configuration?.mode == TunerMode.TRAINING) {
+        EarTunerApp(ui, model, onHome)
+        return
+    }
     val context = LocalContext.current
     // Permission callbacks may arrive after navigation or backgrounding. Starting remains explicit.
     val permission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -29,24 +34,25 @@ fun TunerApp(ui: TunerUiState, model: TunerViewModel, onHome: () -> Unit) {
     }
     val state = ui.tuning
     val configuration = ui.configuration.configuration
-    MaterialTheme(colorScheme = darkColorScheme(primary = Pink, secondary = Lavender, background = Night, surface = Panel)) {
+    TunerGardenTheme {
         BackHandler(onBack = onHome)
-        Scaffold(containerColor = Night) { padding ->
+        Scaffold(containerColor = GardenTokens.Background) { padding ->
             Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(20.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 TextButton(onClick = onHome) { Text("Volver al menú") }
                 Text("Afinador", style = MaterialTheme.typography.headlineLarge)
+                TunerHistoryAccess(ui, model)
                 Text(configuration?.let { "${if (it.mode == TunerMode.FREE) "Libre" else "Guiado"} · ${it.currentGuitar.name} · ${it.currentTuning.name}" } ?: "Configuración no disponible",
                     style = MaterialTheme.typography.titleMedium, modifier = Modifier.testTag("tuner-setup"))
                 TunerConfigurationPanel(ui.copy(configurationBusy = ui.configurationBusy || ui.referenceBusy), model)
                 GuidedTunerPanel(ui.copy(configurationBusy = ui.configurationBusy || ui.referenceBusy), model)
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
                     TunerCriterion.entries.forEach { criterion ->
                         FilterChip(selected = configuration?.criterion == criterion, enabled = configuration != null && !ui.configurationBusy && !ui.referenceBusy, onClick = { model.criterion(criterion) },
                             label = { Text(if (criterion == TunerCriterion.NORMAL) "Normal ±5 cents" else "Pro ±2 cents") })
                     }
                 }
-                if (configuration?.mode != TunerMode.GUIDED) Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                if (configuration?.mode != TunerMode.GUIDED) FlowRow(horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
                     FilterChip(selected = state.tracking == TunerTracking.CHROMATIC, enabled = configuration != null && !ui.configurationBusy && !ui.referenceBusy,
                         onClick = { model.tracking(TunerTracking.CHROMATIC) }, label = { Text("Cromático") })
                     FilterChip(selected = state.tracking == TunerTracking.STRINGS, enabled = configuration != null && !ui.configurationBusy && !ui.referenceBusy,
@@ -69,7 +75,7 @@ fun TunerApp(ui: TunerUiState, model: TunerViewModel, onHome: () -> Unit) {
                 if (configuration?.mode != TunerMode.GUIDED) {
                     Text("Fijar cuerda · sexta → primera")
                     (configuration?.currentTuning?.notesSixToFirst ?: listOf(40, 45, 50, 55, 59, 64)).mapIndexed { index, midi -> (6 - index) to midi }.chunked(3).forEach { row ->
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        FlowRow(horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
                             row.forEach { (number, midi) ->
                                 FilterChip(selected = state.fixedString == number, enabled = configuration != null && !ui.configurationBusy && !ui.referenceBusy, onClick = { model.fixString(number) },
                                     label = { Text("$number · ${noteName(midi)}") })
@@ -87,8 +93,8 @@ fun TunerApp(ui: TunerUiState, model: TunerViewModel, onHome: () -> Unit) {
                 OutlinedButton(onClick = model::stop, enabled = state.running || ui.referenceBusy, modifier = Modifier.testTag("tuner-stop")) { Text("Detener audio y micrófono") }
                 ui.error?.let { Text(it, color = MaterialTheme.colorScheme.error) }
                 TextButton(onClick = { context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, "package:${context.packageName}".toUri())) }) { Text("Permisos en Ajustes") }
-                Text("Después de autorizar el permiso, pulsá Iniciar micrófono. No se guardan mediciones ni audio.", color = Muted)
-                Text("Una cuerda fijada conserva su altura y octava. Los márgenes Normal/Pro son experimentales.", color = Muted)
+                Text("Después de autorizar el permiso, pulsá Iniciar micrófono. No se guardan grabaciones; el modo Libre no guarda desempeño.", color = GardenTokens.TextSecondary)
+                Text("Una cuerda fijada conserva su altura y octava. Los márgenes Normal/Pro son experimentales.", color = GardenTokens.TextSecondary)
             }
         }
     }

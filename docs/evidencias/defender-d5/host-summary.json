@@ -1,0 +1,123 @@
+{
+  "date": "2026-10-30T14:13:53.431948-03:00",
+  "status": "host-passed-android-pending",
+  "version": "0.12.15",
+  "versionCode": 30,
+  "issue": "https://github.com/SaladinoJC/Tesis/issues/27",
+  "jvm": {
+    "tests": 218,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "newJvmTests": 9,
+  "jvmExecution": "executed",
+  "lint": {
+    "errors": 0,
+    "warnings": 17,
+    "issuesById": {
+      "AndroidGradlePluginVersion": 1,
+      "GradleDependency": 7,
+      "LockedOrientationActivity": 1,
+      "NewerVersionAvailable": 3,
+      "DiscouragedApi": 1,
+      "DataExtractionRules": 1,
+      "ObsoleteSdkInt": 1,
+      "UnusedResources": 1,
+      "MonochromeLauncherIcon": 1
+    }
+  },
+  "assemblies": {
+    "app": "passed",
+    "androidTest": "passed"
+  },
+  "newAndroidTestsCompiled": 2,
+  "androidTestsExecuted": false,
+  "emulatorStarted": false,
+  "gradleDuration": "10m 40s",
+  "sourceFilesVerified": 350,
+  "sourceManifestSha256": "32b369f4ffcac58815893f0c0689377aab4efca8fffebda602553926190c94ef",
+  "runtimeAssetsIdenticalToD4": 149,
+  "profileFiles": 8,
+  "catalog": {
+    "voicings": 1502,
+    "byQuality": {
+      "MAJOR": 180,
+      "MINOR": 180,
+      "DIMINISHED": 158,
+      "AUGMENTED": 138,
+      "DOMINANT7": 200,
+      "MAJOR7": 216,
+      "MINOR7": 229,
+      "HALF_DIMINISHED7": 201
+    },
+    "byClef": {
+      "TREBLE": 751,
+      "BASS": 751
+    },
+    "voiceMidiRange": [
+      35,
+      85
+    ],
+    "targets": 84
+  },
+  "syntheticRouteGames": 168,
+  "audio": {
+    "runtimeSampleRate": 44100,
+    "durationMillis": 600,
+    "voices": [
+      3,
+      4
+    ],
+    "newSpectralCorpusSampleRate": 8000,
+    "contexts": 56,
+    "extremeVoicingsPerContext": 2,
+    "hardwareVerified": false
+  },
+  "execution": {
+    "offline": true,
+    "workers": 1,
+    "heapMiB": 1536,
+    "gc": "SerialGC",
+    "activeProcessorCount": 2,
+    "priority": "BelowNormal",
+    "daemon": "single-use"
+  },
+  "apk": {
+    "path": "Plataforma/build/apk-archives/neuma-v0.12.15-defender-d5-prueba-sin-emulador.apk",
+    "bytes": 15158200,
+    "sha256": "c53c44fe54e5699b2f89ba0ae73ef484e382e2bb93b39bd0d83eaffb2cc22ba3"
+  },
+  "pending": [
+    "D5/D4/D3 Android tests and D1/D2 regression",
+    "Four targets, seconds and alterations, 411/360/320 dp, 320 dp font 200%, TalkBack",
+    "Native export, JSON, recovery and reset",
+    "Physical audio and earlier R6/layout/brand checks"
+  ],
+  "notes": [
+    "D4 progress maps exclusively to root position treble targets; D3 remains notes",
+    "No new profile file, PCM recordings, dependencies or runtime assets",
+    "Synthetic route is not student performance",
+    "No push, issue edits, emulator or installation"
+  ],
+  "signerCertificateSha256": "4e9a10f84ec8218fb0927606a0c84617c3753a452e0c772b1bae1bd377a0c90a",
+  "signatureCompatibleWithD4": true,
+  "apkMetadataVerified": true,
+  "packagedD5CodeVerified": true,
+  "informe": {
+    "pages": 36,
+    "latexPasses": 3,
+    "errors": 0,
+    "overfullBoxes": 0,
+    "undefinedReferences": 0,
+    "underfullVboxes": 5,
+    "bibliography": "empty",
+    "visuallyReviewedPdfPages": [
+      25,
+      26,
+      28,
+      29
+    ],
+    "pdfSha256": "681ad61d43123e616b16c03e22579e1c9737d2057ec759251bae2fd0d80c3a07"
+  }
+}

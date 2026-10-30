@@ -1,0 +1,95 @@
+[
+  {
+    "file": "garden.webp",
+    "width": 768,
+    "height": 1152,
+    "bytes": 378754,
+    "mode": "RGB",
+    "alphaExtrema": null,
+    "sha256": "10c0dd68e56b6129c849c58115f927e78f3ebb897c5952dd531b665cc2e7fb7a"
+  },
+  {
+    "file": "book.webp",
+    "width": 1024,
+    "height": 1536,
+    "bytes": 347314,
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "sha256": "d52d6e7d21345f4219ebe1a4bdb4a59b645ed0e5008c796c90c10336c5bed040"
+  },
+  {
+    "file": "controls.webp",
+    "width": 1254,
+    "height": 1254,
+    "bytes": 328828,
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "sha256": "13a6a53c7fd79457cf195e49999b5cd4f6732433fb1f9207b1f2b570c0e6ce22"
+  },
+  {
+    "file": "simon.webp",
+    "width": 960,
+    "height": 640,
+    "bytes": 268320,
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "sha256": "e3a7016c570b11c83056a20dad65bb9c5b5577ec2119294e388d4750b1e4403f"
+  },
+  {
+    "file": "instruments.webp",
+    "width": 960,
+    "height": 640,
+    "bytes": 331586,
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      253
+    ],
+    "sha256": "33c356f669c9d31c3d5335ddd17e056f61d0bc7b19f39f1217c78f41635f1838"
+  },
+  {
+    "file": "rhythm.webp",
+    "width": 960,
+    "height": 640,
+    "bytes": 304520,
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "sha256": "c164fb1dfad1ce1d9dba55ea8387e83361567cdef3a01d0e2ef4a5ecb23e6d9e"
+  },
+  {
+    "file": "defender.webp",
+    "width": 960,
+    "height": 640,
+    "bytes": 318054,
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      253
+    ],
+    "sha256": "9c05876d25c42bd9df8cac8e30f75c772c3441ef36b4ec49c90033d4a3c034ca"
+  },
+  {
+    "file": "character.webp",
+    "width": 768,
+    "height": 1152,
+    "bytes": 276822,
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "sha256": "51612442401d4f2a3c7b46a3fb36e37bdc8a3c3225720ca380736a87ad3f203d"
+  }
+]

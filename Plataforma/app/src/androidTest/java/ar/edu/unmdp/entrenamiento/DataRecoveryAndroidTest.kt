@@ -15,13 +15,13 @@ import org.junit.Test
 class DataRecoveryAndroidTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
     @Test fun historialDañadoPermiteRecuperarYReiniciarSinSobrescribirOriginal() {
-        compose.waitUntil(15_000) { compose.activity.hasWindowFocus() }
+        compose.awaitGardenMenu()
         val data = Demonstration(compose.activity.filesDir)
         runBlocking { data.reset() }
         val file = File(compose.activity.filesDir, "simon-results.json")
         file.writeText("{cortado")
         try {
-        compose.onNodeWithTag("game-simon").performScrollTo().performClick()
+        compose.openMenuDestination("game-simon")
         compose.onNodeWithText("Jugar Simón").performClick()
         compose.waitUntil(10_000) { compose.onAllNodesWithText("Reintentar lectura").fetchSemanticsNodes().isNotEmpty() }
         compose.onNodeWithText("Jugar Simón").assertDoesNotExist()
@@ -32,7 +32,7 @@ class DataRecoveryAndroidTest {
             assertEquals("simon-results.json", zip.nextEntry.name)
             assertEquals("{cortado", zip.readBytes().toString(Charsets.UTF_8))
         }
-        compose.onNodeWithTag("data-open").performScrollTo().performClick()
+        compose.openMenuDestination("data-open")
         compose.onNodeWithTag("data-recovery").performScrollTo().performClick()
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         // El proveedor externo puede arrancar por primera vez tras un inicio en frío del AVD.

@@ -17,8 +17,8 @@ class VoiceReferenceAndroidTest {
         assertTrue(player.play(69) >= 26460)
     }
     @Test fun objetivoDeshabilitaMicrofonoMientrasSuenaYGraficaNoInventaNota() {
-        compose.waitUntil(15_000) { compose.activity.hasWindowFocus() }
-        compose.onNodeWithTag("game-voice").performScrollTo().performClick()
+        compose.awaitGardenMenu()
+        compose.openMenuDestination("game-voice")
         compose.onNodeWithTag("voice-reference").performScrollTo().performClick()
         compose.onNodeWithTag("voice-start").assertIsNotEnabled()
         compose.waitUntil(10_000) {

@@ -5,12 +5,11 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.relocation.BringIntoViewRequester
-import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -20,54 +19,74 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.drawText
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import ar.edu.unmdp.entrenamiento.rhythm.*
-import java.util.Locale
 
-@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
-fun RhythmApp(ui: RhythmUiState, model: RhythmViewModel, onHome: () -> Unit) {
+fun RhythmApp(ui: RhythmUiState, model: RhythmViewModel, reduceMotion: Boolean = false, onData: (() -> Unit)? = null, onHome: () -> Unit) {
+    if (ui.progressOpen) { RhythmProgressApp(ui, model); return }
+    if (ui.historyOpen) { RhythmHistoryApp(ui, model, onData); return }
     val state = ui.session
     val active = state.phase == RhythmPhase.COUNT_IN || state.phase == RhythmPhase.PLAYING
     val score = state.score
-    val barRequests = remember { List(4) { BringIntoViewRequester() } }
+    var editCategories by rememberSaveable { mutableStateOf(false) }
+    LaunchedEffect(state.phase) { if (state.phase == RhythmPhase.PREVIEW || state.phase == RhythmPhase.RESULTS) editCategories = false }
+    val scroll = rememberScrollState()
+    var scoreTop by remember { mutableIntStateOf(0) }
+    var notationReady by remember { mutableStateOf(false) }
+    val systemReduced = systemReducesMotion()
+    val reduced = reduceMotion || systemReduced
     val meter = score?.beatsPerBar ?: ui.beatsPerBar
     val bar = score?.let { (state.elapsedNanos.coerceAtLeast(0) / Beat(it.beatsPerBar).nanos(it.bpm)).toInt().coerceIn(0, 3) } ?: 0
-    LaunchedEffect(bar, state.phase) {
-        if (state.phase == RhythmPhase.PLAYING) barRequests[bar].bringIntoView()
-    }
-    MaterialTheme(colorScheme = darkColorScheme(primary = Lavender, secondary = Pink,
-        background = Night, surface = Panel, onSurface = SoftWhite, onBackground = SoftWhite)) {
+    LaunchedEffect(active, scoreTop) { if (active) scroll.scrollTo(scoreTop) }
+    TunerGardenTheme {
         BackHandler(onBack = onHome)
-        Scaffold(containerColor = Night, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
-            Column(Modifier.fillMaxSize().padding(padding).padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Scaffold(containerColor = GardenTokens.Background, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
+            Column(Modifier.fillMaxSize().padding(padding).padding(horizontal = GardenTokens.SpaceBase),
+                verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                     TextButton(onClick = onHome) { Text("Menú") }
                     Text("Rhythm Tap", style = MaterialTheme.typography.headlineSmall)
                 }
-                Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()).testTag("rhythm-scroll"),
+                Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(scroll).testTag("rhythm-scroll"),
                     verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    Text("Práctica · 4 compases · $meter/4 · 60 BPM", color = Lavender)
+                    val mode = if ((score != null && state.origin == "progression") || (score == null && ui.progression)) "Progresión" else "Práctica"
+                    val tempo = score?.bpm ?: if (ui.progression) ui.history.progress.tempo(ui.selected) else ui.practiceBpm
+                    Text("$mode · 4 compases · $meter/4 · $tempo BPM", color = GardenTokens.TextSecondary)
                     if (!active) {
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        RhythmSaveStatus(ui, model, onData)
+                        RhythmModeControls(ui, model)
+                        OutlinedButton(onClick = model::openHistory, modifier = Modifier.testTag("rhythm-open-history")) { Text("Historial de ritmo") }
+                        FlowRow(horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
                             (2..4).forEach { beats ->
                                 FilterChip(selected = ui.beatsPerBar == beats, enabled = !ui.busy,
                                     onClick = { model.meter(beats) }, modifier = Modifier.testTag("rhythm-meter-$beats"),
                                     label = { Text("$beats/4") })
                             }
                         }
-                        Text("Elegí las células que querés practicar")
-                        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                        if (state.phase != RhythmPhase.SETUP) TextButton(onClick = { editCategories = !editCategories }, modifier = Modifier.testTag("rhythm-edit-categories")) {
+                            Text(if (editCategories) "Cerrar selección" else "Cambiar células (${ui.selected.size})")
+                        }
+                        if (state.phase == RhythmPhase.SETUP || editCategories) Column(verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceXs)) {
+                            Text("Elegí las células que querés practicar")
                             RhythmCategory.entries.forEach { category ->
-                                FilterChip(selected = category in ui.selected, enabled = !ui.busy,
-                                    onClick = { model.select(category) }, modifier = Modifier.testTag("rhythm-category-${category.code}"),
-                                    label = { Text(category.label) })
+                                val locked = ui.progression && category !in ui.history.progress.unlocked
+                                FilterChip(selected = category in ui.selected, enabled = !ui.busy && !locked,
+                                    onClick = { model.select(category) },
+                                    label = { Text(category.label + if (locked) " · Bloqueada" else "") },
+                                    modifier = Modifier.testTag("rhythm-category-${category.code}").heightIn(min = GardenTokens.TouchMinimum),
+                                    shape = RoundedCornerShape(GardenTokens.RadiusLarge))
                             }
                         }
                         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -90,58 +109,25 @@ fun RhythmApp(ui: RhythmUiState, model: RhythmViewModel, onHome: () -> Unit) {
                         RhythmPhase.RESULTS -> if (state.result?.completed == true) "Ejercicio completado" else "Ejercicio interrumpido"
                     }, modifier = Modifier.testTag("rhythm-status"), fontWeight = FontWeight.SemiBold)
                     if (ui.busy) LinearProgressIndicator(Modifier.fillMaxWidth())
-                    if (score != null) {
-                        score.bars.forEach { measure ->
-                            Column(Modifier.bringIntoViewRequester(barRequests[measure.index])) {
-                                Text("Compás ${measure.index + 1}", style = MaterialTheme.typography.labelMedium)
-                                RhythmBarDrawing(measure, score, state, Modifier.fillMaxWidth().height(100.dp))
-                            }
-                        }
-                    }
+                    if (score != null) RhythmScoreView(score, state, reduced, Modifier.fillMaxWidth().onGloballyPositioned {
+                        val top = it.positionInParent().y.toInt()
+                        if (scoreTop != top) scoreTop = top
+                    }) { notationReady = it }
                     state.result?.let { result ->
-                        Text("Resumen en memoria · Práctica", fontWeight = FontWeight.Bold, modifier = Modifier.testTag("rhythm-summary"))
-                        val onTime = result.attacks.count { it.kind == TapKind.ON_TIME }
-                        Text("A tiempo: $onTime / ${result.attacks.size} · Omitidos: ${result.omissions} · Extras: ${result.extras}")
-                        Text("Adelantados: ${result.attacks.count { it.kind == TapKind.EARLY }} · Atrasados: ${result.attacks.count { it.kind == TapKind.LATE }}")
-                        score?.selected?.forEach { category ->
-                            val owners = score.occurrences.filter { it.target && it.category == category }.map { it.index }.toSet()
-                            val attacks = result.attacks.filter { it.occurrenceIndex in owners }
-                            Text("${category.label}: ${attacks.count { it.kind == TapKind.ON_TIME }} / ${attacks.size} a tiempo (células objetivo)")
-                            val extras = result.taps.count { tap ->
-                                tap.kind == TapKind.EXTRA && score.occurrences.any { occurrence ->
-                                    val start = (Beat(occurrence.bar * score.beatsPerBar) + occurrence.beat).nanos(score.bpm)
-                                    val duration = occurrence.notes.fold(Beat(0)) { sum, note -> sum + note.duration }.nanos(score.bpm)
-                                    occurrence.index in owners && tap.relativeNanos >= start && tap.relativeNanos < start + duration
-                                }
-                            }
-                            Text("Adelantados ${attacks.count { it.kind == TapKind.EARLY }} · Atrasados ${attacks.count { it.kind == TapKind.LATE }} · Omitidos ${attacks.count { it.kind == TapKind.OMITTED }} · Extras $extras",
-                                style = MaterialTheme.typography.bodySmall)
-                            val silences = result.silences.filter { it.occurrenceIndex in owners }
-                            if (silences.isNotEmpty()) Text("Silencios respetados ${silences.count { it.respected == true }} / ${silences.size} · Pendientes ${silences.count { it.respected == null }}",
-                                style = MaterialTheme.typography.bodySmall)
-                        }
-                        Text("Cada golpe conserva su desvío con signo; los errores no detienen el ejercicio.", color = Muted)
-                        result.attacks.forEach { attack ->
-                            Text("Golpe ${attack.index + 1}: ${attack.kind?.let(::kindLabel) ?: "Sin evaluar (interrupción)"}" + (attack.deltaNanos?.let {
-                                String.format(Locale.ROOT, " · %+.1f ms", it / 1_000_000.0)
-                            } ?: ""), style = MaterialTheme.typography.bodySmall)
-                        }
-                        result.taps.filter { it.kind == TapKind.EXTRA || it.kind == TapKind.PREPARATION }.forEach { tap ->
-                            Text("${kindLabel(tap.kind)} · ${tap.relativeNanos / 1_000_000} ms", style = MaterialTheme.typography.bodySmall)
-                        }
-                        Text("El resumen se pierde al cerrar el proceso. No hay DDA ni desbloqueos en esta entrega.", color = Muted)
+                        RhythmResultSummary(result)
+                        Text("Podés consultar este ejercicio y repetirlo desde el historial.", color = GardenTokens.TextSecondary)
                         OutlinedButton(onClick = model::repeat, modifier = Modifier.testTag("rhythm-repeat")) { Text("Repetir mismo patrón") }
                     }
                     Spacer(Modifier.height(12.dp))
                 }
                 if (state.phase == RhythmPhase.PREVIEW) {
-                    Button(onClick = model::play, enabled = !ui.busy, modifier = Modifier.fillMaxWidth().testTag("rhythm-play")) { Text("Play · Conteo y ejecución") }
+                    Button(onClick = model::play, enabled = !ui.busy && notationReady, modifier = Modifier.fillMaxWidth().testTag("rhythm-play")) { Text("Play · Conteo y ejecución") }
                 }
                 // Keep the original pointer listener alive through RESULTS for late delivery of
                 // a touch that occurred before the deadline. New result-screen taps are rejected.
                 if (active || state.phase == RhythmPhase.RESULTS) {
-                    Text(if (active) kindLabel(state.feedback) else "Finalizado", color = Pink, modifier = Modifier.testTag("rhythm-feedback"))
-                    Box(Modifier.fillMaxWidth().height(100.dp).background(Panel, RoundedCornerShape(16.dp))
+                    Text(if (active) rhythmKindLabel(state.feedback) else "Finalizado", color = GardenTokens.Primary, modifier = Modifier.testTag("rhythm-feedback"))
+                    Box(Modifier.fillMaxWidth().height(100.dp).background(GardenTokens.SurfaceSelected, RoundedCornerShape(GardenTokens.RadiusLarge))
                         .testTag("rhythm-tap").semantics {
                             contentDescription = "Registrar un tap rítmico"
                             if (active) onClick { model.tapNow(); true } else disabled()
@@ -170,7 +156,7 @@ fun RhythmApp(ui: RhythmUiState, model: RhythmViewModel, onHome: () -> Unit) {
     }
 }
 
-private fun kindLabel(kind: TapKind?): String = when (kind) {
+internal fun rhythmKindLabel(kind: TapKind?): String = when (kind) {
     TapKind.ON_TIME -> "A tiempo"
     TapKind.EARLY -> "Adelantado"
     TapKind.LATE -> "Atrasado"
@@ -183,22 +169,49 @@ private fun kindLabel(kind: TapKind?): String = when (kind) {
 @Composable
 internal fun RhythmBarDrawing(bar: RhythmBar, score: RhythmScore, state: RhythmState, modifier: Modifier) {
     val description = "Compás ${bar.index + 1}, ${score.beatsPerBar}/4: " + bar.occurrences.joinToString("; ") { it.category.label }
+    val textMeasurer = rememberTextMeasurer()
+    val feedback = remember(score, state.attacks, state.result) {
+        score.toNotation().feedback(state).associate { it.id to it.kind }
+    }
+    // El número es parte de la notación y mantiene la proporción con las plicas en dp.
+    val tripletLabel = textMeasurer.measure("3", TextStyle(fontFamily = gardenBody,
+        fontWeight = FontWeight.SemiBold, fontSize = with(LocalDensity.current) { 12.dp.toSp() }))
     Canvas(modifier.testTag("rhythm-bar-${bar.index}").semantics { contentDescription = description }) {
-        drawRect(Panel)
         val left = 16.dp.toPx(); val right = size.width - 16.dp.toPx()
         val y = size.height * .68f
-        drawLine(Muted, Offset(left, y), Offset(right, y), 1.dp.toPx())
-        drawLine(SoftWhite, Offset(left, y - 28.dp.toPx()), Offset(left, y + 10.dp.toPx()), 2.dp.toPx())
-        drawLine(SoftWhite, Offset(right, y - 28.dp.toPx()), Offset(right, y + 10.dp.toPx()), 2.dp.toPx())
+        drawLine(GardenTokens.Border, Offset(left, y), Offset(right, y), 1.dp.toPx())
+        drawLine(GardenTokens.Text, Offset(left, y - 28.dp.toPx()), Offset(left, y + 10.dp.toPx()), 2.dp.toPx())
+        drawLine(GardenTokens.Text, Offset(right, y - 28.dp.toPx()), Offset(right, y + 10.dp.toPx()), 2.dp.toPx())
         val beatWidth = (right - left - 22.dp.toPx()) / score.beatsPerBar
         bar.occurrences.forEach { occurrence ->
             val x = left + 14.dp.toPx() + occurrence.beat.asDouble().toFloat() * beatWidth
-            val color = if (occurrence.target) SoftWhite else Muted
+            val color = if (occurrence.target) GardenTokens.Text else GardenTokens.TextSecondary
             val top = y - 32.dp.toPx()
             var noteBeat = 0f
-            occurrence.notes.forEach { note ->
+            val positions = occurrence.notes.map { note ->
                 val nx = if (occurrence.category == RhythmCategory.BAR_REST) (left + right) / 2 else x + noteBeat * beatWidth
                 noteBeat += note.duration.asDouble().toFloat()
+                nx
+            }
+            fun beams(note: RhythmNote) = when {
+                note.rest -> 0
+                note.tuplet == 3 && note.duration == Beat(1, 3) -> 1
+                note.duration == Beat(1, 4) -> 2
+                note.duration == Beat(1, 2) || note.duration == Beat(3, 4) -> 1
+                else -> 0
+            }
+            val groups = mutableListOf<List<Int>>()
+            var group = mutableListOf<Int>()
+            for (index in occurrence.notes.indices) {
+                if (beams(occurrence.notes[index]) == 0) {
+                    if (group.isNotEmpty()) groups += group.toList()
+                    group = mutableListOf()
+                } else group += index
+            }
+            if (group.isNotEmpty()) groups += group.toList()
+            val connected = groups.filter { it.size >= 2 }.flatten().toSet()
+            occurrence.notes.forEachIndexed { index, note ->
+                val nx = positions[index]
                 if (note.rest) {
                     when {
                         occurrence.category == RhythmCategory.BAR_REST || note.duration.asDouble() >= 2 -> {
@@ -207,9 +220,22 @@ internal fun RhythmBarDrawing(bar: RhythmBar, score: RhythmScore, state: RhythmS
                             val hangs = occurrence.category == RhythmCategory.BAR_REST
                             drawRect(color, Offset(nx - 6.dp.toPx(), if (hangs) line else line - 5.dp.toPx()), Size(12.dp.toPx(), 5.dp.toPx()))
                         }
-                        note.duration == Beat(1, 2) -> {
-                            drawCircle(color, 3.dp.toPx(), Offset(nx - 2.dp.toPx(), y - 17.dp.toPx()))
-                            drawLine(color, Offset(nx + 5.dp.toPx(), y - 22.dp.toPx()), Offset(nx - 3.dp.toPx(), y + 5.dp.toPx()), 2.dp.toPx())
+                        note.duration == Beat(1, 2) || note.duration == Beat(1, 4) -> {
+                            val flags = if (note.duration == Beat(1, 4)) 2 else 1
+                            val stemTop = if (flags == 2) 29f else 22f
+                            drawLine(color, Offset(nx + 6.dp.toPx(), y - stemTop.dp.toPx()), Offset(nx - 2.dp.toPx(), y + 4.dp.toPx()), 1.8.dp.toPx())
+                            repeat(flags) { flag ->
+                                val cy = y - (if (flags == 2) 22f - flag * 10 else 15f).dp.toPx()
+                                val tipY = cy - 4.dp.toPx()
+                                val tipX = nx + (6 - 8 * (stemTop - (y - tipY) / density) / (stemTop + 4)).dp.toPx()
+                                val cx = tipX - 8.dp.toPx()
+                                drawCircle(color, 2.6.dp.toPx(), Offset(cx, cy))
+                                val hook = Path().apply {
+                                    moveTo(cx, cy)
+                                    cubicTo(cx + 3.dp.toPx(), cy + 5.dp.toPx(), tipX - 2.dp.toPx(), tipY + 7.dp.toPx(), tipX, tipY)
+                                }
+                                drawPath(hook, color, style = Stroke(1.6.dp.toPx()))
+                            }
                         }
                         else -> {
                             val rest = Path().apply {
@@ -223,31 +249,77 @@ internal fun RhythmBarDrawing(bar: RhythmBar, score: RhythmScore, state: RhythmS
                         }
                     }
                 } else {
+                    val headColor = when (feedback["${occurrence.index}:$index"]) {
+                        "ON_TIME" -> GardenTokens.Primary
+                        "EARLY", "LATE", "OMITTED" -> GardenTokens.ErrorText
+                        else -> color
+                    }
                     val hollow = note.duration.asDouble() >= 2
                     val head = Offset(nx - 5.dp.toPx(), y - 3.dp.toPx())
                     val headSize = Size(if (note.duration == Beat(4)) 13.dp.toPx() else 10.dp.toPx(), 7.dp.toPx())
-                    if (hollow) drawOval(color, head, headSize, style = Stroke(1.8.dp.toPx()))
-                    else drawOval(color, head, headSize)
+                    if (hollow) drawOval(headColor, head, headSize, style = Stroke(1.8.dp.toPx()))
+                    else drawOval(headColor, head, headSize)
                     if (note.duration != Beat(4)) drawLine(color, Offset(nx + 4.dp.toPx(), y), Offset(nx + 4.dp.toPx(), top), 1.6.dp.toPx())
-                    if (note.duration == Beat(3, 2)) drawCircle(color, 1.8.dp.toPx(), Offset(nx + 12.dp.toPx(), y - 3.dp.toPx()))
-                    if (note.duration == Beat(1, 2) && occurrence.category != RhythmCategory.EIGHTHS) {
+                    if (note.duration == Beat(3, 2) || note.duration == Beat(3, 4)) drawCircle(color, 1.8.dp.toPx(), Offset(nx + 12.dp.toPx(), y - 3.dp.toPx()))
+                    if (beams(note) > 0 && index !in connected) repeat(beams(note)) { level ->
+                        val flagTop = top + level * 7.dp.toPx()
                         val flag = Path().apply {
-                            moveTo(nx + 4.dp.toPx(), top)
-                            cubicTo(nx + 20.dp.toPx(), top + 9.dp.toPx(), nx + 13.dp.toPx(), top + 14.dp.toPx(), nx + 10.dp.toPx(), top + 19.dp.toPx())
+                            moveTo(nx + 4.dp.toPx(), flagTop)
+                            cubicTo(nx + 20.dp.toPx(), flagTop + 9.dp.toPx(), nx + 13.dp.toPx(), flagTop + 14.dp.toPx(), nx + 10.dp.toPx(), flagTop + 19.dp.toPx())
                         }
                         drawPath(flag, color, style = Stroke(2.dp.toPx()))
                     }
                 }
             }
-            if (occurrence.category == RhythmCategory.EIGHTHS) {
-                drawLine(color, Offset(x + 4.dp.toPx(), top), Offset(x + beatWidth / 2 + 4.dp.toPx(), top), 4.dp.toPx())
+            groups.filter { it.size >= 2 }.forEach { notes ->
+                fun stem(index: Int) = positions[index] + 4.dp.toPx()
+                drawLine(color, Offset(stem(notes.first()), top), Offset(stem(notes.last()), top), 4.dp.toPx())
+                notes.zipWithNext().forEach { (first, second) ->
+                    if (beams(occurrence.notes[first]) == 2 && beams(occurrence.notes[second]) == 2)
+                        drawLine(color, Offset(stem(first), top + 7.dp.toPx()), Offset(stem(second), top + 7.dp.toPx()), 3.dp.toPx())
+                }
+                notes.forEachIndexed { position, index ->
+                    if (beams(occurrence.notes[index]) == 2 &&
+                        notes.getOrNull(position - 1)?.let { beams(occurrence.notes[it]) == 2 } != true &&
+                        notes.getOrNull(position + 1)?.let { beams(occurrence.notes[it]) == 2 } != true) {
+                        val next = notes.getOrNull(position + 1)
+                        val neighbor = next ?: notes[position - 1]
+                        val length = minOf(7.dp.toPx(), kotlin.math.abs(stem(neighbor) - stem(index)) * .45f)
+                        drawLine(color, Offset(stem(index), top + 7.dp.toPx()), Offset(stem(index) + if (next != null) length else -length, top + 7.dp.toPx()), 3.dp.toPx())
+                    }
+                }
+            }
+            if (occurrence.notes.size == 3 && occurrence.notes.all { it.tuplet == 3 && it.duration == Beat(1, 3) }) {
+                val first = positions.first() - 2.dp.toPx()
+                val last = positions.last() + 8.dp.toPx()
+                val center = (first + last) / 2
+                val bracketY = top - 11.dp.toPx()
+                val gap = tripletLabel.size.width / 2f + 3.dp.toPx()
+                drawLine(color, Offset(first, bracketY + 4.dp.toPx()), Offset(first, bracketY), 1.dp.toPx())
+                drawLine(color, Offset(first, bracketY), Offset(center - gap, bracketY), 1.dp.toPx())
+                drawLine(color, Offset(center + gap, bracketY), Offset(last, bracketY), 1.dp.toPx())
+                drawLine(color, Offset(last, bracketY), Offset(last, bracketY + 4.dp.toPx()), 1.dp.toPx())
+                drawText(tripletLabel, color = color,
+                    topLeft = Offset(center - tripletLabel.size.width / 2f, bracketY - tripletLabel.size.height / 2f))
+            }
+            occurrence.notes.forEachIndexed { index, note ->
+                if (note.tieToNext && index + 1 < positions.size) {
+                    val start = positions[index] + 3.dp.toPx()
+                    val end = positions[index + 1] - 3.dp.toPx()
+                    val tie = Path().apply {
+                        moveTo(start, y + 8.dp.toPx())
+                        cubicTo(start + (end - start) / 3, y + 22.dp.toPx(),
+                            end - (end - start) / 3, y + 22.dp.toPx(), end, y + 8.dp.toPx())
+                    }
+                    drawPath(tie, color, style = Stroke(1.6.dp.toPx()))
+                }
             }
         }
         if (state.phase == RhythmPhase.PLAYING) {
             val beat = state.elapsedNanos.toDouble() / Beat(1).nanos(score.bpm) - bar.index * score.beatsPerBar
             if (beat >= 0 && beat < score.beatsPerBar) {
                 val x = left + 14.dp.toPx() + beat.toFloat() * beatWidth
-                drawLine(Pink, Offset(x, 4.dp.toPx()), Offset(x, size.height - 4.dp.toPx()), 2.dp.toPx())
+                drawLine(GardenTokens.Focus, Offset(x, 4.dp.toPx()), Offset(x, size.height - 4.dp.toPx()), 2.dp.toPx())
             }
         }
     }

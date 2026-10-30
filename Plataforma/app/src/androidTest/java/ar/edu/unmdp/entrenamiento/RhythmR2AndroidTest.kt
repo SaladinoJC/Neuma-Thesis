@@ -38,11 +38,12 @@ class RhythmR2AndroidTest {
                 compose.onNodeWithTag("rhythm-meter-$meter").performScrollTo().performClick()
                 compose.onNodeWithTag("rhythm-generate").performScrollTo().performClick()
                 compose.waitUntil(5_000) { model.ui.value.session.phase == RhythmPhase.PREVIEW }
-                compose.onNodeWithTag("rhythm-bar-3").performScrollTo().assertIsDisplayed()
+                compose.onNodeWithTag("rhythm-score").performScrollTo().assertIsDisplayed()
                 saveRhythmScreenshot("flow-$meter", compose.onRoot().captureToImage().asAndroidBitmap())
                 val score = requireNotNull(model.ui.value.session.score)
                 assertEquals(meter, score.beatsPerBar)
                 val epoch = now
+                compose.awaitRhythmScore()
                 compose.onNodeWithTag("rhythm-play").performClick()
                 compose.waitUntil(5_000) { model.ui.value.session.phase == RhythmPhase.COUNT_IN }
                 tapWithDeviceUptime(host, compose.onNodeWithTag("rhythm-tap").fetchSemanticsNode().boundsInRoot.center)

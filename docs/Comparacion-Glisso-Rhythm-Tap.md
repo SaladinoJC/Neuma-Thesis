@@ -1,6 +1,10 @@
 # Glisso Rhythm y Rhythm Tap: comparación y mejoras propuestas
 
+**Actualización 2026-10-29:** el usuario autorizó el seguimiento lateral, el fondo integrado y el feedback verde por nota, con VexFlow si era viable. Esto sustituye la recomendación previa de conservar renglones para esa presentación; no aprueba el resto de las propuestas de este informe. [Implementación y verificación](Rhythm-Tap-lectura-lateral.md).
+
 Fecha de observación: 2026-10-26. Rhythm Tap: versión 0.12.2, commit `fb54fb5`. Este análisis propone mejoras; no cambia requisitos aprobados, prioridades de tickets ni código de la app.
+
+Inspección técnica posterior (2026-10-29): [implementación del renderizador, scroll, transparencia y coloreado por nota](Investigacion-renderizador-Glisso.md). Esa investigación identifica VexFlow/SVG y complementa las observaciones de este documento; tampoco autoriza su implementación.
 
 ## Qué se comprobó
 

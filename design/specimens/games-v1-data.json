@@ -1,0 +1,41 @@
+{
+  "kind": "design_specimen",
+  "defenderNotes": [
+    {
+      "name": "La",
+      "octave": 3,
+      "accidental": "flat",
+      "clef": "treble"
+    },
+    {
+      "name": "Mi",
+      "octave": 4,
+      "accidental": "flat",
+      "clef": "bass"
+    },
+    {
+      "name": "Do",
+      "octave": 6,
+      "accidental": "sharp",
+      "clef": "treble"
+    },
+    {
+      "name": "Do",
+      "octave": 2,
+      "accidental": "sharp",
+      "clef": "bass"
+    }
+  ],
+  "simon": {
+    "tonicMidi": 60,
+    "scale": "Diatónica mayor",
+    "rangeMidi": [
+      60,
+      71
+    ],
+    "highlightedMidi": 64,
+    "round": 4,
+    "completedSequences": 3
+  },
+  "renderSource": "NoteStaff/PianoKeyboard, revisión 2026-10-26; traslación propia para estudio SVG, sin ejecución Android"
+}

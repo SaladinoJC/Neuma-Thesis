@@ -56,8 +56,9 @@ fun defenderHasRoom(candidate: DefenderEnemy, live: List<DefenderEnemy>): Boolea
             val lo = maxOf(0f, minOf(first, second)); val hi = minOf(1f, maxOf(first, second))
             return if (lo < hi) lo..hi else null
         }
-        val x = axisWindow(a.x - b.x, endA.x - endB.x, .245f)
-        val y = axisWindow(a.y - b.y, endA.y - endB.y, .205f)
+        val chords = candidate.chord != null || other.chord != null
+        val x = axisWindow(a.x - b.x, endA.x - endB.x, if (chords) .35f else .245f)
+        val y = axisWindow(a.y - b.y, endA.y - endB.y, if (chords) .24f else .205f)
         x != null && y != null && maxOf(x.start, y.start) < minOf(x.endInclusive, y.endInclusive)
     }
 }

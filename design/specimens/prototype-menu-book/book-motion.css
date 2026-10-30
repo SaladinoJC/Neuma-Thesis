@@ -1,0 +1,12 @@
+/* Transición nativa entre la referencia y sus destinos existentes; sin esperar timers. */
+@media(prefers-reduced-motion:no-preference){@view-transition{navigation:auto}}
+.book{view-transition-name:music-book}#page{view-transition-name:music-page}
+::view-transition-group(*){animation-duration:var(--enter,220ms);animation-timing-function:ease-out}
+::view-transition-old(music-page){animation:book-page-out var(--enter,220ms) ease-out both}
+::view-transition-new(music-page){animation:book-page-in var(--enter,220ms) ease-out both}
+::view-transition-image-pair(music-book){animation:book-touch var(--enter,220ms) ease-out both}
+@keyframes book-page-out{to{opacity:0;translate:-8px 0}}
+@keyframes book-page-in{from{opacity:0;translate:8px 0}to{opacity:1;translate:0 0}}
+@keyframes book-touch{from{rotate:.14deg}to{rotate:0deg}}
+html:has(body.reduced)::view-transition-group(*),html:has(body.reduced)::view-transition-old(*),html:has(body.reduced)::view-transition-new(*),html:has(body.reduced)::view-transition-image-pair(*){animation:none!important}
+@media(prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*),::view-transition-image-pair(*){animation:none!important}}

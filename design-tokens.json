@@ -1,0 +1,58 @@
+{
+  "_note": "Base visual de Music Garden: paleta/tipografías/estados Q1-Q10 aprobados el 2026-10-26. Defender, Simón y movimiento Q11-Q13 aceptados solo como primer acercamiento: pressMs=140 y successMs=450 son provisionales. Otras duraciones y métricas siguen propuestas y toda adaptación Android requiere verificación. Este archivo aún no se consume en la app.",
+  "brand": {
+    "forest": "#1B3A2E",
+    "ivory": "#FAF7EF"
+  },
+  "color": {
+    "background": "#F5EEDC",
+    "surface": "#FFF9ED",
+    "text": "#28392F",
+    "primary": "#315844",
+    "sage": "#A7B99E",
+    "moss": "#718563",
+    "success": "#D9AD69",
+    "warning": "#C9806B",
+    "audio": "#86AAB3",
+    "textSecondary": "#536457",
+    "onPrimary": "#FFF9ED",
+    "primaryPressed": "#254633",
+    "surfaceSelected": "#E1E9DB",
+    "border": "#667A67",
+    "errorText": "#8B4436",
+    "errorSurface": "#F3DED5",
+    "focus": "#3C6872",
+    "disabledSurface": "#E2DECF",
+    "disabledText": "#627063"
+  },
+  "radius": {
+    "small": 8,
+    "medium": 12,
+    "large": 16,
+    "pill": 24
+  },
+  "spacing": {
+    "xs": 4,
+    "sm": 8,
+    "md": 12,
+    "base": 16,
+    "lg": 24,
+    "xl": 32
+  },
+  "typography": {
+    "display": "Fraunces",
+    "body": "Nunito Sans",
+    "music": "Render vectorial estructurado existente; Bravura/SMuFL solo ante una necesidad justificada"
+  },
+  "motion": {
+    "pressMs": 140,
+    "cardEnterMs": 220,
+    "enemySpawnMs": 340,
+    "successMs": 450,
+    "treeHitMs": 320,
+    "easing": "cubic-bezier(0.4, 0, 0.2, 1)"
+  },
+  "touch": {
+    "preferredMinimumLogicalSize": 48
+  }
+}

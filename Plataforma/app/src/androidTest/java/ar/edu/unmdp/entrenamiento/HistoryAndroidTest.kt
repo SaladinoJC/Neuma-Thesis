@@ -12,13 +12,13 @@ import java.io.File
 class HistoryAndroidTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
     @Test fun paginaYDetalleSeConservanAlRecrearSinBorrarResultados() {
-        compose.waitUntil(15_000) { compose.activity.hasWindowFocus() }
+        compose.awaitGardenMenu()
         runBlocking {
             Demonstration(compose.activity.filesDir).reset()
             val results = JsonSimonResults(File(compose.activity.filesDir, "simon-results.json"))
             repeat(26) { results.save(SimonResult(it, listOf(0), 0, id = "history-$it", finishedAtMillis = it.toLong())) }
         }
-        compose.onNodeWithTag("history-open").performScrollTo().performClick()
+        compose.openMenuDestination("history-open")
         compose.waitUntil(10_000) { compose.onAllNodesWithText("20 de 26 resultados").fetchSemanticsNodes().isNotEmpty() }
         compose.onNodeWithTag("history-list").performScrollToNode(hasTestTag("history-more"))
         compose.onNodeWithTag("history-more").performClick()

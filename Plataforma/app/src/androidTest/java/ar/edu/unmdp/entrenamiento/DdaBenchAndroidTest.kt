@@ -8,8 +8,8 @@ import org.junit.Test
 class DdaBenchAndroidTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
     @Test fun bancoPresentaNueveEscenariosYNoventaYTresFronteras() {
-        compose.waitUntil(15_000) { compose.activity.hasWindowFocus() }
-        compose.onNodeWithTag("data-open").performScrollTo().performClick()
+        compose.awaitGardenMenu()
+        compose.openMenuDestination("data-open")
         compose.onNodeWithTag("dda-bench-run").performScrollTo().performClick()
         compose.waitUntil(30_000) { compose.onAllNodesWithTag("dda-bench-summary").fetchSemanticsNodes().isNotEmpty() }
         compose.onNodeWithTag("dda-bench-summary").performScrollTo().assertTextContains("9 escenarios · 93 fronteras · 21/21", substring = true)

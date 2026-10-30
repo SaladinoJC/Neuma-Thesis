@@ -1,0 +1,5 @@
+# Hitos cosméticos independientes de la familia de instrumento
+
+Decisión de producto confirmada por el usuario el 2026-10-28, Q17 y Q20–Q22; implementación pendiente. Los hitos instrumentales conservan su cumplimiento al cambiar gratuitamente entre Guitarra, Piano, Trompeta, Flauta y Violín, habilitando el modelo equivalente en la nueva familia sin repetir objetivos ni perder modelos anteriores. Por eso se distingue el hito cumplido del modelo obtenido/equipado: consumir un hito para entregar únicamente el modelo de la familia activa dejaría sin equivalente al jugador que cambia después.
+
+Se mantienen dos grados de modelo asociados a los hitos de desempeño de Instrumentos y Defender, con cinco variantes por grado y un modelo inicial por familia. Esta elección implica quince modelos instrumentales en producción, conservación de equivalencias al migrar/recuperar el perfil y recompensas deterministas por hito y familia; no introduce una tienda ni altera las reglas del DDA. La trazabilidad y el plan están en [Personaje personalizable](../Plan-personaje-Music-Garden.md).

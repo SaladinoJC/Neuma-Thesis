@@ -1,0 +1,731 @@
+{
+  "reports": [
+    {
+      "variant": "A",
+      "width": 360,
+      "section": "Personaje",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 360,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "A",
+      "width": 360,
+      "section": "Juegos",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 360,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "A",
+      "width": 360,
+      "section": "Afinador",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 360,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "A",
+      "width": 360,
+      "section": "Logros",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 360,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "B",
+      "width": 360,
+      "section": "Personaje",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 360,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "B",
+      "width": 360,
+      "section": "Juegos",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 360,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "B",
+      "width": 360,
+      "section": "Afinador",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 360,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "B",
+      "width": 360,
+      "section": "Logros",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 360,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "C",
+      "width": 360,
+      "section": "Personaje",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 360,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "C",
+      "width": 360,
+      "section": "Juegos",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 360,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "C",
+      "width": 360,
+      "section": "Afinador",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 360,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "C",
+      "width": 360,
+      "section": "Logros",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 360,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "A",
+      "width": 411,
+      "section": "Personaje",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 411,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "A",
+      "width": 411,
+      "section": "Juegos",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 411,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "A",
+      "width": 411,
+      "section": "Afinador",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 411,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "A",
+      "width": 411,
+      "section": "Logros",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 411,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "B",
+      "width": 411,
+      "section": "Personaje",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 411,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "B",
+      "width": 411,
+      "section": "Juegos",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 411,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "B",
+      "width": 411,
+      "section": "Afinador",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 411,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "B",
+      "width": 411,
+      "section": "Logros",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 411,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "C",
+      "width": 411,
+      "section": "Personaje",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 411,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "C",
+      "width": 411,
+      "section": "Juegos",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 411,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "C",
+      "width": 411,
+      "section": "Afinador",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 411,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "C",
+      "width": 411,
+      "section": "Logros",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 411,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "A",
+      "width": 600,
+      "section": "Personaje",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 600,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "A",
+      "width": 600,
+      "section": "Juegos",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 600,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "A",
+      "width": 600,
+      "section": "Afinador",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 600,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "A",
+      "width": 600,
+      "section": "Logros",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 600,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "B",
+      "width": 600,
+      "section": "Personaje",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 600,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "B",
+      "width": 600,
+      "section": "Juegos",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 600,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "B",
+      "width": 600,
+      "section": "Afinador",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 600,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "B",
+      "width": 600,
+      "section": "Logros",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 600,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "C",
+      "width": 600,
+      "section": "Personaje",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 600,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "C",
+      "width": 600,
+      "section": "Juegos",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 600,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "C",
+      "width": 600,
+      "section": "Afinador",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 600,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    },
+    {
+      "variant": "C",
+      "width": 600,
+      "section": "Logros",
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "tokens": "ready",
+      "scrollWidth": 600,
+      "smallControls": [],
+      "clipped": [],
+      "covered": []
+    }
+  ],
+  "interaction": {
+    "returned": true,
+    "index": true,
+    "reduced": true,
+    "restart": true,
+    "variantURL": true
+  }
+}

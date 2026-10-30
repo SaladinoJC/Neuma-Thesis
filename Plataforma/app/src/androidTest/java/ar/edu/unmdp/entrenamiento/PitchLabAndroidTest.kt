@@ -12,8 +12,8 @@ import org.junit.Assert.*
 class PitchLabAndroidTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
     @Test fun laboratorioEjecutaBancoSinMicrofonoYExportaOrigenSeparado() {
-        compose.waitUntil(15_000) { compose.activity.hasWindowFocus() }
-        compose.onNodeWithTag("data-open").performScrollTo().performClick()
+        compose.awaitGardenMenu()
+        compose.openMenuDestination("data-open")
         compose.onNodeWithTag("pitch-lab-open").performScrollTo().performClick()
         compose.onNodeWithTag("lab-run").performClick()
         compose.waitUntil(60_000) { compose.onAllNodesWithTag("lab-summary").fetchSemanticsNodes().isNotEmpty() }

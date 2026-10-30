@@ -1,0 +1,324 @@
+{
+  "url": "file:///C:/Users/Juan/Tesis/preview/neuma-concept.html",
+  "at": "2026-10-29T17:12:48.708Z",
+  "layouts": [
+    {
+      "w": 390,
+      "h": 844,
+      "variant": "A",
+      "scroll": 0,
+      "horizontal": 0,
+      "mainHeight": 691,
+      "continueVisible": true,
+      "progressVisible": true
+    },
+    {
+      "w": 390,
+      "h": 844,
+      "variant": "B",
+      "scroll": 0,
+      "horizontal": 0,
+      "mainHeight": 691,
+      "continueVisible": true,
+      "progressVisible": true
+    },
+    {
+      "w": 390,
+      "h": 844,
+      "variant": "C",
+      "scroll": 0,
+      "horizontal": 0,
+      "mainHeight": 691,
+      "continueVisible": true,
+      "progressVisible": true
+    },
+    {
+      "w": 360,
+      "h": 780,
+      "variant": "A",
+      "scroll": 55,
+      "horizontal": 0,
+      "mainHeight": 627,
+      "continueVisible": true,
+      "progressVisible": false
+    },
+    {
+      "w": 360,
+      "h": 780,
+      "variant": "B",
+      "scroll": 64,
+      "horizontal": 0,
+      "mainHeight": 627,
+      "continueVisible": true,
+      "progressVisible": false
+    },
+    {
+      "w": 360,
+      "h": 780,
+      "variant": "C",
+      "scroll": 10,
+      "horizontal": 0,
+      "mainHeight": 627,
+      "continueVisible": true,
+      "progressVisible": true
+    },
+    {
+      "w": 320,
+      "h": 640,
+      "variant": "A",
+      "scroll": 100,
+      "horizontal": 0,
+      "mainHeight": 514,
+      "continueVisible": true,
+      "progressVisible": false
+    },
+    {
+      "w": 320,
+      "h": 640,
+      "variant": "B",
+      "scroll": 153,
+      "horizontal": 0,
+      "mainHeight": 514,
+      "continueVisible": true,
+      "progressVisible": false
+    },
+    {
+      "w": 320,
+      "h": 640,
+      "variant": "C",
+      "scroll": 85,
+      "horizontal": 0,
+      "mainHeight": 514,
+      "continueVisible": true,
+      "progressVisible": false
+    },
+    {
+      "screen": "rhythm",
+      "w": 320,
+      "h": 640,
+      "horizontal": 0,
+      "scroll": 59
+    },
+    {
+      "screen": "defender",
+      "w": 320,
+      "h": 640,
+      "horizontal": 0,
+      "scroll": 0
+    }
+  ],
+  "actions": [
+    {
+      "name": "Inicio A 390×844, sin scroll horizontal",
+      "passed": true
+    },
+    {
+      "name": "Inicio A 390×844, sin scroll vertical",
+      "passed": true
+    },
+    {
+      "name": "Inicio A: continuar y progreso visibles",
+      "passed": true
+    },
+    {
+      "name": "Inicio B 390×844, sin scroll horizontal",
+      "passed": true
+    },
+    {
+      "name": "Inicio B 390×844, sin scroll vertical",
+      "passed": true
+    },
+    {
+      "name": "Inicio B: continuar y progreso visibles",
+      "passed": true
+    },
+    {
+      "name": "Inicio C 390×844, sin scroll horizontal",
+      "passed": true
+    },
+    {
+      "name": "Inicio C 390×844, sin scroll vertical",
+      "passed": true
+    },
+    {
+      "name": "Inicio C: continuar y progreso visibles",
+      "passed": true
+    },
+    {
+      "name": "Inicio A 360×780, sin scroll horizontal",
+      "passed": true
+    },
+    {
+      "name": "Inicio B 360×780, sin scroll horizontal",
+      "passed": true
+    },
+    {
+      "name": "Inicio C 360×780, sin scroll horizontal",
+      "passed": true
+    },
+    {
+      "name": "Inicio A 320×640, sin scroll horizontal",
+      "passed": true
+    },
+    {
+      "name": "Inicio B 320×640, sin scroll horizontal",
+      "passed": true
+    },
+    {
+      "name": "Inicio C 320×640, sin scroll horizontal",
+      "passed": true
+    },
+    {
+      "name": "SVG musicales cargados sin red",
+      "passed": true
+    },
+    {
+      "name": "Ejemplo usa AudioContext activo, efectos silenciados",
+      "passed": true
+    },
+    {
+      "name": "Reinicio detiene patrón y limpia estado",
+      "passed": true
+    },
+    {
+      "name": "Pulsaciones reales generan resultado coherente con sus timestamps",
+      "passed": true
+    },
+    {
+      "name": "Sin pulsaciones: nueve omisiones y cero aciertos",
+      "passed": true
+    },
+    {
+      "name": "Control global apaga FX y conserva canal musical",
+      "passed": true
+    },
+    {
+      "name": "Respuesta errónea no consume oportunidades",
+      "passed": true
+    },
+    {
+      "name": "Nombre correcto resuelve nota y reproduce altura",
+      "passed": true
+    },
+    {
+      "name": "Pausa congela reloj y oculta notas",
+      "passed": true
+    },
+    {
+      "name": "Reanudar conserva oportunidades",
+      "passed": true
+    },
+    {
+      "name": "Llegada al centro consume una oportunidad",
+      "passed": true
+    },
+    {
+      "name": "Salir de Defender pausa su simulación",
+      "passed": true
+    },
+    {
+      "name": "Salir de ritmo cancela cuenta y fuentes musicales",
+      "passed": true
+    },
+    {
+      "name": "Oído: ejemplo y respuesta funcional",
+      "passed": true
+    },
+    {
+      "name": "Teoría: acorde y respuesta funcional",
+      "passed": true
+    },
+    {
+      "name": "Progreso conserva resultados solo en esta sesión",
+      "passed": true
+    },
+    {
+      "name": "Síntesis emite señal real sin clipping en confirmación",
+      "passed": true
+    },
+    {
+      "name": "Texto 200% sin desborde de documento",
+      "passed": true
+    },
+    {
+      "name": "Reducción de movimiento: nota fija y tiempo activo",
+      "passed": true
+    },
+    {
+      "name": "Convergencia sin respuestas termina tras tres llegadas",
+      "passed": true
+    },
+    {
+      "name": "Los pentagramas móviles no se superponen en el recorrido",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "realTaps": {
+    "matched": 9,
+    "omitted": 0,
+    "extra": 0,
+    "mean": 16,
+    "taps": [
+      {
+        "time": 7.933333342274196,
+        "index": 0,
+        "error": 7.933333342274196
+      },
+      {
+        "time": 757.9666666636866,
+        "index": 1,
+        "error": 7.966666663686617
+      },
+      {
+        "time": 1525.4333333273732,
+        "index": 2,
+        "error": 25.433333327373298
+      },
+      {
+        "time": 1887.133333330353,
+        "index": 3,
+        "error": 12.133333330353047
+      },
+      {
+        "time": 2277.866666669647,
+        "index": 4,
+        "error": 27.86666666964699
+      },
+      {
+        "time": 3019,
+        "index": 5,
+        "error": 19.000000000000128
+      },
+      {
+        "time": 3388.266666660706,
+        "index": 6,
+        "error": 13.266666660705972
+      },
+      {
+        "time": 3757.8666666696467,
+        "index": 7,
+        "error": 7.866666669646527
+      },
+      {
+        "time": 4525.633333330352,
+        "index": 8,
+        "error": 25.633333330351782
+      }
+    ],
+    "bpm": 80
+  },
+  "noTaps": {
+    "matched": 0,
+    "omitted": 9,
+    "extra": 0,
+    "mean": null,
+    "taps": [],
+    "bpm": 80
+  },
+  "sound": {
+    "rms": 0.006420049119260292,
+    "peak": 0.012401150539517403,
+    "rate": 48000
+  }
+}

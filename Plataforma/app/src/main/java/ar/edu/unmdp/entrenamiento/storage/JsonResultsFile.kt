@@ -18,13 +18,24 @@ internal class JsonResultsFile<T>(private val file: File, itemSerializer: KSeria
 
     suspend fun all(): List<T> = withContext(Dispatchers.IO) { profile.transaction { read().results } }
 
-    suspend fun append(result: T, isDuplicate: (T) -> Boolean = { false }) {
+    suspend fun append(result: T, isDuplicate: (T) -> Boolean = { false }) = upsert(result, isDuplicate) { false }
+
+    suspend fun upsert(result: T, sameIdentity: (T) -> Boolean, replace: (T) -> Boolean) {
+        upsertPrepared(result, sameIdentity, replace) { item, _ -> item }
+    }
+
+    /** Prepare derived state under the same profile lock and commit it in the same file replacement. */
+    suspend fun upsertPrepared(result: T, sameIdentity: (T) -> Boolean, replace: (T) -> Boolean,
+        prepare: (T, List<T>) -> T): T {
         val generation = profile.generation.get()
-        withContext(Dispatchers.IO) { profile.transaction {
+        return withContext(Dispatchers.IO) { profile.transaction {
             check(profile.generation.get() == generation) { "El perfil se reinició durante el guardado." }
             val previous = read()
-            if (previous.results.any(isDuplicate)) return@transaction
-            val document = previous.copy(results = previous.results + result)
+            val index = previous.results.indexOfFirst(sameIdentity)
+            if (index >= 0 && !replace(previous.results[index])) return@transaction previous.results[index]
+            val prepared = prepare(result, previous.results)
+            val results = if (index < 0) previous.results + prepared else previous.results.toMutableList().also { it[index] = prepared }
+            val document = previous.copy(results = results)
             val parent = file.absoluteFile.parentFile!!
             check(parent.isDirectory || parent.mkdirs()) { "No se pudo crear el directorio de resultados." }
             val temporary = File.createTempFile("results-", ".tmp", parent)
@@ -36,6 +47,7 @@ internal class JsonResultsFile<T>(private val file: File, itemSerializer: KSeria
                     Files.move(temporary.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING)
                 }
             } finally { temporary.delete() }
+            prepared
         } }
     }
 

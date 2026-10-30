@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-28",
+  "referenceLimitation": "No se recibieron nuevas imágenes adjuntas en el mensaje; se usó la referencia guardada menu.png y la descripción del usuario.",
+  "assets": [
+    {
+      "key": "garden",
+      "file": "garden.png",
+      "prompt": "Use case: illustration-story. Original Music Garden musical learning indie game. Create a deliberately SIMPLE STYLIZED 2D game asset, like a cozy hand-painted mobile game with chunky clean silhouettes and broad flat shapes, only 2-3 softly shaded tones per object, restrained very fine paper grain. The supplied image is ONLY a reference for simplified 2D material rendering, rounded shapes and soft painted shadows; do NOT copy its character, UI, layout or objects. Palette sage #A7B99E, moss #718563, forest green #315844, cream #FFF9ED, paper #F5EEDC, muted honey wood #D9AD69. Clear gentle contours. This must look like simple painted 2D game art, NOT a photograph, realistic illustration, polished 3D render or detailed concept painting. No intricate leaf veins, no realistic wood grain, no gilding, gold trim, metal, ornate frames, flower garlands, glowing particles, bloom, decorative musical symbols, text, letters, numbers, logos, watermark, buttons with text, staves or notation. Asset type: portrait 2:3 quiet woodland backdrop. Three broad layers of rounded sage tree canopies, two simple tree trunks cropped at outer edges, a pale sunlit clearing and a curving moss-green ground. Just a few big stylized leaves near lower corners. Foreground and background have muted low contrast. Large shapes, lots of quiet open space, very few objects, broad painted planes. No detailed plants, no flowers, no pavilion, no pond, no instruments or books. The book will cover the center of this image. Flat soft daylight, natural cozy mood.",
+      "generator": "imagegen (herramienta integrada)",
+      "reference": "design/references/music-garden/menu.png (solo estilo, no extracción)",
+      "source": "C:\\Users\\Juan\\.codex\\generated_images\\01a18336-bce2-7fd0-bf3d-e00a63edab41\\exec-31c77f59-b147-43c8-b2f4-8f04e665e150.png",
+      "transparentRequested": false,
+      "status": "base C elegida; refinamiento de presentacion preparado para revision",
+      "selection": "C/Escenario elegida como base definitiva por usuario, 2026-10-28; raster conservado, refinamiento de presentacion en escenario.css/js"
+    },
+    {
+      "key": "book",
+      "file": "book.png",
+      "prompt": "Use case: illustration-story. Original Music Garden musical learning indie game. Create a deliberately SIMPLE STYLIZED 2D game asset, like a cozy hand-painted mobile game with chunky clean silhouettes and broad flat shapes, only 2-3 softly shaded tones per object, restrained very fine paper grain. The supplied image is ONLY a reference for simplified 2D material rendering, rounded shapes and soft painted shadows; do NOT copy its character, UI, layout or objects. Palette sage #A7B99E, moss #718563, forest green #315844, cream #FFF9ED, paper #F5EEDC, muted honey wood #D9AD69. Clear gentle contours. This must look like simple painted 2D game art, NOT a photograph, realistic illustration, polished 3D render or detailed concept painting. No intricate leaf veins, no realistic wood grain, no gilding, gold trim, metal, ornate frames, flower garlands, glowing particles, bloom, decorative musical symbols, text, letters, numbers, logos, watermark, buttons with text, staves or notation. Asset type: isolated ONE upright vertical storybook page assembly on actual transparent background, portrait 2:3 aspect. Top-down almost straight view. Large blank cream front page with subtly uneven rounded corners and extremely subtle paper grain. 3 thick layered pages visible below and to the right, ochre wooden-brown cover sticking out 3% at right/bottom, simple sage spine strip on left, soft short painted shadow. NO two-page spread. No ornaments, decorations, corner fittings, stitching, writing, tabs, ribbons or buttons. Front page should cover 88% width and 90% height. All middle reading area clean and near-uniform ivory. Very simple chunky 2D geometry and soft painted shadows, like an illustrated mobile game, no realistic detailed fibers or rough crumbling aged parchment. Fill canvas leaving 2% transparent padding.",
+      "generator": "imagegen (herramienta integrada)",
+      "reference": "design/references/music-garden/menu.png (solo estilo, no extracción)",
+      "source": "C:\\Users\\Juan\\.codex\\generated_images\\01a18336-bce2-7fd0-bf3d-e00a63edab41\\exec-d33f3610-92b1-4a0e-80bb-61cbdef8a19b.png",
+      "transparentRequested": true,
+      "status": "base C elegida; refinamiento de presentacion preparado para revision",
+      "selection": "C/Escenario elegida como base definitiva por usuario, 2026-10-28; raster conservado, refinamiento de presentacion en escenario.css/js"
+    },
+    {
+      "key": "piano-a",
+      "file": "piano-a.png",
+      "prompt": "Use case: illustration-story. Original Music Garden musical learning indie game. Create a deliberately SIMPLE STYLIZED 2D game asset, like a cozy hand-painted mobile game with chunky clean silhouettes and broad flat shapes, only 2-3 softly shaded tones per object, restrained very fine paper grain. The supplied image is ONLY a reference for simplified 2D material rendering, rounded shapes and soft painted shadows; do NOT copy its character, UI, layout or objects. Palette sage #A7B99E, moss #718563, forest green #315844, cream #FFF9ED, paper #F5EEDC, muted honey wood #D9AD69. Clear gentle contours. This must look like simple painted 2D game art, NOT a photograph, realistic illustration, polished 3D render or detailed concept painting. No intricate leaf veins, no realistic wood grain, no gilding, gold trim, metal, ornate frames, flower garlands, glowing particles, bloom, decorative musical symbols, text, letters, numbers, logos, watermark, buttons with text, staves or notation. Asset type: one landscape 3:2 hero illustration with actual transparent background. A small cozy sage-green upright piano on a simple pale moss patch, a chunky curved wooden top and ivory keyboard with five black keys grouped correctly as two and three across a simple octave depiction. Three large stylized leaves behind its left side and one small rounded shrub. Entire piano visible, front three-quarter view, clean painted wooden forms, simple light shading, friendly rounded feet. No elaborate setting, no arch, no canopy, no fairy lights, no tiny details. Strong centered silhouette readable at 200px wide. Plenty of transparent air around the subject.",
+      "generator": "imagegen (herramienta integrada)",
+      "reference": "design/references/music-garden/menu.png (solo estilo, no extracción)",
+      "source": "C:\\Users\\Juan\\.codex\\generated_images\\01a18336-bce2-7fd0-bf3d-e00a63edab41\\exec-00e6fe64-e7cd-49a7-b5fe-2347862c8a28.png",
+      "transparentRequested": true,
+      "status": "antecedente no seleccionado",
+      "selection": "Antecedente A/B no seleccionado; conservar sin modificaciones."
+    },
+    {
+      "key": "piano-b",
+      "file": "piano-b.png",
+      "prompt": "Use case: illustration-story. Original Music Garden musical learning indie game. Create a deliberately SIMPLE STYLIZED 2D game asset, like a cozy hand-painted mobile game with chunky clean silhouettes and broad flat shapes, only 2-3 softly shaded tones per object, restrained very fine paper grain. The supplied image is ONLY a reference for simplified 2D material rendering, rounded shapes and soft painted shadows; do NOT copy its character, UI, layout or objects. Palette sage #A7B99E, moss #718563, forest green #315844, cream #FFF9ED, paper #F5EEDC, muted honey wood #D9AD69. Clear gentle contours. This must look like simple painted 2D game art, NOT a photograph, realistic illustration, polished 3D render or detailed concept painting. No intricate leaf veins, no realistic wood grain, no gilding, gold trim, metal, ornate frames, flower garlands, glowing particles, bloom, decorative musical symbols, text, letters, numbers, logos, watermark, buttons with text, staves or notation. Asset type: one landscape 3:2 hero illustration with actual transparent background. A small honey-colored wooden grand piano with simple sage-green lid raised, placed on a low plain moss-green platform. Three-quarter view, recognizably a grand piano, legible ivory keyboard with black keys grouped in twos and threes, one simple large leaf sprig beside a foot. Entire instrument visible. Broad rounded shapes, gently imperfect illustrated contours, only 2-3 shade planes, no detailed scenery or flowers. Friendly quiet 2D mobile-game quality, not a render, tiny simple key details only, ample transparent air.",
+      "generator": "imagegen (herramienta integrada)",
+      "reference": "design/references/music-garden/menu.png (solo estilo, no extracción)",
+      "source": "C:\\Users\\Juan\\.codex\\generated_images\\01a18336-bce2-7fd0-bf3d-e00a63edab41\\exec-6e0fe655-d0cb-48ae-bb73-269f40aadc9b.png",
+      "transparentRequested": true,
+      "status": "antecedente no seleccionado",
+      "selection": "Antecedente A/B no seleccionado; conservar sin modificaciones."
+    },
+    {
+      "key": "piano-c",
+      "file": "piano-c.png",
+      "prompt": "Use case: illustration-story. Original Music Garden musical learning indie game. Create a deliberately SIMPLE STYLIZED 2D game asset, like a cozy hand-painted mobile game with chunky clean silhouettes and broad flat shapes, only 2-3 softly shaded tones per object, restrained very fine paper grain. The supplied image is ONLY a reference for simplified 2D material rendering, rounded shapes and soft painted shadows; do NOT copy its character, UI, layout or objects. Palette sage #A7B99E, moss #718563, forest green #315844, cream #FFF9ED, paper #F5EEDC, muted honey wood #D9AD69. Clear gentle contours. This must look like simple painted 2D game art, NOT a photograph, realistic illustration, polished 3D render or detailed concept painting. No intricate leaf veins, no realistic wood grain, no gilding, gold trim, metal, ornate frames, flower garlands, glowing particles, bloom, decorative musical symbols, text, letters, numbers, logos, watermark, buttons with text, staves or notation. Asset type: one landscape 3:2 hero illustration with actual transparent background. A charming small forest-green upright piano with a warm wooden lid, standing beneath ONE sweeping simple branch with just FIVE large rounded sage leaves and a single pale hanging bell-shaped flower. Complete piano centered, recognizably ivory keyboard with correctly grouped black keys, one octave stylized. Rounded illustrative shapes, only two or three shade values, gentle organic brush outlines. A small simple moss ground shape. No arch, no dense foliage, no glowing lights, no detailed leaf veins. Hero composition is wider and more scenic than an icon but remains sparse clean 2D art.",
+      "generator": "imagegen (herramienta integrada)",
+      "reference": "design/references/music-garden/menu.png (solo estilo, no extracción)",
+      "source": "C:\\Users\\Juan\\.codex\\generated_images\\01a18336-bce2-7fd0-bf3d-e00a63edab41\\exec-0a17e9a6-c643-4398-b664-c6d1a7213020.png",
+      "transparentRequested": true,
+      "status": "base C elegida; refinamiento de presentacion preparado para revision",
+      "selection": "C/Escenario elegida como base definitiva por usuario, 2026-10-28; raster conservado, refinamiento de presentacion en escenario.css/js"
+    },
+    {
+      "key": "controls",
+      "file": "controls.png",
+      "prompt": "Use case: illustration-story. Original Music Garden musical learning indie game. Create a deliberately SIMPLE STYLIZED 2D game asset, like a cozy hand-painted mobile game with chunky clean silhouettes and broad flat shapes, only 2-3 softly shaded tones per object, restrained very fine paper grain. The supplied image is ONLY a reference for simplified 2D material rendering, rounded shapes and soft painted shadows; do NOT copy its character, UI, layout or objects. Palette sage #A7B99E, moss #718563, forest green #315844, cream #FFF9ED, paper #F5EEDC, muted honey wood #D9AD69. Clear gentle contours. This must look like simple painted 2D game art, NOT a photograph, realistic illustration, polished 3D render or detailed concept painting. No intricate leaf veins, no realistic wood grain, no gilding, gold trim, metal, ornate frames, flower garlands, glowing particles, bloom, decorative musical symbols, text, letters, numbers, logos, watermark, buttons with text, staves or notation. Asset type: simple reusable UI material sheet, square canvas actual transparent background. EXACTLY three elements well separated vertically, centered: TOP third a plain softly rounded horizontal sage-green painted wooden button plaque, width 80% of canvas, height 16%, just a darker lower edge for thickness, absolutely blank center; MIDDLE third an identical plain honey-wood button plaque, blank center; BOTTOM third a simple sage-green LEFT-pointing triangle arrow with rounded corners and subtle dark lower edge, small and centered. No frame around these elements, no ornaments, leaves, flowers, screws, text or borders. Very clean simple charming 2D game UI shapes. Smooth painted soft shading, matte colors, no plastic/gloss.",
+      "generator": "imagegen (herramienta integrada)",
+      "reference": "design/references/music-garden/menu.png (solo estilo, no extracción)",
+      "source": "C:\\Users\\Juan\\.codex\\generated_images\\01a18336-bce2-7fd0-bf3d-e00a63edab41\\exec-6ebd3267-3dfb-44f3-9ea4-8f2d6cb8d5fd.png",
+      "transparentRequested": true,
+      "status": "placa verde elegida con C; resto del atlas preservado como antecedente",
+      "selection": "Placa verde adoptada con C; dorada no adoptada. Flechas de C ahora nativas; atlas preservado para antecedentes."
+    }
+  ]
+}

@@ -14,8 +14,8 @@ class TunerConfigurationAndroidTest {
         }
     }
     @Test fun perfilDropDYPersonalizadaSeConservanSinIniciarMicrofono() {
-        compose.waitUntil(15_000) { compose.activity.hasWindowFocus() }
-        compose.onNodeWithTag("game-tuner").performScrollTo().performClick()
+        compose.awaitGardenMenu()
+        compose.openMenuDestination("game-tuner")
         awaitReady()
         compose.onNodeWithTag("tuner-configuration-open").performScrollTo().performClick()
         val name = "Guitarra A2 ${System.nanoTime()}"

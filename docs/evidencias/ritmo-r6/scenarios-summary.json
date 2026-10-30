@@ -1,0 +1,861 @@
+[
+  {
+    "scenario": "Dos ejercicios altos",
+    "origin": "simulated",
+    "exercises": 2,
+    "progress": {
+      "categories": {
+        "QUARTER": {
+          "bpm": 65,
+          "mastered": true,
+          "masteryEvidence": [
+            "simulated-1",
+            "simulated-2"
+          ]
+        }
+      }
+    },
+    "notes": [
+      "Datos sintéticos: no son desempeño de un estudiante ni escriben en el perfil."
+    ],
+    "decisions": [
+      {
+        "id": "simulated-1",
+        "bpm": 60,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "FIRST_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      },
+      {
+        "id": "simulated-2",
+        "bpm": 60,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "INCREASED",
+            "appliedDelta": 5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": "Alto seguido de omisiones",
+    "origin": "simulated",
+    "exercises": 2,
+    "progress": {
+      "categories": {
+        "QUARTER": {}
+      }
+    },
+    "notes": [
+      "Datos sintéticos: no son desempeño de un estudiante ni escriben en el perfil."
+    ],
+    "decisions": [
+      {
+        "id": "simulated-1",
+        "bpm": 60,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "FIRST_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      },
+      {
+        "id": "simulated-2",
+        "bpm": 60,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 0,
+            "extras": 0,
+            "precision": 0.0,
+            "control": 1.0,
+            "mastery": "bajo",
+            "reason": "NOT_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": "Mezcla con categoría más lenta",
+    "origin": "simulated",
+    "exercises": 3,
+    "progress": {
+      "categories": {
+        "QUARTER": {
+          "bpm": 65,
+          "mastered": true,
+          "masteryEvidence": [
+            "simulated-1",
+            "simulated-2"
+          ]
+        },
+        "EIGHTHS": {
+          "highStreak": 1,
+          "streakEvidence": [
+            "simulated-3"
+          ]
+        }
+      }
+    },
+    "notes": [
+      "Datos sintéticos: no son desempeño de un estudiante ni escriben en el perfil."
+    ],
+    "decisions": [
+      {
+        "id": "simulated-1",
+        "bpm": 60,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "FIRST_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      },
+      {
+        "id": "simulated-2",
+        "bpm": 60,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "INCREASED",
+            "appliedDelta": 5
+          }
+        ]
+      },
+      {
+        "id": "simulated-3",
+        "bpm": 60,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 5,
+            "units": 5,
+            "successes": 5,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "LOWER_TEMPO",
+            "appliedDelta": 0
+          },
+          {
+            "category": "EIGHTHS",
+            "occurrences": 5,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "FIRST_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": "Una sola aparición objetivo",
+    "origin": "simulated",
+    "exercises": 1,
+    "progress": {
+      "categories": {
+        "QUARTER": {}
+      }
+    },
+    "notes": [
+      "Datos sintéticos: no son desempeño de un estudiante ni escriben en el perfil."
+    ],
+    "decisions": [
+      {
+        "id": "simulated-1",
+        "bpm": 60,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 1,
+            "units": 1,
+            "successes": 1,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": null,
+            "reason": "INSUFFICIENT",
+            "appliedDelta": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": "Avance hasta 120 BPM",
+    "origin": "simulated",
+    "exercises": 26,
+    "progress": {
+      "categories": {
+        "QUARTER": {
+          "bpm": 120,
+          "mastered": true,
+          "masteryEvidence": [
+            "simulated-1",
+            "simulated-2"
+          ]
+        }
+      }
+    },
+    "notes": [
+      "Datos sintéticos: no son desempeño de un estudiante ni escriben en el perfil."
+    ],
+    "decisions": [
+      {
+        "id": "simulated-1",
+        "bpm": 60,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "FIRST_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      },
+      {
+        "id": "simulated-2",
+        "bpm": 60,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "INCREASED",
+            "appliedDelta": 5
+          }
+        ]
+      },
+      {
+        "id": "simulated-3",
+        "bpm": 65,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "FIRST_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      },
+      {
+        "id": "simulated-4",
+        "bpm": 65,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "INCREASED",
+            "appliedDelta": 5
+          }
+        ]
+      },
+      {
+        "id": "simulated-5",
+        "bpm": 70,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "FIRST_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      },
+      {
+        "id": "simulated-6",
+        "bpm": 70,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "INCREASED",
+            "appliedDelta": 5
+          }
+        ]
+      },
+      {
+        "id": "simulated-7",
+        "bpm": 75,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "FIRST_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      },
+      {
+        "id": "simulated-8",
+        "bpm": 75,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "INCREASED",
+            "appliedDelta": 5
+          }
+        ]
+      },
+      {
+        "id": "simulated-9",
+        "bpm": 80,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "FIRST_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      },
+      {
+        "id": "simulated-10",
+        "bpm": 80,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "INCREASED",
+            "appliedDelta": 5
+          }
+        ]
+      },
+      {
+        "id": "simulated-11",
+        "bpm": 85,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "FIRST_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      },
+      {
+        "id": "simulated-12",
+        "bpm": 85,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "INCREASED",
+            "appliedDelta": 5
+          }
+        ]
+      },
+      {
+        "id": "simulated-13",
+        "bpm": 90,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "FIRST_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      },
+      {
+        "id": "simulated-14",
+        "bpm": 90,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "INCREASED",
+            "appliedDelta": 5
+          }
+        ]
+      },
+      {
+        "id": "simulated-15",
+        "bpm": 95,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "FIRST_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      },
+      {
+        "id": "simulated-16",
+        "bpm": 95,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "INCREASED",
+            "appliedDelta": 5
+          }
+        ]
+      },
+      {
+        "id": "simulated-17",
+        "bpm": 100,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "FIRST_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      },
+      {
+        "id": "simulated-18",
+        "bpm": 100,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "INCREASED",
+            "appliedDelta": 5
+          }
+        ]
+      },
+      {
+        "id": "simulated-19",
+        "bpm": 105,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "FIRST_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      },
+      {
+        "id": "simulated-20",
+        "bpm": 105,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "INCREASED",
+            "appliedDelta": 5
+          }
+        ]
+      },
+      {
+        "id": "simulated-21",
+        "bpm": 110,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "FIRST_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      },
+      {
+        "id": "simulated-22",
+        "bpm": 110,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "INCREASED",
+            "appliedDelta": 5
+          }
+        ]
+      },
+      {
+        "id": "simulated-23",
+        "bpm": 115,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "FIRST_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      },
+      {
+        "id": "simulated-24",
+        "bpm": 115,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "INCREASED",
+            "appliedDelta": 5
+          }
+        ]
+      },
+      {
+        "id": "simulated-25",
+        "bpm": 120,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "FIRST_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      },
+      {
+        "id": "simulated-26",
+        "bpm": 120,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "CEILING",
+            "appliedDelta": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": "Misma partitura con otra semilla",
+    "origin": "simulated",
+    "exercises": 2,
+    "progress": {
+      "categories": {
+        "QUARTER": {
+          "highStreak": 1,
+          "streakEvidence": [
+            "simulated-1"
+          ]
+        }
+      }
+    },
+    "notes": [
+      "Datos sintéticos: no son desempeño de un estudiante ni escriben en el perfil."
+    ],
+    "decisions": [
+      {
+        "id": "simulated-1",
+        "bpm": 60,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "FIRST_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      },
+      {
+        "id": "simulated-repeat",
+        "bpm": 60,
+        "origin": "practice",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "REPEATED",
+            "appliedDelta": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": "Fallo y reintento de guardado",
+    "origin": "simulated",
+    "exercises": 1,
+    "progress": {
+      "categories": {
+        "QUARTER": {
+          "highStreak": 1,
+          "streakEvidence": [
+            "simulated-retry"
+          ]
+        }
+      }
+    },
+    "notes": [
+      "Datos sintéticos: no son desempeño de un estudiante ni escriben en el perfil.",
+      "Primer guardado fallido: un pendiente en memoria, cero cambios de progreso.",
+      "Reintento aplicado una sola vez con la misma identidad."
+    ],
+    "decisions": [
+      {
+        "id": "simulated-retry",
+        "bpm": 60,
+        "origin": "progression",
+        "decisions": [
+          {
+            "category": "QUARTER",
+            "occurrences": 10,
+            "units": 10,
+            "successes": 10,
+            "extras": 0,
+            "precision": 1.0,
+            "control": 1.0,
+            "mastery": "alto",
+            "reason": "FIRST_HIGH",
+            "appliedDelta": 0
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -30,7 +30,7 @@ class GuidedTunerLifecycleAndroidTest {
     @Test fun recrearPausarYSalirInterrumpenGuiadoSinCompletarNiReiniciar() {
         InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand(
             "pm grant ar.edu.unmdp.entrenamiento ${Manifest.permission.RECORD_AUDIO}").close()
-        compose.onNodeWithTag("game-tuner").performScrollTo().performClick()
+        compose.openMenuDestination("garden-tuner-guided")
         ready()
         compose.onNodeWithTag("tuner-mode-GUIDED").performScrollTo().performClick()
         ready()
@@ -45,7 +45,7 @@ class GuidedTunerLifecycleAndroidTest {
             interrupted()
             compose.onNodeWithTag("tuner-start").performScrollTo().performClick()
             compose.onNodeWithText("Volver al menú").performScrollTo().performClick()
-            compose.onNodeWithTag("game-tuner").performScrollTo().performClick()
+            compose.openMenuDestination("garden-tuner-guided")
             interrupted()
         } finally {
             compose.onNodeWithTag("tuner-mode-FREE").performScrollTo().performClick()

@@ -1,0 +1,38 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Music Garden · estudio de movimiento</title>
+<style>
+@font-face{font-family:Fraunces;src:url(fonts/fraunces-variable.ttf);font-weight:100 900;font-display:block}
+@font-face{font-family:'Nunito Sans';src:url(fonts/nunito-sans-variable.ttf);font-weight:200 1000;font-display:block}
+:root{--background:#F5EEDC;--surface:#FFF9ED;--text:#28392F;--primary:#315844;--sage:#A7B99E;--moss:#718563;--success:#D9AD69;--warning:#C9806B;--audio:#86AAB3;--textSecondary:#536457;--onPrimary:#FFF9ED;--primaryPressed:#254633;--surfaceSelected:#E1E9DB;--border:#667A67;--errorText:#8B4436;--errorSurface:#F3DED5;--focus:#3C6872;--disabledSurface:#E2DECF;--disabledText:#627063; --duration-press:140ms;--duration-success:450ms;--ease:cubic-bezier(0.4, 0, 0.2, 1)}
+*{box-sizing:border-box}body{margin:0;font:16px/1.5 'Nunito Sans';background:var(--background);color:var(--text)}main{max-width:480px;margin:auto;padding:24px 16px}
+h1{font:600 24px/1.3 Fraunces;margin:0 0 12px}p{margin:0 0 16px}.scene{position:relative;height:240px;background:var(--surface);border-radius:16px;overflow:hidden;margin:24px 0 12px}
+.tree{position:absolute;width:140px;height:122px;left:20px;bottom:16px}.moth{position:absolute;width:60px;height:44px;left:65%;top:50px}.ring{position:absolute;left:calc(65% - 36px);top:14px;width:132px;height:132px;border:2px solid var(--audio);border-radius:50%;opacity:0}
+.pollen{position:absolute;left:calc(65% + 30px);top:72px}.pollen i{position:absolute;width:5px;height:5px;background:var(--success);border-radius:50%;opacity:0}
+.feedback{min-height:52px;padding:12px 16px;background:var(--surface);border-radius:12px;color:var(--textSecondary);margin-bottom:16px}.running .feedback{background:var(--success);color:var(--text)}
+button{border:0;border-radius:16px;min-height:52px;width:100%;padding:12px 24px;background:var(--primary);color:var(--onPrimary);font:700 16px/1.4 'Nunito Sans';transition:transform var(--duration-press) var(--ease);cursor:pointer}button:active{transform:scale(.98)}button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+label{display:flex;gap:12px;align-items:center;min-height:48px;margin:12px 0;font-size:16px}input{width:20px;height:20px;accent-color:var(--primary)}.note{font-size:14px;color:var(--textSecondary)}
+.running .moth{animation:resolve var(--duration-success) var(--ease) forwards}.running .ring{animation:resonate var(--duration-success) ease-out forwards}.running .pollen i{animation:pollen var(--duration-success) ease-out forwards}
+@keyframes resolve{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.96)}}
+@keyframes resonate{0%{opacity:0;transform:scale(.35)}20%{opacity:1}100%{opacity:0;transform:scale(1)}}
+@keyframes pollen{0%{opacity:0;transform:translate(0,0)}20%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y))}}
+.reduced .moth,.reduced .ring,.reduced .pollen i{animation:none!important}.reduced.running .moth{visibility:hidden}.reduced button{transition:none}
+@media(prefers-reduced-motion:reduce){.moth,.ring,.pollen i{animation:none!important}.running .moth{visibility:hidden}button{transition:none}}
+</style><body><main><h1>Movimiento de Music Garden</h1><p>Muestra del acierto: el resultado aparece al pulsar; la onda y el polen lo acompañan.</p>
+<div class="scene"><svg class="tree" viewBox="0 0 170 148" aria-hidden="true"><g stroke="var(--primary)" stroke-width="1.5" stroke-linejoin="round">
+<path d="M12 72Q0 53 22 44Q12 26 39 23Q39 8 61 14Q70 0 90 14Q110 7 120 27Q148 23 146 45Q170 48 157 69Q167 91 136 91Q123 105 103 91Q84 107 66 93Q43 104 30 89Q8 96 12 72Z" fill="var(--sage)"/>
+<path d="M19 58Q8 40 36 36Q39 18 63 26Q66 51 42 62Z" fill="var(--moss)"/>
+<path d="M101 22Q128 15 135 38Q157 35 153 58L128 72Q102 62 101 22Z" fill="var(--moss)"/>
+<path d="M65 136Q84 116 83 88L66 69 58 47 83 72 91 49 96 29 101 58 94 88Q96 117 113 137Z" fill="var(--success)"/>
+<path d="M82 130Q91 112 88 92M91 82 73 58M92 88 118 63" fill="none"/>
+<path d="M40 139Q72 132 128 140" fill="none"/></g></svg><svg class="moth" viewBox="0 0 64 46" aria-hidden="true"><g stroke="var(--primary)" stroke-width="1.4" stroke-linejoin="round">
+<path d="M31 22Q15 0 2 6Q-2 21 25 28Q5 29 15 43Q25 46 31 27Z" fill="var(--sage)"/>
+<path d="M33 22Q49 0 62 6Q66 21 39 28Q59 29 49 43Q39 46 33 27Z" fill="var(--sage)"/>
+<path d="M31 20 12 12M33 20 53 12M29 29 20 36M35 29 44 36" fill="none"/>
+<path d="M30 20Q28 37 32 43Q36 37 34 20Z" fill="var(--primary)"/>
+<path d="M31 20 26 13M33 20 38 13" fill="none"/></g></svg><div class="ring"></div><div class="pollen"><i style="--x:-36px;--y:-30px"></i><i style="--x:0px;--y:-45px"></i><i style="--x:32px;--y:-28px"></i><i style="--x:44px;--y:0px"></i><i style="--x:30px;--y:33px"></i><i style="--x:0px;--y:40px"></i><i style="--x:-34px;--y:27px"></i><i style="--x:-44px;--y:0px"></i></div></div>
+<div class="feedback" aria-live="polite">Listo para ver el efecto.</div><button type="button" id="play" data-control="preview">Ver acierto</button><label><input type="checkbox" id="reduce">Reducir movimiento</label><p class="note">Ilustración de movimiento de 450 ms. No reproduce audio ni evalúa una respuesta musical. Podés repetirla mientras está en curso.</p></main>
+<script>
+const p=new URLSearchParams(location.search),reduce=document.querySelector('#reduce');reduce.checked=p.has('reduce');document.body.classList.toggle('reduced',reduce.checked);reduce.onchange=()=>document.body.classList.toggle('reduced',reduce.checked);
+function run(){document.body.classList.remove('running');document.querySelector('.scene').getBoundingClientRect();document.querySelector('.feedback').textContent='Correcto. El jardín resuena.';document.body.classList.add('running')}
+document.querySelector('#play').onclick=run;
+document.fonts.ready.then(()=>{if(p.has('frame')){run();requestAnimationFrame(()=>{document.getAnimations().forEach(a=>{a.pause();a.currentTime=Number(p.get('frame'))});document.documentElement.dataset.fonts='ready'})}else document.documentElement.dataset.fonts='ready'});
+</script></body></html>

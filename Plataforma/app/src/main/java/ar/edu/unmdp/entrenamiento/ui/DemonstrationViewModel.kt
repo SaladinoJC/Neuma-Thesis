@@ -16,7 +16,10 @@ class DemonstrationViewModel(private val data: Demonstration, private val drain:
     private val refresh: suspend () -> Unit,
     private val helpSimulation: () -> ar.edu.unmdp.entrenamiento.instruments.InstrumentResult? = { null },
     private val pendingVoice: () -> ar.edu.unmdp.entrenamiento.voice.VoiceResult? = { null },
-    private val drainForReset: suspend () -> Unit = drain) : ViewModel() {
+    private val drainForReset: suspend () -> Unit = drain,
+    private val pendingTuner: () -> List<ar.edu.unmdp.entrenamiento.tuner.TunerResult> = { emptyList() },
+    private val pendingRhythm: () -> List<ar.edu.unmdp.entrenamiento.rhythm.RhythmRecord> = { emptyList() },
+    private val pendingDefender: () -> List<ar.edu.unmdp.entrenamiento.defender.DefenderRecord> = { emptyList() }) : ViewModel() {
     private val mutableUi = MutableStateFlow(DemonstrationUi())
     val ui = mutableUi.asStateFlow()
     private var snapshot: String? = null
@@ -50,7 +53,7 @@ class DemonstrationViewModel(private val data: Demonstration, private val drain:
     }
     fun prepareExport() = act {
         drain()
-        snapshot = data.export(BuildConfig.VERSION_NAME, ui.value.simulation, helpSimulation(), ui.value.benchmark, pendingVoice())
+        snapshot = data.export(BuildConfig.VERSION_NAME, ui.value.simulation, helpSimulation(), ui.value.benchmark, pendingVoice(), pendingTuner(), pendingRhythm(), pendingDefender())
         mutableUi.value = ui.value.copy(pickerReady = true, awaitingDestination = true)
     }
     fun pickerLaunched() { mutableUi.value = ui.value.copy(pickerReady = false) }
@@ -73,7 +76,10 @@ class DemonstrationViewModel(private val data: Demonstration, private val drain:
         viewModelScope.launch {
             try {
                 val pending = pendingVoice()
-                withContext(Dispatchers.IO) { data.writeRecovery(checkNotNull(open()) { "No se pudo abrir el destino." }, pending) }
+                val tuner = pendingTuner()
+                val rhythm = pendingRhythm()
+                val defender = pendingDefender()
+                withContext(Dispatchers.IO) { data.writeRecovery(checkNotNull(open()) { "No se pudo abrir el destino." }, pending, tuner, rhythm, defender) }
                 notify("Originales guardados para recuperación.")
             } catch (error: Exception) { notify("No se pudo exportar: ${error.message}") }
             finally { writing = false; mutableUi.value = ui.value.copy(busy = false) }

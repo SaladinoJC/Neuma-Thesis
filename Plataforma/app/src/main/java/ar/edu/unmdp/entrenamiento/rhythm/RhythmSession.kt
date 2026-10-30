@@ -26,7 +26,18 @@ enum class RhythmCategory(val code: String, val label: String) {
     REST_EIGHTH("R10", "Silencio de corchea + corchea"),
     EIGHTH_REST("R11", "Corchea + silencio de corchea"),
     QUARTER_REST("R12", "Silencio de negra"), HALF_REST("R18", "Silencio de blanca"),
-    BAR_REST("R19", "Silencio de compás")
+    BAR_REST("R19", "Silencio de compás"),
+    SIXTEENTHS("R03", "Cuatro semicorcheas"),
+    EIGHTH_TWO_SIXTEENTHS("R04", "Corchea + dos semicorcheas"),
+    TWO_SIXTEENTHS_EIGHTH("R05", "Dos semicorcheas + corchea"),
+    SIXTEENTH_EIGHTH_SIXTEENTH("R06", "Semicorchea + corchea + semicorchea"),
+    DOTTED_EIGHTH_SIXTEENTH("R07", "Corchea con puntillo + semicorchea"),
+    SIXTEENTH_DOTTED_EIGHTH("R08", "Semicorchea + corchea con puntillo"),
+    REST_SIXTEENTH("R13", "Silencio de semicorchea + tres semicorcheas"),
+    SIXTEENTHS_REST("R14", "Tres semicorcheas + silencio de semicorchea"),
+    EIGHTH_TRIPLET("R15", "Tresillo de corcheas"),
+    SYNCOPATION("R16", "Corchea + negra + corchea"),
+    TIED_QUARTERS("R17", "Dos negras ligadas")
 }
 @Serializable
 data class RhythmNote(val duration: Beat, val rest: Boolean = false, val tieToNext: Boolean = false, val tuplet: Int? = null)
@@ -68,7 +79,7 @@ enum class RhythmPhase { SETUP, PREVIEW, COUNT_IN, PLAYING, RESULTS }
 data class RhythmState(val phase: RhythmPhase = RhythmPhase.SETUP, val score: RhythmScore? = null,
     val taps: List<RhythmTap> = emptyList(), val error: String? = null, val attacks: List<RhythmAttack> = emptyList(),
     val elapsedNanos: Long = 0L, val result: RhythmResult? = null, val repeated: Boolean = false,
-    val feedback: TapKind? = null)
+    val feedback: TapKind? = null, val origin: String = "practice")
 
 class RhythmSession {
     var state = RhythmState()
@@ -113,8 +124,13 @@ class RhythmSession {
         state = RhythmState(RhythmPhase.PREVIEW, score)
     }
 
-    fun preview(score: RhythmScore) {
-        if (!active) { epoch = null; state = RhythmState(RhythmPhase.PREVIEW, score) }
+    fun preview(score: RhythmScore, repeated: Boolean = false, origin: String = "practice") {
+        if (active) return
+        epoch = null
+        require(origin in setOf("practice", "progression"))
+        state = if (score.isPlayable()) RhythmState(RhythmPhase.PREVIEW, score, repeated = repeated,
+            origin = if (repeated) "practice" else origin)
+        else RhythmState(error = "Partitura inválida: revisá compases, posiciones y figuras del catálogo.")
     }
     fun setup() { if (!active) { epoch = null; state = RhythmState() } }
     fun play(originNanos: Long, metronome: Boolean = true, tapSound: Boolean = true,
@@ -196,7 +212,7 @@ class RhythmSession {
         state = state.copy(result = result(completed))
     }
     private fun result(completed: Boolean) = RhythmResult(requireNotNull(state.score), completed,
-        state.taps.toList(), state.attacks.toList(), metronome, tapSound, state.repeated,
+        state.taps.toList(), state.attacks.toList(), metronome, tapSound, state.repeated, origin = state.origin,
         audioClockSource = audioClockSource, clockUncertaintyNanos = uncertainty, inputClockOffsetNanos = inputOffset,
         countInStartNanos = requireNotNull(epoch), silences = silenceResults(completed))
 
@@ -216,4 +232,25 @@ class RhythmSession {
             }
         }
     }
+}
+
+/** Rechaza contenido musical incompleto antes de fijar su reloj. Las plantillas aprobadas
+ * son el límite actual: no aceptar variantes de tresillo/ligadura bajo la misma categoría. */
+private fun RhythmScore.isPlayable(): Boolean {
+    if (beatsPerBar !in 2..4 || beatUnit != 4 || bpm <= 0 || bars.map { it.index } != (0..3).toList()) return false
+    if (selected.isEmpty() || (RhythmCategory.WHOLE in selected && beatsPerBar != 4)) return false
+    var nextIndex = 0
+    for (bar in bars) {
+        var position = Beat(0)
+        for (cell in bar.occurrences) {
+            if (cell.bar != bar.index || cell.index != nextIndex++ || cell.beat != position) return false
+            if (cell.category == RhythmCategory.WHOLE && beatsPerBar != 4) return false
+            if (cell.notes != cell.category.notes(beatsPerBar)) return false
+            if (cell.target && cell.category !in selected) return false
+            if (!cell.target && cell.category !in setOf(RhythmCategory.QUARTER, RhythmCategory.EIGHTHS)) return false
+            position = cell.notes.fold(position) { sum, note -> sum + note.duration }
+        }
+        if (position != Beat(beatsPerBar)) return false
+    }
+    return true
 }

@@ -1,0 +1,356 @@
+{
+  "reports": [
+    {
+      "width": 360,
+      "height": 987,
+      "scrollWidth": 360,
+      "viewportHeight": 800,
+      "headingOrder": [
+        "page-title",
+        "illustration-window",
+        "description",
+        "primary"
+      ],
+      "growthPercent": 18,
+      "paintedWidth": 318.5390625,
+      "baselineWidth": 270,
+      "tabRise": [
+        10,
+        10,
+        10
+      ],
+      "tabLegibility": [
+        {
+          "label": "Personaje",
+          "font": 13,
+          "fits": true,
+          "hit": true
+        },
+        {
+          "label": "Juegos",
+          "font": 13,
+          "fits": true,
+          "hit": true
+        },
+        {
+          "label": "Afinador",
+          "font": 13,
+          "fits": true,
+          "hit": true
+        },
+        {
+          "label": "Logros",
+          "font": 13,
+          "fits": true,
+          "hit": true
+        }
+      ],
+      "navControls": [
+        {
+          "id": "prev",
+          "width": 48,
+          "height": 48,
+          "stroke": "rgb(98, 112, 99)"
+        },
+        {
+          "id": "next",
+          "width": 48,
+          "height": 48,
+          "stroke": "rgb(49, 88, 68)"
+        }
+      ],
+      "forestFilter": "saturate(0.86) contrast(0.9)",
+      "bookFilter": "contrast(0.94) brightness(1.015)",
+      "playMaterial": "/simple-assets/controls.webp",
+      "ambient": 0
+    },
+    {
+      "width": 411,
+      "height": 908,
+      "scrollWidth": 411,
+      "viewportHeight": 891,
+      "headingOrder": [
+        "page-title",
+        "illustration-window",
+        "description",
+        "primary"
+      ],
+      "growthPercent": 16.2,
+      "paintedWidth": 372.984375,
+      "baselineWidth": 321,
+      "tabRise": [
+        10,
+        10,
+        10
+      ],
+      "tabLegibility": [
+        {
+          "label": "Personaje",
+          "font": 13,
+          "fits": true,
+          "hit": true
+        },
+        {
+          "label": "Juegos",
+          "font": 13,
+          "fits": true,
+          "hit": true
+        },
+        {
+          "label": "Afinador",
+          "font": 13,
+          "fits": true,
+          "hit": true
+        },
+        {
+          "label": "Logros",
+          "font": 13,
+          "fits": true,
+          "hit": true
+        }
+      ],
+      "navControls": [
+        {
+          "id": "prev",
+          "width": 48,
+          "height": 48,
+          "stroke": "rgb(98, 112, 99)"
+        },
+        {
+          "id": "next",
+          "width": 48,
+          "height": 48,
+          "stroke": "rgb(49, 88, 68)"
+        }
+      ],
+      "forestFilter": "saturate(0.86) contrast(0.9)",
+      "bookFilter": "contrast(0.94) brightness(1.015)",
+      "playMaterial": "/simple-assets/controls.webp",
+      "ambient": 0
+    },
+    {
+      "width": 600,
+      "height": 1000,
+      "scrollWidth": 600,
+      "viewportHeight": 1000,
+      "headingOrder": [
+        "page-title",
+        "illustration-window",
+        "description",
+        "primary"
+      ],
+      "growthPercent": 17.9,
+      "paintedWidth": 435,
+      "baselineWidth": 369,
+      "tabRise": [
+        10,
+        10,
+        10
+      ],
+      "tabLegibility": [
+        {
+          "label": "Personaje",
+          "font": 13,
+          "fits": true,
+          "hit": true
+        },
+        {
+          "label": "Juegos",
+          "font": 13,
+          "fits": true,
+          "hit": true
+        },
+        {
+          "label": "Afinador",
+          "font": 13,
+          "fits": true,
+          "hit": true
+        },
+        {
+          "label": "Logros",
+          "font": 13,
+          "fits": true,
+          "hit": true
+        }
+      ],
+      "navControls": [
+        {
+          "id": "prev",
+          "width": 48,
+          "height": 48,
+          "stroke": "rgb(98, 112, 99)"
+        },
+        {
+          "id": "next",
+          "width": 48,
+          "height": 48,
+          "stroke": "rgb(49, 88, 68)"
+        }
+      ],
+      "forestFilter": "saturate(0.86) contrast(0.9)",
+      "bookFilter": "contrast(0.94) brightness(1.015)",
+      "playMaterial": "/simple-assets/controls.webp",
+      "ambient": 0
+    },
+    {
+      "width": 320,
+      "height": 986,
+      "scrollWidth": 320,
+      "viewportHeight": 640,
+      "headingOrder": [
+        "page-title",
+        "illustration-window",
+        "description",
+        "primary"
+      ],
+      "growthPercent": 8,
+      "paintedWidth": 282,
+      "baselineWidth": 261,
+      "tabRise": [
+        10,
+        10,
+        10
+      ],
+      "tabLegibility": [
+        {
+          "label": "Personaje",
+          "font": 12,
+          "fits": true,
+          "hit": true
+        },
+        {
+          "label": "Juegos",
+          "font": 12,
+          "fits": true,
+          "hit": true
+        },
+        {
+          "label": "Afinador",
+          "font": 12,
+          "fits": true,
+          "hit": true
+        },
+        {
+          "label": "Logros",
+          "font": 12,
+          "fits": true,
+          "hit": true
+        }
+      ],
+      "navControls": [
+        {
+          "id": "prev",
+          "width": 48,
+          "height": 48,
+          "stroke": "rgb(98, 112, 99)"
+        },
+        {
+          "id": "next",
+          "width": 48,
+          "height": 48,
+          "stroke": "rgb(49, 88, 68)"
+        }
+      ],
+      "forestFilter": "saturate(0.86) contrast(0.9)",
+      "bookFilter": "contrast(0.94) brightness(1.015)",
+      "playMaterial": "/simple-assets/controls.webp",
+      "ambient": 0
+    },
+    {
+      "width": 360,
+      "height": 1456,
+      "large": true,
+      "scrollWidth": 360,
+      "viewportHeight": 800,
+      "headingOrder": [
+        "page-title",
+        "illustration-window",
+        "description",
+        "primary"
+      ],
+      "growthPercent": 18,
+      "paintedWidth": 318.5390625,
+      "baselineWidth": 270,
+      "tabRise": [
+        10,
+        10,
+        10
+      ],
+      "tabLegibility": [
+        {
+          "label": "Personaje",
+          "font": 26,
+          "fits": true,
+          "hit": true
+        },
+        {
+          "label": "Juegos",
+          "font": 26,
+          "fits": true,
+          "hit": true
+        },
+        {
+          "label": "Afinador",
+          "font": 26,
+          "fits": true,
+          "hit": true
+        },
+        {
+          "label": "Logros",
+          "font": 26,
+          "fits": true,
+          "hit": true
+        }
+      ],
+      "navControls": [
+        {
+          "id": "prev",
+          "width": 48,
+          "height": 48,
+          "stroke": "rgb(98, 112, 99)"
+        },
+        {
+          "id": "next",
+          "width": 48,
+          "height": 48,
+          "stroke": "rgb(49, 88, 68)"
+        }
+      ],
+      "forestFilter": "saturate(0.86) contrast(0.9)",
+      "bookFilter": "contrast(0.94) brightness(1.015)",
+      "playMaterial": "/simple-assets/controls.webp",
+      "ambient": 0
+    }
+  ],
+  "interaction": {
+    "preview": {
+      "page": 1,
+      "book": 1,
+      "enabled": true
+    },
+    "rapid": {
+      "page": 1,
+      "book": 1
+    },
+    "manualReduced": true,
+    "systemReduced": true,
+    "reducedDestination": {
+      "game": 1,
+      "reduced": true,
+      "transition": {
+        "event": "pagereveal",
+        "active": false,
+        "skipped": false
+      }
+    },
+    "navigation": {
+      "game": 1,
+      "title": "Instrumentos",
+      "transition": {
+        "event": "pagereveal",
+        "active": true,
+        "skipped": false
+      }
+    }
+  }
+}

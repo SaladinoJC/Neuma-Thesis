@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-28",
+  "assets": [
+    {
+      "file": "instruments.png",
+      "prompt": "Use case: illustration-story. Create a reusable illustration for Music Garden, an original musical learning Android game. The attached piano is a STYLE reference only: match its simple stylized painted 2D, slight low-poly broad shading, soft paper texture, rounded clean silhouettes and cozy muted forest green, sage, cream and honey wood. Two or three tone planes per object, very few details. Genuine transparent background, full object in a compact centered composition with at least 8% transparent padding, landscape 3:2 except the character. No realistic rendering, 3D, detailed grain, gilding, borders, frames, text, logos, UI, staves, notation or note glyphs. No dense vegetation. Simple mobile indie-game aesthetic, not a generic flat icon. A friendly wooden acoustic guitar, small violin and a simple flute arranged on a small moss-green patch, one pair of broad sage leaves to the side. Clearly recognizable whole instruments. Just three objects, no room or window, no scenery. Simple warm wood planes.",
+      "source": "C:\\Users\\Juan\\.codex\\generated_images\\01a18336-bce2-7fd0-bf3d-e00a63edab41\\exec-e5067cc8-afc2-4276-a83b-9b5b49e5fc59.png",
+      "generator": "imagegen herramienta integrada",
+      "reference": "piano-c.png como estilo",
+      "status": "nuevo recurso para menú Android solicitado por usuario"
+    },
+    {
+      "file": "rhythm.png",
+      "prompt": "Use case: illustration-story. Create a reusable illustration for Music Garden, an original musical learning Android game. The attached piano is a STYLE reference only: match its simple stylized painted 2D, slight low-poly broad shading, soft paper texture, rounded clean silhouettes and cozy muted forest green, sage, cream and honey wood. Two or three tone planes per object, very few details. Genuine transparent background, full object in a compact centered composition with at least 8% transparent padding, landscape 3:2 except the character. No realistic rendering, 3D, detailed grain, gilding, borders, frames, text, logos, UI, staves, notation or note glyphs. No dense vegetation. Simple mobile indie-game aesthetic, not a generic flat icon. A small chunky wooden frame drum leaning slightly, two plain wooden mallets and two seed-pod shakers resting on a small sage patch. Clear simple silhouettes and soft shadow planes, no music notation, no hands. A single broad leaf to one side, no added scenery.",
+      "source": "C:\\Users\\Juan\\.codex\\generated_images\\01a18336-bce2-7fd0-bf3d-e00a63edab41\\exec-d7517635-29c5-40f4-8376-0df08720798d.png",
+      "generator": "imagegen herramienta integrada",
+      "reference": "piano-c.png como estilo",
+      "status": "nuevo recurso para menú Android solicitado por usuario"
+    },
+    {
+      "file": "defender.png",
+      "prompt": "Use case: illustration-story. Create a reusable illustration for Music Garden, an original musical learning Android game. The attached piano is a STYLE reference only: match its simple stylized painted 2D, slight low-poly broad shading, soft paper texture, rounded clean silhouettes and cozy muted forest green, sage, cream and honey wood. Two or three tone planes per object, very few details. Genuine transparent background, full object in a compact centered composition with at least 8% transparent padding, landscape 3:2 except the character. No realistic rendering, 3D, detailed grain, gilding, borders, frames, text, logos, UI, staves, notation or note glyphs. No dense vegetation. Simple mobile indie-game aesthetic, not a generic flat icon. A guardian tree with a broad rounded low-poly sage canopy and gracefully curved wooden trunk, absolutely NO FACE, its whole small root patch visible. Two SMALL moths with simple leaf-shaped wings hover nearby. Three or four large canopy masses, a little moss base, no flowers or glowing particles. Tree dominates. No buildings or weapons.",
+      "source": "C:\\Users\\Juan\\.codex\\generated_images\\01a18336-bce2-7fd0-bf3d-e00a63edab41\\exec-740f08f2-c151-49ff-b7c2-4a120d59d67b.png",
+      "generator": "imagegen herramienta integrada",
+      "reference": "piano-c.png como estilo",
+      "status": "nuevo recurso para menú Android solicitado por usuario"
+    },
+    {
+      "file": "character.png",
+      "prompt": "Use case: illustration-story. Create a reusable illustration for Music Garden, an original musical learning Android game. The attached piano is a STYLE reference only: match its simple stylized painted 2D, slight low-poly broad shading, soft paper texture, rounded clean silhouettes and cozy muted forest green, sage, cream and honey wood. Two or three tone planes per object, very few details. Genuine transparent background, full object in a compact centered composition with at least 8% transparent padding, landscape 3:2 except the character. No realistic rendering, 3D, detailed grain, gilding, borders, frames, text, logos, UI, staves, notation or note glyphs. No dense vegetation. Simple mobile indie-game aesthetic, not a generic flat icon. Portrait 2:3 composition: temporary generic human garden explorer, full body, no gender cues. Simple kind neutral face, short dark hair, sage-green tunic and trousers, warm brown boots, a small forest-green scarf. Standing quietly, simple warm painted skin tone. Friendly stylized 2D human silhouette, not a doll, no hood sprout, no pointy ears, no weapon, no inventory, no rewards or equipped instrument. No extra objects or leaves. This is only a placeholder, not a final avatar customization design.",
+      "source": "C:\\Users\\Juan\\.codex\\generated_images\\01a18336-bce2-7fd0-bf3d-e00a63edab41\\exec-d7aba0a5-85f7-4d3f-9c44-2ecfdbd69e30.png",
+      "generator": "imagegen herramienta integrada",
+      "reference": "piano-c.png como estilo",
+      "status": "personaje temporal; no define personalización ni apariencia final"
+    }
+  ]
+}

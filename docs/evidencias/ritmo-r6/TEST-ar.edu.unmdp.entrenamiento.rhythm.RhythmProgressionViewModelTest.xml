@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.rhythm.RhythmProgressionViewModelTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-30T14:33:03.489Z" hostname="DESKTOP-PP49S64" time="0.253">
+  <properties/>
+  <testcase name="falloDeGuardadoBloqueaNuevaProgresionHastaReintentarSinCambiarRacha" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmProgressionViewModelTest" time="0.095"/>
+  <testcase name="modosBloqueosTempoFijoRepetirYReabrirPerfilSinAudioAutomatico" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmProgressionViewModelTest" time="0.157"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

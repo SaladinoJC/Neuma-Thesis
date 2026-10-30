@@ -11,14 +11,14 @@ class InstrumentDdaAndroidTest {
 
     @org.junit.Before
     fun awaitAppWindow() {
-        compose.waitUntil(15_000) { compose.activity.hasWindowFocus() }
+        compose.awaitGardenMenu()
         compose.waitForIdle()
     }
 
 
     @Test
     fun inspectorReproduceRecuperacionSinCambiarLaPartidaReal() {
-        compose.onNodeWithTag("game-instruments").performScrollTo().performClick()
+        compose.openMenuDestination("game-instruments")
         compose.waitUntil(10_000) { compose.onAllNodesWithTag("dda-open").fetchSemanticsNodes().isNotEmpty() }
         compose.onNodeWithTag("dda-open").performClick()
         compose.onNodeWithTag("dda-simulated").performClick()
@@ -44,7 +44,7 @@ class InstrumentDdaAndroidTest {
 
     @Test
     fun escenariosDeAciertosAyudadosYAlternanciaMantienenLaAyuda() {
-        compose.onNodeWithTag("game-instruments").performScrollTo().performClick()
+        compose.openMenuDestination("game-instruments")
         compose.waitUntil(10_000) { compose.onAllNodesWithTag("dda-open").fetchSemanticsNodes().isNotEmpty() }
         compose.onNodeWithTag("dda-open").performClick()
         compose.onNodeWithTag("dda-simulated").performClick()

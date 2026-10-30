@@ -4,6 +4,8 @@ Estado: síntesis funcional y concreciones confirmadas por el usuario mediante �
 
 ## Intención confirmada
 
+Estado de implementación al 2026-10-29: **A1–A6 disponibles en software**; [A6 v0.12.7](Demostracion-afinador-A6.md) agrega seguimiento opcional, historial y exportación, con 140 JVM/50 Android aprobadas. La validación física sigue pendiente. El estado histórico de publicación del encabezado no implica que todos los incrementos sigan sin implementar.
+
 El usuario pidió el 2026-10-22 un afinador para afinar instrumentos, con una función que lo haga especialmente útil respecto de un afinador común. Quiere definir primero esta función y retomar después Rhythm Tap, generación/renderizado de partituras y Defender.
 
 En la primera ronda confirmó:

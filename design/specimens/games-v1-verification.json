@@ -1,0 +1,1351 @@
+[
+  {
+    "case": "defender-v1-360",
+    "fontsReady": true,
+    "fonts": [
+      {
+        "family": "Fraunces",
+        "status": "loaded"
+      },
+      {
+        "family": "Nunito Sans",
+        "status": "loaded"
+      }
+    ],
+    "width": 360,
+    "documentWidth": 360,
+    "height": 800,
+    "controls": [
+      {
+        "type": "menu",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "type": "pause",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "accidental",
+        "width": 96,
+        "height": 48
+      },
+      {
+        "type": "accidental",
+        "width": 96,
+        "height": 48
+      },
+      {
+        "type": "accidental",
+        "width": 96,
+        "height": 48
+      },
+      {
+        "type": "confirm",
+        "width": 328,
+        "height": 52
+      }
+    ],
+    "overflow": [],
+    "titleFont": "Fraunces, serif",
+    "bodyFont": "\"Nunito Sans\", sans-serif",
+    "viewportHeight": 800,
+    "notes": [
+      {
+        "name": "La",
+        "octave": 3,
+        "accidental": "flat",
+        "clef": "treble",
+        "staffStep": -4
+      },
+      {
+        "name": "Mi",
+        "octave": 4,
+        "accidental": "flat",
+        "clef": "bass",
+        "staffStep": 12
+      },
+      {
+        "name": "Do",
+        "octave": 6,
+        "accidental": "sharp",
+        "clef": "treble",
+        "staffStep": 12
+      },
+      {
+        "name": "Do",
+        "octave": 2,
+        "accidental": "sharp",
+        "clef": "bass",
+        "staffStep": -4
+      }
+    ],
+    "targets": [
+      {
+        "x": 20,
+        "y": 116,
+        "width": 94,
+        "height": 141.796875
+      },
+      {
+        "x": 246,
+        "y": 140,
+        "width": 94,
+        "height": 141.796875
+      },
+      {
+        "x": 20,
+        "y": 266,
+        "width": 94,
+        "height": 141.796875
+      },
+      {
+        "x": 246,
+        "y": 290,
+        "width": 94,
+        "height": 141.796875
+      }
+    ],
+    "arena": {
+      "x": 16,
+      "y": 112,
+      "width": 328,
+      "height": 392
+    },
+    "keys": [],
+    "feedback": "Elegí una nota y tocá.",
+    "animations": 0,
+    "reduced": false
+  },
+  {
+    "case": "defender-v1-411",
+    "fontsReady": true,
+    "fonts": [
+      {
+        "family": "Fraunces",
+        "status": "loaded"
+      },
+      {
+        "family": "Nunito Sans",
+        "status": "loaded"
+      }
+    ],
+    "width": 411,
+    "documentWidth": 411,
+    "height": 891,
+    "controls": [
+      {
+        "type": "menu",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "type": "pause",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 82.75,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 82.75,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 82.75,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 82.75,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 82.75,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 82.75,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 82.75,
+        "height": 48
+      },
+      {
+        "type": "accidental",
+        "width": 113,
+        "height": 48
+      },
+      {
+        "type": "accidental",
+        "width": 113,
+        "height": 48
+      },
+      {
+        "type": "accidental",
+        "width": 113,
+        "height": 48
+      },
+      {
+        "type": "confirm",
+        "width": 379,
+        "height": 52
+      }
+    ],
+    "overflow": [],
+    "titleFont": "Fraunces, serif",
+    "bodyFont": "\"Nunito Sans\", sans-serif",
+    "viewportHeight": 891,
+    "notes": [
+      {
+        "name": "La",
+        "octave": 3,
+        "accidental": "flat",
+        "clef": "treble",
+        "staffStep": -4
+      },
+      {
+        "name": "Mi",
+        "octave": 4,
+        "accidental": "flat",
+        "clef": "bass",
+        "staffStep": 12
+      },
+      {
+        "name": "Do",
+        "octave": 6,
+        "accidental": "sharp",
+        "clef": "treble",
+        "staffStep": 12
+      },
+      {
+        "name": "Do",
+        "octave": 2,
+        "accidental": "sharp",
+        "clef": "bass",
+        "staffStep": -4
+      }
+    ],
+    "targets": [
+      {
+        "x": 20,
+        "y": 116,
+        "width": 94,
+        "height": 141.796875
+      },
+      {
+        "x": 297,
+        "y": 140,
+        "width": 94,
+        "height": 141.796875
+      },
+      {
+        "x": 20,
+        "y": 266,
+        "width": 94,
+        "height": 141.796875
+      },
+      {
+        "x": 297,
+        "y": 290,
+        "width": 94,
+        "height": 141.796875
+      }
+    ],
+    "arena": {
+      "x": 16,
+      "y": 112,
+      "width": 379,
+      "height": 483
+    },
+    "keys": [],
+    "feedback": "Elegí una nota y tocá.",
+    "animations": 0,
+    "reduced": false
+  },
+  {
+    "case": "defender-v1-hit",
+    "fontsReady": true,
+    "fonts": [
+      {
+        "family": "Fraunces",
+        "status": "loaded"
+      },
+      {
+        "family": "Nunito Sans",
+        "status": "loaded"
+      }
+    ],
+    "width": 411,
+    "documentWidth": 411,
+    "height": 891,
+    "controls": [
+      {
+        "type": "menu",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "type": "pause",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 82.75,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 82.75,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 82.75,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 82.75,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 82.75,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 82.75,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 82.75,
+        "height": 48
+      },
+      {
+        "type": "accidental",
+        "width": 113,
+        "height": 48
+      },
+      {
+        "type": "accidental",
+        "width": 113,
+        "height": 48
+      },
+      {
+        "type": "accidental",
+        "width": 113,
+        "height": 48
+      },
+      {
+        "type": "confirm",
+        "width": 379,
+        "height": 52
+      }
+    ],
+    "overflow": [],
+    "titleFont": "Fraunces, serif",
+    "bodyFont": "\"Nunito Sans\", sans-serif",
+    "viewportHeight": 891,
+    "notes": [
+      {
+        "name": "La",
+        "octave": 3,
+        "accidental": "flat",
+        "clef": "treble",
+        "staffStep": -4
+      },
+      {
+        "name": "Mi",
+        "octave": 4,
+        "accidental": "flat",
+        "clef": "bass",
+        "staffStep": 12
+      },
+      {
+        "name": "Do",
+        "octave": 6,
+        "accidental": "sharp",
+        "clef": "treble",
+        "staffStep": 12
+      },
+      {
+        "name": "Do",
+        "octave": 2,
+        "accidental": "sharp",
+        "clef": "bass",
+        "staffStep": -4
+      }
+    ],
+    "targets": [
+      {
+        "x": 297,
+        "y": 140,
+        "width": 94,
+        "height": 141.796875
+      },
+      {
+        "x": 20,
+        "y": 266,
+        "width": 94,
+        "height": 141.796875
+      },
+      {
+        "x": 297,
+        "y": 290,
+        "width": 94,
+        "height": 141.796875
+      }
+    ],
+    "arena": {
+      "x": 16,
+      "y": 112,
+      "width": 379,
+      "height": 483
+    },
+    "keys": [],
+    "feedback": "Correcto. El jardín resuena.",
+    "animations": 0,
+    "reduced": false
+  },
+  {
+    "case": "defender-v1-error",
+    "fontsReady": true,
+    "fonts": [
+      {
+        "family": "Fraunces",
+        "status": "loaded"
+      },
+      {
+        "family": "Nunito Sans",
+        "status": "loaded"
+      }
+    ],
+    "width": 360,
+    "documentWidth": 360,
+    "height": 800,
+    "controls": [
+      {
+        "type": "menu",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "type": "pause",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "accidental",
+        "width": 96,
+        "height": 48
+      },
+      {
+        "type": "accidental",
+        "width": 96,
+        "height": 48
+      },
+      {
+        "type": "accidental",
+        "width": 96,
+        "height": 48
+      },
+      {
+        "type": "confirm",
+        "width": 328,
+        "height": 52
+      }
+    ],
+    "overflow": [],
+    "titleFont": "Fraunces, serif",
+    "bodyFont": "\"Nunito Sans\", sans-serif",
+    "viewportHeight": 800,
+    "notes": [
+      {
+        "name": "La",
+        "octave": 3,
+        "accidental": "flat",
+        "clef": "treble",
+        "staffStep": -4
+      },
+      {
+        "name": "Mi",
+        "octave": 4,
+        "accidental": "flat",
+        "clef": "bass",
+        "staffStep": 12
+      },
+      {
+        "name": "Do",
+        "octave": 6,
+        "accidental": "sharp",
+        "clef": "treble",
+        "staffStep": 12
+      },
+      {
+        "name": "Do",
+        "octave": 2,
+        "accidental": "sharp",
+        "clef": "bass",
+        "staffStep": -4
+      }
+    ],
+    "targets": [
+      {
+        "x": 20,
+        "y": 116,
+        "width": 94,
+        "height": 141.796875
+      },
+      {
+        "x": 246,
+        "y": 140,
+        "width": 94,
+        "height": 141.796875
+      },
+      {
+        "x": 20,
+        "y": 266,
+        "width": 94,
+        "height": 141.796875
+      },
+      {
+        "x": 246,
+        "y": 290,
+        "width": 94,
+        "height": 141.796875
+      }
+    ],
+    "arena": {
+      "x": 16,
+      "y": 112,
+      "width": 328,
+      "height": 392
+    },
+    "keys": [],
+    "feedback": "No coincide. Probá otra nota.",
+    "animations": 0,
+    "reduced": false
+  },
+  {
+    "case": "defender-v1-life",
+    "fontsReady": true,
+    "fonts": [
+      {
+        "family": "Fraunces",
+        "status": "loaded"
+      },
+      {
+        "family": "Nunito Sans",
+        "status": "loaded"
+      }
+    ],
+    "width": 360,
+    "documentWidth": 360,
+    "height": 800,
+    "controls": [
+      {
+        "type": "menu",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "type": "pause",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "accidental",
+        "width": 96,
+        "height": 48
+      },
+      {
+        "type": "accidental",
+        "width": 96,
+        "height": 48
+      },
+      {
+        "type": "accidental",
+        "width": 96,
+        "height": 48
+      },
+      {
+        "type": "confirm",
+        "width": 328,
+        "height": 52
+      }
+    ],
+    "overflow": [],
+    "titleFont": "Fraunces, serif",
+    "bodyFont": "\"Nunito Sans\", sans-serif",
+    "viewportHeight": 800,
+    "notes": [
+      {
+        "name": "La",
+        "octave": 3,
+        "accidental": "flat",
+        "clef": "treble",
+        "staffStep": -4
+      },
+      {
+        "name": "Mi",
+        "octave": 4,
+        "accidental": "flat",
+        "clef": "bass",
+        "staffStep": 12
+      },
+      {
+        "name": "Do",
+        "octave": 6,
+        "accidental": "sharp",
+        "clef": "treble",
+        "staffStep": 12
+      },
+      {
+        "name": "Do",
+        "octave": 2,
+        "accidental": "sharp",
+        "clef": "bass",
+        "staffStep": -4
+      }
+    ],
+    "targets": [
+      {
+        "x": 246,
+        "y": 140,
+        "width": 94,
+        "height": 141.796875
+      },
+      {
+        "x": 20,
+        "y": 266,
+        "width": 94,
+        "height": 141.796875
+      },
+      {
+        "x": 246,
+        "y": 290,
+        "width": 94,
+        "height": 141.796875
+      }
+    ],
+    "arena": {
+      "x": 16,
+      "y": 112,
+      "width": 328,
+      "height": 392
+    },
+    "keys": [],
+    "feedback": "Una criatura alcanzó el árbol.",
+    "animations": 0,
+    "reduced": false
+  },
+  {
+    "case": "defender-v1-pause",
+    "fontsReady": true,
+    "fonts": [
+      {
+        "family": "Fraunces",
+        "status": "loaded"
+      },
+      {
+        "family": "Nunito Sans",
+        "status": "loaded"
+      }
+    ],
+    "width": 360,
+    "documentWidth": 360,
+    "height": 800,
+    "controls": [
+      {
+        "type": "menu",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "type": "pause",
+        "width": 48,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "note",
+        "width": 70,
+        "height": 48
+      },
+      {
+        "type": "accidental",
+        "width": 96,
+        "height": 48
+      },
+      {
+        "type": "accidental",
+        "width": 96,
+        "height": 48
+      },
+      {
+        "type": "accidental",
+        "width": 96,
+        "height": 48
+      },
+      {
+        "type": "confirm",
+        "width": 328,
+        "height": 52
+      }
+    ],
+    "overflow": [],
+    "titleFont": "Fraunces, serif",
+    "bodyFont": "\"Nunito Sans\", sans-serif",
+    "viewportHeight": 800,
+    "notes": [
+      {
+        "name": "La",
+        "octave": 3,
+        "accidental": "flat",
+        "clef": "treble",
+        "staffStep": -4
+      },
+      {
+        "name": "Mi",
+        "octave": 4,
+        "accidental": "flat",
+        "clef": "bass",
+        "staffStep": 12
+      },
+      {
+        "name": "Do",
+        "octave": 6,
+        "accidental": "sharp",
+        "clef": "treble",
+        "staffStep": 12
+      },
+      {
+        "name": "Do",
+        "octave": 2,
+        "accidental": "sharp",
+        "clef": "bass",
+        "staffStep": -4
+      }
+    ],
+    "targets": [],
+    "arena": {
+      "x": 16,
+      "y": 112,
+      "width": 328,
+      "height": 392
+    },
+    "keys": [],
+    "feedback": "Elegí una nota y tocá.",
+    "animations": 0,
+    "reduced": false
+  },
+  {
+    "case": "simon-v1-listening",
+    "fontsReady": true,
+    "fonts": [
+      {
+        "family": "Fraunces",
+        "status": "loaded"
+      },
+      {
+        "family": "Nunito Sans",
+        "status": "loaded"
+      }
+    ],
+    "width": 800,
+    "documentWidth": 800,
+    "height": 360,
+    "controls": [
+      {
+        "type": "menu",
+        "width": 48,
+        "height": 48
+      }
+    ],
+    "overflow": [],
+    "titleFont": "Fraunces, serif",
+    "bodyFont": "\"Nunito Sans\", sans-serif",
+    "viewportHeight": 360,
+    "notes": [],
+    "targets": [],
+    "arena": null,
+    "keys": [
+      {
+        "midi": 60,
+        "width": 107.421875,
+        "height": 171.40625,
+        "black": false
+      },
+      {
+        "midi": 62,
+        "width": 107.421875,
+        "height": 171.40625,
+        "black": false
+      },
+      {
+        "midi": 64,
+        "width": 107.421875,
+        "height": 171.40625,
+        "black": false
+      },
+      {
+        "midi": 65,
+        "width": 107.421875,
+        "height": 171.40625,
+        "black": false
+      },
+      {
+        "midi": 67,
+        "width": 107.421875,
+        "height": 171.40625,
+        "black": false
+      },
+      {
+        "midi": 69,
+        "width": 107.421875,
+        "height": 171.40625,
+        "black": false
+      },
+      {
+        "midi": 71,
+        "width": 107.421875,
+        "height": 171.40625,
+        "black": false
+      },
+      {
+        "midi": 61,
+        "width": 66.59375,
+        "height": 106.265625,
+        "black": true
+      },
+      {
+        "midi": 63,
+        "width": 66.59375,
+        "height": 106.265625,
+        "black": true
+      },
+      {
+        "midi": 66,
+        "width": 66.59375,
+        "height": 106.265625,
+        "black": true
+      },
+      {
+        "midi": 68,
+        "width": 66.59375,
+        "height": 106.265625,
+        "black": true
+      },
+      {
+        "midi": 70,
+        "width": 66.59375,
+        "height": 106.265625,
+        "black": true
+      }
+    ],
+    "animations": 0,
+    "reduced": false
+  },
+  {
+    "case": "simon-v1-response",
+    "fontsReady": true,
+    "fonts": [
+      {
+        "family": "Fraunces",
+        "status": "loaded"
+      },
+      {
+        "family": "Nunito Sans",
+        "status": "loaded"
+      }
+    ],
+    "width": 891,
+    "documentWidth": 891,
+    "height": 411,
+    "controls": [
+      {
+        "type": "menu",
+        "width": 48,
+        "height": 48
+      }
+    ],
+    "overflow": [],
+    "titleFont": "Fraunces, serif",
+    "bodyFont": "\"Nunito Sans\", sans-serif",
+    "viewportHeight": 411,
+    "notes": [],
+    "targets": [],
+    "arena": null,
+    "keys": [
+      {
+        "midi": 60,
+        "width": 120.421875,
+        "height": 222.40625,
+        "black": false
+      },
+      {
+        "midi": 62,
+        "width": 120.421875,
+        "height": 222.40625,
+        "black": false
+      },
+      {
+        "midi": 64,
+        "width": 120.421875,
+        "height": 222.40625,
+        "black": false
+      },
+      {
+        "midi": 65,
+        "width": 120.421875,
+        "height": 222.40625,
+        "black": false
+      },
+      {
+        "midi": 67,
+        "width": 120.421875,
+        "height": 222.40625,
+        "black": false
+      },
+      {
+        "midi": 69,
+        "width": 120.421875,
+        "height": 222.40625,
+        "black": false
+      },
+      {
+        "midi": 71,
+        "width": 120.421875,
+        "height": 222.40625,
+        "black": false
+      },
+      {
+        "midi": 61,
+        "width": 74.65625,
+        "height": 137.890625,
+        "black": true
+      },
+      {
+        "midi": 63,
+        "width": 74.65625,
+        "height": 137.890625,
+        "black": true
+      },
+      {
+        "midi": 66,
+        "width": 74.65625,
+        "height": 137.890625,
+        "black": true
+      },
+      {
+        "midi": 68,
+        "width": 74.65625,
+        "height": 137.890625,
+        "black": true
+      },
+      {
+        "midi": 70,
+        "width": 74.65625,
+        "height": 137.890625,
+        "black": true
+      }
+    ],
+    "animations": 0,
+    "reduced": false
+  },
+  {
+    "case": "simon-v1-small",
+    "fontsReady": true,
+    "fonts": [
+      {
+        "family": "Fraunces",
+        "status": "loaded"
+      },
+      {
+        "family": "Nunito Sans",
+        "status": "loaded"
+      }
+    ],
+    "width": 640,
+    "documentWidth": 640,
+    "height": 360,
+    "controls": [
+      {
+        "type": "menu",
+        "width": 48,
+        "height": 48
+      }
+    ],
+    "overflow": [],
+    "titleFont": "Fraunces, serif",
+    "bodyFont": "\"Nunito Sans\", sans-serif",
+    "viewportHeight": 360,
+    "notes": [],
+    "targets": [],
+    "arena": null,
+    "keys": [
+      {
+        "midi": 60,
+        "width": 84.5625,
+        "height": 171.40625,
+        "black": false
+      },
+      {
+        "midi": 62,
+        "width": 84.5625,
+        "height": 171.40625,
+        "black": false
+      },
+      {
+        "midi": 64,
+        "width": 84.5625,
+        "height": 171.40625,
+        "black": false
+      },
+      {
+        "midi": 65,
+        "width": 84.5625,
+        "height": 171.40625,
+        "black": false
+      },
+      {
+        "midi": 67,
+        "width": 84.5625,
+        "height": 171.40625,
+        "black": false
+      },
+      {
+        "midi": 69,
+        "width": 84.5625,
+        "height": 171.40625,
+        "black": false
+      },
+      {
+        "midi": 71,
+        "width": 84.5625,
+        "height": 171.40625,
+        "black": false
+      },
+      {
+        "midi": 61,
+        "width": 52.421875,
+        "height": 106.265625,
+        "black": true
+      },
+      {
+        "midi": 63,
+        "width": 52.421875,
+        "height": 106.265625,
+        "black": true
+      },
+      {
+        "midi": 66,
+        "width": 52.421875,
+        "height": 106.265625,
+        "black": true
+      },
+      {
+        "midi": 68,
+        "width": 52.421875,
+        "height": 106.265625,
+        "black": true
+      },
+      {
+        "midi": 70,
+        "width": 52.421875,
+        "height": 106.265625,
+        "black": true
+      }
+    ],
+    "animations": 0,
+    "reduced": false
+  },
+  {
+    "case": "motion-v1-frame220",
+    "fontsReady": true,
+    "fonts": [
+      {
+        "family": "Fraunces",
+        "status": "loaded"
+      },
+      {
+        "family": "Nunito Sans",
+        "status": "loaded"
+      }
+    ],
+    "width": 411,
+    "documentWidth": 411,
+    "height": 700,
+    "controls": [
+      {
+        "type": "preview",
+        "width": 379,
+        "height": 52
+      }
+    ],
+    "overflow": [],
+    "titleFont": "Fraunces",
+    "bodyFont": "\"Nunito Sans\"",
+    "viewportHeight": 700,
+    "notes": [],
+    "targets": [],
+    "arena": null,
+    "keys": [],
+    "feedback": "Correcto. El jardín resuena.",
+    "animations": 10,
+    "reduced": false,
+    "interaction": {
+      "first": {
+        "message": "Correcto. El jardín resuena.",
+        "disabled": false
+      },
+      "second": {
+        "message": "Correcto. El jardín resuena.",
+        "disabled": false
+      },
+      "systemReduced": false,
+      "animations": 10
+    }
+  },
+  {
+    "case": "motion-v1-reduced",
+    "fontsReady": true,
+    "fonts": [
+      {
+        "family": "Fraunces",
+        "status": "loaded"
+      },
+      {
+        "family": "Nunito Sans",
+        "status": "loaded"
+      }
+    ],
+    "width": 411,
+    "documentWidth": 411,
+    "height": 700,
+    "controls": [
+      {
+        "type": "preview",
+        "width": 379,
+        "height": 52
+      }
+    ],
+    "overflow": [],
+    "titleFont": "Fraunces",
+    "bodyFont": "\"Nunito Sans\"",
+    "viewportHeight": 700,
+    "notes": [],
+    "targets": [],
+    "arena": null,
+    "keys": [],
+    "feedback": "Correcto. El jardín resuena.",
+    "animations": 0,
+    "reduced": true,
+    "interaction": {
+      "first": {
+        "message": "Correcto. El jardín resuena.",
+        "disabled": false
+      },
+      "second": {
+        "message": "Correcto. El jardín resuena.",
+        "disabled": false
+      },
+      "systemReduced": false,
+      "animations": 0
+    }
+  },
+  {
+    "case": "motion-v1-system-reduced",
+    "fontsReady": true,
+    "fonts": [
+      {
+        "family": "Fraunces",
+        "status": "loaded"
+      },
+      {
+        "family": "Nunito Sans",
+        "status": "loaded"
+      }
+    ],
+    "width": 411,
+    "documentWidth": 411,
+    "height": 700,
+    "controls": [
+      {
+        "type": "preview",
+        "width": 379,
+        "height": 52
+      }
+    ],
+    "overflow": [],
+    "titleFont": "Fraunces",
+    "bodyFont": "\"Nunito Sans\"",
+    "viewportHeight": 700,
+    "notes": [],
+    "targets": [],
+    "arena": null,
+    "keys": [],
+    "feedback": "Correcto. El jardín resuena.",
+    "animations": 0,
+    "reduced": false,
+    "interaction": {
+      "first": {
+        "message": "Correcto. El jardín resuena.",
+        "disabled": false
+      },
+      "second": {
+        "message": "Correcto. El jardín resuena.",
+        "disabled": false
+      },
+      "systemReduced": true,
+      "animations": 0
+    }
+  }
+]

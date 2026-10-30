@@ -16,14 +16,13 @@ import org.junit.Test
 class RhythmAndroidTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
     @Test fun partituraConteoTapsRepeticionYPausaEnVertical() {
-        compose.waitUntil(15_000) { compose.activity.hasWindowFocus() }
-        compose.onNodeWithTag("game-rhythm").performScrollTo().performClick()
+        compose.awaitGardenMenu()
+        compose.openMenuDestination("game-rhythm")
         compose.onNodeWithTag("rhythm-category-R20").performScrollTo().performClick()
         compose.onNodeWithTag("rhythm-category-R21").performScrollTo().performClick()
         compose.onNodeWithTag("rhythm-generate").performScrollTo().performClick()
         compose.waitUntil(10_000) { compose.onAllNodesWithTag("rhythm-play").fetchSemanticsNodes().isNotEmpty() }
-        compose.onNodeWithTag("rhythm-bar-0").performScrollTo().assertIsDisplayed()
-        compose.onNodeWithTag("rhythm-bar-3").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithTag("rhythm-score").performScrollTo().assertIsDisplayed()
         compose.onNodeWithTag("rhythm-metronome").performScrollTo().performClick()
         compose.onNodeWithTag("rhythm-tap-sound").performScrollTo().performClick()
         lateinit var model: RhythmViewModel
@@ -35,6 +34,7 @@ class RhythmAndroidTest {
             // timeline before injecting the gesture. Render explicit frames while the
             // real audio/monotonic clock keeps running, and inspect the public state.
             compose.mainClock.autoAdvance = false
+            compose.awaitRhythmScore()
             compose.onNodeWithTag("rhythm-play").performClick()
             compose.waitUntil(10_000) { model.ui.value.session.phase == RhythmPhase.COUNT_IN }
             compose.mainClock.advanceTimeBy(64)
@@ -61,6 +61,7 @@ class RhythmAndroidTest {
             assertTrue(model.ui.value.session.repeated)
 
             compose.mainClock.autoAdvance = false
+            compose.awaitRhythmScore()
             compose.onNodeWithTag("rhythm-play").performClick()
             compose.waitUntil(10_000) { model.ui.value.session.phase == RhythmPhase.COUNT_IN }
             compose.activityRule.scenario.moveToState(Lifecycle.State.CREATED)

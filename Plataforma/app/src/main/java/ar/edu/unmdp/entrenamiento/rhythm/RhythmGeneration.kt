@@ -5,6 +5,18 @@ import kotlin.random.Random
 
 internal class RhythmGenerationFailure(message: String) : Exception(message)
 
+internal val rhythmR3Categories = setOf(RhythmCategory.SIXTEENTHS, RhythmCategory.EIGHTH_TWO_SIXTEENTHS,
+    RhythmCategory.TWO_SIXTEENTHS_EIGHTH, RhythmCategory.SIXTEENTH_EIGHTH_SIXTEENTH,
+    RhythmCategory.DOTTED_EIGHTH_SIXTEENTH, RhythmCategory.SIXTEENTH_DOTTED_EIGHTH,
+    RhythmCategory.REST_SIXTEENTH, RhythmCategory.SIXTEENTHS_REST)
+internal val rhythmR4Categories = setOf(RhythmCategory.EIGHTH_TRIPLET, RhythmCategory.SYNCOPATION, RhythmCategory.TIED_QUARTERS)
+
+private fun List<RhythmNote>.wholeBeats(): Int {
+    val duration = fold(Beat(0)) { sum, note -> sum + note.duration }
+    check(duration.denominator == 1) { "La plantilla debe ocupar tiempos enteros." }
+    return duration.numerator
+}
+
 internal fun RhythmCategory.notes(meter: Int): List<RhythmNote> = when (this) {
     RhythmCategory.QUARTER -> listOf(RhythmNote(Beat(1)))
     RhythmCategory.EIGHTHS -> listOf(RhythmNote(Beat(1, 2)), RhythmNote(Beat(1, 2)))
@@ -16,9 +28,20 @@ internal fun RhythmCategory.notes(meter: Int): List<RhythmNote> = when (this) {
     RhythmCategory.QUARTER_REST -> listOf(RhythmNote(Beat(1), rest = true))
     RhythmCategory.HALF_REST -> listOf(RhythmNote(Beat(2), rest = true))
     RhythmCategory.BAR_REST -> listOf(RhythmNote(Beat(meter), rest = true))
+    RhythmCategory.SIXTEENTHS -> List(4) { RhythmNote(Beat(1, 4)) }
+    RhythmCategory.EIGHTH_TWO_SIXTEENTHS -> listOf(RhythmNote(Beat(1, 2)), RhythmNote(Beat(1, 4)), RhythmNote(Beat(1, 4)))
+    RhythmCategory.TWO_SIXTEENTHS_EIGHTH -> listOf(RhythmNote(Beat(1, 4)), RhythmNote(Beat(1, 4)), RhythmNote(Beat(1, 2)))
+    RhythmCategory.SIXTEENTH_EIGHTH_SIXTEENTH -> listOf(RhythmNote(Beat(1, 4)), RhythmNote(Beat(1, 2)), RhythmNote(Beat(1, 4)))
+    RhythmCategory.DOTTED_EIGHTH_SIXTEENTH -> listOf(RhythmNote(Beat(3, 4)), RhythmNote(Beat(1, 4)))
+    RhythmCategory.SIXTEENTH_DOTTED_EIGHTH -> listOf(RhythmNote(Beat(1, 4)), RhythmNote(Beat(3, 4)))
+    RhythmCategory.REST_SIXTEENTH -> List(4) { RhythmNote(Beat(1, 4), rest = it == 0) }
+    RhythmCategory.SIXTEENTHS_REST -> List(4) { RhythmNote(Beat(1, 4), rest = it == 3) }
+    RhythmCategory.EIGHTH_TRIPLET -> List(3) { RhythmNote(Beat(1, 3), tuplet = 3) }
+    RhythmCategory.SYNCOPATION -> listOf(RhythmNote(Beat(1, 2)), RhythmNote(Beat(1)), RhythmNote(Beat(1, 2)))
+    RhythmCategory.TIED_QUARTERS -> listOf(RhythmNote(Beat(1), tieToNext = true), RhythmNote(Beat(1)))
 }
 
-/** Exact feasibility first, then bounded rejection of randomized placements. All R2 cells
+/** Exact feasibility first, then bounded rejection of randomized placements. All R2–R4 cells
  * occupy integer quarter beats, so connection beats can fill every residual slot. */
 internal fun generateSimpleRhythm(selected: Set<RhythmCategory>, seed: Long, meter: Int,
     maxCandidates: Int, checkCancelled: () -> Unit): RhythmScore {
@@ -32,7 +55,7 @@ internal fun generateSimpleRhythm(selected: Set<RhythmCategory>, seed: Long, met
     if (meter !in 2..4) impossible("El compás debe ser 2/4, 3/4 o 4/4.")
     if (RhythmCategory.WHOLE in selected && meter != 4) impossible("La redonda solo cabe en 4/4 sin cruzar barras.")
     val ordered = selected.sortedBy { it.code }
-    val lengths = ordered.map { category -> category.notes(meter).sumOf { it.duration.asDouble() }.toInt() }
+    val lengths = ordered.map { category -> category.notes(meter).wholeBeats() }
     val total = 4 * meter
     val minimum = total / 2
     val maximum = total * 3 / 4
@@ -90,19 +113,23 @@ internal fun generateSimpleRhythm(selected: Set<RhythmCategory>, seed: Long, met
             while (beat < meter) {
                 budget()
                 val candidates = remaining.indices.filter { index ->
-                    remaining[index].first.notes(meter).sumOf { it.duration.asDouble() } <= meter - beat
+                    remaining[index].first.notes(meter).wholeBeats() <= meter - beat
                 }
                 if (candidates.isEmpty()) { failed = true; break }
                 val (category, target) = remaining.removeAt(candidates[random.nextInt(candidates.size)])
                 val notes = category.notes(meter)
                 occurrences.add(RhythmOccurrence(occurrences.size, bar, Beat(beat), category, target, notes))
-                beat += notes.sumOf { it.duration.asDouble() }.toInt()
+                beat += notes.wholeBeats()
             }
             if (failed) break
         }
         if (!failed && remaining.isEmpty()) return RhythmScore(seed, ordered,
             List(4) { bar -> RhythmBar(bar, occurrences.filter { it.bar == bar }) },
-            version = "rhythm-simple-v2", beatsPerBar = meter)
+            version = when {
+                selected.any { it in rhythmR4Categories } -> "rhythm-simple-v4"
+                selected.any { it in rhythmR3Categories } -> "rhythm-simple-v3"
+                else -> "rhythm-simple-v2"
+            }, beatsPerBar = meter)
     }
     throw RhythmGenerationFailure("Se agotó la búsqueda aleatoria. Reintentá; no demuestra que la selección sea imposible.")
 }

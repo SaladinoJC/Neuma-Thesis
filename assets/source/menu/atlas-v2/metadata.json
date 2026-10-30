@@ -1,0 +1,87 @@
+[
+  {
+    "file": "book.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "bytes": 2546752
+  },
+  {
+    "file": "character.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "bytes": 2623795
+  },
+  {
+    "file": "controls.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "bytes": 1403007
+  },
+  {
+    "file": "defender.png",
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "bytes": 3180325
+  },
+  {
+    "file": "garden.png",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGB",
+    "alphaExtrema": null,
+    "bytes": 3691443
+  },
+  {
+    "file": "instruments.png",
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "bytes": 3319410
+  },
+  {
+    "file": "rhythm.png",
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "bytes": 3154437
+  },
+  {
+    "file": "simon.png",
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "bytes": 2930885
+  }
+]

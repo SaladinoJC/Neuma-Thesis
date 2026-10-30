@@ -1,0 +1,50 @@
+[
+  {
+    "source": "assets\\exports\\prototype-menu-simple-v3\\garden.webp",
+    "target": "Plataforma\\app\\src\\main\\res\\drawable-nodpi\\garden_garden.webp",
+    "sha256": "e1871d179056ecb63f5bed86e37a7f49cde15c05be739cdedffcf79c87afb558",
+    "bytes": 38566
+  },
+  {
+    "source": "assets\\exports\\prototype-menu-simple-v3\\book.webp",
+    "target": "Plataforma\\app\\src\\main\\res\\drawable-nodpi\\garden_book.webp",
+    "sha256": "874f613c169fced68008d9e977e11f734fd3e4df4e3604dd01fe7d580a8f5457",
+    "bytes": 98988
+  },
+  {
+    "source": "assets\\exports\\prototype-menu-simple-v3\\controls.webp",
+    "target": "Plataforma\\app\\src\\main\\res\\drawable-nodpi\\garden_controls.webp",
+    "sha256": "5b19d0ab807d761e5b1352f57c40216f482334469639a086d9d8eeb8f897967f",
+    "bytes": 97972
+  },
+  {
+    "source": "assets\\exports\\prototype-menu-simple-v3\\piano-c.webp",
+    "target": "Plataforma\\app\\src\\main\\res\\drawable-nodpi\\garden_simon.webp",
+    "sha256": "1cb622dc8d367d07841f13b2c757fc6b5a605712c1f96bd4d0f448cd942b410b",
+    "bytes": 61448
+  },
+  {
+    "source": "assets\\exports\\android-menu-v1\\instruments.webp",
+    "target": "Plataforma\\app\\src\\main\\res\\drawable-nodpi\\garden_instruments.webp",
+    "sha256": "d65b31fbd376d030faced095dbb0679aa8ca93901998b2f73efa1d3b01add4c5",
+    "bytes": 62314
+  },
+  {
+    "source": "assets\\exports\\android-menu-v1\\rhythm.webp",
+    "target": "Plataforma\\app\\src\\main\\res\\drawable-nodpi\\garden_rhythm.webp",
+    "sha256": "a2ec5fc259587b44f1f870ff2bf7ffc807ffbdb34b3ce53e0290e30ed5f82c5b",
+    "bytes": 44832
+  },
+  {
+    "source": "assets\\exports\\android-menu-v1\\defender.webp",
+    "target": "Plataforma\\app\\src\\main\\res\\drawable-nodpi\\garden_defender.webp",
+    "sha256": "fcbb6aa439943911bef47a3afbcd298818d0f57325829c7d82fe739765572cfd",
+    "bytes": 62658
+  },
+  {
+    "source": "assets\\exports\\android-menu-v1\\character.webp",
+    "target": "Plataforma\\app\\src\\main\\res\\drawable-nodpi\\garden_character.webp",
+    "sha256": "6254edd95be700f0a873686caacb294f00a91dcb6d45c68bc7660777af42b59f",
+    "bytes": 41612
+  }
+]

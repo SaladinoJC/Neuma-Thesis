@@ -5,6 +5,7 @@ import android.os.SystemClock
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,27 +33,26 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ar.edu.unmdp.entrenamiento.defender.*
 
-private val DefenderCyan = Color(0xFF55D9FF)
-private val DefenderSpace = Color(0xFF070D25)
-
 @Composable
-fun DefenderApp(ui: DefenderUiState, model: DefenderViewModel, onHome: () -> Unit) {
-    MaterialTheme(colorScheme = darkColorScheme(primary = DefenderCyan, secondary = Pink,
-        background = DefenderSpace, surface = Panel, onSurface = SoftWhite, onBackground = SoftWhite)) {
+fun DefenderApp(ui: DefenderUiState, model: DefenderViewModel, onData: (() -> Unit)? = null,
+    reduceMotion: Boolean = false, onHome: () -> Unit) {
+    if (ui.inspectorOpen) { DefenderInspectorApp(ui, model); return }
+    if (ui.historyOpen) { DefenderHistoryApp(ui, model, onData); return }
+    val reduced = reduceMotion || systemReducesMotion()
+    TunerGardenTheme {
         BackHandler(onBack = onHome)
-        Scaffold(containerColor = DefenderSpace, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
-            Column(Modifier.fillMaxSize().padding(padding).padding(horizontal = 12.dp)) {
+        Scaffold(containerColor = GardenTokens.Background, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
+            Column(Modifier.fillMaxSize().padding(padding).padding(horizontal = GardenTokens.SpaceMd)) {
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                    TextButton(onClick = onHome) { Text("‹ Menú") }
-                    Text("DEFENDER", modifier = Modifier.weight(1f), fontWeight = FontWeight.Black,
-                        color = DefenderCyan, letterSpacing = 2.sp)
+                    TextButton(onClick = onHome) { Text("Menú") }
+                    Text("Defender", modifier = Modifier.weight(1f), style = MaterialTheme.typography.headlineSmall)
                     if (ui.game.phase == DefenderPhase.RUNNING)
                         TextButton(onClick = model::pause, modifier = Modifier.testTag("defender-pause")) { Text("Pausa") }
                 }
                 when (ui.game.phase) {
-                    DefenderPhase.SETUP -> DefenderSetup(ui, model)
-                    DefenderPhase.FINISHED, DefenderPhase.INTERRUPTED -> DefenderSummary(ui, model)
-                    else -> DefenderGame(ui, model)
+                    DefenderPhase.SETUP -> DefenderSetup(ui, model, onData)
+                    DefenderPhase.FINISHED, DefenderPhase.INTERRUPTED -> DefenderSummary(ui, model, onData)
+                    else -> DefenderGame(ui, model, reduced)
                 }
             }
         }
@@ -60,18 +60,58 @@ fun DefenderApp(ui: DefenderUiState, model: DefenderViewModel, onHome: () -> Uni
 }
 
 @Composable
-private fun DefenderSetup(ui: DefenderUiState, model: DefenderViewModel) {
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(vertical = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        Text("Defendé la base", style = MaterialTheme.typography.headlineLarge)
-        Text("Leé la nota, elegí su nombre y dispará antes de que llegue.")
-        NoteStaff(DefenderNote(DefenderName.MI, 4), Modifier.fillMaxWidth().height(120.dp))
-        Text("Práctica · elegí qué leer", color = DefenderCyan)
-        DefenderStage.entries.forEach { stage ->
-            FilterChip(selected = ui.stage == stage, onClick = { model.stage(stage) },
-                label = { Text(stage.label) }, modifier = Modifier.testTag("defender-stage-${stage.name}"))
+private fun DefenderSetup(ui: DefenderUiState, model: DefenderViewModel, onData: (() -> Unit)?) {
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(vertical = GardenTokens.SpaceBase),
+        verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceBase)) {
+        Text("Defendé el jardín", style = MaterialTheme.typography.headlineSmall)
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
+            FilterChip(ui.variant == "notes", { model.variant("notes") }, label = { Text("Notas") },
+                modifier = Modifier.testTag("defender-variant-notes").heightIn(min = GardenTokens.TouchMinimum))
+            FilterChip(ui.variant == "chords", { model.variant("chords") }, label = { Text("Acordes por nombre") },
+                modifier = Modifier.testTag("defender-variant-chords").heightIn(min = GardenTokens.TouchMinimum))
         }
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Text(if (ui.variant == "chords") "Leé el acorde y elegí raíz, alteración y calidad antes de tocar."
+            else "Leé la nota, elegí su nombre y tocá antes de que llegue al árbol.")
+        DefenderStorageNotice(ui, model, onData)
+        DefenderModeControls(ui, model)
+        val example = if (ui.variant == "chords") defenderChordPool(ui.chordQuality, ui.chordInversion, ui.chordClefs)
+            .let { pool -> pool.firstOrNull { it.root.name == DefenderName.DO && it.root.accidental == DefenderAccidental.NATURAL } ?: pool.firstOrNull() } else null
+        NoteStaff(example?.root ?: DefenderNote(DefenderName.MI, 4), Modifier.fillMaxWidth().height(120.dp), example?.notes)
+        Text(if (ui.progression) "Progresión · elegí una etapa desbloqueada" else "Práctica · elegí qué leer", color = GardenTokens.Primary)
+        if (ui.variant == "chords") {
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
+                DefenderChordClefs.entries.forEach { clefs ->
+                    FilterChip(ui.chordClefs == clefs, { model.chordClefs(clefs) }, enabled = ui.canChoose(ui.targetFor(clefs = clefs)),
+                        label = { Text(clefs.label) }, modifier = Modifier.testTag("defender-chord-clefs-${clefs.name}").heightIn(min = GardenTokens.TouchMinimum))
+                }
+            }
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
+                ui.chordQuality.intervals.indices.forEach { inversion ->
+                    FilterChip(ui.chordInversion == inversion, { model.chordInversion(inversion) },
+                        enabled = ui.canChoose(ui.chordTarget.copy(inversion = inversion)), label = { Text(defenderInversionLabel(inversion)) },
+                        modifier = Modifier.testTag("defender-chord-inversion-$inversion").heightIn(min = GardenTokens.TouchMinimum))
+                }
+            }
+            Text("Se responde raíz y calidad; el bajo puede ser otra nota. Deslizá las calidades durante la partida.", color = GardenTokens.TextSecondary)
+            if (ui.progression) Text("Fa y primeras inversiones requieren dominar las ocho fundamentales en sol. Mezcla requiere las ocho fundamentales en fa. Las inversiones avanzan por calidad y clave.", color = GardenTokens.TextSecondary)
+            DefenderChordQuality.entries.forEach { quality ->
+                val locked = !ui.canChoose(ui.targetFor(quality = quality))
+                FilterChip(ui.chordQuality == quality, { model.chordQuality(quality) }, enabled = !locked,
+                    colors = FilterChipDefaults.filterChipColors(disabledLabelColor = GardenTokens.DisabledText, disabledContainerColor = GardenTokens.DisabledSurface),
+                    label = { Text(quality.label + if (locked) " · Bloqueada" else "") },
+                    modifier = Modifier.testTag("defender-quality-${quality.name}").heightIn(min = GardenTokens.TouchMinimum))
+            }
+            val missing = ui.chordTarget.prerequisites.filter { !ui.progress[it].mastered }
+            if (ui.progression && missing.isNotEmpty()) Text("Falta dominar: ${missing.joinToString { it.label }}", color = GardenTokens.TextSecondary)
+        } else DefenderStage.entries.forEach { stage ->
+            val locked = ui.progression && stage !in ui.progress.unlocked
+            FilterChip(selected = ui.stage == stage, onClick = { model.stage(stage) }, enabled = !locked,
+                colors = FilterChipDefaults.filterChipColors(disabledLabelColor = GardenTokens.DisabledText,
+                    disabledContainerColor = GardenTokens.DisabledSurface),
+                label = { Text(stage.label + if (locked) " · Bloqueada" else "") },
+                modifier = Modifier.testTag("defender-stage-${stage.name}").heightIn(min = GardenTokens.TouchMinimum))
+        }
+        if (ui.variant == "notes") Row(verticalAlignment = Alignment.CenterVertically) {
             Text("Incluir ♭ y ♯", modifier = Modifier.weight(1f))
             Switch(checked = ui.accidentals, onCheckedChange = model::accidentals,
                 modifier = Modifier.testTag("defender-accidentals"))
@@ -83,147 +123,166 @@ private fun DefenderSetup(ui: DefenderUiState, model: DefenderViewModel) {
                     label = { Text("$count") }, modifier = Modifier.testTag("defender-count-$count"))
             }
         }
-        Text("Viaje 10 s · tres vidas\nSolo las llegadas quitan vida. Cada acierto suma 100 puntos.")
+        Text("Viaje inicial ${if (ui.progression) 10 else ui.travelMillis / 1000} s · tres vidas\nSolo las llegadas quitan vida. Cada acierto suma 100 puntos.")
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             FilterChip(selected = !ui.letterNames, onClick = { model.letterNames(false) }, label = { Text("Do–Si") })
             FilterChip(selected = ui.letterNames, onClick = { model.letterNames(true) }, label = { Text("C–B") })
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Sonido de nota al acertar", modifier = Modifier.weight(1f))
+            Text(if (ui.variant == "chords") "Sonido del acorde al acertar" else "Sonido de nota al acertar", modifier = Modifier.weight(1f))
             Switch(checked = ui.noteSound, onCheckedChange = model::noteSound, modifier = Modifier.testTag("defender-note-sound"))
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text("Efectos de juego", modifier = Modifier.weight(1f))
             Switch(checked = ui.effectsSound, onCheckedChange = model::effectsSound, modifier = Modifier.testTag("defender-effects-sound"))
         }
-        Button(onClick = { model.start() }, modifier = Modifier.fillMaxWidth().height(56.dp).testTag("defender-start")) { Text("Jugar Defender") }
-        Text("Esta práctica no modifica tu progreso. Podés revisar el resumen al terminar.", color = Muted)
+        Button(onClick = { model.start() }, modifier = Modifier.fillMaxWidth().heightIn(min = GardenTokens.TouchMinimum).testTag("defender-start")) { Text("Jugar Defender") }
+        Text(if (ui.progression) "Dos partidas altas completas de la misma etapa habilitan la siguiente. Valores experimentales."
+            else "Esta práctica no modifica tu progreso. Podés revisar el resumen al terminar.", color = GardenTokens.TextSecondary)
+        ui.error?.let { Text(it, color = GardenTokens.ErrorText) }
     }
 }
 
 @Composable
-private fun ColumnScope.DefenderGame(ui: DefenderUiState, model: DefenderViewModel) {
+private fun ColumnScope.DefenderGame(ui: DefenderUiState, model: DefenderViewModel, reduced: Boolean) {
     val game = ui.game
-    Row(Modifier.fillMaxWidth().padding(vertical = 8.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-        Text(game.configuration.stage.label, color = DefenderCyan, fontWeight = FontWeight.Bold, fontSize = 13.sp)
-        Text("♥ ${game.lives}", color = Pink, modifier = Modifier.testTag("defender-lives"))
+    FlowRow(Modifier.fillMaxWidth().padding(vertical = GardenTokens.SpaceSm), horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceMd)) {
+        Text(game.configuration.contentLabel, color = GardenTokens.Primary, fontWeight = FontWeight.Bold)
+        Text("Vidas: ${game.lives}", color = GardenTokens.Primary, modifier = Modifier.testTag("defender-lives"))
         Text("${game.points} pts", fontWeight = FontWeight.Bold, modifier = Modifier.testTag("defender-score"))
+        if (reduced) game.enemies.minOfOrNull { it.deadlineMillis - game.activeMillis }?.let {
+            Text("Próxima llegada: ${(it.coerceAtLeast(0) + 999) / 1000} s", style = MaterialTheme.typography.bodySmall)
+        }
     }
     if (game.phase == DefenderPhase.PAUSED) {
         Box(Modifier.weight(1f).fillMaxWidth().testTag("defender-paused"), contentAlignment = Alignment.Center) {
             Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(20.dp)) {
                 Text("En pausa", style = MaterialTheme.typography.headlineLarge)
-                Text("Tiempo y audio detenidos", color = Muted)
+                Text("Tiempo y audio detenidos", color = GardenTokens.TextSecondary)
+                OutlinedButton(onClick = model::openInspector, modifier = Modifier.testTag("defender-inspector-open")) { Text("Progreso y DDA") }
                 Button(onClick = model::resume, modifier = Modifier.testTag("defender-resume")) { Text("Reanudar") }
             }
         }
         return
     }
-    DefenderArena(game, Modifier.weight(1f).fillMaxWidth())
+    DefenderArena(game, Modifier.weight(1f).fillMaxWidth(), reduced)
     // Fixed bottom controls remain reachable on a narrow portrait display.
-    Surface(color = Panel, border = BorderStroke(1.dp, DefenderCyan.copy(alpha = .4f)), shape = RoundedCornerShape(12.dp)) {
-        Column(Modifier.padding(8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            Text(game.feedback ?: "Seleccioná la nota", color = if (game.feedback == null) Muted else Pink,
-                fontSize = 13.sp, modifier = Modifier.testTag("defender-feedback"))
+    Surface(color = GardenTokens.Surface, shape = RoundedCornerShape(GardenTokens.RadiusLarge)) {
+        Column(Modifier.padding(GardenTokens.SpaceSm), verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceXs)) {
+            Text(game.feedback ?: if (game.configuration.variant == "chords") "Elegí raíz, alteración y calidad" else "Seleccioná la nota", color = if (game.feedback == null) GardenTokens.TextSecondary else GardenTokens.ErrorText,
+                style = MaterialTheme.typography.bodySmall, modifier = Modifier.testTag("defender-feedback"))
             DefenderName.entries.toList().chunked(4).forEach { row ->
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                     row.forEach { name ->
                         val selected = game.selected == name
                         OutlinedButton(onClick = { model.select(name) },
-                            modifier = Modifier.weight(1f).height(48.dp).testTag("defender-name-${name.name}"),
+                            modifier = Modifier.weight(1f).heightIn(min = GardenTokens.TouchMinimum).testTag("defender-name-${name.name}"),
                             contentPadding = PaddingValues(0.dp),
-                            colors = ButtonDefaults.outlinedButtonColors(containerColor = if (selected) DefenderCyan.copy(alpha = .25f) else Color.Transparent),
-                            border = BorderStroke(if (selected) 2.dp else 1.dp, if (selected) DefenderCyan else Muted)) {
+                            colors = ButtonDefaults.outlinedButtonColors(containerColor = if (selected) GardenTokens.SurfaceSelected else Color.Transparent),
+                            border = BorderStroke(if (selected) 2.dp else 1.dp, if (selected) GardenTokens.Primary else GardenTokens.Border)) {
                             Text(if (ui.letterNames) name.letter else name.solfege, fontWeight = FontWeight.Bold)
                         }
                     }
                     if (row.size < 4) Spacer(Modifier.weight(1f))
                 }
             }
-            if (game.configuration.accidentals) {
+            if (game.configuration.accidentals || game.configuration.variant == "chords") {
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     DefenderAccidental.entries.forEach { accidental ->
                         FilterChip(selected = game.selectedAccidental == accidental,
                             onClick = { model.accidental(accidental) }, label = { Text(accidental.symbol) },
-                            modifier = Modifier.weight(1f).testTag("defender-accidental-${accidental.name}"))
+                            modifier = Modifier.weight(1f).heightIn(min = GardenTokens.TouchMinimum).testTag("defender-accidental-${accidental.name}"))
                     }
+                }
+            }
+            if (game.configuration.variant == "chords") Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
+                DefenderChordQuality.entries.forEach { quality ->
+                    FilterChip(game.selectedQuality == quality, { model.quality(quality) }, label = { Text(quality.label) },
+                        modifier = Modifier.testTag("defender-answer-quality-${quality.name}").heightIn(min = GardenTokens.TouchMinimum))
                 }
             }
         }
     }
-    Button(onClick = model::fire, enabled = game.selected != null,
-        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp).height(52.dp).testTag("defender-fire")
-            .pointerInput(game.selected, game.selectedAccidental) {
+    Button(onClick = model::fire, enabled = game.selected != null && (game.configuration.variant != "chords" || game.selectedQuality != null),
+        modifier = Modifier.fillMaxWidth().padding(vertical = GardenTokens.SpaceSm).heightIn(min = GardenTokens.TouchMinimum).testTag("defender-fire")
+            .pointerInput(game.selected, game.selectedAccidental, game.selectedQuality) {
                 awaitEachGesture {
                     val down = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
-                    game.selected?.let { selected ->
-                        model.firePointer(down.uptimeMillis, SystemClock.uptimeMillis(), selected, game.selectedAccidental)
+                    game.selected?.takeIf { game.configuration.variant != "chords" || game.selectedQuality != null }?.let { selected ->
+                        model.firePointer(down.uptimeMillis, SystemClock.uptimeMillis(), selected, game.selectedAccidental, game.selectedQuality)
                         down.consume()
                     }
                     waitForUpOrCancellation(pass = PointerEventPass.Initial)?.consume()
                 }
             }) {
-        Text("DISPARAR", fontWeight = FontWeight.Black, letterSpacing = 2.sp)
+        Text("Tocar", fontWeight = FontWeight.Bold)
     }
-    ui.error?.let { Text(it, color = Pink, fontSize = 12.sp) }
+    ui.error?.let { Text(it, color = GardenTokens.ErrorText) }
 }
 
 @Composable
-private fun DefenderArena(game: DefenderState, modifier: Modifier) {
+private fun DefenderArena(game: DefenderState, modifier: Modifier, reduced: Boolean) {
     BoxWithConstraints(modifier.testTag("defender-arena")) {
         Canvas(Modifier.fillMaxSize()) {
-            repeat(58) { index ->
-                val x = ((index * 37 + 11) % 101) / 100f * size.width
-                val y = ((index * 61 + 7) % 103) / 103f * size.height
-                drawRect(if (index % 5 == 0) Pink.copy(alpha = .7f) else DefenderCyan.copy(alpha = .4f),
-                    Offset(x, y), Size(if (index % 7 == 0) 4.dp.toPx() else 1.dp.toPx(), 2.dp.toPx()))
-            }
             val base = Offset(size.width * .5f, size.height * .94f)
-            if (game.configuration.maxEnemies > 1) drawLine(DefenderCyan.copy(alpha = .6f),
-                Offset(size.width * .25f, size.height * .84f), Offset(size.width * .75f, size.height * .84f), 2.dp.toPx())
-            drawArc(DefenderCyan.copy(alpha = .4f), 180f, 180f, false,
-                Offset(size.width * .16f, size.height * .83f), Size(size.width * .68f, size.height * .34f), style = Stroke(2.dp.toPx()))
-            val ship = Path().apply {
-                moveTo(base.x, base.y - 28.dp.toPx()); lineTo(base.x + 23.dp.toPx(), base.y + 8.dp.toPx())
-                lineTo(base.x + 7.dp.toPx(), base.y + 3.dp.toPx()); lineTo(base.x, base.y - 8.dp.toPx())
-                lineTo(base.x - 7.dp.toPx(), base.y + 3.dp.toPx()); lineTo(base.x - 23.dp.toPx(), base.y + 8.dp.toPx()); close()
+            drawLine(GardenTokens.Moss, Offset(size.width * .25f, size.height * .84f),
+                Offset(size.width * .75f, size.height * .84f), 2.dp.toPx())
+            val trunk = Path().apply {
+                moveTo(base.x - 10.dp.toPx(), base.y)
+                quadraticTo(base.x + 6.dp.toPx(), base.y - 19.dp.toPx(), base.x - 3.dp.toPx(), base.y - 44.dp.toPx())
+                lineTo(base.x + 6.dp.toPx(), base.y - 44.dp.toPx())
+                quadraticTo(base.x + 14.dp.toPx(), base.y - 15.dp.toPx(), base.x + 10.dp.toPx(), base.y); close()
             }
-            drawPath(ship, DefenderCyan)
-            drawRect(Pink, Offset(base.x - 4.dp.toPx(), base.y + 10.dp.toPx()), Size(8.dp.toPx(), 12.dp.toPx()))
-            game.results.lastOrNull()?.takeIf { it.resolution == DefenderResolution.ELIMINATED && game.activeMillis - it.atMillis in 0..220 }?.let {
+            drawPath(trunk, GardenTokens.Primary)
+            for ((index, x) in listOf(-24f, -8f, 12f).withIndex()) drawOval(
+                if (index == 1) GardenTokens.Moss else GardenTokens.Sage,
+                Offset(base.x + x.dp.toPx(), base.y - (64 + index % 2 * 9).dp.toPx()), Size(35.dp.toPx(), 40.dp.toPx()))
+            game.results.lastOrNull()?.takeIf { !reduced && it.resolution == DefenderResolution.ELIMINATED && game.activeMillis - it.atMillis in 0..220 }?.let {
                 val p = it.position
-                drawLine(DefenderCyan, base, Offset(p.x * size.width, p.y * size.height), 3.dp.toPx())
+                val point = Offset(p.x * size.width, p.y * size.height)
+                drawCircle(GardenTokens.Success, 9.dp.toPx(), point, style = Stroke(2.dp.toPx()))
             }
         }
         game.enemies.forEach { enemy ->
-            val point = enemy.position(game.activeMillis)
-            val cardWidth = if (game.configuration.maxEnemies == 1) minOf(136.dp, maxWidth * .45f) else maxWidth * .235f
-            val cardHeight = if (game.configuration.maxEnemies == 1) minOf(116.dp, maxHeight * .35f) else maxHeight * .17f
+            val point = if (reduced) enemy.entry else enemy.position(game.activeMillis)
+            val chord = enemy.chord != null
+            val cardWidth = if (game.configuration.maxEnemies == 1) minOf(if (chord) 190.dp else 136.dp, maxWidth * if (chord) .7f else .45f) else maxWidth * if (chord) .34f else .235f
+            val cardHeight = if (game.configuration.maxEnemies == 1) minOf(116.dp, maxHeight * .35f) else maxHeight * if (chord) .20f else .17f
             Column(Modifier.offset(x = maxWidth * point.x - cardWidth / 2, y = maxHeight * point.y - cardHeight / 2)
                 .width(cardWidth).testTag("defender-enemy"), horizontalAlignment = Alignment.CenterHorizontally) {
-                NoteStaff(enemy.note, Modifier.fillMaxWidth().height(cardHeight).testTag("defender-target"))
-                Text("▟▙", color = Pink, fontSize = 12.sp, fontWeight = FontWeight.Black)
+                DefenderEnemyStaff(enemy, Modifier.fillMaxWidth().height(cardHeight).testTag("defender-target"))
+                Canvas(Modifier.width(24.dp).height(12.dp)) {
+                    val wing = Path().apply {
+                        moveTo(size.width / 2, size.height)
+                        quadraticTo(-size.width / 4, -size.height / 2, size.width / 2, size.height / 2)
+                        quadraticTo(size.width * 1.25f, -size.height / 2, size.width / 2, size.height); close()
+                    }
+                    drawPath(wing, GardenTokens.Moss)
+                    drawLine(GardenTokens.Primary, Offset(size.width / 2, size.height / 4), Offset(size.width / 2, size.height), 1.dp.toPx())
+                }
             }
         }
         game.results.lastOrNull()?.takeIf { it.resolution == DefenderResolution.ARRIVED && game.activeMillis - it.atMillis in 0..1200 }?.let { result ->
-            Text("${result.enemy.note.name.solfege}${if (result.enemy.note.accidental == DefenderAccidental.NATURAL) "" else result.enemy.note.accidental.symbol}${result.enemy.note.octave}", color = Pink, fontWeight = FontWeight.Black,
+            Text(result.enemy.solution(game.configuration.letterNames), color = GardenTokens.ErrorText, fontWeight = FontWeight.Bold,
                 modifier = Modifier.offset(x = maxWidth * result.position.x - 28.dp, y = maxHeight * result.position.y - 22.dp)
-                    .background(DefenderSpace).padding(4.dp).testTag("defender-solution"))
+                    .background(GardenTokens.Background).padding(GardenTokens.SpaceXs).testTag("defender-solution"))
         }
     }
 }
 
 /** Own vector treble clef: spiral sits on the G4 line (second from the bottom). */
 @Composable
-fun NoteStaff(note: DefenderNote, modifier: Modifier = Modifier) {
-    Canvas(modifier.background(Color(0xFFFFF1D9), RoundedCornerShape(5.dp)).semantics {
+fun NoteStaff(note: DefenderNote, modifier: Modifier = Modifier, chordNotes: List<DefenderNote>? = null) {
+    val voices = chordNotes ?: listOf(note)
+    Canvas(modifier.background(GardenTokens.Surface, RoundedCornerShape(GardenTokens.RadiusLarge)).semantics {
         contentDescription = "Pentagrama en clave de ${note.clef.label.lowercase()}"
     }) {
-        val sx = size.width / 100f; val sy = size.height / 120f
-        val ink = Color(0xFF13223D)
+        val sx = size.width / if (chordNotes == null) 100f else 144f; val sy = size.height / 120f
+        val ink = GardenTokens.Text
         translate(top = 8 * sy) {
         for (line in 0..4) drawLine(ink, Offset(4 * sx, (28 + line * 12) * sy),
-            Offset(96 * sx, (28 + line * 12) * sy), .9f * sy)
+            Offset((if (chordNotes == null) 96 else 140) * sx, (28 + line * 12) * sy), .9f * sy)
         if (note.clef == DefenderClef.TREBLE) {
         val clef = Path().apply {
             moveTo(19*sx, 92*sy)
@@ -246,16 +305,20 @@ fun NoteStaff(note: DefenderNote, modifier: Modifier = Modifier) {
             drawCircle(ink, 1.8f*sy, Offset(39*sx, 34*sy))
             drawCircle(ink, 1.8f*sy, Offset(39*sx, 46*sy))
         }
-        val ledgerSteps = if (note.staffStep < 0) (-2 downTo note.staffStep step 2).toList()
-            else if (note.staffStep > 8) (10..note.staffStep step 2).toList() else emptyList()
+        val stemHeadX = if (chordNotes == null) 66f else 110f
+        val offsets = defenderChordHeadOffsets(voices)
+        voices.forEachIndexed { index, voice ->
+        val headX = stemHeadX + if (chordNotes == null) 0 else offsets[index]
+        val ledgerSteps = if (voice.staffStep < 0) (-2 downTo voice.staffStep step 2).toList()
+            else if (voice.staffStep > 8) (10..voice.staffStep step 2).toList() else emptyList()
         ledgerSteps.forEach { step ->
             val ledgerY = (76 - step * 6) * sy
-            drawLine(ink, Offset(61*sx, ledgerY), Offset(85*sx, ledgerY), .9f*sy)
+            drawLine(ink, Offset((headX-5)*sx, ledgerY), Offset((headX+19)*sx, ledgerY), .9f*sy)
         }
-        if (note.accidental != DefenderAccidental.NATURAL) {
-            val ay = (76 - note.staffStep * 6) * sy
-            val ax = 52*sx
-            if (note.accidental == DefenderAccidental.SHARP) {
+        if (voice.accidental != DefenderAccidental.NATURAL) {
+            val ay = (76 - voice.staffStep * 6) * sy
+            val ax = (if (chordNotes == null) 52f else 87f - (index % 3)*15f)*sx
+            if (voice.accidental == DefenderAccidental.SHARP) {
                 for (dx in listOf(-2f, 3f)) drawLine(ink, Offset(ax+dx*sx, ay-10*sy), Offset(ax+dx*sx, ay+9*sy), 1.3f*sx)
                 for (dy in listOf(-3f, 3f)) drawLine(ink, Offset(ax-6*sx, ay+dy*sy+2*sy), Offset(ax+7*sx, ay+dy*sy-2*sy), 2f*sy)
             } else {
@@ -266,51 +329,64 @@ fun NoteStaff(note: DefenderNote, modifier: Modifier = Modifier) {
                 drawPath(flat, ink, style = Stroke(1.6f*sx))
             }
         }
-        val y = (76 - note.staffStep * 6) * sy
-        drawOval(ink, Offset(66 * sx, y - 4.4f * sy), Size(12 * sx, 8.8f * sy))
-        if (note.staffStep >= 4) drawLine(ink, Offset(66*sx, y), Offset(66*sx, y + 29*sy), 1.4f*sx)
-        else drawLine(ink, Offset(78*sx, y), Offset(78*sx, y - 29*sy), 1.4f*sx)
+        val y = (76 - voice.staffStep * 6) * sy
+        drawOval(ink, Offset(headX * sx, y - 4.4f * sy), Size(12 * sx, 8.8f * sy))
+        }
+        val low = (76 - voices.minOf { it.staffStep } * 6)*sy
+        val high = (76 - voices.maxOf { it.staffStep } * 6)*sy
+        if (voices.map { it.staffStep }.average() >= 4) drawLine(ink, Offset(stemHeadX*sx, high), Offset(stemHeadX*sx, low + 29*sy), 1.4f*sx)
+        else drawLine(ink, Offset((stemHeadX+12)*sx, low), Offset((stemHeadX+12)*sx, high - 29*sy), 1.4f*sx)
         }
     }
 }
 
 @Composable
-private fun DefenderSummary(ui: DefenderUiState, model: DefenderViewModel) {
+internal fun DefenderEnemyStaff(enemy: DefenderEnemy, modifier: Modifier = Modifier) {
+    NoteStaff(enemy.note, modifier, enemy.chord?.notes)
+}
+
+@Composable
+private fun DefenderSummary(ui: DefenderUiState, model: DefenderViewModel, onData: (() -> Unit)?) {
     val game = ui.game
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(vertical = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text(if (game.phase == DefenderPhase.FINISHED) "Base alcanzada" else "Práctica interrumpida",
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(vertical = GardenTokens.SpaceBase),
+        verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceMd)) {
+        Text(if (game.phase == DefenderPhase.FINISHED) "Base alcanzada" else "Partida interrumpida",
             style = MaterialTheme.typography.headlineLarge, modifier = Modifier.testTag("defender-summary"))
         Text("${game.points} puntos · ${game.results.count { it.resolution == DefenderResolution.ELIMINATED }} eliminados")
         Text("${game.results.count { it.resolution == DefenderResolution.ARRIVED }} llegadas · ${game.failedShots} disparos fallidos")
-        Text(game.configuration.stage.label, color = DefenderCyan, fontWeight = FontWeight.Bold)
-        Text(when (game.configuration.stage) {
+        DefenderStorageNotice(ui, model, onData)
+        Text(game.configuration.contentLabel, color = GardenTokens.Primary, fontWeight = FontWeight.Bold)
+        if (game.configuration.variant == "chords") Text("${defenderInversionLabel(game.configuration.chordInversion)} · ${game.configuration.chordClefs.label} · grafía exacta de raíz")
+        else Text(when (game.configuration.stage) {
             DefenderStage.N1 -> "Clave de sol · rango Mi4–Fa5"
             DefenderStage.N2 -> "Clave de sol · rango La3–Do6"
             DefenderStage.N3 -> "Clave de fa · rango Do2–Mi4"
             DefenderStage.N4 -> "Claves de sol y fa · rangos La3–Do6 / Do2–Mi4"
         })
-        Text(if (game.configuration.accidentals) "Alteraciones: naturales, bemoles y sostenidos"
+        Text(if (game.configuration.variant == "chords") "Alteraciones explícitas en las voces del acorde"
+            else if (game.configuration.accidentals) "Alteraciones: naturales, bemoles y sostenidos"
             else "Alteraciones: solo naturales")
-        Text("Práctica · no modifica tu progreso", color = Muted)
-        Text("Semilla ${game.seed} · ${game.configuration.version}", color = Muted, fontSize = 12.sp)
-        Button(onClick = { model.start() }, modifier = Modifier.fillMaxWidth()) { Text("Nueva práctica") }
+        Text(if (game.origin == "progression") "Progresión · avance al cerrar el resumen" else "Práctica · no modifica tu progreso", color = GardenTokens.TextSecondary)
+        Text("Semilla ${game.seed} · ${game.configuration.version}", color = GardenTokens.TextSecondary, style = MaterialTheme.typography.bodySmall)
+        OutlinedButton(onClick = model::openInspector, modifier = Modifier.testTag("defender-inspector-open")) { Text("Progreso y DDA") }
+        OutlinedButton(onClick = model::openHistory, modifier = Modifier.testTag("defender-history-open")) { Text("Historial de Defender") }
+        Button(onClick = model::prepare, modifier = Modifier.fillMaxWidth().testTag("defender-new")) { Text("Preparar otra partida") }
         Text("Revisión", style = MaterialTheme.typography.titleLarge)
         game.results.forEach { result ->
             val note = result.enemy.note
-            val symbol = if (note.accidental == DefenderAccidental.NATURAL) "" else note.accidental.symbol
-            Surface(color = Panel, shape = RoundedCornerShape(8.dp)) {
+            Surface(color = GardenTokens.Surface, shape = RoundedCornerShape(GardenTokens.RadiusLarge)) {
                 Row(Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    NoteStaff(result.enemy.note, Modifier.width(110.dp).height(84.dp))
+                    DefenderEnemyStaff(result.enemy, Modifier.width(110.dp).height(84.dp))
                     Column {
-                        Text("${note.name.solfege}$symbol${note.octave} · ${note.name.letter}$symbol${note.octave}", fontWeight = FontWeight.Bold)
-                        Text("Clave de ${note.clef.label.lowercase()} · ${when (note.accidental) {
+                        Text("${result.enemy.solution()} · ${result.enemy.solution(true)}", fontWeight = FontWeight.Bold)
+                        result.enemy.chord?.let { Text(it.notes.joinToString(" · ") { voice -> voice.writtenName() }) }
+                        Text("Clave de ${note.clef.label.lowercase()} · ${if (result.enemy.chord != null) defenderInversionLabel(result.enemy.chord.inversion) else when (note.accidental) {
                             DefenderAccidental.NATURAL -> "natural"
                             DefenderAccidental.FLAT -> "bemol"
                             DefenderAccidental.SHARP -> "sostenido"
-                        }}", color = Muted, fontSize = 12.sp)
-                        Text(if (result.resolution == DefenderResolution.ELIMINATED) "Eliminado" else "Llegó a la base", color = Muted)
+                        }}", color = GardenTokens.TextSecondary, style = MaterialTheme.typography.bodySmall)
+                        Text(if (result.resolution == DefenderResolution.ELIMINATED) "Eliminado" else "Llegó al árbol", color = GardenTokens.TextSecondary)
                     }
                 }
             }

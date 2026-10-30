@@ -1,8 +1,63 @@
-# Entrenamiento auditivo musical
+# Neuma — entrenamiento auditivo musical
 
 Vocabulario del sistema de entrenamiento auditivo mediante minijuegos.
 
 ## Language
+
+**Neuma**:
+Nombre de la aplicación de entrenamiento auditivo musical mediante minijuegos, elegido por el usuario. Es distinto del título académico de la tesis y de la dirección artística Music Garden.
+_Evitar_: Music Garden como nombre del producto.
+
+**Music Garden**:
+Nombre provisional de la dirección artística compartida por la plataforma y sus minijuegos, inspirada en naturaleza, cuentos ilustrados, papel artesanal, botánica y fantasía suave. Cada minijuego puede tener su propio escenario y personajes dentro de esa identidad.
+_Evitar_: tratarlo como nombre comercial confirmado de la aplicación.
+
+**Señalador del libro**:
+Pestaña que selecciona una sección del menú de libro de Music Garden: Personaje, Juegos, Afinador o Logros. Es distinto de avanzar entre páginas dentro de una sección.
+
+**Personaje**:
+Representación personalizable del jugador como humano explorador del jardín, que ocupa la sección de inicio del libro de Music Garden. Su apariencia combina rasgos personales con ropa y accesorios.
+
+**Tipo de cuerpo**:
+Variante de la silueta corporal del personaje, seleccionable sin etiquetas de género en la interfaz. Es distinta de la ropa, el peinado o el vello facial.
+
+**Categoría de equipamiento**:
+Espacio de personalización del personaje: cabeza, torso, piernas, instrumento, accesorio 1 o accesorio 2. Los dos espacios de accesorios admiten objetos como joyas, relojes y aros, evitando combinaciones incompatibles por ubicación; un par de aros constituye un objeto.
+
+**Objeto cosmético**:
+Prenda, accesorio o instrumento equipable destinado a modificar la apariencia del personaje. Su obtención forma parte de la progresión estética, y se conserva al cambiar el tipo de cuerpo.
+
+**Hacerlo sonar**:
+Acción que reproduce una melodía breve con el timbre del instrumento equipado por el personaje. Es una demostración sonora y no una ejecución de notas por parte del jugador.
+
+**Familia de instrumento del personaje**:
+Elección musical del jugador entre Guitarra, Piano, Trompeta, Flauta y Violín, modificable gratuitamente conservando hitos y modelos equivalentes. Agrupa los modelos de su personaje; no es la clasificación organológica de cuerdas, vientos o percusión.
+
+**Modelo de instrumento**:
+Variante coleccionable de la familia elegida, desde un modelo inicial genérico/desgastado hasta otros desbloqueados mediante hitos. Es distinto de cambiar a otra familia de instrumento.
+
+**Grado de modelo**:
+Posición de la colección instrumental: inicial, premio de desempeño de Instrumentos o premio de desempeño de Defender. Cada grado tiene un modelo equivalente por familia; expresa progresión de colección, no una medición de calidad acústica ni una ventaja en los juegos.
+
+**Armario**:
+Colección consultable de objetos equipables, disponibles y bloqueados, dentro de la personalización del personaje. Los objetos bloqueados muestran el hito necesario y su progreso.
+
+**Hito cosmético**:
+Objetivo de práctica o desempeño que concede una recompensa predeterminada al cumplirse. En los hitos instrumentales habilita un grado de modelo, conservado al cambiar de familia; para el mismo hito y familia la recompensa es igual para todos los jugadores.
+_Evitar_: confundirlo con una medalla o un desbloqueo de nivel.
+
+**Progresión estética**:
+Obtención de ropa y accesorios para el personaje mediante hitos, incluidos hitos propios de cada minijuego. Es distinta de la adaptación de dificultad y del acceso a niveles.
+
+**Página de juego**:
+Entrada de un minijuego en el libro de Music Garden, con su portada, descripción breve y acceso a Jugar. Es distinta de la preparación o de una partida del minijuego.
+
+**Logros**:
+Sección del libro que reúne medallas por objetivos y progreso/desbloqueos del estudiante, diferenciados entre sí.
+_Evitar_: tratar todos los desbloqueos como medallas o usar Logros como sinónimo del historial de partidas.
+
+**Medalla**:
+Reconocimiento por cumplir un objetivo explícito de actividad. Es distinto de habilitar un nivel; sus condiciones de obtención y permanencia requieren definición propia.
 
 **DDA (ajuste dinámico de dificultad)**:
 Ajuste de las exigencias de un minijuego a partir del desempeño del jugador. En este proyecto comprende adaptación intrapartida y progresión por desbloqueo de niveles.
@@ -70,6 +125,12 @@ _Evitar_: separar obligatoriamente la selección del usuario en «familias» y �
 
 **Enemigo de Defender**:
 Objetivo musical que avanza hacia la base y se elimina mediante una respuesta correcta. Si llega sin ser eliminado, cuesta una vida; una respuesta incorrecta por sí sola no cuesta vida.
+
+**Árbol guardián**:
+Representación botánica de la base protegida en Defender dentro de Music Garden. Las criaturas que lo alcanzan cuestan una vida, conservando las reglas del juego.
+
+**Tocar (Defender)**:
+Acción de confirmar la respuesta musical elegida para resolver un objetivo visible. Es el nombre adoptado para la acción antes presentada como «Disparar»; elegir una nota por sí solo no confirma la respuesta.
 
 **Variante de Defender**:
 Modalidad de lectura y respuesta: notas por nombre, acordes por nombre o acordes en piano virtual. Comparten la supervivencia arcade, pero conservan contenido, resultados y progreso independientes.

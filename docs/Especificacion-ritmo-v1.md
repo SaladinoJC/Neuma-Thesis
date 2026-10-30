@@ -1,6 +1,6 @@
 # Rhythm Tap — especificación del primer alcance
 
-Estado: síntesis funcional y parámetros iniciales confirmados mediante «ok»; puntos de prueba y seis incrementos aprobados mediante «perfecto» el 2026-10-22. Implementación pendiente.
+Estado: síntesis funcional y parámetros iniciales confirmados mediante «ok»; puntos de prueba y seis incrementos aprobados mediante «perfecto» el 2026-10-22. R1–R5 implementados y verificados en software hasta v0.12.10, incluido historial/exportación; progresión R6 pendiente. Consultar el plan y sus guías para alcance y límites comprobados.
 
 Publicada como [issue #15](https://github.com/SaladinoJC/Tesis/issues/15). [Plan aprobado y tickets #16–#21](Plan-tareas-ritmo-v1.md).
 
@@ -24,7 +24,7 @@ Primer alcance: compases simples 2/4, 3/4 y 4/4 y las 21 categorías aceptadas. 
 4. Como estudiante, quiero generar una partitura nueva localmente y verla antes de empezar.
 5. Como estudiante, quiero decidir cuándo pulsar Play y escuchar un compás de entrada.
 6. Como estudiante, quiero leer una notación legible con barras, silencios, puntillos, tresillos y ligaduras cuando correspondan.
-7. Como estudiante, quiero un marcador y desplazamiento vertical suave para seguir mi posición.
+7. Como estudiante, quiero un marcador fijo y desplazamiento lateral continuo para seguir mi posición, con ventanas estáticas cuando reduzco movimiento.
 8. Como estudiante, quiero responder con taps, sin micrófono ni necesidad de sostener el dedo.
 9. Como estudiante, quiero escuchar opcionalmente mis taps reales, incluyendo sus errores de tiempo.
 10. Como estudiante, quiero activar/desactivar el metrónomo después del conteo para practicar mantener el tempo.
@@ -67,7 +67,7 @@ Primer alcance: compases simples 2/4, 3/4 y 4/4 y las 21 categorías aceptadas. 
 ### Presentación, audio y reloj
 
 - Notación rítmica de una voz sin alturas: cabezas, plicas, barras, silencios, puntillos, corchete/número de tresillo y ligaduras. Agrupar según pulso y métrica, sin cambiar la duración semántica para facilitar el dibujo.
-- Varios renglones con tamaños mínimos legibles, marcador y desplazamiento vertical suave sincronizado; no depender del scroll para medir el tiempo. Antes de Play se puede revisar; la ejecución inicia únicamente tras el conteo.
+- Actualización autorizada por el usuario el 2026-10-29: línea continua SVG con VexFlow local, fondo transparente sobre el papel, marcador fijo y desplazamiento lateral desde tiempo musical. Cabezas verdes para ataques a tiempo, sin recolorear plicas/barras ni introducir ataques en continuaciones ligadas. Revisión manual antes de Play y en resultados/historial; repetición sin marcas. Reducción de movimiento con ventanas estáticas por pulso y sin marcador móvil; alternativa nativa si no puede cargar el renderer. Esto sustituye la presentación por renglones/seguimiento vertical, sin depender del scroll para medir tiempo ni cambiar audio o evaluación. [Implementación y verificación](Rhythm-Tap-lectura-lateral.md).
 - Conteo audible de un compás; metrónomo durante ejecución opcional. Sonido de taps reales opcional e independiente. No demo ni reproducción del patrón ideal. Recordar preferencias, sin iniciar audio por reabrir pantalla.
 - Un único reloj monótono para timeline, taps y marcador. Marcar tiempos de eventos táctiles al ocurrir, no al terminar composición o dibujo. El adaptador debe mapear el reloj táctil y el audio a esa base y registrar incertidumbre/configuración; no asumir que llamar a reproducir significa que ya sonó.
 - No programar precisión musical mediante una sucesión de esperas de UI. Reutilizar reproducción de bajo retardo cuando sirva, pero el reproductor de frases actual no acredita por sí solo un metrónomo sincronizado con taps. Verificar avance real y cancelación del audio en Android.

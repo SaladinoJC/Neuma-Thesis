@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.defender.DefenderDdaTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-30T15:23:51.586Z" hostname="DESKTOP-PP49S64" time="0.018">
+  <properties/>
+  <testcase name="ningunaReglaValidaMantieneViajeYExplicaFallo" classname="ar.edu.unmdp.entrenamiento.defender.DefenderDdaTest" time="0.002"/>
+  <testcase name="vivosConservanViajeYDeadlineCuandoAjustaElMotor" classname="ar.edu.unmdp.entrenamiento.defender.DefenderDdaTest" time="0.001"/>
+  <testcase name="aceleraDesdeQuintaResolucionConEnfriamientoDeTresYLimiteSeis" classname="ar.edu.unmdp.entrenamiento.defender.DefenderDdaTest" time="0.008"/>
+  <testcase name="practicaConViajeManualInspeccionaSinAplicarYReiniciaPresionEnNuevaPartida" classname="ar.edu.unmdp.entrenamiento.defender.DefenderDdaTest" time="0.003"/>
+  <testcase name="fallosGlobalesAfectanPrecisionAunqueTodosLosEnemigosSeEliminen" classname="ar.edu.unmdp.entrenamiento.defender.DefenderDdaTest" time="0.001"/>
+  <testcase name="tresPerdidasEnVentanaReducenRapidezYSupervivenciaAunqueNoHayaFallosDeRespuesta" classname="ar.edu.unmdp.entrenamiento.defender.DefenderDdaTest" time="0.002"/>
+  <testcase name="sinDisparosNoDesaparecenPerdidasNiSeInventaPrecision" classname="ar.edu.unmdp.entrenamiento.defender.DefenderDdaTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

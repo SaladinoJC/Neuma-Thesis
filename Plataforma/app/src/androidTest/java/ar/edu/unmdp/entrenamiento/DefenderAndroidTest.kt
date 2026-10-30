@@ -46,7 +46,7 @@ class DefenderAndroidTest {
         compose.runOnIdle { now = 1000L }
         tapWithDeviceUptime(hostView, compose.onNodeWithTag("defender-fire").fetchSemanticsNode().boundsInRoot.center)
         compose.onNodeWithTag("defender-score").assertTextEquals("0 pts")
-        compose.onNodeWithTag("defender-lives").assertTextEquals("♥ 3")
+        compose.onNodeWithTag("defender-lives").assertTextEquals("Vidas: 3")
         compose.onNodeWithTag("defender-accidental-${wrong.name}").assertIsSelected()
         compose.onNodeWithTag("defender-fire").assertIsEnabled()
         screenshot("d2-controles-alteraciones")
@@ -196,9 +196,9 @@ class DefenderAndroidTest {
         compose.onNodeWithTag("defender-fire").assertDoesNotExist()
         compose.runOnIdle { now = 50_000 }
         compose.onNodeWithTag("defender-resume").performClick()
-        compose.onNodeWithTag("defender-lives").assertTextEquals("♥ 3")
+        compose.onNodeWithTag("defender-lives").assertTextEquals("Vidas: 3")
         compose.runOnIdle { now = 60_000; model.tick() }
-        compose.onNodeWithTag("defender-lives").assertTextEquals("♥ 2")
+        compose.onNodeWithTag("defender-lives").assertTextEquals("Vidas: 2")
         compose.onNodeWithTag("defender-solution").assertIsDisplayed()
         screenshot("solucion")
         compose.runOnIdle { now = 84_000; model.tick() }

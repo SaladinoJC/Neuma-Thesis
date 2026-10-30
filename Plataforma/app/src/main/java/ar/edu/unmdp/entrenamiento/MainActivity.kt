@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -52,20 +53,31 @@ class MainActivity : ComponentActivity() {
     private lateinit var tuner: TunerViewModel
     private lateinit var defender: DefenderViewModel
     private lateinit var rhythm: RhythmViewModel
+    private lateinit var gardenMenu: ar.edu.unmdp.entrenamiento.ui.GardenMenuState
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT),
             navigationBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT))
         val data = Demonstration(filesDir)
+        gardenMenu = ViewModelProvider(this)[ar.edu.unmdp.entrenamiento.ui.GardenMenuState::class.java]
         tuner = ViewModelProvider(this, object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T = TunerViewModel(
                 referencePlayer = ar.edu.unmdp.entrenamiento.audio.AndroidTunerReferencePlayer(applicationContext),
-                configurationStore = JsonTunerConfiguration(File(filesDir, "tuner-configuration.json"))) as T
+                configurationStore = JsonTunerConfiguration(File(filesDir, "tuner-configuration.json")),
+                resultsStore = ar.edu.unmdp.entrenamiento.tuner.JsonTunerResults(File(filesDir, "tuner-results.json"))) as T
         })[TunerViewModel::class.java]
-        defender = ViewModelProvider(this)[DefenderViewModel::class.java]
-        rhythm = ViewModelProvider(this)[RhythmViewModel::class.java]
+        defender = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T = DefenderViewModel(
+                resultsStore = ar.edu.unmdp.entrenamiento.defender.JsonDefenderResults(File(filesDir, "defender-results.json"))) as T
+        })[DefenderViewModel::class.java]
+        rhythm = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T = RhythmViewModel(
+                resultsStore = ar.edu.unmdp.entrenamiento.rhythm.JsonRhythmResults(File(filesDir, "rhythm-results.json"))) as T
+        })[RhythmViewModel::class.java]
         model = ViewModelProvider(this, object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -101,13 +113,18 @@ class MainActivity : ComponentActivity() {
         val instrumentModel = instruments
         val voiceModel = voice
         val tunerModel = tuner
+        val rhythmModel = rhythm
+        val defenderModel = defender
         val demonstration = ViewModelProvider(this, object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T = DemonstrationViewModel(data,
-                drain = { labModel.cancelAndJoin(); voiceModel.stopAndJoin(); tunerModel.awaitConfigurationIdle(); simonModel.awaitIdle(); instrumentModel.awaitIdle() },
-                refresh = { simonModel.reload(); instrumentModel.reload(); voiceModel.resetDisplay(); labModel.resetDisplay(); tunerModel.resetDisplay() },
+                drain = { labModel.cancelAndJoin(); voiceModel.stopAndJoin(); rhythmModel.stopAndJoin(); defenderModel.stopAndJoin(); tunerModel.awaitConfigurationIdle(); simonModel.awaitIdle(); instrumentModel.awaitIdle() },
+                refresh = { simonModel.reload(); instrumentModel.reload(); voiceModel.resetDisplay(); labModel.resetDisplay(); tunerModel.resetDisplay(); rhythmModel.resetDisplay(); defenderModel.resetDisplay() },
                 helpSimulation = { instrumentModel.ui.value.simulation }, pendingVoice = voiceModel::pendingForExport,
-                drainForReset = { labModel.cancelAndJoin(); voiceModel.stopAndJoin(); tunerModel.stop(); tunerModel.awaitConfigurationIdle(); simonModel.discardForReset(); instrumentModel.discardForReset() }) as T
+                pendingTuner = tunerModel::pendingForExport,
+                pendingRhythm = rhythmModel::pendingForExport,
+                pendingDefender = defenderModel::pendingForExport,
+                drainForReset = { labModel.cancelAndJoin(); voiceModel.stopAndJoin(); rhythmModel.stopAndJoin(); defenderModel.stopAndJoin(); tunerModel.stop(); tunerModel.awaitConfigurationIdle(); simonModel.discardForReset(); instrumentModel.discardForReset() }) as T
         })[DemonstrationViewModel::class.java]
         val history = ViewModelProvider(this, object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
@@ -129,12 +146,16 @@ class MainActivity : ComponentActivity() {
             LaunchedEffect(ui.screen, instrumentUi.open, auxiliary) {
                 requestedOrientation = if (ui.screen == AppScreen.MENU || instrumentUi.open || auxiliary.isNotEmpty())
                     ActivityInfo.SCREEN_ORIENTATION_PORTRAIT else ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
+                WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars =
+                    auxiliary in setOf("rhythm", "tuner", "data", "defender")
             }
-            if (auxiliary == "rhythm") RhythmApp(rhythmUi, rhythm) {
+            if (auxiliary == "rhythm") RhythmApp(rhythmUi, rhythm, reduceMotion = gardenMenu.reduceMotion,
+                onData = { rhythm.home(); auxiliary = "data" }) {
                 rhythm.home()
                 auxiliary = ""
             }
-            else if (auxiliary == "defender") DefenderApp(defenderUi, defender) {
+            else if (auxiliary == "defender") DefenderApp(defenderUi, defender, reduceMotion = gardenMenu.reduceMotion,
+                onData = { defender.home(); auxiliary = "data" }) {
                 defender.home()
                 auxiliary = ""
             }
@@ -155,8 +176,11 @@ class MainActivity : ComponentActivity() {
             else SimonApp(ui, model::openSimon, model::selectScale, model::start, model::answer, model::home,
                 instruments::open, instrumentUi.history, model::selectAutomatic,
                 onVoice = { auxiliary = "voice" }, onData = { auxiliary = "data" }, onHistory = { history.load(); auxiliary = "history" }, onRetryStorage = model::retryStorage,
-                onTuner = { auxiliary = "tuner" }, onDefender = { defender.prepare(); auxiliary = "defender" },
-                onRhythm = { auxiliary = "rhythm" })
+                onTuner = { if (tunerUi.configuration.configuration != null) tuner.mode(ar.edu.unmdp.entrenamiento.tuner.TunerMode.FREE); auxiliary = "tuner" },
+                onGuidedTuner = { if (tunerUi.configuration.configuration != null) tuner.mode(ar.edu.unmdp.entrenamiento.tuner.TunerMode.GUIDED); auxiliary = "tuner" },
+                onTrainingTuner = { if (tunerUi.configuration.configuration != null) tuner.mode(ar.edu.unmdp.entrenamiento.tuner.TunerMode.TRAINING); auxiliary = "tuner" },
+                onDefender = { defender.prepare(); auxiliary = "defender" },
+                onRhythm = { auxiliary = "rhythm" }, menuState = gardenMenu, instrumentProgress = instrumentUi.progress)
         }
     }
 

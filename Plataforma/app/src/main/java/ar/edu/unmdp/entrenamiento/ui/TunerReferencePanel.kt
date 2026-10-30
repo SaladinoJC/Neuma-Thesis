@@ -13,7 +13,7 @@ import ar.edu.unmdp.entrenamiento.tuner.*
 fun TunerReferencePanel(ui: TunerUiState, model: TunerViewModel) {
     val configuration = ui.configuration.configuration ?: return
     Text("Referencia sonora", style = MaterialTheme.typography.titleMedium)
-    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
         ReferenceTimbre.entries.forEach { timbre ->
             FilterChip(selected = configuration.referenceTimbre == timbre,
                 enabled = !ui.configurationBusy && !ui.referenceBusy,
@@ -22,7 +22,7 @@ fun TunerReferencePanel(ui: TunerUiState, model: TunerViewModel) {
         }
     }
     val target = ui.tuning.targetMidi
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         Button(onClick = model::playReference,
             enabled = !ui.referenceBusy && !ui.configurationBusy && target in tunerTargetRange,
             modifier = Modifier.testTag("tuner-reference")) {
@@ -31,5 +31,5 @@ fun TunerReferencePanel(ui: TunerUiState, model: TunerViewModel) {
         if (ui.referenceBusy) TextButton(onClick = model::stop, modifier = Modifier.testTag("tuner-reference-cancel")) { Text("Cancelar") }
     }
     if (ui.referenceBusy) Text("Micrófono en pausa durante la referencia", modifier = Modifier.testTag("tuner-reference-status"))
-    else if (target == null) Text("Fijá una cuerda o iniciá Guiado para elegir el objetivo.", color = Muted)
+    else if (target == null) Text("Fijá una cuerda o iniciá un recorrido para elegir el objetivo.", color = GardenTokens.TextSecondary)
 }

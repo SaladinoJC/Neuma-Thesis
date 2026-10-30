@@ -1,0 +1,45 @@
+% Fuente editable principal. Compilar desde Informe/ mediante compilar.ps1.
+\documentclass[12pt,a4paper,twoside,openany]{report}
+\input{configuracion}
+\input{datos}
+
+\begin{document}
+\input{preliminares/portada}
+\pagenumbering{roman}
+\input{preliminares/agradecimientos}
+% Dedicatoria y frase: opcionales; agregar si el autor lo desea.
+\tableofcontents
+\listoffigures
+\addcontentsline{toc}{chapter}{Índice de figuras}
+\listoftables
+\addcontentsline{toc}{chapter}{Índice de tablas}
+\input{preliminares/resumen}
+\clearpage
+\pagenumbering{arabic}
+
+\input{capitulos/01-introduccion}
+\input{capitulos/02-objetivos}
+\input{capitulos/03-marco-teorico-y-estado-del-arte}
+\input{capitulos/04-metodologia}
+\input{capitulos/05-herramientas-y-tecnologias}
+\input{capitulos/06-factibilidad}
+\input{capitulos/07-planificacion}
+\input{capitulos/08-requerimientos}
+\input{capitulos/09-diseno}
+\input{capitulos/10-implementacion}
+\input{capitulos/11-pruebas-y-validacion}
+\input{capitulos/12-evaluacion}
+\input{capitulos/13-conclusiones}
+
+\chapter*{Referencias bibliográficas}
+\addcontentsline{toc}{chapter}{Referencias bibliográficas}
+\pendiente{Incorporar únicamente fuentes verificadas y citadas en el texto.}
+\begingroup
+\doublespacing
+\setlength{\bibitemsep}{0pt}
+\printbibliography[heading=none]
+\endgroup
+
+\appendix
+\input{anexos/material-complementario}
+\end{document}

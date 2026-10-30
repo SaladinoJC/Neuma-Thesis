@@ -1,6 +1,8 @@
 # Defender — especificación de notas, acordes y piano
 
-Estado: síntesis y valores iniciales confirmados mediante «perfeto»; puntos de prueba, división y dependencias aprobados mediante «perfecto» el 2026-10-22. Implementación pendiente.
+> Actualización visual confirmada por el usuario el 2026-10-26 (Music Garden, Q1–Q4): [ART_DIRECTION.md](ART_DIRECTION.md) reemplaza la estética espacial de esta especificación por jardín de papel recortado con tinta, árbol sin rostro, polillas de alas vegetales y acción «Tocar». Se conservan las reglas funcionales y la orientación vertical/radial. «Base», «enemigo» y «disparo» en el detalle siguiente describen el contrato previo; no requieren renombrar el modelo interno para adaptar la presentación. Ilustraciones concretas pendientes de revisión; sin implementación visual en esta etapa. La issue publicada no se modificó.
+
+Estado: síntesis y valores iniciales confirmados mediante «perfeto»; puntos de prueba, división y dependencias aprobados mediante «perfecto» el 2026-10-22. D1/D2 implementados y verificados en software; D3/D4/D5 implementados localmente en 0.12.13/0.12.14/0.12.15, con revisión Android pendiente. D6/D7 pendientes. [D3](Demostracion-defender-D3.md), [D4](Demostracion-defender-D4.md), [D5](Demostracion-defender-D5.md). Las reglas siguientes siguen siendo la especificación, no una declaración de que las tres variantes ya existen.
 
 Publicada como [issue #22](https://github.com/SaladinoJC/Tesis/issues/22). [Plan aprobado y tickets #23–#29](Plan-tareas-defender-v1.md).
 

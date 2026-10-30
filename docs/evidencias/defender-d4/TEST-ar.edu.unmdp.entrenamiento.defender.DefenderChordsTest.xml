@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.defender.DefenderChordsTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-30T16:20:27.996Z" hostname="DESKTOP-PP49S64" time="0.021">
+  <properties/>
+  <testcase name="catalogoConservaTercerasQuintasGrafiasYLimiteDeDosLineasAdicionales" classname="ar.edu.unmdp.entrenamiento.defender.DefenderChordsTest" time="0.006"/>
+  <testcase name="raizEnarmonicaNoSustituyeLaGrafiaMostrada" classname="ar.edu.unmdp.entrenamiento.defender.DefenderChordsTest" time="0.003"/>
+  <testcase name="entregaTardiaUsaCalidadCapturadaConTimestampOriginal" classname="ar.edu.unmdp.entrenamiento.defender.DefenderChordsTest" time="0.002"/>
+  <testcase name="vivosNoRepitenRespuestaAunqueCambieRegistroYElCupoEsAcotado" classname="ar.edu.unmdp.entrenamiento.defender.DefenderChordsTest" time="0.007"/>
+  <testcase name="exigeRespuestaCompletaYEscritaConservaErrorYLimpiaTrasAcierto" classname="ar.edu.unmdp.entrenamiento.defender.DefenderChordsTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

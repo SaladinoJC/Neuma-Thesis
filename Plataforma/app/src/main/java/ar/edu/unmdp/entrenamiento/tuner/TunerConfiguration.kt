@@ -26,7 +26,7 @@ fun parseTunerNote(text: String): Int {
 @Serializable
 data class GuitarProfile(val id: String, val name: String, val tuningId: String = "standard")
 
-@Serializable enum class TunerMode { FREE, GUIDED }
+@Serializable enum class TunerMode(val label: String) { FREE("Libre"), GUIDED("Guiado"), TRAINING("Oído") }
 
 @Serializable
 data class GuitarTuning(val id: String, val name: String, val notesSixToFirst: List<Int>, val revision: Int = 1) {
@@ -58,6 +58,8 @@ data class TunerConfiguration(
     val mode: TunerMode = TunerMode.FREE,
     val finalReview: Boolean = true,
     val referenceTimbre: ReferenceTimbre = ReferenceTimbre.GUITAR,
+    val earClassification: Boolean = false,
+    val saveHistory: Boolean = true,
 ) {
     init {
         require(schemaVersion == 1) { "Versión de configuración del afinador no compatible." }
@@ -124,6 +126,8 @@ class TunerConfigurationSession(private val store: TunerConfigurationStore,
     suspend fun preferences(criterion: TunerCriterion, tracking: TunerTracking) = change { it.copy(criterion = criterion, tracking = tracking) }
     suspend fun guidedPreferences(mode: TunerMode, finalReview: Boolean) = change { it.copy(mode = mode, finalReview = finalReview) }
     suspend fun referenceTimbre(value: ReferenceTimbre) = change { it.copy(referenceTimbre = value) }
+    suspend fun earClassification(value: Boolean) = change { it.copy(earClassification = value) }
+    suspend fun saveHistory(value: Boolean) = change { it.copy(saveHistory = value) }
     suspend fun saveCustom(name: String, notes: List<Int>, id: String? = null) = change { withCustom(it, name, notes, id) }
     suspend fun saveCustomNames(name: String, notes: List<String>, id: String? = null) = change {
         withCustom(it, name, notes.map(::parseTunerNote), id)

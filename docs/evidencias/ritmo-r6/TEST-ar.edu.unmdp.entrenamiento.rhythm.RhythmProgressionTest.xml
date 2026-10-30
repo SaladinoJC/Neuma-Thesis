@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.rhythm.RhythmProgressionTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-10-30T14:33:03.036Z" hostname="DESKTOP-PP49S64" time="0.451">
+  <properties/>
+  <testcase name="bancoSimuladoEsAisladoYCompruebaInsuficienciaTechoRepeticionYFallo" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmProgressionTest" time="0.302"/>
+  <testcase name="jsonReabreYReintentoODobleGuardadoNoDuplicanAvance" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmProgressionTest" time="0.04"/>
+  <testcase name="grafoTieneTodasLasCategoriasAlcanzablesYSinCiclos" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmProgressionTest" time="0.001"/>
+  <testcase name="revisionesTardiasNoDuplicanAumentosNiRetiranUnDesbloqueo" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmProgressionTest" time="0.005"/>
+  <testcase name="mezclaNoElevaCategoriaMasRapidaYConexionNoEsEvidencia" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmProgressionTest" time="0.005"/>
+  <testcase name="practicaRepetidaContenidoIdenticoYOmisionesNoRegalanProgreso" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmProgressionTest" time="0.007"/>
+  <testcase name="dosEjerciciosNuevosSinMetronomoSubenCincoYDesbloqueanAntesDeReiniciarRacha" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmProgressionTest" time="0.004"/>
+  <testcase name="silencioSoloSumaCuandoSeRespetaYUnExtraNoSeAtribuyeADosApariciones" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmProgressionTest" time="0.005"/>
+  <testcase name="guardadosConcurrentesExportacionYReinicioConservanUnaSolaSecuenciaCoherente" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmProgressionTest" time="0.08"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

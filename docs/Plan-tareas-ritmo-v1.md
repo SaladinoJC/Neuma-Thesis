@@ -1,6 +1,6 @@
 # Plan de incrementos de Rhythm Tap v1
 
-Estado: puntos de prueba, división y dependencias aprobados por el usuario mediante «perfecto» el 2026-10-22. Especificación y seis tickets publicados. R1 implementado y verificado en software en v0.12; R2 terminado individualmente en v0.12.2 el 2026-10-26, con 110 JVM conjuntas, cinco Android seleccionadas, lint y revisión visual aprobados. R3–R6 pendientes; prueba física y cierre de issues pendientes. [Verificación R2](Rhythm-Tap-R2.md) y [antecedente v0.12](Verificacion-prototipo-v0.12.md).
+Estado: puntos de prueba, división y dependencias aprobados por el usuario mediante «perfecto» el 2026-10-22. Especificación y seis tickets publicados. **R1–R5 terminados en software hasta v0.12.10**: 163 JVM, 57/57 Android completas en API 34, revisión de R5 a 411/360/320 dp y texto 200 %, lint 0 errores/14 advertencias. **R6 pendiente**; prueba física y cierre de issues pendientes. Verificación actual [R5](Rhythm-Tap-R5.md) y antecedentes [R4](Rhythm-Tap-R4.md), [R3](Rhythm-Tap-R3.md), [R2](Rhythm-Tap-R2.md) y [v0.12](Verificacion-prototipo-v0.12.md).
 
 Fuente: [especificación](Especificacion-ritmo-v1.md). Cada ticket entrega un recorrido ejecutable a través de interfaz, reglas, audio/datos necesarios y verificación. No separar generador, renderizador y evaluador en tickets horizontales que no permitan practicar nada al terminar.
 
@@ -31,7 +31,7 @@ R1–R5 se entregan como práctica sin desbloqueos ni progreso automático fingi
 - [ ] Modelo de duraciones racionales, compás, procedencia de células y resultado serializable previsto para silencios, tresillos y ligaduras; no implementar su renderizado futuro antes de necesitarlo.
 - [ ] Generar localmente con semilla/versión; duración exacta y cuota objetivo/conexión identificables. Para estas categorías coincidentes visualmente, no duplicar conteo de duración.
 - [ ] Vista previa sin audio objetivo; Play inicia un compás de conteo audible antes de admitir respuestas. Generar/revisar no inicia ejecución.
-- [ ] Partitura legible por renglones, marcador temporal y seguimiento vertical cuando haga falta, sin depender del refresco visual para registrar taps.
+- [ ] Partitura legible y seguimiento temporal sin depender del refresco visual para registrar taps. La presentación por renglones/seguimiento vertical original queda sustituida por lectura lateral autorizada el 2026-10-29: [guía y verificación](Rhythm-Tap-lectura-lateral.md).
 - [ ] Metrónomo de ejecución y sonido de taps reales opcionales/independientes; ningún patrón ideal suena antes ni durante.
 - [ ] Reloj común, asociación uno a uno y ventanas experimentales de la especificación; feedback, omisiones y extras sin detener ejercicio. Resumen en memoria y repetir mismo patrón como práctica.
 - [ ] Salir/segundo plano interrumpe y libera audio sin completar; sin micrófono ni permisos de voz innecesarios.
@@ -57,13 +57,13 @@ R1–R5 se entregan como práctica sin desbloqueos ni progreso automático fingi
 
 **Bloqueado por:** R2.
 
-- [ ] Añadir R03/R04/R05/R06/R07/R08/R13/R14 según catálogo; conservar orden de figuras/silencios y posiciones admitidas.
-- [ ] Cada seleccionada aparece repetidamente en la cuota, sin introducir recursos no elegidos al concatenar células.
-- [ ] Renderizar barras, puntillos y silencios de semicorchea con agrupación por pulso, sin comprimir ilegiblemente un renglón.
-- [ ] Recalcular ventanas por intervalo local y tempo: un tap no satisface varios ataques aunque aumente densidad.
-- [ ] Mantener ataque real para sonido/feedback; no programar el tap sobre la grilla ideal.
-- [ ] Resultados y revisión señalan anticipos, retrasos, extras y omisiones en estas células. Metrónomo apagado conserva la grilla y permite observar deriva.
-- [ ] Pruebas de catálogo y de fronteras temporales, ejemplos visuales Android canónicos y ejercicio completo combinado.
+- [x] Añadir R03/R04/R05/R06/R07/R08/R13/R14 según catálogo; conservar orden de figuras/silencios y posiciones admitidas.
+- [x] Cada seleccionada aparece repetidamente en la cuota, sin introducir recursos no elegidos al concatenar células.
+- [x] Renderizar barras, puntillos y silencios de semicorchea con agrupación por pulso, sin comprimir ilegiblemente un renglón.
+- [x] Recalcular ventanas por intervalo local y tempo: un tap no satisface varios ataques aunque aumente densidad.
+- [x] Mantener ataque real para sonido/feedback; no programar el tap sobre la grilla ideal.
+- [x] Resultados y revisión señalan anticipos, retrasos, extras y omisiones en estas células. Metrónomo apagado conserva la grilla y permite observar deriva.
+- [x] Pruebas de catálogo y de fronteras temporales, ejemplos visuales Android canónicos y ejercicio completo combinado.
 
 ## R4 — Tresillos, síncopas y ligaduras
 
@@ -71,12 +71,12 @@ R1–R5 se entregan como práctica sin desbloqueos ni progreso automático fingi
 
 **Bloqueado por:** R2. No necesita semicorcheas de R3 para estas tres plantillas.
 
-- [ ] Tresillo de corcheas suma exactamente un tiempo en compases simples; notación ternaria reconocible y tres ataques, sin redondeos acumulativos.
-- [ ] R16 corchea+negra+corchea ocupa dos tiempos y se coloca de modo que exista el cruce sincopado especificado.
-- [ ] R17 inicial: dos negras ligadas entre tiempos, con un ataque; no sustituirlas visualmente por blanca ni esperar otro tap en la continuación.
-- [ ] Generación seleccionable con cuota, compatibilidad y contexto; exclusión de versiones de tresillo/silencios/ligaduras aún no incluidas.
-- [ ] Partitura, timeline, feedback y resumen derivados del mismo contenido racional, con ejemplos negativos de suma incorrecta y reataque extra.
-- [ ] Corpus de estas categorías, revisión visual Android y ejecución/repetición completas con audio de taps opcional.
+- [x] Tresillo de corcheas suma exactamente un tiempo en compases simples; notación ternaria reconocible y tres ataques, sin redondeos acumulativos.
+- [x] R16 corchea+negra+corchea ocupa dos tiempos y se coloca de modo que exista el cruce sincopado especificado.
+- [x] R17 inicial: dos negras ligadas entre tiempos, con un ataque; no sustituirlas visualmente por blanca ni esperar otro tap en la continuación.
+- [x] Generación seleccionable con cuota, compatibilidad y contexto; exclusión de versiones de tresillo/silencios/ligaduras aún no incluidas.
+- [x] Partitura, timeline, feedback y resumen derivados del mismo contenido racional, con ejemplos negativos de suma incorrecta y reataque extra.
+- [x] Corpus de estas categorías, revisión visual Android y ejecución/repetición completas con audio de taps opcional.
 
 ## R5 — Historial, repetición y exportación de ejercicios
 
@@ -84,13 +84,13 @@ R1–R5 se entregan como práctica sin desbloqueos ni progreso automático fingi
 
 **Bloqueado por:** R1. El contenido serializable de R1 admite las extensiones de R2–R4; ellas aportan sus pruebas de representación específicas.
 
-- [ ] Guardar partitura exacta, semilla/huella/versiones, selección/presencia, tempo/compás, ayudas, datos de taps, evaluación y origen; no guardar solo semilla ni recalcular resultados con otra configuración silenciosamente.
-- [ ] Historial y filtros por categoría, compás, tempo, práctica/progresión y metrónomo; mostrar solo opciones de progresión implementadas cuando llegue R6.
-- [ ] Abrir detalle con partitura, ataques/silencios, desviaciones, extras/omisiones y categoría propietaria, conservando datos ausentes como ausentes.
-- [ ] Repetir exactamente el patrón desde resultados/historial como práctica; no cambiarlo por nueva semilla ni declararlo evidencia nueva por cambiar UUID.
-- [ ] Error de lectura/guardado visible, recuperación del original y reintento idempotente; interrupciones no se presentan como completas.
-- [ ] Exportación/reinicio/recuperación integran almacenamiento nuevo preservando datos de juegos/voz/laboratorio y afinador si ya existe.
-- [ ] Pruebas públicas de persistencia, filtros, huella, repetición, fallos y compatibilidad; recorrido Android cerrar/reabrir→detalle→repetir→exportar.
+- [x] Guardar partitura exacta, semilla/huella/versiones, selección/presencia, tempo/compás, ayudas, datos de taps, evaluación y origen; no guardar solo semilla ni recalcular resultados con otra configuración silenciosamente.
+- [x] Historial y filtros por categoría, compás, tempo, práctica/progresión y metrónomo; mostrar solo opciones de progresión implementadas cuando llegue R6.
+- [x] Abrir detalle con partitura, ataques/silencios, desviaciones, extras/omisiones y categoría propietaria, conservando datos ausentes como ausentes.
+- [x] Repetir exactamente el patrón desde resultados/historial como práctica; no cambiarlo por nueva semilla ni declararlo evidencia nueva por cambiar UUID.
+- [x] Error de lectura/guardado visible, recuperación del original y reintento idempotente; interrupciones no se presentan como completas.
+- [x] Exportación/reinicio/recuperación integran almacenamiento nuevo preservando datos de juegos/voz/laboratorio y afinador si ya existe.
+- [x] Pruebas públicas de persistencia, filtros, huella, repetición, fallos y compatibilidad; recorrido Android cerrar/reabrir→detalle→repetir→exportar.
 
 ## R6 — Progresión por categoría y tempo con Mamdani
 

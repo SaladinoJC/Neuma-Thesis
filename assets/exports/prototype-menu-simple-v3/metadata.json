@@ -1,0 +1,71 @@
+[
+  {
+    "file": "book.webp",
+    "width": 1024,
+    "height": 1536,
+    "bytes": 98988,
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      254
+    ],
+    "sha256": "874f613c169fced68008d9e977e11f734fd3e4df4e3604dd01fe7d580a8f5457"
+  },
+  {
+    "file": "controls.webp",
+    "width": 1254,
+    "height": 1254,
+    "bytes": 97972,
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      255
+    ],
+    "sha256": "5b19d0ab807d761e5b1352f57c40216f482334469639a086d9d8eeb8f897967f"
+  },
+  {
+    "file": "garden.webp",
+    "width": 768,
+    "height": 1152,
+    "bytes": 38566,
+    "mode": "RGB",
+    "alpha": null,
+    "sha256": "e1871d179056ecb63f5bed86e37a7f49cde15c05be739cdedffcf79c87afb558"
+  },
+  {
+    "file": "piano-a.webp",
+    "width": 768,
+    "height": 512,
+    "bytes": 47102,
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      254
+    ],
+    "sha256": "a1db416a74f3b47f3110db43998e6f6c2778bbada5c20717ba420ac0fa30d1c7"
+  },
+  {
+    "file": "piano-b.webp",
+    "width": 768,
+    "height": 512,
+    "bytes": 52194,
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      254
+    ],
+    "sha256": "5a812a554634bc727c9514a57e0a9043bbbc7c71c107cb3bd822c319a3cb043c"
+  },
+  {
+    "file": "piano-c.webp",
+    "width": 768,
+    "height": 512,
+    "bytes": 61448,
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      254
+    ],
+    "sha256": "1cb622dc8d367d07841f13b2c757fc6b5a605712c1f96bd4d0f448cd942b410b"
+  }
+]

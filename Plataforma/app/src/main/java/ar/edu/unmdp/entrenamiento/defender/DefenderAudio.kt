@@ -11,12 +11,14 @@ enum class DefenderEffect { HIT, MISS, ARRIVAL }
 
 interface DefenderAudio {
     suspend fun note(midi: Int): Int
+    suspend fun chord(midis: List<Int>): Int = error("El reproductor no admite acordes.")
     suspend fun effect(effect: DefenderEffect): Int
 }
 
 /** Generated PCM, no microphone or third-party assets. Tracks release on cancellation. */
 class AndroidDefenderAudio : DefenderAudio {
     override suspend fun note(midi: Int): Int = play(referenceTone(midi))
+    override suspend fun chord(midis: List<Int>): Int = play(defenderChordTone(midis))
     override suspend fun effect(effect: DefenderEffect): Int {
         val frequency = when (effect) { DefenderEffect.HIT -> 1800.0; DefenderEffect.MISS -> 180.0; DefenderEffect.ARRIVAL -> 90.0 }
         val frames = 4410
@@ -43,4 +45,11 @@ class AndroidDefenderAudio : DefenderAudio {
             track.playbackHeadPosition
         } finally { track.release() }
     }
+}
+
+/** Complete three/four-voice voicing, averaged without clipping; generated only in memory. */
+fun defenderChordTone(midis: List<Int>, sampleRate: Int = 44100): ShortArray {
+    require(midis.size in 3..4 && midis.distinct().size == midis.size)
+    val voices = midis.map { referenceTone(it, sampleRate) }
+    return ShortArray(voices.first().size) { i -> (voices.sumOf { it[i].toInt() } / voices.size).toShort() }
 }

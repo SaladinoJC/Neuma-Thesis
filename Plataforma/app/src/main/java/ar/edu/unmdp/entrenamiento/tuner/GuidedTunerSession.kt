@@ -37,6 +37,12 @@ class GuidedTunerSession {
         farSince = null; lastTime = null
         state = state.copy(measurement = meter.state, farWarning = false)
     }
+    /** Reutiliza solo la segunda pasada para el entrenamiento de oído. */
+    fun beginReview(snapshot: TunerSetupSnapshot) {
+        meter.configure(snapshot)
+        state = GuidedTunerState(phase = GuidedPhase.REVIEW, setup = meter.setup, finalReview = true)
+        target(6)
+    }
     fun measure(estimate: PitchEstimate, timeMillis: Long) {
         if (!state.active || !state.measurement.running) return
         meter.measure(estimate, timeMillis)
