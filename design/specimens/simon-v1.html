@@ -1,0 +1,64 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Music Garden · estudio estático</title><style>
+@font-face{font-family:Fraunces;src:url(fonts/fraunces-variable.ttf);font-weight:100 900;font-display:block}
+@font-face{font-family:'Nunito Sans';src:url(fonts/nunito-sans-variable.ttf);font-weight:200 1000;font-display:block}
+:root{--background:#F5EEDC;
+--surface:#FFF9ED;
+--text:#28392F;
+--primary:#315844;
+--sage:#A7B99E;
+--moss:#718563;
+--success:#D9AD69;
+--warning:#C9806B;
+--audio:#86AAB3;
+--textSecondary:#536457;
+--onPrimary:#FFF9ED;
+--primaryPressed:#254633;
+--surfaceSelected:#E1E9DB;
+--border:#667A67;
+--errorText:#8B4436;
+--errorSurface:#F3DED5;
+--focus:#3C6872;
+--disabledSurface:#E2DECF;
+--disabledText:#627063;--s-xs:4px;
+--s-sm:8px;
+--s-md:12px;
+--s-base:16px;
+--s-lg:24px;
+--s-xl:32px;--r-small:8px;
+--r-medium:12px;
+--r-large:16px;
+--r-pill:24px;}*{box-sizing:border-box}body{margin:0;background:var(--background);color:var(--text);font:16px/1.45 'Nunito Sans',sans-serif}
+.game{padding:12px 16px 16px;display:flex;flex-direction:column;gap:8px;height:100svh;min-height:770px;max-width:480px;margin:auto}
+header{display:flex;align-items:center;gap:12px;min-height:48px}h1{font:600 20px/1.25 Fraunces,serif;margin:0;flex:1}h2{font:600 24px/1.3 Fraunces;margin:0 0 12px}p{margin:0}
+.back{display:flex;align-items:center;justify-content:center;min-height:48px;min-width:48px;font-weight:600;color:var(--primary)}
+.hud{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:36px;font-size:14px;color:var(--textSecondary)}
+.lives{display:flex;gap:3px;align-items:center;white-space:nowrap;color:var(--text)}.life{width:20px;height:20px;fill:var(--moss);stroke:var(--primary);stroke-width:1.3}.lives-label{margin-left:4px}
+.arena{position:relative;flex:1;min-height:318px;isolation:isolate}.border-plant{position:absolute;left:0;top:26%;width:20px;height:120px;opacity:.55;z-index:-1}
+.enemy{position:absolute;width:94px;display:flex;flex-direction:column;align-items:center;gap:2px}.enemy-0{left:4px;top:4px}.enemy-1{right:4px;top:28px}.enemy-2{left:4px;top:154px}.enemy-3{right:4px;top:178px}
+.staff{width:94px;height:112.8px;border-radius:12px;background:var(--surface);flex:none}.moth{width:37px;height:27px}.guardian{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:108px}.tree{width:100%;display:block}
+.answer{padding:12px;border-radius:var(--r-large);background:var(--surface);display:grid;gap:8px}.feedback{font-size:14px;line-height:20px;color:var(--textSecondary);min-height:20px}
+.note-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.choice{display:flex;align-items:center;justify-content:center;min-height:48px;border:1px solid var(--border);border-radius:var(--r-medium);font-weight:700;color:var(--primary)}
+.chosen{border:2px solid var(--primary);background:var(--surfaceSelected)}.chosen:after{content:'';width:5px;height:5px;border-radius:50%;background:var(--primary);margin-left:6px}
+.accidentals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.accidentals .choice{font-size:14px}
+.action{display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:var(--r-large);background:var(--primary);color:var(--onPrimary);font-weight:700;flex:none}
+.sound-wave{display:none;position:absolute;width:150px;height:150px;left:50%;bottom:38px;transform:translateX(-50%);z-index:-1}.solution{display:none;position:absolute;left:0;top:100px;max-width:130px;padding:8px;border-radius:8px;background:var(--errorSurface);color:var(--errorText);font-size:14px}
+.pause-card{display:none;position:absolute;inset:28px 12px auto;background:var(--surface);padding:24px;border-radius:16px;text-align:center}.pause-card .action{margin-top:20px}
+.state-hit .enemy-0,.state-life .enemy-0{visibility:hidden}.state-hit .sound-wave{display:block}.state-hit .feedback{color:var(--text);background:var(--success);border-radius:8px;padding:0 8px}.state-hit .defender>.action{background:var(--disabledSurface);color:var(--disabledText)}
+.state-error .feedback,.state-life .feedback{color:var(--errorText)}.state-error .answer{outline:2px solid var(--errorText);outline-offset:-2px}.state-life .leaf-2 .life{fill:none;stroke:var(--border)}.state-life .solution{display:block}
+.state-pause .enemy,.state-pause .guardian,.state-pause .border-plant{visibility:hidden}.state-pause .pause-card{display:block}.state-pause .answer,.state-pause .defender>.action{visibility:hidden}
+.game.simon{max-width:1200px;min-height:340px;height:100svh;padding:8px 16px;gap:6px}.simon h1{font-size:22px}.round{font-weight:700}.simon-details{display:flex;justify-content:space-between;gap:12px;font-size:14px;color:var(--textSecondary)}
+.phase{display:flex;justify-content:space-between;gap:12px;align-items:center;background:var(--surface);padding:10px 16px;border-radius:12px;min-height:48px}.phase-title{color:var(--focus)}.phase-progress{font-weight:600;color:var(--textSecondary)}
+.piano-frame{padding:12px 8px 0;background:var(--sage);border-radius:16px 16px 8px 8px;flex:1;position:relative;min-height:160px}.piano-leaf{position:absolute;right:4px;top:-10px;width:26px;height:26px;fill:var(--moss);stroke:var(--primary);stroke-width:1.2}
+.keyboard{position:relative;height:100%;min-height:148px}.key{position:absolute;top:0;border:1px solid var(--border);border-radius:0 0 8px 8px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:12px}
+.white{height:100%;background:var(--surface)}.black{height:62%;background:var(--text);z-index:1}.white span{font-size:14px;font-weight:700}.sounding{background:var(--success);border:2px solid var(--primary)}
+.sound-mark{display:none}.sounding .sound-mark{position:absolute;bottom:40px;width:9px;height:9px;background:var(--primary);border-radius:50%;display:block}
+.piano-help{font-size:14px;text-align:center;color:var(--textSecondary)}.response .sounding{background:var(--surface);border:1px solid var(--border)}.response .sound-mark{display:none}.response .phase-title{color:var(--primary)}
+@media(max-width:380px){.guardian{width:96px}.hud{font-size:13px}.life{width:18px}}
+</style><body><div class="game simon"><header><span class="back" data-control="menu">Menú</span><h1>Simón dice musical</h1><span class="round">Ronda 4</span></header>
+<div class="simon-details"><span>Diatónica mayor · tónica Do4</span><span>3 secuencias completadas</span></div>
+<div class="phase"><strong class="phase-title">Escuchá la secuencia</strong><span class="phase-progress">4 notas</span></div>
+<div class="piano-frame"><svg class="piano-leaf" viewBox="0 0 28 26" aria-hidden="true"><path d="M4 21Q1 4 23 2Q25 19 4 21Z"/><path d="M4 21 19 6" fill="none"/></svg><div class="keyboard"><div class="key white " style="left:0.0%;width:14.285714285714286%" data-midi="60"><span>Do4</span><i class="sound-mark"></i></div><div class="key white " style="left:14.285714285714286%;width:14.285714285714286%" data-midi="62"><span>Re4</span><i class="sound-mark"></i></div><div class="key white sounding" style="left:28.571428571428573%;width:14.285714285714286%" data-midi="64"><span>Mi4</span><i class="sound-mark"></i></div><div class="key white " style="left:42.85714285714286%;width:14.285714285714286%" data-midi="65"><span>Fa4</span><i class="sound-mark"></i></div><div class="key white " style="left:57.142857142857146%;width:14.285714285714286%" data-midi="67"><span>Sol4</span><i class="sound-mark"></i></div><div class="key white " style="left:71.42857142857143%;width:14.285714285714286%" data-midi="69"><span>La4</span><i class="sound-mark"></i></div><div class="key white " style="left:85.71428571428572%;width:14.285714285714286%" data-midi="71"><span>Si4</span><i class="sound-mark"></i></div><div class="key black" style="left:9.857142857142858%;width:8.857142857142858%" data-midi="61" aria-label="Do sostenido 4, fuera de la escala"></div><div class="key black" style="left:24.142857142857146%;width:8.857142857142858%" data-midi="63" aria-label="Re sostenido 4, fuera de la escala"></div><div class="key black" style="left:52.714285714285715%;width:8.857142857142858%" data-midi="66" aria-label="Fa sostenido 4, fuera de la escala"></div><div class="key black" style="left:67.0%;width:8.857142857142858%" data-midi="68" aria-label="Sol sostenido 4, fuera de la escala"></div><div class="key black" style="left:81.28571428571429%;width:8.857142857142858%" data-midi="70" aria-label="La sostenido 4, fuera de la escala"></div></div></div>
+<p class="piano-help">Las teclas atenuadas no pertenecen a esta escala.</p></div><script>const p=new URLSearchParams(location.search);const state=p.get('state')||'ready';document.body.classList.add('state-'+state);
+const feedback=document.querySelector('.feedback');if(feedback){if(state==='hit'){feedback.textContent='Correcto. El jardín resuena.';document.querySelector('.points').textContent='100 pts';document.querySelectorAll('.note-grid .chosen').forEach(e=>e.classList.remove('chosen'))}if(state==='error')feedback.textContent='No coincide. Probá otra nota.';if(state==='life'){feedback.textContent='Una criatura alcanzó el árbol.';document.querySelector('.lives-label').textContent='2 vidas'}}
+if(state==='response'){document.body.classList.add('response');document.querySelector('.phase-title').textContent='Ahora repetí la secuencia';document.querySelector('.phase-progress').textContent='0 de 4 notas'}
+document.fonts.ready.then(()=>{document.documentElement.dataset.fonts='ready'});</script></body></html>

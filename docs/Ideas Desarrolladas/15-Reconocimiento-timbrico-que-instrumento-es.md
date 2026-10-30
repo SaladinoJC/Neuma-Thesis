@@ -7,6 +7,16 @@
 
 **Estado:** DESARROLLADA
 
+## Implementación del plan — 2026-10-21
+
+El usuario solicitó completar desbloqueos, voz y demostración. v0.5 incorpora progresión Mamdani persistida en ambos juegos: automático inicia en el nivel más alto desbloqueado; dos partidas completas consecutivas de dominio alto habilitan el siguiente para la próxima partida. Práctica manual y simulaciones no alteran el progreso real. Las funciones, umbrales y referencias son parámetros experimentales de la especificación, sin calibración pedagógica. Esta actualización prevalece sobre los estados históricos «pendiente de implementación» que siguen abajo. Conducta y límites en [Demostracion-prototipo-v0.5.md](../Demostracion-prototipo-v0.5.md); verificación en [Verificacion-prototipo-v0.5.md](../Verificacion-prototipo-v0.5.md).
+
+## Actualización solicitada — 2026-10-09
+
+En el siguiente incremento autorizado por el usuario, v0.4 implementa el DDA intrapartida de escuchas con las propuestas numéricas de la especificación y un panel de inspección/simulación. Automático inicia en A; práctica manual A/B/C conserva tres escuchas, como elección provisional del agente para preservar el recorrido anterior. Escenarios, configuración y límites en [DDA-instrumentos-v0.4.md](../DDA-instrumentos-v0.4.md). Los desbloqueos todavía corresponden a #5 y no están implementados.
+
+Tras probar v0.3 en el celular, el usuario pidió variar el Do4 aislado mediante una melodía breve generada aleatoriamente al seleccionar el instrumento. Esta solicitud prevalece sobre la frase fija descrita en §15.2 y §15.3. En v0.3.1 se genera una frase nueva por pregunta, independiente de la identidad del instrumento; todas sus reescuchas conservan exactamente la misma. Se usa el mismo conjunto de notas reales, gramática y duración para todos los instrumentos, evitando asignar melodías características. Las respuestas registran la frase y las versiones de generador/banco. El diseño concreto de seis notas pentatónicas, cierre en tónica y tiempos es una elección provisional del agente, no una decisión calibrada o del director. Detalles y procedencia: [Melodias-instrumentos-v0.3.1.md](../Melodias-instrumentos-v0.3.1.md). Se mantienen las reglas DDA confirmadas abajo, todavía pendientes de implementación.
+
 ## Actualización confirmada — 2026-10-02
 
 El usuario revisó la política DDA en la entrevista `grill-with-docs`. Esta actualización prevalece sobre las descripciones de gobernanza por promedio móvil y de escuchas fijas que se conservan abajo como antecedente:

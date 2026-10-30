@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import ar.edu.unmdp.entrenamiento.simon.Phase
 import ar.edu.unmdp.entrenamiento.simon.Scale
 import ar.edu.unmdp.entrenamiento.simon.SimonResult
+import ar.edu.unmdp.entrenamiento.instruments.InstrumentResult
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -49,19 +50,37 @@ fun noteName(midi: Int): String {
 
 @Composable
 fun SimonApp(ui: SimonUiState, onSimon: () -> Unit, onScale: (Scale) -> Unit,
-    onStart: () -> Unit, onAnswer: (Int) -> Unit, onHome: () -> Unit) {
+    onStart: () -> Unit, onAnswer: (Int) -> Unit, onHome: () -> Unit,
+    onInstruments: () -> Unit = {}, instrumentHistory: List<InstrumentResult> = emptyList(),
+    onAutomatic: () -> Unit = {}, onVoice: () -> Unit = {}, onData: () -> Unit = {}, onHistory: () -> Unit = {}, onRetryStorage: () -> Unit = {}, onTuner: () -> Unit = {},
+    onRhythm: () -> Unit = {}, onDefender: () -> Unit = {}, menuState: GardenMenuState? = null,
+    instrumentProgress: ar.edu.unmdp.entrenamiento.progress.Progress = ar.edu.unmdp.entrenamiento.progress.Progress(),
+    onGuidedTuner: () -> Unit = onTuner, onTrainingTuner: () -> Unit = onTuner, onVocalIntervals: () -> Unit = {}) {
+    if (ui.screen == AppScreen.MENU) {
+        val garden = menuState ?: androidx.compose.runtime.remember { GardenMenuState() }
+        MusicGardenMenu(garden, ui, instrumentProgress,
+            onPlay = { when (it) { 0 -> onSimon(); 1 -> onInstruments(); 2 -> onRhythm(); 3 -> onDefender(); 4 -> onVocalIntervals() } },
+            onTuner, onGuidedTuner, onHistory, onVoice, onData, onRetryStorage, onTrainingTuner)
+        return
+    }
     MaterialTheme(colorScheme = darkColorScheme(primary = Pink, secondary = Lavender,
         background = Night, surface = Panel, onSurface = SoftWhite, onBackground = SoftWhite, onPrimary = Night)) {
         BackHandler(enabled = ui.screen != AppScreen.MENU, onBack = onHome)
         Scaffold(containerColor = Night, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
             Box(Modifier.fillMaxSize().padding(padding)
                 .background(Brush.verticalGradient(listOf(Color(0xFF111828), Night, Color(0xFF0B1920))))) {
-                when (ui.screen) {
-                    AppScreen.MENU -> MainMenu(ui, onSimon)
-                    AppScreen.SIMON_SETUP -> Setup(ui, onScale, onStart, onHome)
+                if (ui.storageError != null && ui.screen != AppScreen.MENU) {
+                    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp)) {
+                        Text(ui.storageError)
+                        TextButton(onClick = onRetryStorage) { Text("Reintentar lectura") }
+                        TextButton(onClick = onHome) { Text("Volver al menú") }
+                    }
+                } else when (ui.screen) {
+                    AppScreen.MENU -> Unit
+                    AppScreen.SIMON_SETUP -> Setup(ui, onScale, onStart, onHome, onAutomatic)
                     AppScreen.SIMON_GAME -> Game(ui, onAnswer, onHome, onStart)
                 }
-                ui.error?.let {
+                ui.error?.takeIf { ui.storageError == null }?.let {
                     Surface(Modifier.align(Alignment.BottomCenter).padding(16.dp),
                         color = MaterialTheme.colorScheme.errorContainer, shape = RoundedCornerShape(12.dp)) {
                         Text(it, Modifier.padding(16.dp), color = MaterialTheme.colorScheme.onErrorContainer)
@@ -69,77 +88,6 @@ fun SimonApp(ui: SimonUiState, onSimon: () -> Unit, onScale: (Scale) -> Unit,
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun MainMenu(ui: SimonUiState, onSimon: () -> Unit) {
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(22.dp),
-        verticalArrangement = Arrangement.spacedBy(14.dp)) {
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween) {
-            Text("♫", color = Lavender, fontSize = 32.sp)
-        }
-        Box(Modifier.fillMaxWidth().height(200.dp), contentAlignment = Alignment.Center) {
-            SoundWaves(Modifier.fillMaxSize())
-            Column(horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text("Entrená tu oído", color = SoftWhite, fontSize = 36.sp, lineHeight = 40.sp,
-                    textAlign = TextAlign.Center, fontWeight = FontWeight.ExtraBold)
-                Text("Versión ${BuildConfig.VERSION_NAME}", color = Color(0xFFBBDCF0), fontSize = 14.sp)
-            }
-        }
-        Text("ELEGÍ TU PRÓXIMO DESAFÍO", color = Muted, fontSize = 10.sp, letterSpacing = 1.5.sp)
-        MenuCard("Simón dice musical", "Recordá y repetí notas en el piano", Pink, "♫",
-            "Disponible", Modifier.testTag("game-simon"), onClick = onSimon)
-        MenuCard("¿Qué instrumento es?", "Descubrí el instrumento por su sonido",
-            Color(0xFF71AAFF), "≋", "Próximamente")
-        MenuCard("Afiná tu voz", "Explorá las notas que cantás", Color(0xFF63D9B0), "♪", "Próximamente")
-        if (ui.history.isNotEmpty()) {
-            Text("Últimas partidas de Simón", fontWeight = FontWeight.SemiBold)
-            ui.history.take(5).forEach { HistoryCard(it) }
-        }
-    }
-}
-
-@Composable
-private fun MenuCard(title: String, subtitle: String, accent: Color, symbol: String,
-    badge: String, modifier: Modifier = Modifier, onClick: (() -> Unit)? = null) {
-    Surface(onClick = { onClick?.invoke() }, enabled = onClick != null,
-        modifier = modifier.fillMaxWidth(), shape = RoundedCornerShape(20.dp),
-        color = accent.copy(alpha = if (onClick != null) 0.16f else 0.08f),
-        border = BorderStroke(if (onClick != null) 1.5.dp else 1.dp, accent.copy(alpha = 0.5f))) {
-        Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-            Box(Modifier.size(56.dp).clip(RoundedCornerShape(14.dp))
-                .background(Brush.linearGradient(listOf(accent, accent.copy(alpha = 0.5f)))),
-                contentAlignment = Alignment.Center) { Text(symbol, fontSize = 34.sp, color = SoftWhite) }
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text(title, color = SoftWhite, fontWeight = FontWeight.Bold, fontSize = 17.sp)
-                Text(subtitle, color = Muted, fontSize = 12.sp, lineHeight = 16.sp)
-                Text(badge, color = accent, fontSize = 10.sp, fontWeight = FontWeight.SemiBold)
-            }
-            if (onClick != null) Text("›", color = accent, fontSize = 30.sp)
-        }
-    }
-}
-
-@Composable
-private fun SoundWaves(modifier: Modifier) {
-    Canvas(modifier) {
-        for (line in 0..5) {
-            val path = Path()
-            for (step in 0..80) {
-                val x = size.width * step / 80
-                val y = size.height * 0.78f + sin(step * 0.085 + line * 0.18).toFloat() *
-                    size.height * 0.12f + line * 5.dp.toPx()
-                if (step == 0) path.moveTo(x, y) else path.lineTo(x, y)
-            }
-            drawPath(path, Brush.horizontalGradient(listOf(Lavender.copy(alpha = 0.08f),
-                Color(0xFF38C5DC).copy(alpha = 0.25f))),
-                style = androidx.compose.ui.graphics.drawscope.Stroke(1.dp.toPx()))
-        }
-        drawCircle(Lavender.copy(alpha = 0.07f), size.width * 0.22f, Offset(size.width * 0.07f, size.height * 0.25f))
     }
 }
 
@@ -156,7 +104,7 @@ private fun PageHeader(onHome: () -> Unit) {
 }
 
 @Composable
-private fun Setup(ui: SimonUiState, onScale: (Scale) -> Unit, onStart: () -> Unit, onHome: () -> Unit) {
+private fun Setup(ui: SimonUiState, onScale: (Scale) -> Unit, onStart: () -> Unit, onHome: () -> Unit, onAutomatic: () -> Unit) {
     Column(Modifier.fillMaxSize().padding(horizontal = 16.dp).testTag("simon-viewport")) {
         PageHeader(onHome)
         Row(Modifier.weight(1f).padding(bottom = 8.dp), horizontalArrangement = Arrangement.spacedBy(24.dp)) {
@@ -169,12 +117,14 @@ private fun Setup(ui: SimonUiState, onScale: (Scale) -> Unit, onStart: () -> Uni
                     Instruction("▥", "Repetí", Lavender)
                     Instruction("☆", "Avanzá", Color(0xFFFFCD75))
                 }
-                Text("Práctica libre · Una tónica nueva en cada partida", color = Muted, fontSize = 11.sp)
+                ProgressSummary(ui.progress, Scale.entries.map { it.label })
+                FilterChip(selected = ui.automatic, onClick = onAutomatic, label = { Text("Automático") }, modifier = Modifier.testTag("simon-automatic"))
+                Text(if (ui.automatic) "Próxima: ${Scale.entries[ui.progress.level].label}" else "Práctica manual · No desbloquea", color = Muted, fontSize = 11.sp)
             }
             Column(Modifier.weight(1.15f).fillMaxHeight(), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Text("Seleccioná la escala", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
                 Scale.entries.forEach { scale ->
-                    val selected = ui.selectedScale == scale
+                    val selected = !ui.automatic && ui.selectedScale == scale
                     Surface(onClick = { onScale(scale) }, enabled = !ui.busy,
                         modifier = Modifier.fillMaxWidth().weight(1f).testTag("scale-${scale.name}"),
                         shape = RoundedCornerShape(12.dp), color = if (selected) Pink.copy(alpha = 0.12f) else Panel,
@@ -188,7 +138,7 @@ private fun Setup(ui: SimonUiState, onScale: (Scale) -> Unit, onStart: () -> Uni
                         }
                     }
                 }
-                Button(onClick = onStart, enabled = !ui.busy, modifier = Modifier.fillMaxWidth().height(48.dp),
+                Button(onClick = onStart, enabled = !ui.busy && ui.storageError == null, modifier = Modifier.fillMaxWidth().height(48.dp),
                     shape = RoundedCornerShape(14.dp)) { Text("Jugar Simón", fontWeight = FontWeight.Bold) }
                 TextButton(onClick = onHome, modifier = Modifier.fillMaxWidth().height(40.dp)) { Text("Volver al menú") }
             }
@@ -230,8 +180,10 @@ private fun Game(ui: SimonUiState, onAnswer: (Int) -> Unit, onHome: () -> Unit, 
                     Text(if (state.phase == Phase.FINISHED) "Partida terminada" else "Partida interrumpida",
                         fontSize = 22.sp, fontWeight = FontWeight.Bold)
                     state.result?.let { ResultCard(it) }
+                    ProgressSummary(ui.progress, Scale.entries.map { it.label })
+                    state.result?.mastery?.let { MasteryButton(it) }
                 }
-                Button(onClick = onStart, enabled = !ui.busy, modifier = Modifier.weight(1f).height(52.dp),
+                Button(onClick = onStart, enabled = !ui.busy && ui.storageError == null, modifier = Modifier.weight(1f).height(52.dp),
                     shape = RoundedCornerShape(16.dp)) { Text("Otra partida") }
             }
         } else {
@@ -277,6 +229,7 @@ private fun HistoryCard(result: SimonResult) {
                 Text(result.scale.label, fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
                 Text(if (result.completed) "Completada" else "Interrumpida", color = Pink, fontSize = 12.sp)
             }
+            Text(if (result.origin == "automatic") "Automática" else "Práctica manual", color = Muted, fontSize = 12.sp)
             Text("${result.completedLength} notas completadas · ${noteName(result.tonicMidi)}", color = Muted, fontSize = 12.sp)
             Text(SimpleDateFormat("dd/MM HH:mm", Locale.forLanguageTag("es-AR")).format(Date(result.finishedAtMillis)), color = Muted, fontSize = 11.sp)
         }

@@ -1,0 +1,17 @@
+{
+  "method": "Samples every 8 px in master book reading region x120..879/y150..1349; sRGB WCAG ratio; text tokens against RGB paper. Excludes artwork and control labels; not native accessibility certification.",
+  "results": {
+    "text": {
+      "minimumSampledContrast": 9.02,
+      "samples": 14250
+    },
+    "primary": {
+      "minimumSampledContrast": 5.93,
+      "samples": 14250
+    },
+    "textSecondary": {
+      "minimumSampledContrast": 4.65,
+      "samples": 14250
+    }
+  }
+}

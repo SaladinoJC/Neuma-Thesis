@@ -22,6 +22,30 @@ import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class SimonViewModelTest {
+    @Test fun `historial ilegible impide iniciar incluso manual y permite relectura`() = runTest {
+        Dispatchers.setMain(kotlinx.coroutines.test.StandardTestDispatcher(testScheduler))
+        try {
+            var broken = true
+            val results = object : SimonResults {
+                override suspend fun all(): List<SimonResult> { check(!broken); return emptyList() }
+                override suspend fun save(result: SimonResult) {}
+            }
+            var plays = 0
+            val player = object : NotePlayer {
+                override suspend fun play(midiNote: Int): Int { plays++; return 26460 }
+                override fun feedback(midiNote: Int) = 1
+            }
+            val model = SimonViewModel(SimonSession({ 0 }, results), player)
+            model.selectScale(ar.edu.unmdp.entrenamiento.simon.Scale.PENTATONIC)
+            model.start(); advanceUntilIdle()
+            assertEquals(0, plays)
+            assertNotNull(model.ui.value.storageError)
+            model.home(); advanceUntilIdle(); assertEquals(AppScreen.MENU, model.ui.value.screen)
+            broken = false; model.retryStorage(); advanceUntilIdle()
+            model.start(); advanceUntilIdle()
+            assertEquals(1, plays)
+        } finally { Dispatchers.resetMain() }
+    }
     @Test
     fun `si la preparacion de audio excede su limite la partida sale de la espera y avisa`() = runTest {
         Dispatchers.setMain(kotlinx.coroutines.test.StandardTestDispatcher(testScheduler))
@@ -159,5 +183,26 @@ class SimonViewModelTest {
         } finally {
             Dispatchers.resetMain()
         }
+    }
+    @Test
+    fun `el historial tardio no deshace la apertura de Simon`() = runTest {
+        Dispatchers.setMain(kotlinx.coroutines.test.StandardTestDispatcher(testScheduler))
+        try {
+            val loaded = kotlinx.coroutines.CompletableDeferred<Unit>()
+            val results = object : SimonResults {
+                override suspend fun all(): List<SimonResult> { loaded.await(); return emptyList() }
+                override suspend fun save(result: SimonResult) {}
+            }
+            val player = object : NotePlayer {
+                override suspend fun play(midiNote: Int) = 0
+                override fun feedback(midiNote: Int) = 1
+            }
+            val model = SimonViewModel(SimonSession({ 0 }, results), player)
+            runCurrent()
+            model.openSimon()
+            assertEquals(AppScreen.SIMON_SETUP, model.ui.value.screen)
+            loaded.complete(Unit); advanceUntilIdle()
+            assertEquals(AppScreen.SIMON_SETUP, model.ui.value.screen)
+        } finally { Dispatchers.resetMain() }
     }
 }

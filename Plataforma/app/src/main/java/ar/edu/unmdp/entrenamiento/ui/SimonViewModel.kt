@@ -1,5 +1,6 @@
 package ar.edu.unmdp.entrenamiento.ui
 
+import ar.edu.unmdp.entrenamiento.progress.Progress
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unmdp.entrenamiento.audio.NotePlayer
@@ -32,6 +33,9 @@ data class SimonUiState(
     val preparing: Boolean = false,
     val history: List<SimonResult> = emptyList(),
     val error: String? = null,
+    val storageError: String? = null,
+    val automatic: Boolean = true,
+    val progress: Progress = Progress(),
 ) {
     val inGame: Boolean get() = screen == AppScreen.SIMON_GAME
 }
@@ -52,7 +56,24 @@ class SimonViewModel(private val session: SimonSession, private val player: Note
     }
 
     fun selectScale(scale: Scale) {
-        if (!ui.value.inGame) mutableUi.value = ui.value.copy(selectedScale = scale)
+        if (!ui.value.inGame) mutableUi.value = ui.value.copy(selectedScale = scale, automatic = false)
+    }
+
+    fun selectAutomatic() {
+        if (!ui.value.inGame && !ui.value.busy) mutableUi.value = ui.value.copy(automatic = true)
+    }
+    suspend fun awaitIdle() = actions.withLock {
+        session.interrupt()
+    }
+    suspend fun discardForReset() {
+        cancelAudio()
+        actions.withLock { session.discardForReset() }
+    }
+
+    suspend fun reload() = actions.withLock {
+        session.interrupt()
+        mutableUi.value = SimonUiState()
+        refreshHistory()
     }
 
     fun openSimon() {
@@ -62,13 +83,15 @@ class SimonViewModel(private val session: SimonSession, private val player: Note
     }
 
     fun start() {
-        if (ui.value.busy || returningHome) return
+        if (ui.value.busy || returningHome || ui.value.storageError != null) return
         cancelAudio()
         mutableUi.value = ui.value.copy(busy = true, preparing = true, error = null)
         viewModelScope.launch {
             actions.withLock {
                 try {
-                    session.start(ui.value.selectedScale, tonicMidi = Random.nextInt(60, 72))
+                    refreshHistory()
+                    if (ui.value.automatic) session.startAutomatic(Random.nextInt(60, 72))
+                    else session.start(ui.value.selectedScale, tonicMidi = Random.nextInt(60, 72))
                     mutableUi.value = ui.value.copy(game = session.state, screen = AppScreen.SIMON_GAME)
                     if (foreground && !returningHome) playSequence(session.state)
                     else interruptLocked()
@@ -111,7 +134,10 @@ class SimonViewModel(private val session: SimonSession, private val player: Note
                     interruptLocked()
                     mutableUi.value = ui.value.copy(screen = AppScreen.MENU, busy = false, highlighted = null)
                 } catch (error: Exception) { report(error) }
-                finally { returningHome = false }
+                finally {
+                    mutableUi.value = ui.value.copy(screen = AppScreen.MENU, busy = false, preparing = false, highlighted = null)
+                    returningHome = false
+                }
             }
         }
     }
@@ -197,8 +223,23 @@ class SimonViewModel(private val session: SimonSession, private val player: Note
         refreshHistory()
     }
 
+    fun retryStorage() {
+        viewModelScope.launch { actions.withLock {
+            try { refreshHistory(); mutableUi.value = ui.value.copy(error = null) }
+            catch (error: Exception) { report(error) }
+        } }
+    }
+
     private suspend fun refreshHistory() {
-        mutableUi.value = ui.value.copy(history = session.history().sortedByDescending { it.finishedAtMillis })
+        try {
+            val history = session.history().sortedByDescending { it.finishedAtMillis }
+            val progress = session.progress()
+            mutableUi.value = ui.value.copy(history = history, progress = progress, storageError = null)
+        } catch (cancelled: CancellationException) { throw cancelled }
+        catch (error: Exception) {
+            mutableUi.value = ui.value.copy(storageError = "No se puede leer el historial. Exportá los originales desde Datos y demostración antes de reiniciar.")
+            throw error
+        }
     }
 
     private fun report(error: Exception) {

@@ -33,11 +33,17 @@ Especificación: [#1](https://github.com/SaladinoJC/Tesis/issues/1). Todas las i
 
 **Qué entrega:** segundo minijuego ejecutable con cuatro opciones, banco real de samples y resumen de diez preguntas. Permite seleccionar manualmente los niveles A/B/C y empieza con tres escuchas totales por pregunta; aún no ajusta ayuda.
 
-- [ ] Incorporar muestras con permiso y procedencia comprobados, catálogo/transformaciones documentadas, altura sonora compartida y presentación comparable.
-- [ ] Cuatro opciones con una correcta, respuesta sin presión temporal y máximo de tres reproducciones, incluida la primera.
-- [ ] Contar cada reproducción real y mostrar escuchas restantes sin permitir superar el límite.
-- [ ] Diez respuestas cierran partida con resumen y resultados persistidos; cada pregunta registra selección, corrección y escuchas usadas.
-- [ ] Probar aciertos/errores, repeticiones, diez rondas y cierre; comprobar el banco de audio en Android.
+- [x] Incorporar muestras con permiso y procedencia comprobados, catálogo/transformaciones documentadas, altura sonora compartida y presentación comparable.
+- [x] Cuatro opciones con una correcta, respuesta sin presión temporal y máximo de tres reproducciones, incluida la primera.
+- [x] Contar cada reproducción real y mostrar escuchas restantes sin permitir superar el límite.
+- [x] Diez respuestas cierran partida con resumen y resultados persistidos; cada pregunta registra selección, corrección y escuchas usadas.
+- [x] Probar aciertos/errores, repeticiones, diez rondas y cierre; comprobar el banco de audio en Android.
+
+Software comprobado en emulador Pixel_6/API 34. Evidencia y recorrido físico pendiente en [Verificacion-Instrumentos-v0.3.md](Verificacion-Instrumentos-v0.3.md); catálogo y tratamiento del audio en [Audio-instrumentos.md](Audio-instrumentos.md). No se acredita sonoridad perceptual idéntica, calibración pedagógica ni prueba en S22 Ultra.
+
+Actualización 2026-10-09: el usuario informó que probó v0.3 en el celular y solicitó melodías aleatorias. El ajuste v0.3.1 conserva el alcance del incremento y añade una frase generada por pregunta, reescuchas idénticas y registro de notas/duraciones con banco real ampliado. Pruebas y límites en [Verificacion-Instrumentos-v0.3.1.md](Verificacion-Instrumentos-v0.3.1.md). La prueba física de la versión nueva sigue pendiente. #3 continúa abierta en GitHub; no se publicó ni cerró desde esta sesión.
+
+
 
 ## 3. Ajustar escuchas con DDA Mamdani e inspeccionar sus decisiones
 
@@ -45,13 +51,15 @@ Especificación: [#1](https://github.com/SaladinoJC/Tesis/issues/1). Todas las i
 
 **Qué entrega:** reconocimiento tímbrico automático con adaptación de ayuda observable, motor Mamdani y panel para reproducir escenarios. El modo automático inicia en A hasta que el ticket 4 agregue desbloqueos.
 
-- [ ] Motor independiente de interfaz, configuración identificable y propuestas numéricas de la especificación documentadas como no calibradas.
-- [ ] Desde tercera respuesta evaluar últimas tres rondas; usar exactitud/autonomía y cambiar máximo una escucha dentro de [1, 3].
-- [ ] Aplicar solo a próxima pregunta; dos rondas entre cambios; iniciar cada partida con tres escuchas y ventana vacía.
-- [ ] Mostrar entradas, pertenencias, reglas, salida/acción propuestas, acción aplicada y motivo de espera/límite.
-- [ ] Casos reproducibles de aciertos, errores, reescuchas y alternancia; simulaciones aisladas de desempeño y progreso real.
-- [ ] Mantener resultados correctos como correctos aunque haya ayuda; no penalizar tiempo de respuesta.
-- [ ] Pruebas conductuales de aumento/reducción/mantenimiento, límites, espera, datos insuficientes y fallo seguro sin salida.
+- [x] Motor independiente de interfaz, configuración identificable y propuestas numéricas de la especificación documentadas como no calibradas.
+- [x] Desde tercera respuesta evaluar últimas tres rondas; usar exactitud/autonomía y cambiar máximo una escucha dentro de [1, 3].
+- [x] Aplicar solo a próxima pregunta; dos rondas entre cambios; iniciar cada partida con tres escuchas y ventana vacía.
+- [x] Mostrar entradas, pertenencias, reglas, salida/acción propuestas, acción aplicada y motivo de espera/límite.
+- [x] Casos reproducibles de aciertos, errores, reescuchas y alternancia; simulaciones aisladas de desempeño y progreso real.
+- [x] Mantener resultados correctos como correctos aunque haya ayuda; no penalizar tiempo de respuesta.
+- [x] Pruebas conductuales de aumento/reducción/mantenimiento, límites, espera, datos insuficientes y fallo seguro sin salida.
+
+Comprobado en v0.4: 34 pruebas JVM y 13 Android, lint sin errores y APK generado. Verificación en [Verificacion-DDA-v0.4.md](Verificacion-DDA-v0.4.md); configuración y escenarios en [DDA-instrumentos-v0.4.md](DDA-instrumentos-v0.4.md). El S22 Ultra sigue pendiente. #4 permanece abierta en GitHub, sin publicación/cierre en esta sesión.
 
 ## 4. Desbloquear niveles y conservar progreso en ambos juegos
 
@@ -59,14 +67,17 @@ Especificación: [#1](https://github.com/SaladinoJC/Tesis/issues/1). Todas las i
 
 **Qué entrega:** modo automático inicia en el nivel más alto desbloqueado y habilita el siguiente tras dos partidas consecutivas de dominio alto, utilizando el mismo motor con indicadores específicos de cada juego.
 
-- [ ] Añadir calificación de dominio de partida completa de instrumentos y puntaje completado de Simón; referencias por escala/configuración visibles como parámetros de prueba.
-- [ ] Dos automáticas completas consecutivas altas del mismo juego/nivel habilitan siguiente; una completa no alta reinicia racha.
-- [ ] Cambio efectivo en próxima partida; progreso permanente, sin avanzar más allá del último nivel.
-- [ ] Simón mantiene su mecánica sin adaptación intrapartida adicional.
-- [ ] Manuales y simulaciones no alteran rachas ni desbloqueos; separar historial por juego/nivel/origen.
-- [ ] Persistir progreso/rachas y evitar doble avance; cerrar/reabrir mantiene nivel y resumen.
-- [ ] Demostrar desbloqueo con escenarios identificados, sin presentarlos como datos de usuarios reales.
-- [ ] Pruebas del primer/segundo alto, reinicio de racha, orígenes, niveles, duplicación, persistencia y nivel final.
+- [x] Añadir calificación de dominio de partida completa de instrumentos y puntaje completado de Simón; referencias por escala/configuración visibles como parámetros de prueba.
+- [x] Dos automáticas completas consecutivas altas del mismo juego/nivel habilitan siguiente; una completa no alta reinicia racha.
+- [x] Cambio efectivo en próxima partida; progreso permanente, sin avanzar más allá del último nivel.
+- [x] Simón mantiene su mecánica sin adaptación intrapartida adicional.
+- [x] Manuales y simulaciones no alteran rachas ni desbloqueos; separar historial por juego/nivel/origen.
+- [x] Persistir progreso/rachas y evitar doble avance; cerrar/reabrir mantiene nivel y resumen.
+- [x] Demostrar desbloqueo con escenarios identificados, sin presentarlos como datos de usuarios reales.
+- [x] Pruebas del primer/segundo alto, reinicio de racha, orígenes, niveles, duplicación, persistencia y nivel final.
+
+
+Implementación v0.5: [conducta y recorrido](Demostracion-prototipo-v0.5.md), [verificación](Verificacion-prototipo-v0.5.md). La validación física completa sigue pendiente; no se cerraron estos tickets en GitHub.
 
 ## 5. Inspeccionar tono vocal con YIN en Android
 
@@ -74,13 +85,16 @@ Especificación: [#1](https://github.com/SaladinoJC/Tesis/issues/1). Todas las i
 
 **Qué entrega:** pantalla de prueba de voz accesible desde la app, con captura real, objetivo seleccionable y mediciones exportables de frecuencia/nota/desviación. La verificación física final será en S22 Ultra.
 
-- [ ] Permiso de micrófono y estado de rechazo claros; iniciar/detener y liberar captura al salir.
-- [ ] Estimar fuera del hilo de interfaz; mostrar frecuencia, nota aproximada y cents respecto del objetivo durante nota sostenida.
-- [ ] Silencio/estimación inválida no produce una nota ficticia; no guardar audio crudo.
-- [ ] Registrar configuración del estimador/muestreo, validez y tiempo de procesamiento, sin llamarlo latencia acústica extremo a extremo.
-- [ ] Señales sintéticas de 110/220/440 Hz con error inicial de prueba ≤ 10 cents después del arranque; silencio sin tono válido. Documentar resultados y límites.
+- [x] Permiso de micrófono y estado de rechazo claros; iniciar/detener y liberar captura al salir.
+- [x] Estimar fuera del hilo de interfaz; mostrar frecuencia, nota aproximada y cents respecto del objetivo durante nota sostenida.
+- [x] Silencio/estimación inválida no produce una nota ficticia; no guardar audio crudo.
+- [x] Registrar configuración del estimador/muestreo, validez y tiempo de procesamiento, sin llamarlo latencia acústica extremo a extremo.
+- [x] Señales sintéticas de 110/220/440 Hz con error inicial de prueba ≤ 10 cents después del arranque; silencio sin tono válido. Documentar resultados y límites.
 - [ ] Verificación real en S22 Ultra con datos de dispositivo/configuración y observaciones; si falta acceso, dejar esta comprobación pendiente en lugar de declarar éxito.
-- [ ] No incorporar ML ni exigir C++/Oboe sin evidencia de necesidad.
+- [x] No incorporar ML ni exigir C++/Oboe sin evidencia de necesidad.
+
+
+Implementación v0.5: [conducta y recorrido](Demostracion-prototipo-v0.5.md), [verificación](Verificacion-prototipo-v0.5.md). La validación física completa sigue pendiente; no se cerraron estos tickets en GitHub.
 
 ## 6. Exportar y reiniciar una demostración reproducible
 
@@ -88,12 +102,15 @@ Especificación: [#1](https://github.com/SaladinoJC/Tesis/issues/1). Todas las i
 
 **Qué entrega:** recorrido completo de los dos juegos y voz, exportación portable de resultados/decisiones y reinicio explícito para repetir la demostración desde cero.
 
-- [ ] Exportar partidas, decisiones y medidas de voz con esquema/versiones, origen y configuración identificables; sin grabaciones de voz.
-- [ ] Exportación parseable y usable fuera de la app; exportar no modifica progreso.
-- [ ] Reinicio con confirmación explícita elimina perfil/resultados/rachas/desbloqueos, conserva configuración de fábrica y se refleja al reabrir.
-- [ ] Guía de demostración: Simón con puntaje claro; diez preguntas; ayuda aumenta/disminuye; desbloqueo por dos altas; modo manual/simulado aislado; voz y silencio; cierre/reapertura; exportación/reinicio.
+- [x] Exportar partidas, decisiones y medidas de voz con esquema/versiones, origen y configuración identificables; sin grabaciones de voz.
+- [x] Exportación parseable y usable fuera de la app; exportar no modifica progreso.
+- [x] Reinicio con confirmación explícita elimina perfil/resultados/rachas/desbloqueos, conserva configuración de fábrica y se refleja al reabrir.
+- [x] Guía de demostración: Simón con puntaje claro; diez preguntas; ayuda aumenta/disminuye; desbloqueo por dos altas; modo manual/simulado aislado; voz y silencio; cierre/reapertura; exportación/reinicio.
 - [ ] Evidencia de recorrido en S22 Ultra y checks apropiados por componente; separar resultados sintéticos, simulados y reales.
-- [ ] Actualizar instrucciones de ejecución, estado del prototipo y limitaciones observadas.
+- [x] Actualizar instrucciones de ejecución, estado del prototipo y limitaciones observadas.
+
+
+Implementación v0.5: [conducta y recorrido](Demostracion-prototipo-v0.5.md), [verificación](Verificacion-prototipo-v0.5.md). La validación física completa sigue pendiente; no se cerraron estos tickets en GitHub.
 
 ## Puntos de prueba propuestos
 

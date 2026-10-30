@@ -4,6 +4,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onAllNodesWithTag
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
@@ -25,9 +26,16 @@ import org.junit.Test
 class SimonAndroidTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
 
+    @org.junit.Before
+    fun awaitAppWindow() {
+        compose.awaitGardenMenu()
+        compose.waitForIdle()
+    }
+
+
     @Test
     fun recrearLaActividadNoInterrumpeLaPartidaYSimonEntraHorizontal() {
-        compose.onNodeWithTag("game-simon").performClick()
+        compose.openMenuDestination("game-simon")
         compose.waitUntil(30_000) {
             compose.activity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
         }
@@ -64,17 +72,18 @@ class SimonAndroidTest {
 
     @Test
     fun abreElMenuYPermitePrepararSimonSinIniciarPartida() {
-        compose.onNodeWithText("Entrená tu oído").assertIsDisplayed()
-        compose.onNodeWithTag("game-simon").performClick()
+        compose.onNodeWithTag("garden-menu").assertIsDisplayed()
+        compose.openMenuDestination("game-simon")
         compose.onNodeWithText("¿Cómo se juega?").assertIsDisplayed()
         compose.onNodeWithText("Jugar Simón").assertIsDisplayed()
         compose.onNodeWithText("Volver al menú").performClick()
-        compose.onNodeWithText("Entrená tu oído").assertIsDisplayed()
+        compose.waitUntil(10_000) { compose.activity.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT }
+        compose.onNodeWithTag("garden-menu").assertIsDisplayed()
     }
 
     @Test
     fun elPianoCromaticoRespondeAlPresionarLaTeclaSinEsperarASoltarla() {
-        compose.onNodeWithTag("game-simon").performClick()
+        compose.openMenuDestination("game-simon")
         compose.onNodeWithTag("scale-CHROMATIC").performClick()
         compose.onNodeWithText("Jugar Simón").performClick()
         compose.waitUntil(30_000) {
@@ -101,22 +110,19 @@ class SimonAndroidTest {
 
     @Test
     fun iniciarAbandonarYReabrirConservaElResultadoInterrumpido() {
-        compose.onNodeWithTag("game-simon").performClick()
+        compose.openMenuDestination("game-simon")
         compose.onNodeWithText("Jugar Simón").performClick()
         compose.onNodeWithText("Volver al menú").performClick()
-        compose.waitUntil(10_000) {
-            compose.onAllNodesWithText("Interrumpida").fetchSemanticsNodes().isNotEmpty()
-        }
+        compose.openMenuDestination("history-open")
+        compose.onAllNodesWithText("Interrumpida").onFirst().performClick()
+        compose.onNodeWithText("Interrumpida", substring = true).assertExists()
         compose.activityRule.scenario.recreate()
-        compose.waitUntil(10_000) {
-            compose.onAllNodesWithText("Interrumpida").fetchSemanticsNodes().isNotEmpty()
-        }
-        compose.onNodeWithText("Entrená tu oído").assertIsDisplayed()
+        compose.onNodeWithText("Interrumpida", substring = true).assertExists()
     }
 
     @Test
     fun responderConErrorMuestraResumenYConservaPartidaCompletaAlReabrir() {
-        compose.onNodeWithTag("game-simon").performClick()
+        compose.openMenuDestination("game-simon")
         compose.onNodeWithText("Jugar Simón").performClick()
         // La primera nota de la secuencia no cambia. Si 0 acierta, 1 falla
         // en el inicio de la siguiente ronda: no dependemos del azar interno.
@@ -135,10 +141,10 @@ class SimonAndroidTest {
         }
         compose.onNodeWithText("Longitud máxima completada").assertIsDisplayed()
         compose.onNodeWithText("Volver al menú").performClick()
+        compose.openMenuDestination("history-open")
+        compose.onAllNodesWithText("Ver detalle").onFirst().performClick()
         compose.activityRule.scenario.recreate()
-        compose.waitUntil(10_000) {
-            compose.onAllNodesWithText("Completada").fetchSemanticsNodes().isNotEmpty()
-        }
+        compose.onNodeWithText("Completada", substring = true).assertExists()
     }
 
     @Test

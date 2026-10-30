@@ -1,0 +1,10 @@
+{
+  "origin": "simulated",
+  "rounds": 500,
+  "signedTargetsPerLevel": 25,
+  "masteredPerLevel": 25,
+  "eligible": 500,
+  "givenAnchorRounds": 250,
+  "signal": "synthetic pitch estimates; no hardware or students",
+  "fullRouteSha256": "a99e37a5d77ba9b468e856e9bd65a8186fd81abd8dd88b0906d0167b7b51ef41"
+}

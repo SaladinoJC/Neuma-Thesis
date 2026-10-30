@@ -1,0 +1,710 @@
+[
+  {
+    "scenario": "Aciertos rápidos: acelerar hasta 6 s",
+    "origin": "simulated",
+    "notes": [
+      "Datos sintéticos, sin audio ni cambios en el perfil real."
+    ],
+    "progress": {
+      "stages": {
+        "N1": {
+          "highStreak": 1,
+          "streakEvidence": [
+            "simulated-1"
+          ]
+        }
+      }
+    },
+    "records": [
+      {
+        "id": "simulated-1",
+        "stage": "N1",
+        "origin": "progression",
+        "sealed": true,
+        "resolved": 27,
+        "finalTravelMillis": 6000,
+        "decisionReasons": {
+          "INSUFFICIENT": 4,
+          "APPLIED": 4,
+          "COOLDOWN": 15,
+          "LIMIT": 3,
+          "KEEP": 1
+        },
+        "progressReason": "FIRST_HIGH",
+        "evidence": [
+          {
+            "clef": null,
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          },
+          {
+            "clef": "TREBLE",
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": "Aciertos lentos: alargar hasta 14 s",
+    "origin": "simulated",
+    "notes": [
+      "Datos sintéticos, sin audio ni cambios en el perfil real."
+    ],
+    "progress": {
+      "stages": {
+        "N1": {
+          "highStreak": 1,
+          "streakEvidence": [
+            "simulated-1"
+          ]
+        }
+      }
+    },
+    "records": [
+      {
+        "id": "simulated-1",
+        "stage": "N1",
+        "origin": "progression",
+        "sealed": true,
+        "resolved": 27,
+        "finalTravelMillis": 14000,
+        "decisionReasons": {
+          "INSUFFICIENT": 4,
+          "APPLIED": 4,
+          "COOLDOWN": 15,
+          "LIMIT": 4
+        },
+        "progressReason": "FIRST_HIGH",
+        "evidence": [
+          {
+            "clef": null,
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          },
+          {
+            "clef": "TREBLE",
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": "Aciertos a mitad de viaje: mantener",
+    "origin": "simulated",
+    "notes": [
+      "Datos sintéticos, sin audio ni cambios en el perfil real.",
+      "Los aciertos a mitad de viaje mantienen; las pérdidas usadas para cerrar pueden proponer alargar."
+    ],
+    "progress": {
+      "stages": {
+        "N1": {
+          "highStreak": 1,
+          "streakEvidence": [
+            "simulated-1"
+          ]
+        }
+      }
+    },
+    "records": [
+      {
+        "id": "simulated-1",
+        "stage": "N1",
+        "origin": "progression",
+        "sealed": true,
+        "resolved": 27,
+        "finalTravelMillis": 11000,
+        "decisionReasons": {
+          "INSUFFICIENT": 4,
+          "KEEP": 7,
+          "COOLDOWN": 15,
+          "APPLIED": 1
+        },
+        "progressReason": "FIRST_HIGH",
+        "evidence": [
+          {
+            "clef": null,
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          },
+          {
+            "clef": "TREBLE",
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": "Tres llegadas sin intentos",
+    "origin": "simulated",
+    "notes": [
+      "Datos sintéticos, sin audio ni cambios en el perfil real."
+    ],
+    "progress": {
+      "stages": {
+        "N1": {}
+      }
+    },
+    "records": [
+      {
+        "id": "simulated-1",
+        "stage": "N1",
+        "origin": "progression",
+        "sealed": true,
+        "resolved": 3,
+        "finalTravelMillis": 10000,
+        "decisionReasons": {
+          "INSUFFICIENT": 3
+        },
+        "progressReason": "INSUFFICIENT",
+        "evidence": [
+          {
+            "clef": null,
+            "resolved": 3,
+            "eliminated": 0,
+            "survival": 0.0,
+            "precision": 0.0,
+            "mastery": "bajo",
+            "centroid": 0.17976142857142854
+          },
+          {
+            "clef": "TREBLE",
+            "resolved": 3,
+            "eliminated": 0,
+            "survival": 0.0,
+            "precision": 0.0,
+            "mastery": "bajo",
+            "centroid": 0.17976142857142854
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": "Dos partidas altas de N1",
+    "origin": "simulated",
+    "notes": [
+      "Datos sintéticos, sin audio ni cambios en el perfil real."
+    ],
+    "progress": {
+      "stages": {
+        "N1": {
+          "mastered": true,
+          "masteryEvidence": [
+            "simulated-1",
+            "simulated-2"
+          ]
+        }
+      }
+    },
+    "records": [
+      {
+        "id": "simulated-1",
+        "stage": "N1",
+        "origin": "progression",
+        "sealed": true,
+        "resolved": 27,
+        "finalTravelMillis": 6000,
+        "decisionReasons": {
+          "INSUFFICIENT": 4,
+          "APPLIED": 4,
+          "COOLDOWN": 15,
+          "LIMIT": 3,
+          "KEEP": 1
+        },
+        "progressReason": "FIRST_HIGH",
+        "evidence": [
+          {
+            "clef": null,
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          },
+          {
+            "clef": "TREBLE",
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          }
+        ]
+      },
+      {
+        "id": "simulated-2",
+        "stage": "N1",
+        "origin": "progression",
+        "sealed": true,
+        "resolved": 27,
+        "finalTravelMillis": 6000,
+        "decisionReasons": {
+          "INSUFFICIENT": 4,
+          "APPLIED": 4,
+          "COOLDOWN": 15,
+          "LIMIT": 3,
+          "KEEP": 1
+        },
+        "progressReason": "MASTERED",
+        "evidence": [
+          {
+            "clef": null,
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          },
+          {
+            "clef": "TREBLE",
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": "Ruta N1–N4 y evidencia por clave",
+    "origin": "simulated",
+    "notes": [
+      "Datos sintéticos, sin audio ni cambios en el perfil real."
+    ],
+    "progress": {
+      "stages": {
+        "N1": {
+          "mastered": true,
+          "masteryEvidence": [
+            "simulated-1",
+            "simulated-2"
+          ]
+        },
+        "N2": {
+          "mastered": true,
+          "masteryEvidence": [
+            "simulated-3",
+            "simulated-4"
+          ]
+        },
+        "N3": {
+          "mastered": true,
+          "masteryEvidence": [
+            "simulated-5",
+            "simulated-6"
+          ]
+        },
+        "N4": {
+          "highStreak": 1,
+          "streakEvidence": [
+            "simulated-7"
+          ]
+        }
+      }
+    },
+    "records": [
+      {
+        "id": "simulated-1",
+        "stage": "N1",
+        "origin": "progression",
+        "sealed": true,
+        "resolved": 27,
+        "finalTravelMillis": 6000,
+        "decisionReasons": {
+          "INSUFFICIENT": 4,
+          "APPLIED": 4,
+          "COOLDOWN": 15,
+          "LIMIT": 3,
+          "KEEP": 1
+        },
+        "progressReason": "FIRST_HIGH",
+        "evidence": [
+          {
+            "clef": null,
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          },
+          {
+            "clef": "TREBLE",
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          }
+        ]
+      },
+      {
+        "id": "simulated-2",
+        "stage": "N1",
+        "origin": "progression",
+        "sealed": true,
+        "resolved": 27,
+        "finalTravelMillis": 6000,
+        "decisionReasons": {
+          "INSUFFICIENT": 4,
+          "APPLIED": 4,
+          "COOLDOWN": 15,
+          "LIMIT": 3,
+          "KEEP": 1
+        },
+        "progressReason": "MASTERED",
+        "evidence": [
+          {
+            "clef": null,
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          },
+          {
+            "clef": "TREBLE",
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          }
+        ]
+      },
+      {
+        "id": "simulated-3",
+        "stage": "N2",
+        "origin": "progression",
+        "sealed": true,
+        "resolved": 27,
+        "finalTravelMillis": 6000,
+        "decisionReasons": {
+          "INSUFFICIENT": 4,
+          "APPLIED": 4,
+          "COOLDOWN": 15,
+          "LIMIT": 3,
+          "KEEP": 1
+        },
+        "progressReason": "FIRST_HIGH",
+        "evidence": [
+          {
+            "clef": null,
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          },
+          {
+            "clef": "TREBLE",
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          }
+        ]
+      },
+      {
+        "id": "simulated-4",
+        "stage": "N2",
+        "origin": "progression",
+        "sealed": true,
+        "resolved": 27,
+        "finalTravelMillis": 6000,
+        "decisionReasons": {
+          "INSUFFICIENT": 4,
+          "APPLIED": 4,
+          "COOLDOWN": 15,
+          "LIMIT": 3,
+          "KEEP": 1
+        },
+        "progressReason": "MASTERED",
+        "evidence": [
+          {
+            "clef": null,
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          },
+          {
+            "clef": "TREBLE",
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          }
+        ]
+      },
+      {
+        "id": "simulated-5",
+        "stage": "N3",
+        "origin": "progression",
+        "sealed": true,
+        "resolved": 27,
+        "finalTravelMillis": 6000,
+        "decisionReasons": {
+          "INSUFFICIENT": 4,
+          "APPLIED": 4,
+          "COOLDOWN": 15,
+          "LIMIT": 3,
+          "KEEP": 1
+        },
+        "progressReason": "FIRST_HIGH",
+        "evidence": [
+          {
+            "clef": null,
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          },
+          {
+            "clef": "BASS",
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          }
+        ]
+      },
+      {
+        "id": "simulated-6",
+        "stage": "N3",
+        "origin": "progression",
+        "sealed": true,
+        "resolved": 27,
+        "finalTravelMillis": 6000,
+        "decisionReasons": {
+          "INSUFFICIENT": 4,
+          "APPLIED": 4,
+          "COOLDOWN": 15,
+          "LIMIT": 3,
+          "KEEP": 1
+        },
+        "progressReason": "MASTERED",
+        "evidence": [
+          {
+            "clef": null,
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          },
+          {
+            "clef": "BASS",
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          }
+        ]
+      },
+      {
+        "id": "simulated-7",
+        "stage": "N4",
+        "origin": "progression",
+        "sealed": true,
+        "resolved": 63,
+        "finalTravelMillis": 6000,
+        "decisionReasons": {
+          "INSUFFICIENT": 4,
+          "APPLIED": 4,
+          "COOLDOWN": 39,
+          "LIMIT": 15,
+          "KEEP": 1
+        },
+        "progressReason": "FIRST_HIGH",
+        "evidence": [
+          {
+            "clef": null,
+            "resolved": 63,
+            "eliminated": 60,
+            "survival": 0.9523809523809523,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          },
+          {
+            "clef": "TREBLE",
+            "resolved": 31,
+            "eliminated": 29,
+            "survival": 0.9354838709677419,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          },
+          {
+            "clef": "BASS",
+            "resolved": 32,
+            "eliminated": 31,
+            "survival": 0.96875,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": "Práctica manual sin aplicar DDA",
+    "origin": "simulated",
+    "notes": [
+      "Datos sintéticos, sin audio ni cambios en el perfil real."
+    ],
+    "progress": {
+      "stages": {
+        "N1": {}
+      }
+    },
+    "records": [
+      {
+        "id": "simulated-1",
+        "stage": "N1",
+        "origin": "practice",
+        "sealed": true,
+        "resolved": 27,
+        "finalTravelMillis": 12000,
+        "decisionReasons": {
+          "INSUFFICIENT": 4,
+          "MANUAL": 8,
+          "COOLDOWN": 15
+        },
+        "progressReason": "PRACTICE",
+        "evidence": [
+          {
+            "clef": null,
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          },
+          {
+            "clef": "TREBLE",
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": "Fallo y reintento idempotente",
+    "origin": "simulated",
+    "notes": [
+      "Datos sintéticos, sin audio ni cambios en el perfil real.",
+      "Guardado fallido: un pendiente, ningún cambio de progreso.",
+      "Reintento confirmado una sola vez."
+    ],
+    "progress": {
+      "stages": {
+        "N1": {
+          "highStreak": 1,
+          "streakEvidence": [
+            "simulated-retry"
+          ]
+        }
+      }
+    },
+    "records": [
+      {
+        "id": "simulated-retry",
+        "stage": "N1",
+        "origin": "progression",
+        "sealed": true,
+        "resolved": 27,
+        "finalTravelMillis": 6000,
+        "decisionReasons": {
+          "INSUFFICIENT": 4,
+          "APPLIED": 4,
+          "COOLDOWN": 15,
+          "LIMIT": 3,
+          "KEEP": 1
+        },
+        "progressReason": "FIRST_HIGH",
+        "evidence": [
+          {
+            "clef": null,
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          },
+          {
+            "clef": "TREBLE",
+            "resolved": 27,
+            "eliminated": 24,
+            "survival": 0.8888888888888888,
+            "precision": 1.0,
+            "mastery": "alto",
+            "centroid": 0.8444449999999998
+          }
+        ]
+      }
+    ]
+  }
+]

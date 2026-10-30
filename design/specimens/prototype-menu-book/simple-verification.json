@@ -1,0 +1,736 @@
+{
+  "reports": [
+    {
+      "width": 360,
+      "height": 894,
+      "variant": "A",
+      "scrollWidth": 360,
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "assets": "ready",
+      "animations": 0,
+      "clipped": [],
+      "outsidePaper": [],
+      "smallControls": [],
+      "tabHits": [
+        {
+          "name": "Personaje",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Juegos",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Afinador",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Logros",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        }
+      ],
+      "covered": []
+    },
+    {
+      "width": 360,
+      "height": 897,
+      "variant": "B",
+      "scrollWidth": 360,
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "assets": "ready",
+      "animations": 0,
+      "clipped": [],
+      "outsidePaper": [],
+      "smallControls": [],
+      "tabHits": [
+        {
+          "name": "Personaje",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Juegos",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Afinador",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Logros",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        }
+      ],
+      "covered": []
+    },
+    {
+      "width": 360,
+      "height": 987,
+      "variant": "C",
+      "scrollWidth": 360,
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "assets": "ready",
+      "animations": 0,
+      "clipped": [],
+      "outsidePaper": [],
+      "smallControls": [],
+      "tabHits": [
+        {
+          "name": "Personaje",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Juegos",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Afinador",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Logros",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        }
+      ],
+      "covered": []
+    },
+    {
+      "width": 411,
+      "height": 894,
+      "variant": "A",
+      "scrollWidth": 411,
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "assets": "ready",
+      "animations": 0,
+      "clipped": [],
+      "outsidePaper": [],
+      "smallControls": [],
+      "tabHits": [
+        {
+          "name": "Personaje",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Juegos",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Afinador",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Logros",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        }
+      ],
+      "covered": []
+    },
+    {
+      "width": 411,
+      "height": 891,
+      "variant": "B",
+      "scrollWidth": 411,
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "assets": "ready",
+      "animations": 0,
+      "clipped": [],
+      "outsidePaper": [],
+      "smallControls": [],
+      "tabHits": [
+        {
+          "name": "Personaje",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Juegos",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Afinador",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Logros",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        }
+      ],
+      "covered": []
+    },
+    {
+      "width": 411,
+      "height": 908,
+      "variant": "C",
+      "scrollWidth": 411,
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "assets": "ready",
+      "animations": 0,
+      "clipped": [],
+      "outsidePaper": [],
+      "smallControls": [],
+      "tabHits": [
+        {
+          "name": "Personaje",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Juegos",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Afinador",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Logros",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        }
+      ],
+      "covered": []
+    },
+    {
+      "width": 600,
+      "height": 1000,
+      "variant": "A",
+      "scrollWidth": 600,
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "assets": "ready",
+      "animations": 0,
+      "clipped": [],
+      "outsidePaper": [],
+      "smallControls": [],
+      "tabHits": [
+        {
+          "name": "Personaje",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Juegos",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Afinador",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Logros",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        }
+      ],
+      "covered": []
+    },
+    {
+      "width": 600,
+      "height": 1000,
+      "variant": "B",
+      "scrollWidth": 600,
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "assets": "ready",
+      "animations": 0,
+      "clipped": [],
+      "outsidePaper": [],
+      "smallControls": [],
+      "tabHits": [
+        {
+          "name": "Personaje",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Juegos",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Afinador",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Logros",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        }
+      ],
+      "covered": []
+    },
+    {
+      "width": 600,
+      "height": 1000,
+      "variant": "C",
+      "scrollWidth": 600,
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "assets": "ready",
+      "animations": 0,
+      "clipped": [],
+      "outsidePaper": [],
+      "smallControls": [],
+      "tabHits": [
+        {
+          "name": "Personaje",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Juegos",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Afinador",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Logros",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        }
+      ],
+      "covered": []
+    },
+    {
+      "width": 320,
+      "height": 1005,
+      "variant": "A",
+      "scrollWidth": 320,
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "assets": "ready",
+      "animations": 0,
+      "clipped": [],
+      "outsidePaper": [],
+      "smallControls": [],
+      "tabHits": [
+        {
+          "name": "Personaje",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Juegos",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Afinador",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Logros",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        }
+      ],
+      "covered": []
+    },
+    {
+      "width": 320,
+      "height": 1012,
+      "variant": "B",
+      "scrollWidth": 320,
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "assets": "ready",
+      "animations": 0,
+      "clipped": [],
+      "outsidePaper": [],
+      "smallControls": [],
+      "tabHits": [
+        {
+          "name": "Personaje",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Juegos",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Afinador",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Logros",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        }
+      ],
+      "covered": []
+    },
+    {
+      "width": 320,
+      "height": 986,
+      "variant": "C",
+      "scrollWidth": 320,
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "assets": "ready",
+      "animations": 0,
+      "clipped": [],
+      "outsidePaper": [],
+      "smallControls": [],
+      "tabHits": [
+        {
+          "name": "Personaje",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Juegos",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Afinador",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Logros",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        }
+      ],
+      "covered": []
+    },
+    {
+      "width": 360,
+      "height": 1462,
+      "large": true,
+      "variant": "A",
+      "scrollWidth": 360,
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "assets": "ready",
+      "animations": 0,
+      "clipped": [],
+      "outsidePaper": [],
+      "smallControls": [],
+      "tabHits": [
+        {
+          "name": "Personaje",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Juegos",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Afinador",
+          "visible": false,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Logros",
+          "visible": false,
+          "hit": true,
+          "overlap": true
+        }
+      ],
+      "covered": []
+    },
+    {
+      "width": 360,
+      "height": 1367,
+      "large": true,
+      "variant": "B",
+      "scrollWidth": 360,
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "assets": "ready",
+      "animations": 0,
+      "clipped": [],
+      "outsidePaper": [],
+      "smallControls": [],
+      "tabHits": [
+        {
+          "name": "Personaje",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Juegos",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Afinador",
+          "visible": false,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Logros",
+          "visible": false,
+          "hit": true,
+          "overlap": true
+        }
+      ],
+      "covered": []
+    },
+    {
+      "width": 360,
+      "height": 1456,
+      "large": true,
+      "variant": "C",
+      "scrollWidth": 360,
+      "fonts": [
+        {
+          "family": "Fraunces",
+          "status": "loaded"
+        },
+        {
+          "family": "Nunito Sans",
+          "status": "loaded"
+        }
+      ],
+      "assets": "ready",
+      "animations": 0,
+      "clipped": [],
+      "outsidePaper": [],
+      "smallControls": [],
+      "tabHits": [
+        {
+          "name": "Personaje",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Juegos",
+          "visible": true,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Afinador",
+          "visible": false,
+          "hit": true,
+          "overlap": true
+        },
+        {
+          "name": "Logros",
+          "visible": false,
+          "hit": true,
+          "overlap": true
+        }
+      ],
+      "covered": []
+    }
+  ],
+  "interaction": {
+    "returned": true,
+    "variantURL": true,
+    "manualReduced": true,
+    "systemReduced": true,
+    "index": true,
+    "legacyNext": true,
+    "legacyPersonaje": true
+  }
+}

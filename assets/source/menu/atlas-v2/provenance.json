@@ -1,0 +1,85 @@
+{
+  "generated": "2026-10-28",
+  "assets": [
+    {
+      "id": "garden",
+      "file": "garden.png",
+      "generator": "imagegen (herramienta integrada)",
+      "source": "C:\\Users\\Juan\\.codex\\generated_images\\01a18336-bce2-7fd0-bf3d-e00a63edab41\\exec-ed5d8892-0d89-4796-afd9-bdecd71832d3.png",
+      "prompt": "Use case: illustration-story. Project: Music Garden, an original indie 2D musical ear-training game. Art direction: refined hand-painted botanical storybook, layered cut paper and delicate warm ink, gouache shading, tactile handmade materials, sophisticated rather than preschool, warm ivory #F5EEDC #FFF9ED, deep forest #315844, sage #A7B99E, moss #718563, restrained ochre #D9AD69 and muted teal #86AAB3. Soft warm daylight, consistent gentle light from upper left. No photorealistic 3D, no neon, no glass, no modern app icons, no text, no letters, no logo, no watermark, no staves or musical notation. This is a reusable game asset, not a screenshot or complete UI. Asset type: portrait 2:3 background painting for mobile menu. A magical musical botanical garden with large arching trees, overlapping fern fronds, leaves, hanging bell-shaped flowers reminiscent of wind chimes, a distant small wooden garden pavilion and a winding path. Deep layered vegetation at both sides, warmly lit distant clearing at center, tiny restrained golden fireflies, delicate plants and seed pods in foreground corners. Rich, carefully illustrated foliage and visible depth. Upper 12% lightly detailed for branding; middle 80% will be largely covered by a book, so concentrate beautiful narrative details at the top, bottom and outer edges. No book, no UI, no character. Fill entire canvas with scene.",
+      "transparentRequested": false,
+      "status": "acabado descartado por el usuario por exceso de realismo/ornamentos; conservar como antecedente",
+      "sha256": "5785e39440b27415eb91714ff692e0aa1ff865f7a198998741fbb56156c57b8f"
+    },
+    {
+      "id": "book",
+      "file": "book.png",
+      "generator": "imagegen (herramienta integrada)",
+      "source": "C:\\Users\\Juan\\.codex\\generated_images\\01a18336-bce2-7fd0-bf3d-e00a63edab41\\exec-ebb81534-687e-45e0-8ba5-d292523cb8d0.png",
+      "prompt": "Use case: illustration-story. Project: Music Garden, an original indie 2D musical ear-training game. Art direction: refined hand-painted botanical storybook, layered cut paper and delicate warm ink, gouache shading, tactile handmade materials, sophisticated rather than preschool, warm ivory #F5EEDC #FFF9ED, deep forest #315844, sage #A7B99E, moss #718563, restrained ochre #D9AD69 and muted teal #86AAB3. Soft warm daylight, consistent gentle light from upper left. No photorealistic 3D, no neon, no glass, no modern app icons, no text, no letters, no logo, no watermark, no staves or musical notation. This is a reusable game asset, not a screenshot or complete UI. Asset type: one isolated portrait 2:3 empty storybook page assembly on genuine transparent background. Straight-on top view, ONE single large vertical page, not an open two-page spread. Thick forest-green cloth book cover peeking out at right and bottom, subtle antique ochre corner details, several irregular ivory page edges visible as layered volume beneath a large blank warm ivory front page. Thin binding groove at far left, deckled organic page edge, minute real paper fibers and natural pale shading around perimeter, very subtle paper texture. The central 76% width and 84% height must remain clean, pale, blank and evenly lit for real UI text. No drawings on reading area, no ribbon, no label, no buttons, no text. Occupy 96% of canvas; minimal transparent margin. Illustration looks premium handmade with nuanced painted shadows and dimensional layered edges, not a smooth rectangle.",
+      "transparentRequested": true,
+      "status": "acabado descartado por el usuario por exceso de realismo/ornamentos; conservar como antecedente",
+      "sha256": "1f9b41696debfe1d2378740b65fce5dc5afba5136146e568d0bc08d79bc4fca9"
+    },
+    {
+      "id": "controls",
+      "file": "controls.png",
+      "generator": "imagegen (herramienta integrada)",
+      "source": "C:\\Users\\Juan\\.codex\\generated_images\\01a18336-bce2-7fd0-bf3d-e00a63edab41\\exec-78f962e8-def4-4f6f-a568-dd85fb83e524.png",
+      "prompt": "Use case: illustration-story. Project: Music Garden, an original indie 2D musical ear-training game. Art direction: refined hand-painted botanical storybook, layered cut paper and delicate warm ink, gouache shading, tactile handmade materials, sophisticated rather than preschool, warm ivory #F5EEDC #FFF9ED, deep forest #315844, sage #A7B99E, moss #718563, restrained ochre #D9AD69 and muted teal #86AAB3. Soft warm daylight, consistent gentle light from upper left. No photorealistic 3D, no neon, no glass, no modern app icons, no text, no letters, no logo, no watermark, no staves or musical notation. This is a reusable game asset, not a screenshot or complete UI. Asset type: reusable UI material atlas, square canvas, genuine transparent background. EXACT 2 columns and 3 rows of six separated items, each centered inside its own equal rectangular grid cell, 12% empty transparent padding around every item. Top left: tall forest-green embroidered cloth ribbon bookmark, flat clean center, forked swallowtail bottom, tiny stitched leaf at top. Top right: same tall ribbon in warm ochre. Middle left: wide horizontal forest-green painted wood-and-leaf PLAY button plaque, empty clean center for a word, soft irregular edges and subtle short shadow; width four times height. Middle right: matching wide ivory parchment plaque with an understated botanical outline, empty center. Bottom left: small ochre carved wooden LEFT arrow with real arrow silhouette, botanical vine around base, isolated. Bottom right: delicate symmetrical botanical title ornament, a small pair of sage leafy sprigs and ochre seed pod centered, horizontal. All six assets must be clearly separated, no overlapping, no background sheet, no text or glyphs. Asset sheet alone.",
+      "transparentRequested": true,
+      "status": "acabado descartado por el usuario por exceso de realismo/ornamentos; conservar como antecedente",
+      "sha256": "780bbd0d926f8119c82a32aebbda28962e537b88b28a4efb396bc00f63a60460"
+    },
+    {
+      "id": "simon",
+      "file": "simon.png",
+      "generator": "imagegen (herramienta integrada)",
+      "source": "C:\\Users\\Juan\\.codex\\generated_images\\01a18336-bce2-7fd0-bf3d-e00a63edab41\\exec-e19f7954-13c7-4e5e-8fb8-689b9a3ca848.png",
+      "prompt": "undefined Asset type: full hero illustration for the Simon minigame, landscape 3:2 composition, genuine transparent background. A small handcrafted upright piano with lid and a recognizably ordered black/ivory keyboard, tucked into a lush botanical clearing of curling ferns, tiny ivory flowers and bells suspended from branches. Warm ochre light around the piano, two small botanical moths fluttering nearby. Entire piano visible, imaginative enchanting scene on an irregular illustrated island, softly feathered natural paper-cut edges fading to transparent around the whole scene, no rectangular background. Hero-quality narrative cover painting rather than a generic icon. Strong silhouette and readable focal point at 300px wide. No written music, no musical note symbols, no text.",
+      "transparentRequested": true,
+      "status": "acabado descartado por el usuario por exceso de realismo/ornamentos; conservar como antecedente",
+      "sha256": "7aedd77495d3daf921750db4453458966182310c321673c9d3cb0a2a47838635"
+    },
+    {
+      "id": "instruments",
+      "file": "instruments.png",
+      "generator": "imagegen (herramienta integrada)",
+      "source": "C:\\Users\\Juan\\.codex\\generated_images\\01a18336-bce2-7fd0-bf3d-e00a63edab41\\exec-34acf0e3-dc9f-49ff-8760-e167acb466f1.png",
+      "prompt": "undefined Asset type: full hero illustration for instrument recognition minigame, landscape 3:2 composition, genuine transparent background. An intimate botanical greenhouse alcove with a beautifully painted wooden violin and bow, a warm wooden acoustic guitar and a small brass flute resting among ferns, ivory flowering vines and amber seed pods. Distinct recognizable instruments arranged as a rich but legible still life, no player or hands, complete instrument shapes. Scene on an irregular illustrated island with soft naturally feathered paper-cut edges fading to transparent, no rectangular background. Hero-quality indie game cover, not an icon. No written music, no musical note symbols, no text.",
+      "transparentRequested": true,
+      "status": "acabado descartado por el usuario por exceso de realismo/ornamentos; conservar como antecedente",
+      "sha256": "5d175f76166d6941db707e167d856186b96b51e0b7f98e0379bc626b75b629f4"
+    },
+    {
+      "id": "rhythm",
+      "file": "rhythm.png",
+      "generator": "imagegen (herramienta integrada)",
+      "source": "C:\\Users\\Juan\\.codex\\generated_images\\01a18336-bce2-7fd0-bf3d-e00a63edab41\\exec-0e365bd2-7168-4a2b-ac1f-552c008d0f66.png",
+      "prompt": "undefined Asset type: full hero illustration for Rhythm Tap rhythm-training minigame, landscape 3:2 composition, genuine transparent background. A beautiful handmade wooden frame drum and two wood mallets on a mossy stump, a little semicircle of smaller wooden percussion blocks and seed-pod shakers among curling ferns and tiny golden flowers. Gentle visual repetition in the stems and seed pods suggests rhythm without any notation. Painted dynamic diagonal mallets but no hands/people. Complete central drum visible. Rich detailed miniature botanical scene with a strong focal point, softly feathered paper-cut irregular edges fading to transparent, not a rectangular background. Hero-quality indie cover, not an icon. No written music or symbols, no text.",
+      "transparentRequested": true,
+      "status": "acabado descartado por el usuario por exceso de realismo/ornamentos; conservar como antecedente",
+      "sha256": "a72645497e197ecd4291b39bbdcb8c7ebad6ccd05155b6ed3e7f449494db5793"
+    },
+    {
+      "id": "defender",
+      "file": "defender.png",
+      "generator": "imagegen (herramienta integrada)",
+      "source": "C:\\Users\\Juan\\.codex\\generated_images\\01a18336-bce2-7fd0-bf3d-e00a63edab41\\exec-736d1f8a-0c7a-4127-878e-8c61973327ea.png",
+      "prompt": "undefined Asset type: full hero illustration for Defender music-reading minigame, landscape 3:2 composition, genuine transparent background. A broad-canopied guardian tree with a gracefully curved trunk and absolutely NO FACE, protected magical botanical clearing with very small warm ochre flecks of light. Two delicate moths with leaf-shaped sage wings approaching the tree from opposite sides. Hand-painted layered-paper tree canopy, roots entwined among ferns and ivory flowers, soft surrounding storybook scenery. Whole tree visible and dominant, strong silhouette. A rich irregular illustrated island softly feathered at the edges to transparency, no rectangular background. Hero-quality indie cover, not an icon. No written music, no notes or staves, no text.",
+      "transparentRequested": true,
+      "status": "acabado descartado por el usuario por exceso de realismo/ornamentos; conservar como antecedente",
+      "sha256": "fbfe9d6ab4c08d1543fc41d74b7758d8b8aadc94d8b285f736e7eac0e640f37e"
+    },
+    {
+      "id": "character",
+      "file": "character.png",
+      "generator": "imagegen (herramienta integrada)",
+      "source": "C:\\Users\\Juan\\.codex\\generated_images\\01a18336-bce2-7fd0-bf3d-e00a63edab41\\exec-a0368df7-56e7-42ee-b734-c403cb720b05.png",
+      "prompt": "undefined Asset type: generic temporary avatar hero for Personaje page, portrait composition, genuine transparent background. One small friendly botanical garden traveler, full body including feet, centered, wearing a forest-green stitched linen hood, sage leaf-shaped cape, warm ochre small scarf, simple ivory face with two tiny dark eyes and quiet smile, a single leaf sprout emerging from hood. A handmade storybook character with nuanced gouache, restrained ink, natural fabric grain, boots resting on a little patch of moss and delicate fern. Welcoming, gender-neutral, no weapon, no pet, no reward badges or equipment upgrade indicators. Character should occupy most of canvas with generous transparent padding, beautifully painted with clear silhouette at mobile scale, no frame, no text, no UI.",
+      "transparentRequested": true,
+      "status": "acabado descartado por el usuario por exceso de realismo/ornamentos; conservar como antecedente",
+      "sha256": "26d6fd52bfaf01651cc364f326f726e5a8a521a5f5e97c188ab9117f8ba8a943"
+    }
+  ]
+}

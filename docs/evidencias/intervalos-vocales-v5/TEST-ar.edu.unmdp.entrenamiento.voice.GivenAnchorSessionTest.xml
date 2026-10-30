@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.voice.GivenAnchorSessionTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-30T22:27:17.370Z" hostname="DESKTOP-PP49S64" time="0.13">
+  <properties/>
+  <testcase name="given anchor evaluates one sung target and keeps the anchor provenance" classname="ar.edu.unmdp.entrenamiento.voice.GivenAnchorSessionTest" time="0.0"/>
+  <testcase name="synthetic PCM traverses YIN into a single given anchor target" classname="ar.edu.unmdp.entrenamiento.voice.GivenAnchorSessionTest" time="0.129"/>
+  <testcase name="invalid signal and capture gaps cannot finish a given anchor response" classname="ar.edu.unmdp.entrenamiento.voice.GivenAnchorSessionTest" time="0.0"/>
+  <testcase name="given reference keeps descending unison and octave errors without folding" classname="ar.edu.unmdp.entrenamiento.voice.GivenAnchorSessionTest" time="0.001"/>
+  <testcase name="invalid external anchors are rejected before a round starts" classname="ar.edu.unmdp.entrenamiento.voice.GivenAnchorSessionTest" time="0.0"/>
+  <system-out><![CDATA[Synthetic PCM given anchor=220Hz, interval=-12, measured=-1199.9951535760981, error=0.0048464239018812805
+Synthetic PCM given anchor=220Hz, interval=0, measured=0.0075354597770663475, error=0.0075354597770663475
+Synthetic PCM given anchor=220Hz, interval=7, measured=700.0394844649982, error=0.03948446499816782
+Synthetic PCM given anchor=220Hz, interval=12, measured=1200.0736077702368, error=0.07360777023677656
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

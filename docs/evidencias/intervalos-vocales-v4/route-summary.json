@@ -1,0 +1,9 @@
+{
+  "origin": "simulated",
+  "rounds": 250,
+  "signedTargets": 25,
+  "mastered": 25,
+  "eligible": 250,
+  "signal": "synthetic pitch estimates; no hardware or students",
+  "fullRouteSha256": "2e171a488eb6084e9c49fbcf7662dca582c8790e770429ae753fb397b1b83ce2"
+}

@@ -2,6 +2,7 @@ package ar.edu.unmdp.entrenamiento.simon
 
 import kotlinx.serialization.Serializable
 import java.util.UUID
+import ar.edu.unmdp.entrenamiento.progress.*
 
 @Serializable
 enum class Scale(val label: String, val intervals: List<Int>) {
@@ -23,6 +24,7 @@ data class SimonResult(
     val finishedAtMillis: Long = 0,
     val origin: String = "manual",
     val configurationVersion: String = "simon-0.2.1-piano-fluido",
+    val mastery: Mastery? = null,
 )
 data class SimonState(
     val phase: Phase = Phase.IDLE,
@@ -43,10 +45,13 @@ class SimonSession(
 ) {
     private var id = ""
     private var startedAtMillis = 0L
+    private var origin = "manual"
     var state = SimonState()
         private set
 
-    fun start(scale: Scale, tonicMidi: Int): SimonState {
+    fun start(scale: Scale, tonicMidi: Int, origin: String = "manual"): SimonState {
+        require(origin in listOf("manual", "automatic", "simulated"))
+        this.origin = origin
         require(tonicMidi in 48..84)
         check(state.phase !in listOf(Phase.PLAYBACK, Phase.RESPONSE)) { "La partida anterior sigue activa." }
         id = UUID.randomUUID().toString()
@@ -59,6 +64,13 @@ class SimonSession(
         )
         return state
     }
+
+    suspend fun progress(): Progress = progression(results.all().map {
+        ProgressEntry(it.id, it.scale.ordinal, it.origin, it.completed, it.mastery)
+    })
+
+    suspend fun startAutomatic(tonicMidi: Int): SimonState =
+        start(Scale.entries[progress().level], tonicMidi, "automatic")
 
     fun playbackFinished(): SimonState {
         if (state.phase == Phase.PLAYBACK) state = state.copy(phase = Phase.RESPONSE)
@@ -90,6 +102,8 @@ class SimonSession(
         return state
     }
 
+    /** Solo después de una confirmación de reinicio de perfil; no guarda una interrupción. */
+    fun discardForReset() { state = SimonState() }
     suspend fun history(): List<SimonResult> = results.all()
     suspend fun interrupt(): SimonState {
         if (state.phase !in listOf(Phase.PLAYBACK, Phase.RESPONSE)) return state
@@ -109,5 +123,10 @@ class SimonSession(
         tonicMidi = state.tonicMidi,
         startedAtMillis = startedAtMillis,
         finishedAtMillis = clock(),
+        origin = origin,
+        configurationVersion = "simon-0.5-progression",
+        mastery = if (completed) listOf(5, 7, 9)[state.scale.ordinal].let { reference ->
+            mastery(mapOf("longitud" to (state.completedLength.toDouble()/reference).coerceIn(0.0, 1.0)), reference)
+        } else null,
     )
 }

@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-30T12:29:17.677590-03:00",
+  "status": "host-passed-android-pending",
+  "version": "0.12.13",
+  "versionCode": 28,
+  "issue": "https://github.com/SaladinoJC/Tesis/issues/25",
+  "jvm": {
+    "tests": 196,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "newJvmTests": 18,
+  "jvmExecution": "executed",
+  "lint": {
+    "errors": 0,
+    "warnings": 17,
+    "issuesById": {
+      "AndroidGradlePluginVersion": 1,
+      "GradleDependency": 7,
+      "LockedOrientationActivity": 1,
+      "NewerVersionAvailable": 3,
+      "DiscouragedApi": 1,
+      "DataExtractionRules": 1,
+      "ObsoleteSdkInt": 1,
+      "UnusedResources": 1,
+      "MonochromeLauncherIcon": 1
+    }
+  },
+  "assemblies": {
+    "app": "passed",
+    "androidTest": "passed"
+  },
+  "newAndroidTestsCompiled": 2,
+  "androidTestsExecuted": false,
+  "emulatorStarted": false,
+  "gradleDuration": "5m 20s",
+  "sourceFilesVerified": 340,
+  "sourceManifestSha256": "61fa06354ffdc0ba391b0e9986387410245d80cf1ed5608976b9150c90d9ffd3",
+  "runtimeAssetsIdenticalToR6": 149,
+  "profileFiles": 8,
+  "syntheticScenarios": 8,
+  "execution": {
+    "offline": true,
+    "workers": 1,
+    "heapMiB": 1536,
+    "gc": "SerialGC",
+    "activeProcessorCount": 2,
+    "priority": "BelowNormal",
+    "daemon": "single-use"
+  },
+  "apk": {
+    "path": "Plataforma/build/apk-archives/neuma-v0.12.13-defender-d3-prueba-sin-emulador.apk",
+    "bytes": 15092664,
+    "sha256": "d6bd7a9a700fb3b153ad13290f3db16ae207fc4126e37908b9d04b1f7cdff341"
+  },
+  "pending": [
+    "Android D3 new tests and D1/D2 regression",
+    "Visual states at 411/360/320 dp and 320 dp font scale 200%, four targets, reduced motion and TalkBack",
+    "Native export/recovery/reset and JSON on Android",
+    "Earlier R6/rhythm layout/Neuma brand Android verification",
+    "Physical phone and acoustic timing"
+  ],
+  "notes": [
+    "Summary persists provisionally; closing its input surface seals result and progress together",
+    "No push, publication, issue edits, emulator launch or Personaje implementation"
+  ],
+  "signerCertificateSha256": "4e9a10f84ec8218fb0927606a0c84617c3753a452e0c772b1bae1bd377a0c90a",
+  "signatureCompatibleWithR6": true
+}

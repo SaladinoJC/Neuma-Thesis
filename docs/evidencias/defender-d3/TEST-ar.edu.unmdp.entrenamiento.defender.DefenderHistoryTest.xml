@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.defender.DefenderHistoryTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-30T15:23:51.623Z" hostname="DESKTOP-PP49S64" time="0.706">
+  <properties/>
+  <testcase name="dosAltasDelMismoObjetivoHabilitanSoloLaSiguienteEtapaYSeConservanTrasErrores" classname="ar.edu.unmdp.entrenamiento.defender.DefenderHistoryTest" time="0.043"/>
+  <testcase name="mezclaNoAcreditaClaveAusenteYNuncaComparteDominioConOtraVariante" classname="ar.edu.unmdp.entrenamiento.defender.DefenderHistoryTest" time="0.095"/>
+  <testcase name="lecturaSuspendidaConservaGuardadosPendientesYFiltros" classname="ar.edu.unmdp.entrenamiento.defender.DefenderHistoryTest" time="0.018"/>
+  <testcase name="commitsConcurrentesCoordinanRachaYNoDuplicanIdentidades" classname="ar.edu.unmdp.entrenamiento.defender.DefenderHistoryTest" time="0.175"/>
+  <testcase name="jsonIdempotenteReabreExportaRecuperaYReiniciaSinPerderRitmo" classname="ar.edu.unmdp.entrenamiento.defender.DefenderHistoryTest" time="0.323"/>
+  <testcase name="archivoIncompatibleNoSePisaYRecuperacionIncluyeOriginalYPendiente" classname="ar.edu.unmdp.entrenamiento.defender.DefenderHistoryTest" time="0.035"/>
+  <testcase name="guardadoFallidoMantienePendienteYReintentoNoDuplicaRacha" classname="ar.edu.unmdp.entrenamiento.defender.DefenderHistoryTest" time="0.015"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

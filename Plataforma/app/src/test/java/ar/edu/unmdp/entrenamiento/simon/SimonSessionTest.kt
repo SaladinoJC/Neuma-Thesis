@@ -11,6 +11,20 @@ import org.junit.rules.TemporaryFolder
 class SimonSessionTest {
     @get:Rule val temporaryFolder = TemporaryFolder()
     @Test
+    fun `el historial de v021 sigue legible al incorporar instrumentos`() = runTest {
+        val file = File(temporaryFolder.root, "previous-version.json")
+        file.writeText("""{"schemaVersion":1,"results":[{"completedLength":4,"attemptedSequence":[0,1,2,3,4],"errorPosition":0,"completed":true,"id":"previous-game","scale":"DIATONIC","tonicMidi":60,"startedAtMillis":1234,"finishedAtMillis":5678,"origin":"manual","configurationVersion":"simon-0.2.1-piano-fluido"}]}""")
+        val session = SimonSession({ 2 }, JsonSimonResults(file))
+        assertEquals(4, session.history().single().completedLength)
+        session.start(Scale.PENTATONIC, 60)
+        session.playbackFinished()
+        session.answer(0)
+        val reopened = SimonSession({ 0 }, JsonSimonResults(file))
+        assertEquals(2, reopened.history().size)
+        assertEquals("previous-game", reopened.history().first().id)
+        assertEquals(listOf(0,1,2,3,4), reopened.history().first().attemptedSequence)
+    }
+    @Test
     fun `la partida presenta una sola nota antes de recibir respuestas`() {
         val session = SimonSession(nextNote = { 2 })
         session.start(Scale.PENTATONIC, tonicMidi = 60)

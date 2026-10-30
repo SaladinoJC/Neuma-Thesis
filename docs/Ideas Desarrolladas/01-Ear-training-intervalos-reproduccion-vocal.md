@@ -5,6 +5,26 @@
 
 **Estado:** DESARROLLADA
 
+> Implementación parcial, 2026-10-30: [V1 del núcleo de imitación](../Intervalos-vocales-V1.md)
+> evalúa dos notas sostenidas respecto del ancla cantada y conserva la serie.
+> [V2](../Intervalos-vocales-V2.md), autorizada con «dale, hacelo», conecta una ronda
+> manual con referencia/micrófono y resumen en memoria. Android sin ejecutar por
+> orden de no emular. [V3](../Intervalos-vocales-V3.md) agrega persistencia, historial,
+> exportación JSON/ZIP, pendientes y reintento. [V4](../Intervalos-vocales-V4.md)
+> implementa Mamdani entre rondas de series de imitación y progresión por contenido/
+> dirección, con inspección y simulaciones. [V5](../Intervalos-vocales-V5.md),
+> autorizada con «Dale, vamos con ancla dada», reproduce solo el ancla y captura
+> el objetivo, con prerrequisito de imitación y progreso independiente por dirección.
+> [V6](../Intervalos-vocales-V6.md), autorizada con «dale, segui con eso», agrega
+> producción libre sin audio, ancla propia y dos capturas, con acceso por hito de
+> ancla dada y progreso independiente. Selección automática global de ayuda, CA
+> y ML siguen pendientes. El orden y los parámetros de V4–V6 son experimentales del agente.
+> La prioridad vocal procede de la entrevista del informe del 2026-10-30.
+> Los umbrales/promedio móvil de esta ficha requieren revisión frente a la
+> decisión posterior de usar Mamdani; V4–V6 los sustituyen para los tres andamiajes
+> implementados con elección explícita. Oboe/ML permanecen
+> sujetos a medición y acuerdo con el director según el contraste del protocolo.
+
 ## 1.1 Fundamento
 
 **Pedagógico.** La literatura de *aural skills* de conservatorio distingue percepción

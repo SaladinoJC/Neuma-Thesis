@@ -1,0 +1,135 @@
+\chapter{Introducción}
+\label{cap:introduccion}
+\section{Contexto}
+Este Trabajo Final de Ingeniería en Informática aborda el diseño y la evaluación de
+Neuma, una plataforma de entrenamiento auditivo musical para dispositivos Android.
+La propuesta reúne ejercicios presentados como juegos serios, análisis de respuestas
+vocales y ajuste de la dificultad según el desempeño del estudiante. El proyecto se
+encuadra en la modalidad de Proyecto y/o Diseño de Ingeniería en Informática.
+
+La aplicación está dirigida principalmente a estudiantes de conservatorio y, de manera
+más amplia, a estudiantes de música e interesados en ejercitar su oído y su lectura
+musical. Se presupone una base de conocimientos musicales, incluida la lectura de
+partituras necesaria para las actividades que la utilizan. El público previsto comprende
+niños, adolescentes y adultos. Neuma se concibe como un recurso complementario de las
+clases o del aprendizaje realizado por otros medios.
+
+El escenario de uso considerado es la práctica individual: el estudiante escucha una
+consigna musical, responde mediante los controles del juego o mediante la voz y recibe
+información sobre su respuesta. Según la actividad, el sistema debe interpretar una
+secuencia de notas, una elección tímbrica, una ejecución rítmica o una respuesta vocal.
+Estas interacciones plantean necesidades diferentes de reproducción, captura, evaluación
+y presentación de la información, que deben integrarse en una misma aplicación.
+
+En los ejercicios vocales, la respuesta requiere transformar la señal del micrófono en
+una estimación de frecuencia fundamental y relacionarla con el objetivo musical. En los
+demás ejercicios, el desempeño se obtiene de las acciones registradas durante la partida.
+En ambos casos, la propuesta contempla utilizar indicadores de desempeño para regular
+los desafíos y conservar información que permita examinar las decisiones del sistema.
+El marco teórico y los antecedentes que fundamentan estos componentes se desarrollarán
+en el capítulo~\ref{cap:marco}.
+\section{Motivación}
+El proyecto surge de la experiencia del autor como estudiante de música en el
+conservatorio. Durante su formación encontró dificultades para practicar determinados
+contenidos y limitaciones en las herramientas que utilizaba: algunas no se ajustaban
+a su forma de estudiar y otras restringían el acceso mediante planes pagos. También
+percibió que, en ciertas actividades, mejorar el desempeño dentro del juego no tenía
+una relación clara con la habilidad musical que deseaba desarrollar. Conversaciones
+informales con otros estudiantes de música de la ciudad permitieron reconocer
+inquietudes similares. Estas experiencias constituyen el origen de la propuesta y
+no representan un relevamiento sistemático de necesidades ni una evaluación comparativa
+de las aplicaciones disponibles.
+
+La motivación técnica del trabajo es construir una integración verificable entre
+procesamiento de audio, interacción musical y adaptación de ejercicios. Mostrar una nota
+estimada o modificar un parámetro de dificultad constituye una parte de esa integración;
+también es necesario establecer bajo qué condiciones funciona, qué información utiliza
+y cuáles son sus límites. Por ello, el desarrollo del prototipo se acompaña de un registro
+de datos y de una evaluación de su comportamiento.
+
+Desde la perspectiva de la práctica musical, se busca ofrecer actividades en las que el
+estudiante pueda reconocer el resultado de sus respuestas y continuar ejercitándose con
+desafíos ajustados a su desempeño. Esta finalidad orienta el diseño de la aplicación.
+Para orientar las actividades hacia ese propósito, el diseño deberá explicitar qué
+habilidad musical practica cada una e incorporar variaciones pertinentes que reduzcan
+la dependencia de pistas particulares del minijuego. Por ejemplo, el ajuste de afinación
+de oído busca ejercitar la escucha de diferencias de altura, mientras que la variación
+tímbrica en ejercicios de intervalos pretende evitar que la respuesta dependa siempre
+de una misma sonoridad. La pertinencia de cada variación deberá examinarse según la
+actividad. La transferencia a situaciones musicales externas a la aplicación se adopta
+como intención de diseño; demostrarla requeriría una evaluación específica que excede
+las pruebas técnicas y exploratorias previstas en este trabajo.
+
+El interés académico reside en documentar las decisiones de ingeniería que permiten
+construir el prototipo y contrastarlas con evidencia obtenida en condiciones definidas.
+El aporte propuesto comprende el software, su diseño y el análisis de precisión de la
+estimación de tono, latencia de la retroalimentación y comportamiento del ajuste de
+dificultad. La publicación gratuita del código y su documentación forma parte del
+producto previsto en el protocolo.
+\section{Problema a resolver}
+El problema consiste en diseñar e integrar un sistema móvil que interprete las respuestas
+del estudiante, produzca retroalimentación durante la práctica y ajuste los ejercicios
+de acuerdo con indicadores de desempeño. El protocolo presentado el 28 de septiembre
+de 2026 plantea evaluar esa integración mediante la precisión de detección de tono,
+la latencia de la retroalimentación y el funcionamiento del ajuste de dificultad.
+
+La entrada vocal introduce un problema de medición: se debe obtener una estimación de
+tono cuya exactitud y tiempo de disponibilidad puedan contrastarse con referencias.
+El componente adaptativo introduce un problema de decisión: es necesario definir qué
+se considera evidencia de desempeño, cómo se transforma en un ajuste y en qué momento
+se aplica. La integración exige, además, que esas decisiones sean compatibles con las
+reglas de cada actividad y puedan reconstruirse a partir de los registros del prototipo.
+
+La pregunta que organiza el desarrollo es cómo integrar el análisis vocal, la
+retroalimentación y la dificultad adaptativa en una aplicación Android, y cómo evaluar
+su funcionamiento con criterios técnicos explícitos. Para responderla, se deberán
+identificar las condiciones de ensayo, los dispositivos utilizados, las referencias de
+comparación y los indicadores de evaluación. Los objetivos del
+capítulo~\ref{cap:objetivos} descomponen este problema en resultados verificables.
+\section{Alcance y delimitaciones}
+El producto previsto es un prototipo funcional que integre captura y análisis de audio,
+ejercicios musicales, retroalimentación, ajuste de dificultad y registro del desempeño.
+El protocolo propone inicialmente cinco actividades: Simón musical armónico,
+reconocimiento de instrumentos, defensa de acordes en partitura, eco rítmico y reproducción
+vocal de intervalos. El plan de trabajo adjunto acota el mínimo a un juego vocal y otro
+juego sencillo, con tres actividades adicionales opcionales. La selección inicial y el
+mínimo planificado se conservan como referencias distintas para revisar el alcance final.
+
+Se mantiene como compromiso mínimo la integración de un ejercicio de reproducción vocal
+de intervalos: el estudiante escuchará una referencia, responderá con la voz y recibirá
+retroalimentación, con dificultad ajustada a su desempeño. Este ejercicio deberá
+demostrar la articulación entre análisis vocal y adaptación. La prueba técnica de voz
+y el afinador aportan componentes al desarrollo, pero no sustituyen por sí solos esa
+integración.
+
+Las decisiones de desarrollo posteriores fijan Android como plataforma, Kotlin y Jetpack
+Compose para la aplicación, funcionamiento sin conexión y un perfil local. También
+establecen un ajuste de dificultad mediante lógica difusa y una primera prueba de voz
+separada, basada en YIN. Estas decisiones orientan la construcción incremental; la
+existencia de esa prueba separada no acredita la integración del juego vocal previsto.
+
+Existen diferencias técnicas entre los documentos de partida. El análisis de factibilidad
+del protocolo incluye una capa C++ con Oboe, transporte mediante estructuras sin bloqueos
+y un detector híbrido DSP/ML dentro del producto mínimo. En cambio, el plan de trabajo
+considera Oboe y el aprendizaje automático como opciones por validar y condiciona este
+último a los resultados de la línea base y al tiempo disponible. Para el desarrollo se
+adopta su tratamiento como alternativas cuya incorporación dependerá de las mediciones.
+Esta orientación, confirmada por el autor, deberá justificarse mediante evidencia y
+acordarse con el director por su diferencia con la formulación del protocolo.
+
+La versión de entrega se prevé gratuita en todas sus funciones, sin suscripción y
+utilizable sin conexión. Se contempla publicar el código fuente y la documentación
+bajo una licencia abierta compatible con las dependencias y los recursos empleados.
+La enseñanza de contenidos musicales desde sus fundamentos queda fuera del alcance
+actual. Una eventual sección de aprendizaje introductorio se considera una ampliación
+futura.
+
+Se mantiene la delimitación a entrada monofónica y procesamiento en el dispositivo.
+Quedan fuera la extracción de voz en entornos polifónicos, el multijugador en tiempo real
+y la realidad extendida con motores tridimensionales pesados. La evaluación prevista
+comprende pruebas técnicas y sesiones exploratorias de uso, inicialmente con estudiantes
+de música mayores de edad que posean conocimientos musicales básicos. Esta delimitación
+de los participantes es más acotada que el público previsto para la aplicación. Las
+observaciones se interpretarán dentro de las condiciones y la población efectivamente
+evaluadas. La realización de las sesiones y sus resultados se documentarán cuando
+exista evidencia; no se plantean como demostración de eficacia pedagógica.

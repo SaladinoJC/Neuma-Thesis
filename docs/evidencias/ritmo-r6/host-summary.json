@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-30T11:38:39.735141-03:00",
+  "status": "host-passed-android-pending",
+  "version": "0.12.12",
+  "versionCode": 27,
+  "issue": "https://github.com/SaladinoJC/Tesis/issues/21",
+  "jvm": {
+    "tests": 178,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "newJvmTests": 11,
+  "jvmExecution": "executed",
+  "lint": {
+    "errors": 0,
+    "warnings": 17,
+    "issuesById": {
+      "AndroidGradlePluginVersion": 1,
+      "GradleDependency": 7,
+      "LockedOrientationActivity": 1,
+      "NewerVersionAvailable": 3,
+      "DiscouragedApi": 1,
+      "DataExtractionRules": 1,
+      "ObsoleteSdkInt": 1,
+      "UnusedResources": 1,
+      "MonochromeLauncherIcon": 1
+    }
+  },
+  "appAssembly": "passed",
+  "androidTestAssembly": "passed",
+  "newAndroidTestsCompiled": 2,
+  "androidTestsExecuted": false,
+  "emulatorStarted": false,
+  "gradleDuration": "6m 35s",
+  "sourceFilesVerified": 330,
+  "sourceManifestSha256": "9e2f7132d38226ca68a5e91553186bcc01fb103fbb5759240f014b769dd1e3b6",
+  "resources": {
+    "offline": true,
+    "maxWorkers": 1,
+    "heapMiB": 1536,
+    "gc": "SerialGC",
+    "activeProcessorCount": 2,
+    "priority": "BelowNormal",
+    "daemon": "single-use"
+  },
+  "apk": {
+    "path": "Plataforma/build/apk-archives/neuma-v0.12.12-r6-prueba-sin-emulador.apk",
+    "bytes": 14977972,
+    "sha256": "199fdb9573f7b52837ca25cc4a24d613686103ce270d47794048339ed9e54187"
+  },
+  "pending": [
+    "R6 Android UI at 411/360/320 dp, 320 dp font 200%, accessibility and native export",
+    "Rhythm engraving final layout and DocumentsUI return from v0.12.11",
+    "Physical phone, acoustic timing and TalkBack gestures/speech"
+  ],
+  "notes": [
+    "Synthetic scenarios are not measured student performance",
+    "No publish, push, issue modifications or Personaje implementation"
+  ],
+  "signerCertificateSha256": "4e9a10f84ec8218fb0927606a0c84617c3753a452e0c772b1bae1bd377a0c90a",
+  "signatureCompatibleWithR5": true,
+  "packagedAssetsIdenticalToV01211": 149
+}

@@ -1,5 +1,9 @@
 # 12. Defensa de acordes en partitura
 
+> Actualización 2026-10-22: el usuario confirmó planificar las tres variantes de Defender en orden notas (13) → acordes por nombre (12) → piano virtual (14), conservando supervivencia con tres vidas y sin coste directo de vida por intento incorrecto. Ver [definición en curso](../Definicion-defender.md). Esta ficha describe la segunda etapa; el DDA previo por ventanas/umbrales necesita concretarse con el Mamdani vigente. No implica aprobación del director ni código implementado.
+
+> Quinta ronda de la entrevista: mayor→menor→disminuido→aumentado→séptimas (dominante, mayor7, menor7, semidisminuido), primero tríadas fundamentales y luego séptimas/inversiones. Respuesta raíz+calidad, sin exigir identificar la inversión; raíz no necesariamente es el bajo. Sol→fa→mezcla con progreso propio, escritura exacta de raíz y sin duplicados simultáneos por raíz escrita+calidad. La referencia vertical, movimiento radial, audio y feedback comunes están definidos en la entrevista. Estas decisiones resuelven la ambigüedad de inversión/respuesta y prevalecen sobre detalles anteriores incompatibles.
+
 > Vuelta de tuerca al ítem 14 original ("reconocimiento visual de acordes en
 > partitura, básico, ya existe en el mercado"). Acordes en notación de
 > pentagrama avanzan hacia una base que el usuario debe proteger; para

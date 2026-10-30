@@ -1,0 +1,1479 @@
+{
+ "url": "preview/neuma-concept.html",
+ "at": "2026-10-29T17:09:56.099Z",
+ "allow": [
+  "button-fx",
+  "heavy-shadow",
+  "palette-cream",
+  "app-title-size"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 1,
+   "filled": [
+    0.35
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 900,
+     "screens": 1,
+     "words": 159,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 36,
+     "sections": 6,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Tu momento de música.",
+     "words": 4,
+     "chars": 21,
+     "lines": 1,
+     "size": 32,
+     "vw": 2.2,
+     "font": "Georgia",
+     "weight": 400,
+     "tracking": -0.03,
+     "leading": 1.16,
+     "top": 129,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Tu momento de música.",
+     "words": 4,
+     "lines": 1,
+     "size": 32,
+     "font": "Georgia"
+    },
+    "headings": [
+     {
+      "text": "neuma.",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 37,
+      "vw": 2.6,
+      "font": "Georgia",
+      "weight": 400,
+      "tracking": -0.062,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.08,
+      "top": 58,
+      "tag": "button",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu momento de música.",
+      "words": 4,
+      "chars": 21,
+      "lines": 1,
+      "size": 32,
+      "vw": 2.2,
+      "font": "Georgia",
+      "weight": 400,
+      "tracking": -0.034,
+      "leading": 1.16,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.23,
+      "top": 129,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Un espacio para escuchar.",
+      "words": 4,
+      "chars": 25,
+      "lines": 2,
+      "size": 48,
+      "vw": 3.3,
+      "font": "Georgia",
+      "weight": 400,
+      "tracking": -0.037,
+      "leading": 1.04,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.2,
+      "top": 325,
+      "tag": "div",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 3,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 1,
+     "medianWords": 4,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Segoe UI",
+       "share": 0.9,
+       "mono": false
+      },
+      {
+       "family": "Georgia",
+       "share": 0.1,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      17,
+      22,
+      27,
+      32,
+      37,
+      48
+     ],
+     "sizeCount": 10,
+     "notLoaded": [],
+     "body": {
+      "font": "Segoe UI",
+      "size": 12,
+      "leading": 1.8,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 5
+     },
+     "measureChars": 33,
+     "max": {
+      "size": 48,
+      "vw": 3.3,
+      "font": "Georgia",
+      "text": "Un espaciopara escuchar."
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.12,
+     "smallText": 5
+    },
+    "eyebrows": [
+     {
+      "text": "Estudio de identidad · Prototipo",
+      "above": "Un espacio para escuchar.",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 12,
+      "top": 278
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#e9ebe5",
+     "bodyBgHsl": {
+      "h": 80,
+      "s": 0.13,
+      "l": 0.91
+     },
+     "dark": false,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#59665f",
+       "share": 0.63
+      },
+      {
+       "color": "#202b2a",
+       "share": 0.25
+      },
+      {
+       "color": "#365e56",
+       "share": 0.05
+      },
+      {
+       "color": "#4f665c",
+       "share": 0.04
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.02
+      }
+     ],
+     "button": {
+      "bg": "#365e56",
+      "hsl": {
+       "h": 168,
+       "s": 0.27,
+       "l": 0.29
+      },
+      "fg": "#202b2a"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 3,
+     "inHero": 3,
+     "radius": 12,
+     "height": 48,
+     "withShadow": 2,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Continuar práctica",
+      "Inicio · Tu estudio",
+      "Probar materiales sonoros"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 3,
+     "shadowOverlay": 1,
+     "shadowSamples": [
+      "div.phone → rgb(207, 212, 202) 0px 0px 0px 1px, rgba(35, 53, 42, 0.075) 0px 24px 70px 0px, r",
+      "button.primary → rgb(41, 75, 68) 0px 3px 0px 0px, rgba(32, 43, 42, 0.03) 0px 5px 8px 0px",
+      "button.sound-test → rgba(32, 43, 42, 0.024) 0px 2px 3px 0px"
+     ],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "nav.bottom-nav 376px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 2,
+     "boxRadius": 46,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 79,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 900,
+    "margins": {
+     "left": 201,
+     "right": 201
+    },
+    "sections": [],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Tu momento de música.",
+      "size": 32,
+      "top": 129,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 596,
+      "n": 3
+     },
+     {
+      "x": 616,
+      "n": 1
+     },
+     {
+      "x": 658,
+      "n": 1
+     },
+     {
+      "x": 1019,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 6,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.11,
+    "voidBox": {
+     "x": 0,
+     "y": 120,
+     "w": 180,
+     "h": 780
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": false,
+    "ground": "#e9ebe5",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 201,
+     "right": 201
+    },
+    "hero": {
+     "text": "Tu momento de música.",
+     "words": 4,
+     "chars": 21,
+     "lines": 1,
+     "size": 32,
+     "vw": 2.2,
+     "font": "Georgia",
+     "weight": 400,
+     "tracking": -0.03,
+     "leading": 1.16,
+     "top": 129,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 1,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 3,
+     "radii": [
+      [
+       46,
+       1
+      ],
+      [
+       18,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 2,
+     "softShadows": 1,
+     "shadowSamples": [
+      "rgb(207, 212, 202) 0px 0px 0px 1px",
+      "rgba(35, 53, 42, 0.075) 0px 24px 70px 0px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 1,
+    "placeholders": [],
+    "type": {
+     "under13": 0.46,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      17,
+      18,
+      22,
+      23,
+      26,
+      27,
+      30,
+      32,
+      37,
+      48
+     ]
+    },
+    "title": {
+     "text": "Tu momento de música.",
+     "size": 32,
+     "top": 129
+    },
+    "colourShare": 0
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 1,
+   "filled": [
+    0.51
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 1024,
+     "screens": 1,
+     "words": 123,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 36,
+     "sections": 6,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Tu momento de música.",
+     "words": 4,
+     "chars": 21,
+     "lines": 1,
+     "size": 32,
+     "vw": 4.2,
+     "font": "Georgia",
+     "weight": 400,
+     "tracking": -0.03,
+     "leading": 1.16,
+     "top": 191,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Tu momento de música.",
+     "words": 4,
+     "lines": 1,
+     "size": 32,
+     "font": "Georgia"
+    },
+    "headings": [
+     {
+      "text": "neuma.",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 37,
+      "vw": 4.8,
+      "font": "Georgia",
+      "weight": 400,
+      "tracking": -0.062,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "left",
+      "widthRatio": 0.14,
+      "top": 120,
+      "tag": "button",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu momento de música.",
+      "words": 4,
+      "chars": 21,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Georgia",
+      "weight": 400,
+      "tracking": -0.034,
+      "leading": 1.16,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.43,
+      "top": 191,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Encontrá tu pulso.",
+      "words": 3,
+      "chars": 18,
+      "lines": 1,
+      "size": 27,
+      "vw": 3.5,
+      "font": "Georgia",
+      "weight": 400,
+      "tracking": -0.026,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.38,
+      "top": 328,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 3,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 1,
+     "medianWords": 4,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Segoe UI",
+       "share": 0.91,
+       "mono": false
+      },
+      {
+       "family": "Georgia",
+       "share": 0.09,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      17,
+      22,
+      27,
+      32,
+      37
+     ],
+     "sizeCount": 9,
+     "notLoaded": [],
+     "body": {
+      "font": "Segoe UI",
+      "size": 12,
+      "leading": 1.7,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 5
+     },
+     "measureChars": 33,
+     "max": {
+      "size": 37,
+      "vw": 4.8,
+      "font": "Georgia",
+      "text": "neuma."
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.16,
+     "smallText": 3
+    },
+    "eyebrows": [
+     {
+      "text": "Continuá tu práctica",
+      "above": "Encontrá tu pulso.",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 299
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#e9ebe5",
+     "bodyBgHsl": {
+      "h": 80,
+      "s": 0.13,
+      "l": 0.91
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f7f7f2",
+       "top": 90,
+       "hsl": {
+        "h": 60,
+        "s": 0.24,
+        "l": 0.96
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#59665f",
+       "share": 0.55
+      },
+      {
+       "color": "#202b2a",
+       "share": 0.29
+      },
+      {
+       "color": "#365e56",
+       "share": 0.06
+      },
+      {
+       "color": "#4f665c",
+       "share": 0.05
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.03
+      }
+     ],
+     "button": {
+      "bg": "#365e56",
+      "hsl": {
+       "h": 168,
+       "s": 0.27,
+       "l": 0.29
+      },
+      "fg": "#202b2a"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 3,
+     "inHero": 3,
+     "radius": 12,
+     "height": 48,
+     "withShadow": 2,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Continuar práctica",
+      "Inicio · Tu estudio",
+      "Probar materiales sonoros"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 3,
+     "shadowOverlay": 1,
+     "shadowSamples": [
+      "div.phone → rgb(207, 212, 202) 0px 0px 0px 1px, rgba(35, 53, 42, 0.075) 0px 24px 70px 0px, r",
+      "button.primary → rgb(41, 75, 68) 0px 3px 0px 0px, rgba(32, 43, 42, 0.03) 0px 5px 8px 0px",
+      "button.sound-test → rgba(32, 43, 42, 0.024) 0px 2px 3px 0px"
+     ],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "nav.bottom-nav 376px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 2,
+     "boxRadius": 46,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 79,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 1024,
+    "margins": {
+     "left": 99,
+     "right": 68
+    },
+    "sections": [],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Tu momento de música.",
+      "size": 32,
+      "top": 191,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 99,
+      "n": 3
+     },
+     {
+      "x": 119,
+      "n": 1
+     },
+     {
+      "x": 161,
+      "n": 1
+     },
+     {
+      "x": 500,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 6,
+    "bodySize": 12,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": false,
+    "ground": "#e9ebe5",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 99,
+     "right": 44
+    },
+    "hero": {
+     "text": "Tu momento de música.",
+     "words": 4,
+     "chars": 21,
+     "lines": 1,
+     "size": 32,
+     "vw": 4.2,
+     "font": "Georgia",
+     "weight": 400,
+     "tracking": -0.03,
+     "leading": 1.16,
+     "top": 191,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 1,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 3,
+     "radii": [
+      [
+       46,
+       1
+      ],
+      [
+       18,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 2,
+     "softShadows": 1,
+     "shadowSamples": [
+      "rgb(207, 212, 202) 0px 0px 0px 1px",
+      "rgba(35, 53, 42, 0.075) 0px 24px 70px 0px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 1,
+    "placeholders": [],
+    "type": {
+     "under13": 0.46,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      17,
+      18,
+      22,
+      23,
+      26,
+      27,
+      30,
+      32,
+      37,
+      48
+     ]
+    },
+    "title": {
+     "text": "Tu momento de música.",
+     "size": 32,
+     "top": 191
+    },
+    "colourShare": 0.001
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 1,
+   "filled": [
+    0.45
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 844,
+     "screens": 1,
+     "words": 64,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 36,
+     "sections": 6,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Tu momento de música.",
+     "words": 4,
+     "chars": 21,
+     "lines": 1,
+     "size": 32,
+     "vw": 8.2,
+     "font": "Georgia",
+     "weight": 400,
+     "tracking": -0.03,
+     "leading": 1.16,
+     "top": 94,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Tu momento de música.",
+     "words": 4,
+     "lines": 1,
+     "size": 32,
+     "font": "Georgia"
+    },
+    "headings": [
+     {
+      "text": "neuma.",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 37,
+      "vw": 9.5,
+      "font": "Georgia",
+      "weight": 400,
+      "tracking": -0.062,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "left",
+      "widthRatio": 0.28,
+      "top": 23,
+      "tag": "button",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu momento de música.",
+      "words": 4,
+      "chars": 21,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Georgia",
+      "weight": 400,
+      "tracking": -0.034,
+      "leading": 1.16,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 94,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Encontrá tu pulso.",
+      "words": 3,
+      "chars": 18,
+      "lines": 1,
+      "size": 27,
+      "vw": 6.9,
+      "font": "Georgia",
+      "weight": 400,
+      "tracking": -0.026,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.77,
+      "top": 231,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 3,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 1,
+     "medianWords": 4,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Segoe UI",
+       "share": 0.85,
+       "mono": false
+      },
+      {
+       "family": "Georgia",
+       "share": 0.15,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      17,
+      27,
+      32,
+      37
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 37,
+      "vw": 9.5,
+      "font": "Georgia",
+      "text": "neuma."
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.21,
+     "smallText": 1
+    },
+    "eyebrows": [
+     {
+      "text": "Continuá tu práctica",
+      "above": "Encontrá tu pulso.",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 202
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f7f7f2",
+     "bodyBgHsl": {
+      "h": 60,
+      "s": 0.24,
+      "l": 0.96
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f7f7f2",
+       "top": 0,
+       "hsl": {
+        "h": 60,
+        "s": 0.24,
+        "l": 0.96
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#202b2a",
+       "share": 0.41
+      },
+      {
+       "color": "#59665f",
+       "share": 0.3
+      },
+      {
+       "color": "#365e56",
+       "share": 0.13
+      },
+      {
+       "color": "#4f665c",
+       "share": 0.11
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.06
+      }
+     ],
+     "button": {
+      "bg": "#365e56",
+      "hsl": {
+       "h": 168,
+       "s": 0.27,
+       "l": 0.29
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": 12,
+     "height": 48,
+     "withShadow": 1,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Continuar práctica"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 1,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "button.primary → rgb(41, 75, 68) 0px 3px 0px 0px, rgba(32, 43, 42, 0.03) 0px 5px 8px 0px"
+     ],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "nav.bottom-nav 390px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 1,
+     "boxRadius": 18,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 79,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 844,
+    "margins": {
+     "left": 24,
+     "right": 24
+    },
+    "sections": [
+     {
+      "sel": "article.continue-card",
+      "tag": "article",
+      "top": 182,
+      "height": 246,
+      "words": 16,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Encontrá tu pulso.",
+       "size": 27,
+       "tag": "h2"
+      },
+      "left": 44,
+      "right": 44,
+      "textLeft": 44,
+      "textRight": 138,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.training-section",
+      "tag": "section",
+      "top": 452,
+      "height": 144,
+      "words": 9,
+      "media": 0,
+      "middle": 16,
+      "heading": {
+       "text": "Explorá tu música",
+       "size": 15,
+       "tag": "h2"
+      },
+      "left": 24,
+      "right": 24,
+      "textLeft": 24,
+      "textRight": 24,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Tu momento de música.",
+      "size": 32,
+      "top": 94,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 24,
+      "n": 3
+     },
+     {
+      "x": 44,
+      "n": 1
+     },
+     {
+      "x": 86,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 5,
+    "bodySize": 14,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": false,
+    "ground": "#f7f7f2",
+    "sidebar": null,
+    "topbar": {
+     "h": 79
+    },
+    "canvas": {
+     "left": 24,
+     "right": 24
+    },
+    "hero": {
+     "text": "Tu momento de música.",
+     "words": 4,
+     "chars": 21,
+     "lines": 1,
+     "size": 32,
+     "vw": 8.2,
+     "font": "Georgia",
+     "weight": 400,
+     "tracking": -0.03,
+     "leading": 1.16,
+     "top": 94,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 1,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 1,
+     "radii": [
+      [
+       18,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 1,
+    "placeholders": [],
+    "type": {
+     "under13": 0.46,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      17,
+      18,
+      22,
+      23,
+      26,
+      27,
+      30,
+      32,
+      37,
+      48
+     ]
+    },
+    "title": {
+     "text": "Tu momento de música.",
+     "size": 32,
+     "top": 94
+    },
+    "colourShare": 0
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "tiny-text",
+   "width": 1440,
+   "message": "46% of the text is under 13px.",
+   "fix": "Data and labels read at 13–14px; keep 11–12px for sublines and axis ticks.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\Juan\\Tesis\\preview\\review\\home-A\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\Juan\\Tesis\\preview\\review\\home-A\\desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\Juan\\Tesis\\preview\\review\\home-A\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\Juan\\Tesis\\preview\\review\\home-A\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\Juan\\Tesis\\preview\\review\\home-A\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\Juan\\Tesis\\preview\\review\\home-A\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

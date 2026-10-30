@@ -4,11 +4,13 @@
 
 Este directorio reúne materiales de una tesis / Trabajo Final de Ingeniería en Informática de la Universidad Nacional de Mar del Plata sobre un sistema de entrenamiento auditivo musical mediante juegos serios. El foco de ingeniería propuesto es procesar audio en tiempo real en el dispositivo, estimar el tono de la voz y ajustar dinámicamente la dificultad a partir del desempeño del estudiante.
 
-El usuario confirmó que quiere comenzar a prototipar. Consultar `.agents/estado-prototipo.md` al iniciar trabajo de implementación o retomar una sesión: registra el avance, las decisiones y el próximo paso. El nombre formal, el alcance final, la arquitectura y el equipo siguen sujetos a confirmación con el director. Las alternativas técnicas de los borradores son propuestas, no decisiones implementadas.
+El usuario confirmó que quiere comenzar a prototipar. Consultar `.agents/estado-prototipo.md` al iniciar trabajo de implementación o retomar una sesión: registra el avance, las decisiones y el próximo paso. **Neuma** es el nombre de la aplicación elegido por el usuario el 2026-10-29. El título y los datos de portada indicados por el usuario están en `Informe/datos.tex`; defensa provisional en marzo de 2027. El alcance final y la aprobación académica siguen sujetos a acuerdo con el director. Las alternativas técnicas de los borradores son propuestas, no decisiones implementadas.
 
 ## Mapa de documentos
 
 `Tesis/` es la raíz del repositorio. Los materiales académicos están en `docs/` y la aplicación se desarrollará en `Plataforma/`.
+
+- **Informe (tipo 1 confirmado por el usuario, 2026-10-29):** al redactar o cerrar un incremento sustancial con material para la tesis, consultar `Informe/LEEME.md` y `Informe/seguimiento.md`; actualizar los capítulos y su trazabilidad cuando exista evidencia suficiente. Base LaTeX por capítulos en `Informe/main.tex`; requisitos y acceso por página a las cuatro guías en `Informe/requisitos-tipo-1.md`. Para cambios de presentación consultar `Informe/estilo.md`: `TesisPrueba.pdf` es referencia exclusivamente estética elegida por el usuario. Conservar los PDF originales y verificar las fuentes antes de trasladar afirmaciones de borradores.
 
 - `docs/PROTOCOLO_Saladino.doc`: documento de protocolo disponible. Consultarlo al definir objetivos, alcance o plan de trabajo. El contexto anterior mencionaba `PROTOCOLO-contenido.md` y `PROTOCOLO.doc`, pero esos archivos no están presentes; verificar su ubicación si se necesitan.
 - `docs/Plan_de_trabajo_y_Gantt_Saladino.xlsx`: planificación disponible; consultarla al trabajar sobre cronograma o entregables.
@@ -24,6 +26,34 @@ Decisiones confirmadas por el usuario el 2026-10-02: Android como plataforma par
 El contexto previo atribuye al borrador del protocolo un MVP con audio monofónico, estimación de tono con una línea base DSP (YIN) y posible apoyo de un modelo ML liviano, telemetría para validar la precisión y un motor reutilizable de ajuste dinámico de dificultad (DDA). También describe ejecución local de audio, procesamiento asíncrono y exclusión de extracción de voz en entornos polifónicos, multijugador en tiempo real y XR/3D pesado. Comprobar estas atribuciones en el protocolo disponible antes de usarlas para fijar el alcance. `docs/IdeasPrototipo.md` propone empezar por minijuegos sin captura de audio y avanzar hacia ritmo y reproducción vocal de intervalos.
 
 Estos detalles son hipótesis de diseño: al planificar o implementar, comprobar su viabilidad y registrar la decisión concreta. En particular, los documentos tempranos exploran una arquitectura web con React/Next.js, WebAudio y RNN/LSTM; el protocolo posterior propone audio nativo/edge. No asumir que ambos stacks se usarán juntos.
+
+## Identidad visual obligatoria
+
+La aplicación de entrenamiento musical adopta la dirección artística **Music Garden / Botanical Storybook** definida en `docs/ART_DIRECTION.md`. Antes de crear o modificar pantallas, componentes visuales, assets o animaciones, leer ese documento y el inventario `assets/ASSET_MANIFEST.md`.
+
+Nombre de producto: **Neuma**. Logo/icono **temporales**, del paquete corregido `docs/logo/` (2026-10-29). Consultar `docs/logo/LEEME.md` al adaptar la marca. Esta adopción no aprueba el rediseño Quiet Studio de `preview/` ni sustituye la dirección artística vigente.
+
+### Reglas no negociables
+
+1. Conservar coherencia entre pantallas y minijuegos: papel cálido, verdes naturales, ilustración botánica 2D y formas orgánicas. Evitar gradientes neón, estética arcade, glassmorphism y assets de estilo mixto.
+2. Usar tokens de `design-tokens.json` (adaptados a las convenciones ya existentes del proyecto), evitando valores visuales hardcodeados cuando exista un token.
+3. La notación musical debe ser precisa y renderizada desde datos estructurados; no usar emojis, caracteres improvisados ni imágenes generadas como sustitutos de partituras.
+4. La decoración no puede reducir legibilidad, contraste ni tamaño táctil de los controles. Priorizar el aprendizaje musical sobre la ornamentación.
+5. Animaciones suaves y orgánicas. No bloquear acciones ni reproducción/validación de notas con animaciones. Respetar reducción de movimiento.
+6. Reutilizar componentes antes de introducir duplicados. No añadir bibliotecas de animación, iconos o UI sin revisar soporte y necesidad.
+7. Para nuevos assets, actualizar inventario con ruta, propósito, formato, origen/licencia, estados y dimensiones; preservar un editable cuando corresponda.
+8. No usar arte extraído de juegos de referencia ni licencias incompatibles.
+9. Al finalizar un cambio visual, describir qué reglas se aplicaron, qué pantallas/estados se probaron y cualquier desviación consciente del sistema.
+
+## Proceso para cada tarea visual
+
+- Localizar componentes y tokens existentes.
+- Consultar la guía de arte antes de tomar decisiones.
+- Proponer la solución más simple que mantenga la identidad.
+- Implementar en el stack ya existente, sin imponer otro framework.
+- Validar diferentes dimensiones, estados de interacción y legibilidad de notación.
+- Registrar los assets agregados y reportar los criterios comprobados.
+
 
 ## Cómo trabajar con este material
 

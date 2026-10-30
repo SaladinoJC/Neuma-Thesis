@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.defender.DefenderChordAudioTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-30T16:20:22.555Z" hostname="DESKTOP-PP49S64" time="1.397">
+  <properties/>
+  <testcase name="pcmContieneLasTresFrecuenciasEnLaOctavaPedidaSinClipping" classname="ar.edu.unmdp.entrenamiento.defender.DefenderChordAudioTest" time="0.287"/>
+  <testcase name="audioSoloAlAcertarEntregaLasTresAlturasYNoLaRaizSola" classname="ar.edu.unmdp.entrenamiento.defender.DefenderChordAudioTest" time="1.107"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

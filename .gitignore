@@ -14,3 +14,13 @@ Desktop.ini
 **/local.properties
 **/.idea/
 *.iml
+
+# Volcados locales de fallos de la JVM/Android Studio
+hs_err_pid*.log
+
+# Extractos de agradecimientos ajenos, consultados solo como referencia local
+/Informe/Agradecimientos_De_Otras_Tesis.txt
+
+# Herramientas Python de preparación del audio
+__pycache__/
+*.pyc

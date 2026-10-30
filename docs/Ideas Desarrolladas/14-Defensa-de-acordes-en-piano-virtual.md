@@ -1,5 +1,9 @@
 # 14. Defensa de acordes en piano virtual (lectura + digitación)
 
+> Actualización 2026-10-22: el usuario confirmó planificar Defender como notas (13) → acordes por nombre (12) → piano virtual (14), conservando supervivencia con tres vidas y sin pérdida directa de vida por respuesta incorrecta. Ver [definición en curso](../Definicion-defender.md). Esta ficha corresponde a la tercera etapa; las reglas previas por ventanas/umbrales necesitan concretarse con Mamdani. No implica aprobación del director ni implementación existente.
+
+> Sexta ronda: Do3–Do5, selección toggle y Disparar, conjunto exacto con octavas y sin extras; tras error se conserva selección. Las teclas suenan al tocarlas, el acorde al acertar y hay sonido de error. Vertical/movimiento radial y reglas comunes del arcade según la entrevista; distribución concreta de teclado pendiente de verificación visual. La regla anterior de limpiar teclas después de fallar queda reemplazada.
+
 > Vuelta de tuerca al ítem 16 original ("elegir notas en piano virtual para
 > formar un acorde — básico, ya existe en el mercado"). Tercera idea de la
 > familia "defensa" (Ideas 12 y 13): el acorde se muestra en pentagrama, como

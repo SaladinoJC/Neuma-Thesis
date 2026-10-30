@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.defender.DefenderD5ViewModelTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-10-30T17:07:16.738Z" hostname="DESKTOP-PP49S64" time="0.222">
+  <properties/>
+  <testcase name="practicaEnFaConCuatroVocesRespondeRaizYReabreConfiguracionExacta" classname="ar.edu.unmdp.entrenamiento.defender.DefenderD5ViewModelTest" time="0.014"/>
+  <testcase name="controlesRespetanHitoDeOchoFundamentalesYFundamentalDeLaClave" classname="ar.edu.unmdp.entrenamiento.defender.DefenderD5ViewModelTest" time="0.207"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

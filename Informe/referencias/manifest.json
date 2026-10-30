@@ -1,0 +1,37 @@
+{
+  "metodo": "pdftotext -layout -enc UTF-8",
+  "documentos": [
+    {
+      "original": "2026_05_27_Estructura Informe TF.pdf",
+      "consulta": "2026_05_27_Estructura Informe TF.md",
+      "sha256": "9645e509bd2155d52a28a9bd34cd8750810bbfa18cb42f9c8be95653d48f5eea",
+      "bytes_original": 366296,
+      "paginas_pdf": 17,
+      "caracteres_texto": 17927
+    },
+    {
+      "original": "2026_05_27_INSTRUCTIVO_TRABAJO FINAL.pdf",
+      "consulta": "2026_05_27_INSTRUCTIVO_TRABAJO FINAL.md",
+      "sha256": "738062bbe48bc0ac073fadc0412c9f540de3e7c5bac61892f1d69137100be866",
+      "bytes_original": 1378833,
+      "paginas_pdf": 74,
+      "caracteres_texto": 148374
+    },
+    {
+      "original": "2026_05_29_GUIA OPERATIVA PARA EL DESARROLLO DEL TF V3.pdf",
+      "consulta": "2026_05_29_GUIA OPERATIVA PARA EL DESARROLLO DEL TF V3.md",
+      "sha256": "9af056688a28c5ac7044f297b723f6b54feb8e547453ea9319a4084f4d54ecda",
+      "bytes_original": 180812,
+      "paginas_pdf": 10,
+      "caracteres_texto": 14747
+    },
+    {
+      "original": "2026_06_05_Apuntes revisión sistemática.pdf",
+      "consulta": "2026_06_05_Apuntes revisión sistemática.md",
+      "sha256": "d916496035ef05c92786e79390206601fa53e6290506f24e0636619ed6fc5557",
+      "bytes_original": 415182,
+      "paginas_pdf": 22,
+      "caracteres_texto": 57220
+    }
+  ]
+}

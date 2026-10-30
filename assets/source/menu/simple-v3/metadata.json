@@ -1,0 +1,71 @@
+[
+  {
+    "file": "book.png",
+    "width": 1024,
+    "height": 1536,
+    "bytes": 1696587,
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      254
+    ],
+    "sha256": "7aa2c1fa003b733bb10dd7e81827696ff92e793eb2b13a2cb517d0b9f351b052"
+  },
+  {
+    "file": "controls.png",
+    "width": 1254,
+    "height": 1254,
+    "bytes": 895638,
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      255
+    ],
+    "sha256": "d9fc6fd25ab7ea07835728edc28073529d3026cb37e559e49822bf28af06fc7d"
+  },
+  {
+    "file": "garden.png",
+    "width": 1024,
+    "height": 1536,
+    "bytes": 1701033,
+    "mode": "RGB",
+    "alpha": null,
+    "sha256": "b4fde8884fa827efd96c2d6b9a470103db19cab8348cd177fc4ee8f856754c61"
+  },
+  {
+    "file": "piano-a.png",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 1772550,
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      254
+    ],
+    "sha256": "c4e1b8acc90839d675177da9fb3e81950b1e5c6b6c22ef3f3f9baac9992cdef1"
+  },
+  {
+    "file": "piano-b.png",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 1652250,
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      254
+    ],
+    "sha256": "3d60d05e28b54679add5c3c476a6fe9ec7d310d01df366f44b6a2f788c3b6758"
+  },
+  {
+    "file": "piano-c.png",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 1869226,
+    "mode": "RGBA",
+    "alpha": [
+      0,
+      254
+    ],
+    "sha256": "8613c36691049c93d988eb94bde858a9c01163e0ecd4fdd83a924480b7abcd75"
+  }
+]

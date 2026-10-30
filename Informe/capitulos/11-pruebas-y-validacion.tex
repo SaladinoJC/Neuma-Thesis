@@ -1,0 +1,176 @@
+\chapter{Pruebas y validación}
+\label{cap:pruebas}
+\section{Plan de pruebas}
+\pendiente{Vincular requerimientos, casos, entornos y criterios de aceptación.}
+\subsection{Casos del incremento rítmico R6}
+El plan del incremento descrito en la sección~\ref{sec:implementacion-ritmo-r6}
+verifica las acciones de la sesión pública con tiempo, audio y almacenamiento
+controlados. Comprende dos resultados altos, omisiones, silencios con golpes
+extra, mezcla a tempo inferior, práctica y repetición, techo de tempo,
+reapertura, revisiones tardías, guardados concurrentes, exportación y reinicio.
+Los fallos y reintentos de escritura se comprueban sin atribuir progreso a
+resultados todavía pendientes. Un banco sintético independiente permite
+inspeccionar las decisiones sin modificar el perfil real.
+
+La ejecución en Android debe comprobar además los controles, el texto
+ampliado, el acceso al panel y el recorrido de dos ejercicios con desbloqueo
+y repetición. Estas pruebas se prepararon pero no se ejecutaron en esta sesión
+por solicitud del usuario de no abrir el emulador. Las pruebas JVM y las
+simulaciones no sustituyen la comprobación del dispositivo ni una evaluación
+con estudiantes. Los resultados y límites del host se registran en la guía
+del incremento y su evidencia, separadamente de esas verificaciones pendientes.
+\subsection{Casos del incremento de Defender D3}
+El plan correspondiente a la sección~\ref{sec:implementacion-defender-d3}
+comprueba enfriamiento, límites de viaje, conservación de plazos de enemigos
+visibles y cómputo de pérdidas e intentos globales. La sesión pública se
+ejercita con reloj y audio controlados. Para persistencia se verifican
+idempotencia, concurrencia, lectura suspendida, datos incompatibles,
+exportación y recuperación junto a los datos de ritmo.
+
+Un caso específico finaliza aparentemente la partida por tercera llegada,
+entrega después una respuesta con timestamp previo al plazo y abandona la
+ejecución reabierta. El resultado confirmado debe ser una interrupción y no
+debe sumar progreso. Los ocho escenarios de inspección son sintéticos y no
+se escriben en el perfil real. Las pruebas Android de desbloqueo, reapertura
+y simulación quedaron preparadas y compiladas, sin ejecución por solicitud
+del usuario de mantener cerrado el emulador. La evidencia seleccionada de host
+se conserva en \texttt{docs/evidencias/defender-d3/}; las medidas físicas y la
+validación con estudiantes continúan pendientes.
+\subsection{Casos de tríadas de Defender D4}
+Los casos de la sección~\ref{sec:implementacion-defender-d4} verifican el
+catálogo de voces, intervalos, grafías y límites de pentagrama. La sesión
+pública comprueba respuesta completa, rechazo de raíz enarmónica distinta,
+conservación tras error, limpieza tras acierto, unicidad de objetivos y
+timestamp con calidad capturada. La prueba de síntesis examina las tres
+frecuencias de cada calidad sobre Do natural y los límites PCM; no constituye
+una medición acústica del dispositivo.
+
+Los casos de persistencia y ViewModel verifican progresos separados, dos
+resultados altos con cierre confirmado, reapertura, exportación, recuperación,
+reinicio y lectura de registros del formato previo. La ruta completa de
+calidades se genera con sesiones sintéticas aisladas del perfil. La evidencia
+seleccionada se conserva en \path{docs/evidencias/defender-d4/}.
+Dos casos Android preparados comprueban el recorrido de tríadas y la
+simulación aislada; su ejecución, la legibilidad con cuatro objetivos y
+texto ampliado, el sonido físico y TalkBack quedan pendientes por el pedido
+de mantener cerrado el emulador. No se infieren resultados de aprendizaje
+desde estas pruebas de software.
+\subsection{Casos de séptimas e inversiones de Defender D5}
+El plan de la sección~\ref{sec:implementacion-defender-d5} recorre las
+combinaciones de calidad, inversión y clave, comprobando altura, grafía,
+orden de voces, disposición cerrada y límites de líneas adicionales.
+También verifica el desplazamiento de cabezas contiguas, la respuesta por
+raíz frente a un bajo diferente y la unicidad entre objetivos vivos.
+El banco PCM examina las voces de los extremos de cada contexto de clave
+simple con señales sintéticas; no mide el altavoz ni la latencia del teléfono.
+
+Una ruta aislada de 168 partidas recorre los 84 objetivos mediante la sesión
+pública, con reloj y almacenamiento controlados. Comprueba la alcanzabilidad
+del grafo y la evidencia por clave sin modificar el perfil real.
+Otros casos verifican que una inversión diferente o una mezcla sin fa no
+otorguen progreso, así como lectura de perfiles anteriores, reapertura y
+exportación de séptimas invertidas. La evidencia seleccionada se conserva
+en \texttt{docs/evidencias/defender-d5/}.
+Los recorridos Android se prepararon para séptimas en fa, mezcla, pausa y
+reapertura; solo se compilan por el pedido de mantener cerrado el emulador.
+La legibilidad con cuatro objetivos, el texto ampliado, la reproducción
+física y la evaluación con estudiantes permanecen pendientes.
+\section{Verificación del núcleo de intervalos vocales}
+La verificación de V1 utiliza la sesión pública: acciones de inicio y cierre,
+estimaciones de tono y tiempos controlados producen estados y resultados.
+Los casos comprueban relaciones ascendentes y descendentes, unísono,
+traslado de registro, conservación de errores de octava y rechazo de
+continuidades falsas por silencio o huecos temporales. También se controla
+que una interrupción conserve las mediciones sin conceder un resultado musical.
+
+Un recorrido adicional genera PCM sinusoidal y lo procesa mediante el YIN
+existente antes de enviarlo a la sesión. Sus resultados corresponden a señales
+sintéticas en JVM; no miden voz humana, captura Android ni latencia acústica.
+Los reportes del incremento se identifican en
+\texttt{docs/evidencias/intervalos-vocales-v1/}. La conexión con la interfaz y
+la evaluación sobre dispositivos y estudiantes siguen pendientes para V1.
+
+\subsection{Plan y verificación de la ronda vocal V2}
+La integración se verifica por acciones públicas del modelo, con reloj,
+reproducción y captura controlados en sus límites. Los casos recorren una
+ronda completa y comprueban que la segunda captura espere la liberación de
+la primera. Se incluyen cancelaciones repetidas, callbacks anteriores al
+cierre, timeout entre notas, fallos de audio y rechazo de una nueva ronda
+que descartaría una primera nota ya adquirida.
+
+Dos pruebas Android se preparan para la navegación del libro y para el
+resumen con entradas sintéticas. Su compilación no acredita ejecución ni
+funcionamiento acústico. Quedan pendientes la revisión a 411, 360 y 320 dp,
+texto ampliado al 200\%, permisos y ciclo de vida en dispositivo, TalkBack
+y voces reales. La evidencia del incremento se identifica en
+\texttt{docs/evidencias/intervalos-vocales-v2/}; no se interpreta como
+validación pedagógica.
+
+\subsection{Persistencia y recuperación vocal V3}
+Las pruebas atraviesan las acciones públicas del modelo, el historial y las
+salidas de exportación. Se verifica que una ronda completa sobreviva a reabrir,
+que varias cancelaciones conserven un único resultado y que los reintentos de
+una confirmación incierta no dupliquen el identificador. Los casos de datos
+dañados y esquema no compatible comprueban la conservación del archivo original
+y su inclusión en la copia de recuperación junto al resultado pendiente.
+
+También se verifica el drenaje previo al reinicio, la independencia respecto
+del laboratorio de voz y la conservación del pendiente cuando termina una
+lectura anterior. Se preparan dos pruebas Android adicionales para reapertura
+del historial y fallo/reintento; solo se compilan. La evidencia se identifica en
+\texttt{docs/evidencias/intervalos-vocales-v3/}. Estas comprobaciones no evalúan
+voz real, latencia acústica ni eficacia pedagógica.
+
+\subsection{Adaptación y progresión vocal V4}
+Las pruebas verifican cinco rondas enlazadas, mantenimiento del criterio
+durante el sostenido, hitos por intervalo y dirección, orden de contenidos
+y conservación de accesos adquiridos. Se comprueban error de octava,
+dispersión, protocolo abreviado, series parciales, tolerancia ajena, ordinales
+repetidos y confirmaciones de guardado inciertas. Un recorrido sintético de
+250 rondas atraviesa las sesiones públicas y el commit hasta registrar hitos
+para los 25 objetivos firmados. Este recorrido caracteriza las reglas del
+software y no constituye evidencia de aprendizaje.
+
+Dos pruebas Android adicionales se preparan para cancelación/simulación y
+una serie de cinco rondas con entradas controladas. Solo se compilan por la
+restricción de no emular. La evidencia está identificada en
+\texttt{docs/evidencias/intervalos-vocales-v4/}; quedan pendientes legibilidad,
+TalkBack, voz real y calibración de parámetros.
+
+\subsection{Ancla dada V5}
+La verificación recorre reproducción de una única referencia, captura exclusiva
+de la nota objetivo y persistencia de su procedencia. Se comprueban dirección,
+unísono, error de octava, silencio, timeout y el pipeline de PCM sintético a YIN
+y sesión. Los casos de progreso verifican prerrequisitos por dirección, separación
+de tolerancias y rachas, rechazo de referencias incoherentes y compatibilidad
+con snapshots V4. Una ruta sintética de 500 rondas cubre los 25 objetivos de
+imitación y los 25 de ancla dada, sin participación de estudiantes.
+
+Dos pruebas Android adicionales se preparan para el flujo de una sola captura
+y para el bloqueo de acceso automático sin hito de imitación. Solo se compilan.
+La evidencia se identifica en \texttt{docs/evidencias/intervalos-vocales-v5/}.
+Voz real, legibilidad nativa, TalkBack y calibración siguen pendientes.
+
+\subsection{Producción libre V6}
+La verificación comprueba el inicio sin reproducción, las dos capturas separadas,
+el ancla elegida por el usuario y la ausencia de referencias sonoras inventadas
+en el historial. Se ejercitan prerrequisitos por dirección, tolerancias y rachas
+independientes, series mezcladas o abandonadas, timeout entre notas, segundo
+plano y callbacks tardíos. La compatibilidad con snapshots V5, el reintento de
+confirmación incierta, la reapertura y las salidas JSON y ZIP se verifican sin
+duplicar progreso.
+
+Una ruta sintética de 750 rondas atraviesa los 25 objetivos de cada uno de los
+tres modos, mediante sesiones públicas y almacenamiento aislado. Es una prueba
+de reglas del software, sin estudiantes ni medición acústica. Dos pruebas
+Android adicionales se preparan para el flujo silencioso con historial y el
+bloqueo sin hito de ancla dada; solo se compilan por la restricción de no emular.
+La evidencia se identifica en \texttt{docs/evidencias/intervalos-vocales-v6/}.
+Voz real, legibilidad nativa, TalkBack y calibración continúan pendientes.
+
+\section{Resultados obtenidos}
+\pendiente{Incorporar resultados comprobables con versión, fecha, datos, dispositivo y condiciones.
+Separar pruebas automatizadas, simulación, medición física y evaluación con estudiantes.}
+\section{Métricas de calidad}
+\pendiente{Definir métricas y métodos antes de interpretarlas. La demostración funcional
+por sí sola no acredita precisión acústica ni eficacia pedagógica.}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.defender.DefenderD5MusicTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-30T17:07:07.327Z" hostname="DESKTOP-PP49S64" time="0.434">
+  <properties/>
+  <testcase name="bajoInvertidoNoCambiaRespuestaYVivosSonUnicosEnMezcla" classname="ar.edu.unmdp.entrenamiento.defender.DefenderD5MusicTest" time="0.057"/>
+  <testcase name="catalogoCompletoMantieneGrafiaInversionCerradaYLimitesEnAmbasClaves" classname="ar.edu.unmdp.entrenamiento.defender.DefenderD5MusicTest" time="0.119"/>
+  <testcase name="audioDeTresYCuatroVocesCubreExtremosDeCadaInversionYClave" classname="ar.edu.unmdp.entrenamiento.defender.DefenderD5MusicTest" time="0.258"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,20 @@
+{
+  "source": "controls.png",
+  "sourceWidth": 1254,
+  "sourceHeight": 1254,
+  "coordinates": "x, y, width, height; ventanas SVG sobre imagen raster, sin redibujar",
+  "slices": {
+    "ribbon": [235, 40, 205, 505],
+    "selected": [825, 40, 205, 505],
+    "play": [12, 603, 617, 288],
+    "paper": [644, 604, 600, 288],
+    "arrow": [146, 950, 350, 260],
+    "ornament": [650, 985, 580, 200]
+  },
+  "bookEdge": {
+    "source": "book.png",
+    "sourceWidth": 1024,
+    "sourceHeight": 1536,
+    "slice": [923, 105, 70, 1260]
+  }
+}

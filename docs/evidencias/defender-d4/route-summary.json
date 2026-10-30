@@ -1,0 +1,320 @@
+{
+  "origin": "simulated",
+  "variant": "chords",
+  "scenario": "Ruta de cuatro tríadas",
+  "progress": {
+    "variant": "chords",
+    "qualities": {
+      "MAJOR": {
+        "mastered": true,
+        "masteryEvidence": [
+          "simulated-1",
+          "simulated-2"
+        ]
+      },
+      "MINOR": {
+        "mastered": true,
+        "masteryEvidence": [
+          "simulated-3",
+          "simulated-4"
+        ]
+      },
+      "DIMINISHED": {
+        "mastered": true,
+        "masteryEvidence": [
+          "simulated-5",
+          "simulated-6"
+        ]
+      },
+      "AUGMENTED": {
+        "mastered": true,
+        "masteryEvidence": [
+          "simulated-7",
+          "simulated-8"
+        ]
+      }
+    }
+  },
+  "records": [
+    {
+      "id": "simulated-1",
+      "quality": "MAJOR",
+      "resolved": 27,
+      "sealed": true,
+      "finalTravelMillis": 6000,
+      "decisionReasons": {
+        "INSUFFICIENT": 4,
+        "APPLIED": 4,
+        "COOLDOWN": 15,
+        "LIMIT": 3,
+        "KEEP": 1
+      },
+      "progressReason": "FIRST_HIGH",
+      "evidence": [
+        {
+          "quality": null,
+          "resolved": 27,
+          "eliminated": 24,
+          "survival": 0.8888888888888888,
+          "precision": 1.0,
+          "mastery": "alto",
+          "centroid": 0.8444449999999998
+        },
+        {
+          "quality": "MAJOR",
+          "resolved": 27,
+          "eliminated": 24,
+          "survival": 0.8888888888888888,
+          "precision": 1.0,
+          "mastery": "alto",
+          "centroid": 0.8444449999999998
+        }
+      ]
+    },
+    {
+      "id": "simulated-2",
+      "quality": "MAJOR",
+      "resolved": 27,
+      "sealed": true,
+      "finalTravelMillis": 6000,
+      "decisionReasons": {
+        "INSUFFICIENT": 4,
+        "APPLIED": 4,
+        "COOLDOWN": 15,
+        "LIMIT": 3,
+        "KEEP": 1
+      },
+      "progressReason": "MASTERED",
+      "evidence": [
+        {
+          "quality": null,
+          "resolved": 27,
+          "eliminated": 24,
+          "survival": 0.8888888888888888,
+          "precision": 1.0,
+          "mastery": "alto",
+          "centroid": 0.8444449999999998
+        },
+        {
+          "quality": "MAJOR",
+          "resolved": 27,
+          "eliminated": 24,
+          "survival": 0.8888888888888888,
+          "precision": 1.0,
+          "mastery": "alto",
+          "centroid": 0.8444449999999998
+        }
+      ]
+    },
+    {
+      "id": "simulated-3",
+      "quality": "MINOR",
+      "resolved": 27,
+      "sealed": true,
+      "finalTravelMillis": 6000,
+      "decisionReasons": {
+        "INSUFFICIENT": 4,
+        "APPLIED": 4,
+        "COOLDOWN": 15,
+        "LIMIT": 3,
+        "KEEP": 1
+      },
+      "progressReason": "FIRST_HIGH",
+      "evidence": [
+        {
+          "quality": null,
+          "resolved": 27,
+          "eliminated": 24,
+          "survival": 0.8888888888888888,
+          "precision": 1.0,
+          "mastery": "alto",
+          "centroid": 0.8444449999999998
+        },
+        {
+          "quality": "MINOR",
+          "resolved": 27,
+          "eliminated": 24,
+          "survival": 0.8888888888888888,
+          "precision": 1.0,
+          "mastery": "alto",
+          "centroid": 0.8444449999999998
+        }
+      ]
+    },
+    {
+      "id": "simulated-4",
+      "quality": "MINOR",
+      "resolved": 27,
+      "sealed": true,
+      "finalTravelMillis": 6000,
+      "decisionReasons": {
+        "INSUFFICIENT": 4,
+        "APPLIED": 4,
+        "COOLDOWN": 15,
+        "LIMIT": 3,
+        "KEEP": 1
+      },
+      "progressReason": "MASTERED",
+      "evidence": [
+        {
+          "quality": null,
+          "resolved": 27,
+          "eliminated": 24,
+          "survival": 0.8888888888888888,
+          "precision": 1.0,
+          "mastery": "alto",
+          "centroid": 0.8444449999999998
+        },
+        {
+          "quality": "MINOR",
+          "resolved": 27,
+          "eliminated": 24,
+          "survival": 0.8888888888888888,
+          "precision": 1.0,
+          "mastery": "alto",
+          "centroid": 0.8444449999999998
+        }
+      ]
+    },
+    {
+      "id": "simulated-5",
+      "quality": "DIMINISHED",
+      "resolved": 27,
+      "sealed": true,
+      "finalTravelMillis": 6000,
+      "decisionReasons": {
+        "INSUFFICIENT": 4,
+        "APPLIED": 4,
+        "COOLDOWN": 15,
+        "LIMIT": 3,
+        "KEEP": 1
+      },
+      "progressReason": "FIRST_HIGH",
+      "evidence": [
+        {
+          "quality": null,
+          "resolved": 27,
+          "eliminated": 24,
+          "survival": 0.8888888888888888,
+          "precision": 1.0,
+          "mastery": "alto",
+          "centroid": 0.8444449999999998
+        },
+        {
+          "quality": "DIMINISHED",
+          "resolved": 27,
+          "eliminated": 24,
+          "survival": 0.8888888888888888,
+          "precision": 1.0,
+          "mastery": "alto",
+          "centroid": 0.8444449999999998
+        }
+      ]
+    },
+    {
+      "id": "simulated-6",
+      "quality": "DIMINISHED",
+      "resolved": 27,
+      "sealed": true,
+      "finalTravelMillis": 6000,
+      "decisionReasons": {
+        "INSUFFICIENT": 4,
+        "APPLIED": 4,
+        "COOLDOWN": 15,
+        "LIMIT": 3,
+        "KEEP": 1
+      },
+      "progressReason": "MASTERED",
+      "evidence": [
+        {
+          "quality": null,
+          "resolved": 27,
+          "eliminated": 24,
+          "survival": 0.8888888888888888,
+          "precision": 1.0,
+          "mastery": "alto",
+          "centroid": 0.8444449999999998
+        },
+        {
+          "quality": "DIMINISHED",
+          "resolved": 27,
+          "eliminated": 24,
+          "survival": 0.8888888888888888,
+          "precision": 1.0,
+          "mastery": "alto",
+          "centroid": 0.8444449999999998
+        }
+      ]
+    },
+    {
+      "id": "simulated-7",
+      "quality": "AUGMENTED",
+      "resolved": 27,
+      "sealed": true,
+      "finalTravelMillis": 6000,
+      "decisionReasons": {
+        "INSUFFICIENT": 4,
+        "APPLIED": 4,
+        "COOLDOWN": 15,
+        "LIMIT": 3,
+        "KEEP": 1
+      },
+      "progressReason": "FIRST_HIGH",
+      "evidence": [
+        {
+          "quality": null,
+          "resolved": 27,
+          "eliminated": 24,
+          "survival": 0.8888888888888888,
+          "precision": 1.0,
+          "mastery": "alto",
+          "centroid": 0.8444449999999998
+        },
+        {
+          "quality": "AUGMENTED",
+          "resolved": 27,
+          "eliminated": 24,
+          "survival": 0.8888888888888888,
+          "precision": 1.0,
+          "mastery": "alto",
+          "centroid": 0.8444449999999998
+        }
+      ]
+    },
+    {
+      "id": "simulated-8",
+      "quality": "AUGMENTED",
+      "resolved": 27,
+      "sealed": true,
+      "finalTravelMillis": 6000,
+      "decisionReasons": {
+        "INSUFFICIENT": 4,
+        "APPLIED": 4,
+        "COOLDOWN": 15,
+        "LIMIT": 3,
+        "KEEP": 1
+      },
+      "progressReason": "MASTERED",
+      "evidence": [
+        {
+          "quality": null,
+          "resolved": 27,
+          "eliminated": 24,
+          "survival": 0.8888888888888888,
+          "precision": 1.0,
+          "mastery": "alto",
+          "centroid": 0.8444449999999998
+        },
+        {
+          "quality": "AUGMENTED",
+          "resolved": 27,
+          "eliminated": 24,
+          "survival": 0.8888888888888888,
+          "precision": 1.0,
+          "mastery": "alto",
+          "centroid": 0.8444449999999998
+        }
+      ]
+    }
+  ]
+}

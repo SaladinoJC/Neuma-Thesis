@@ -1,0 +1,73 @@
+{
+  "repository": "SaladinoJC/Tesis",
+  "approved_on": "2026-10-22",
+  "tickets": [
+    {
+      "number": 16,
+      "database_id": 5985243847,
+      "url": "https://github.com/SaladinoJC/Tesis/issues/16",
+      "title": "[Ritmo 1/6] Generar y ejecutar cuatro compases básicos en 4/4",
+      "ordinal": 1,
+      "blocked_by_ordinals": []
+    },
+    {
+      "number": 17,
+      "database_id": 5985244393,
+      "url": "https://github.com/SaladinoJC/Tesis/issues/17",
+      "title": "[Ritmo 2/6] Figuras largas, silencios y compases simples",
+      "ordinal": 2,
+      "blocked_by_ordinals": [
+        1
+      ]
+    },
+    {
+      "number": 18,
+      "database_id": 5985245010,
+      "url": "https://github.com/SaladinoJC/Tesis/issues/18",
+      "title": "[Ritmo 3/6] Semicorcheas y puntillos combinados",
+      "ordinal": 3,
+      "blocked_by_ordinals": [
+        2
+      ]
+    },
+    {
+      "number": 19,
+      "database_id": 5985245523,
+      "url": "https://github.com/SaladinoJC/Tesis/issues/19",
+      "title": "[Ritmo 4/6] Tresillos, síncopas y ligaduras",
+      "ordinal": 4,
+      "blocked_by_ordinals": [
+        2
+      ]
+    },
+    {
+      "number": 20,
+      "database_id": 5985246040,
+      "url": "https://github.com/SaladinoJC/Tesis/issues/20",
+      "title": "[Ritmo 5/6] Historial, repetición y exportación de ejercicios",
+      "ordinal": 5,
+      "blocked_by_ordinals": [
+        1
+      ]
+    },
+    {
+      "number": 21,
+      "database_id": 5985246591,
+      "url": "https://github.com/SaladinoJC/Tesis/issues/21",
+      "title": "[Ritmo 6/6] Progresión por categoría y tempo con Mamdani",
+      "ordinal": 6,
+      "blocked_by_ordinals": [
+        3,
+        4,
+        5
+      ]
+    }
+  ],
+  "specification": {
+    "number": 15,
+    "database_id": 5985243348,
+    "url": "https://github.com/SaladinoJC/Tesis/issues/15",
+    "title": "Especificación: Rhythm Tap con categorías, partituras procedurales y DDA"
+  },
+  "native_dependencies_verified": true
+}

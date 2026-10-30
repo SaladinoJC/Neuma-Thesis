@@ -1,0 +1,312 @@
+[
+  {
+    "case": "menu-v1-360",
+    "fontsReady": true,
+    "fonts": [
+      {
+        "family": "Fraunces",
+        "status": "loaded"
+      },
+      {
+        "family": "Nunito Sans",
+        "status": "loaded"
+      }
+    ],
+    "width": 360,
+    "documentWidth": 360,
+    "height": 1122,
+    "controls": [
+      {
+        "type": "card",
+        "width": 328,
+        "height": 104
+      },
+      {
+        "type": "card",
+        "width": 328,
+        "height": 104
+      },
+      {
+        "type": "card",
+        "width": 328,
+        "height": 107.53125
+      },
+      {
+        "type": "card",
+        "width": 328,
+        "height": 104
+      },
+      {
+        "type": "card",
+        "width": 328,
+        "height": 107.53125
+      },
+      {
+        "type": "card",
+        "width": 328,
+        "height": 128.53125
+      },
+      {
+        "type": "secondary",
+        "width": 328,
+        "height": 48.390625
+      },
+      {
+        "type": "secondary",
+        "width": 328,
+        "height": 48
+      }
+    ],
+    "overflow": [],
+    "titleFont": "Fraunces, serif",
+    "bodyFont": "\"Nunito Sans\", sans-serif"
+  },
+  {
+    "case": "menu-v1-411",
+    "fontsReady": true,
+    "fonts": [
+      {
+        "family": "Fraunces",
+        "status": "loaded"
+      },
+      {
+        "family": "Nunito Sans",
+        "status": "loaded"
+      }
+    ],
+    "width": 411,
+    "documentWidth": 411,
+    "height": 1122,
+    "controls": [
+      {
+        "type": "card",
+        "width": 379,
+        "height": 104
+      },
+      {
+        "type": "card",
+        "width": 379,
+        "height": 104
+      },
+      {
+        "type": "card",
+        "width": 379,
+        "height": 107.53125
+      },
+      {
+        "type": "card",
+        "width": 379,
+        "height": 104
+      },
+      {
+        "type": "card",
+        "width": 379,
+        "height": 107.53125
+      },
+      {
+        "type": "card",
+        "width": 379,
+        "height": 128.53125
+      },
+      {
+        "type": "secondary",
+        "width": 379,
+        "height": 48.390625
+      },
+      {
+        "type": "secondary",
+        "width": 379,
+        "height": 48
+      }
+    ],
+    "overflow": [],
+    "titleFont": "Fraunces, serif",
+    "bodyFont": "\"Nunito Sans\", sans-serif"
+  },
+  {
+    "case": "menu-v1-600",
+    "fontsReady": true,
+    "fonts": [
+      {
+        "family": "Fraunces",
+        "status": "loaded"
+      },
+      {
+        "family": "Nunito Sans",
+        "status": "loaded"
+      }
+    ],
+    "width": 600,
+    "documentWidth": 600,
+    "height": 1109,
+    "controls": [
+      {
+        "type": "card",
+        "width": 432,
+        "height": 104
+      },
+      {
+        "type": "card",
+        "width": 432,
+        "height": 104
+      },
+      {
+        "type": "card",
+        "width": 432,
+        "height": 107.53125
+      },
+      {
+        "type": "card",
+        "width": 432,
+        "height": 104
+      },
+      {
+        "type": "card",
+        "width": 432,
+        "height": 107.53125
+      },
+      {
+        "type": "card",
+        "width": 432,
+        "height": 107.53125
+      },
+      {
+        "type": "secondary",
+        "width": 432,
+        "height": 48.390625
+      },
+      {
+        "type": "secondary",
+        "width": 432,
+        "height": 48
+      }
+    ],
+    "overflow": [],
+    "titleFont": "Fraunces, serif",
+    "bodyFont": "\"Nunito Sans\", sans-serif"
+  },
+  {
+    "case": "menu-v1-360-text200",
+    "fontsReady": true,
+    "fonts": [
+      {
+        "family": "Fraunces",
+        "status": "loaded"
+      },
+      {
+        "family": "Nunito Sans",
+        "status": "loaded"
+      }
+    ],
+    "width": 360,
+    "documentWidth": 360,
+    "height": 2258,
+    "controls": [
+      {
+        "type": "card",
+        "width": 328,
+        "height": 253.78125
+      },
+      {
+        "type": "card",
+        "width": 328,
+        "height": 253.78125
+      },
+      {
+        "type": "card",
+        "width": 328,
+        "height": 213.078125
+      },
+      {
+        "type": "card",
+        "width": 328,
+        "height": 207.890625
+      },
+      {
+        "type": "card",
+        "width": 328,
+        "height": 213.078125
+      },
+      {
+        "type": "card",
+        "width": 328,
+        "height": 258.96875
+      },
+      {
+        "type": "secondary",
+        "width": 328,
+        "height": 115.59375
+      },
+      {
+        "type": "secondary",
+        "width": 328,
+        "height": 113.59375
+      }
+    ],
+    "overflow": [],
+    "titleFont": "Fraunces, serif",
+    "bodyFont": "\"Nunito Sans\", sans-serif"
+  },
+  {
+    "case": "menu-v1-states",
+    "fontsReady": true,
+    "fonts": [
+      {
+        "family": "Fraunces",
+        "status": "loaded"
+      },
+      {
+        "family": "Nunito Sans",
+        "status": "loaded"
+      }
+    ],
+    "width": 411,
+    "documentWidth": 411,
+    "height": 900,
+    "controls": [
+      {
+        "type": "card",
+        "width": 0,
+        "height": 0
+      },
+      {
+        "type": "card",
+        "width": 0,
+        "height": 0
+      },
+      {
+        "type": "card",
+        "width": 0,
+        "height": 0
+      },
+      {
+        "type": "card",
+        "width": 0,
+        "height": 0
+      },
+      {
+        "type": "card",
+        "width": 0,
+        "height": 0
+      },
+      {
+        "type": "card",
+        "width": 0,
+        "height": 0
+      },
+      {
+        "type": "secondary",
+        "width": 0,
+        "height": 0
+      },
+      {
+        "type": "secondary",
+        "width": 0,
+        "height": 0
+      }
+    ],
+    "overflow": [],
+    "titleFont": "Fraunces, serif",
+    "bodyFont": "\"Nunito Sans\", sans-serif"
+  }
+]

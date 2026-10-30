@@ -1,0 +1,85 @@
+{
+  "date": "2026-10-30T19:10:14.518098-03:00",
+  "status": "host-passed-android-pending",
+  "version": "0.12.18",
+  "versionCode": 33,
+  "increment": "vocal-intervals-v4-mamdani-series",
+  "jvm": {
+    "tests": 263,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "newJvmTests": 14,
+  "lint": {
+    "errors": 0,
+    "warnings": 10
+  },
+  "assemblies": {
+    "app": "passed",
+    "androidTest": "passed"
+  },
+  "newAndroidTestsCompiled": 2,
+  "androidTestsExecuted": false,
+  "emulatorStarted": false,
+  "installed": false,
+  "sourceFilesVerifiedBySha256": 365,
+  "sourceManifestSha256": "5e2a6eb9d6b0a66883e4c5a39ab78224bc56abb25c97e8c82e1fb27a5edd14a7",
+  "runtimeAssetsIdenticalToV3": 149,
+  "signatureCompatibleWithV3": true,
+  "signerCertificateSha256": "4e9a10f84ec8218fb0927606a0c84617c3753a452e0c772b1bae1bd377a0c90a",
+  "apkMetadataVerified": true,
+  "packagedVocalCodeVerified": true,
+  "apk": {
+    "path": "Plataforma/build/apk-archives/neuma-v0.12.18-intervalos-vocales-v4-prueba-sin-emulador.apk",
+    "bytes": 15289272,
+    "sha256": "ca5f835849fd173e4df3d4ba2e22f327cded56ad1c7e04be10cef81bfb79c9c8"
+  },
+  "execution": {
+    "offline": true,
+    "workers": 1,
+    "heapMiB": 1536,
+    "gc": "SerialGC",
+    "activeProcessorCount": 2,
+    "priority": "BelowNormal"
+  },
+  "gradleDuration": "3m 25s",
+  "informe": {
+    "pages": 39,
+    "latexPasses": 3,
+    "visuallyReviewedPages": [
+      27,
+      28,
+      32
+    ],
+    "pdfSha256": "9a9742e81b6eb8ee3189c64e99e1750f0f7f51fa44fb11f56177efac93d35023",
+    "overfullBoxes": 0,
+    "underfullBoxes": 5
+  },
+  "profileFiles": 9,
+  "vocalPersistence": true,
+  "vocalDda": true,
+  "scaffoldingLevelsImplemented": [
+    1
+  ],
+  "syntheticRoute": {
+    "origin": "simulated",
+    "rounds": 250,
+    "signedTargets": 25,
+    "mastered": 25,
+    "eligible": 250,
+    "signal": "synthetic pitch estimates; no hardware or students",
+    "fullRouteSha256": "2e171a488eb6084e9c49fbcf7662dca582c8790e770429ae753fb397b1b83ce2"
+  },
+  "pending": [
+    "Android UI tests, 411/360/320dp and 320dp font200%, TalkBack",
+    "Real voice, reference audibility, permission and lifecycle on Android",
+    "Native history, retry, JSON/ZIP/reset and earlier Android regression",
+    "Other scaffolding levels (given anchor, free production); Defender D6"
+  ],
+  "notes": [
+    "Manual practice and automatic imitation series; synthetic verification only, no vocal accuracy or educational efficacy claim",
+    "Music Garden and existing assets reused; no new dependency or runtime asset",
+    "No push, issue or protocol edits, emulator, installation or publication"
+  ]
+}

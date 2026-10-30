@@ -1,0 +1,50 @@
+% Referencia estética elegida por el usuario: TesisPrueba.pdf (2026-10-29).
+% Medidas y adaptaciones documentadas en estilo.md; contenido según tipo 1.
+\usepackage{fontspec}
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+% Unicode directo; evitar la incompatibilidad de shorthands con los hooks APA.
+\usepackage[spanish,es-tabla,es-noshorthands,es-lcroman]{babel}
+\usepackage[margin=1in,headheight=15pt,headsep=18pt,footskip=30pt]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{0pt}
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\Huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{}
+\titlespacing*{\chapter}{0pt}{50pt}{40pt}
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection.}{1em}{}
+\usepackage{titletoc}
+% Reservar espacio también para capítulos de dos dígitos en el índice.
+\titlecontents{chapter}[2.5em]{\addvspace{1em}\bfseries}
+  {\contentslabel{2.5em}}{\hspace*{-2.5em}}{\hfill\contentspage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\small\bfseries\thepage}
+\fancyhead[LO]{\small\sffamily\nouppercase{\rightmark}}
+\fancyhead[RE]{\small\sffamily\bfseries\nouppercase{\leftmark}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0pt}%
+}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{csquotes}
+\usepackage[backend=biber,style=apa]{biblatex}
+\addbibresource{bibliografia/referencias.bib}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Trabajo Final -- borrador},pdfsubject={Tipo 1: Proyecto y/o Diseño de Ingeniería}}
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{2}
+% Los pendientes son visibles también en el PDF para evitar falsas completitudes.
+\newcommand{\pendiente}[1]{\par\noindent\textbf{[COMPLETAR]} #1\par}

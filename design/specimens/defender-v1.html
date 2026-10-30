@@ -1,0 +1,93 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Music Garden · estudio estático</title><style>
+@font-face{font-family:Fraunces;src:url(fonts/fraunces-variable.ttf);font-weight:100 900;font-display:block}
+@font-face{font-family:'Nunito Sans';src:url(fonts/nunito-sans-variable.ttf);font-weight:200 1000;font-display:block}
+:root{--background:#F5EEDC;
+--surface:#FFF9ED;
+--text:#28392F;
+--primary:#315844;
+--sage:#A7B99E;
+--moss:#718563;
+--success:#D9AD69;
+--warning:#C9806B;
+--audio:#86AAB3;
+--textSecondary:#536457;
+--onPrimary:#FFF9ED;
+--primaryPressed:#254633;
+--surfaceSelected:#E1E9DB;
+--border:#667A67;
+--errorText:#8B4436;
+--errorSurface:#F3DED5;
+--focus:#3C6872;
+--disabledSurface:#E2DECF;
+--disabledText:#627063;--s-xs:4px;
+--s-sm:8px;
+--s-md:12px;
+--s-base:16px;
+--s-lg:24px;
+--s-xl:32px;--r-small:8px;
+--r-medium:12px;
+--r-large:16px;
+--r-pill:24px;}*{box-sizing:border-box}body{margin:0;background:var(--background);color:var(--text);font:16px/1.45 'Nunito Sans',sans-serif}
+.game{padding:12px 16px 16px;display:flex;flex-direction:column;gap:8px;height:100svh;min-height:770px;max-width:480px;margin:auto}
+header{display:flex;align-items:center;gap:12px;min-height:48px}h1{font:600 20px/1.25 Fraunces,serif;margin:0;flex:1}h2{font:600 24px/1.3 Fraunces;margin:0 0 12px}p{margin:0}
+.back{display:flex;align-items:center;justify-content:center;min-height:48px;min-width:48px;font-weight:600;color:var(--primary)}
+.hud{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:36px;font-size:14px;color:var(--textSecondary)}
+.lives{display:flex;gap:3px;align-items:center;white-space:nowrap;color:var(--text)}.life{width:20px;height:20px;fill:var(--moss);stroke:var(--primary);stroke-width:1.3}.lives-label{margin-left:4px}
+.arena{position:relative;flex:1;min-height:318px;isolation:isolate}.border-plant{position:absolute;left:0;top:26%;width:20px;height:120px;opacity:.55;z-index:-1}
+.enemy{position:absolute;width:94px;display:flex;flex-direction:column;align-items:center;gap:2px}.enemy-0{left:4px;top:4px}.enemy-1{right:4px;top:28px}.enemy-2{left:4px;top:154px}.enemy-3{right:4px;top:178px}
+.staff{width:94px;height:112.8px;border-radius:12px;background:var(--surface);flex:none}.moth{width:37px;height:27px}.guardian{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:108px}.tree{width:100%;display:block}
+.answer{padding:12px;border-radius:var(--r-large);background:var(--surface);display:grid;gap:8px}.feedback{font-size:14px;line-height:20px;color:var(--textSecondary);min-height:20px}
+.note-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.choice{display:flex;align-items:center;justify-content:center;min-height:48px;border:1px solid var(--border);border-radius:var(--r-medium);font-weight:700;color:var(--primary)}
+.chosen{border:2px solid var(--primary);background:var(--surfaceSelected)}.chosen:after{content:'';width:5px;height:5px;border-radius:50%;background:var(--primary);margin-left:6px}
+.accidentals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.accidentals .choice{font-size:14px}
+.action{display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:var(--r-large);background:var(--primary);color:var(--onPrimary);font-weight:700;flex:none}
+.sound-wave{display:none;position:absolute;width:150px;height:150px;left:50%;bottom:38px;transform:translateX(-50%);z-index:-1}.solution{display:none;position:absolute;left:0;top:100px;max-width:130px;padding:8px;border-radius:8px;background:var(--errorSurface);color:var(--errorText);font-size:14px}
+.pause-card{display:none;position:absolute;inset:28px 12px auto;background:var(--surface);padding:24px;border-radius:16px;text-align:center}.pause-card .action{margin-top:20px}
+.state-hit .enemy-0,.state-life .enemy-0{visibility:hidden}.state-hit .sound-wave{display:block}.state-hit .feedback{color:var(--text);background:var(--success);border-radius:8px;padding:0 8px}.state-hit .defender>.action{background:var(--disabledSurface);color:var(--disabledText)}
+.state-error .feedback,.state-life .feedback{color:var(--errorText)}.state-error .answer{outline:2px solid var(--errorText);outline-offset:-2px}.state-life .leaf-2 .life{fill:none;stroke:var(--border)}.state-life .solution{display:block}
+.state-pause .enemy,.state-pause .guardian,.state-pause .border-plant{visibility:hidden}.state-pause .pause-card{display:block}.state-pause .answer,.state-pause .defender>.action{visibility:hidden}
+.game.simon{max-width:1200px;min-height:340px;height:100svh;padding:8px 16px;gap:6px}.simon h1{font-size:22px}.round{font-weight:700}.simon-details{display:flex;justify-content:space-between;gap:12px;font-size:14px;color:var(--textSecondary)}
+.phase{display:flex;justify-content:space-between;gap:12px;align-items:center;background:var(--surface);padding:10px 16px;border-radius:12px;min-height:48px}.phase-title{color:var(--focus)}.phase-progress{font-weight:600;color:var(--textSecondary)}
+.piano-frame{padding:12px 8px 0;background:var(--sage);border-radius:16px 16px 8px 8px;flex:1;position:relative;min-height:160px}.piano-leaf{position:absolute;right:4px;top:-10px;width:26px;height:26px;fill:var(--moss);stroke:var(--primary);stroke-width:1.2}
+.keyboard{position:relative;height:100%;min-height:148px}.key{position:absolute;top:0;border:1px solid var(--border);border-radius:0 0 8px 8px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:12px}
+.white{height:100%;background:var(--surface)}.black{height:62%;background:var(--text);z-index:1}.white span{font-size:14px;font-weight:700}.sounding{background:var(--success);border:2px solid var(--primary)}
+.sound-mark{display:none}.sounding .sound-mark{position:absolute;bottom:40px;width:9px;height:9px;background:var(--primary);border-radius:50%;display:block}
+.piano-help{font-size:14px;text-align:center;color:var(--textSecondary)}.response .sounding{background:var(--surface);border:1px solid var(--border)}.response .sound-mark{display:none}.response .phase-title{color:var(--primary)}
+@media(max-width:380px){.guardian{width:96px}.hud{font-size:13px}.life{width:18px}}
+</style><body><div class="game defender"><header><span class="back" data-control="menu">Menú</span><h1>Defender de notas</h1><span class="back" data-control="pause">Pausa</span></header>
+<div class="hud"><span>Sol y fa · práctica</span><span class="points">0 pts</span><span class="lives"><span class="leaf-0"><svg viewBox="0 0 28 26" class="life" aria-hidden="true"><path d="M4 21Q1 4 23 2Q25 19 4 21Z"/><path d="M4 21 19 6" fill="none"/></svg></span><span class="leaf-1"><svg viewBox="0 0 28 26" class="life" aria-hidden="true"><path d="M4 21Q1 4 23 2Q25 19 4 21Z"/><path d="M4 21 19 6" fill="none"/></svg></span><span class="leaf-2"><svg viewBox="0 0 28 26" class="life" aria-hidden="true"><path d="M4 21Q1 4 23 2Q25 19 4 21Z"/><path d="M4 21 19 6" fill="none"/></svg></span><span class="lives-label">3 vidas</span></span></div>
+<div class="arena"><svg class="border-plant left" viewBox="0 0 28 120" aria-hidden="true"><path d="M4 115Q16 65 16 8" fill="none" stroke="var(--sage)"/><path d="M12 88Q0 78 3 65Q24 71 12 88ZM16 53Q4 43 6 30Q25 38 16 53Z" fill="var(--sage)" stroke="none"/></svg>
+<div class="enemy enemy-0" data-target="true"><svg viewBox="0 0 100 120" class="staff" preserveAspectRatio="xMidYMid meet" data-note="{&quot;name&quot;: &quot;La&quot;, &quot;octave&quot;: 3, &quot;accidental&quot;: &quot;flat&quot;, &quot;clef&quot;: &quot;treble&quot;, &quot;staffStep&quot;: -4}" aria-hidden="true"><g transform="translate(0 8)" fill="var(--text)" stroke="var(--text)"><path d="M4 28H96" fill="none" stroke-width=".9"/><path d="M4 40H96" fill="none" stroke-width=".9"/><path d="M4 52H96" fill="none" stroke-width=".9"/><path d="M4 64H96" fill="none" stroke-width=".9"/><path d="M4 76H96" fill="none" stroke-width=".9"/><path d="M19 92C32 94 28 79 25 69L16 24C10 -1 39 0 28 21C18 39 1 40 5 62C10 80 36 77 35 58C33 44 12 44 11 60C10 72 23 75 29 65" fill="none" stroke-width="2.3"/><path d="M61 88H85" fill="none" stroke-width=".9"/><path d="M61 100H85" fill="none" stroke-width=".9"/><path d="M49 86V106C64 96 57 90 49 98" fill="none" stroke-width="1.6"/><ellipse cx="72" cy="100" rx="6" ry="4.4"/><path d="M78 100v-29" fill="none" stroke-width="1.4"/></g></svg><svg viewBox="0 0 64 46" class="moth" aria-hidden="true"><g stroke="var(--primary)" stroke-width="1.4" stroke-linejoin="round">
+<path d="M31 22Q15 0 2 6Q-2 21 25 28Q5 29 15 43Q25 46 31 27Z" fill="var(--sage)"/>
+<path d="M33 22Q49 0 62 6Q66 21 39 28Q59 29 49 43Q39 46 33 27Z" fill="var(--sage)"/>
+<path d="M31 20 12 12M33 20 53 12M29 29 20 36M35 29 44 36" fill="none"/>
+<path d="M30 20Q28 37 32 43Q36 37 34 20Z" fill="var(--primary)"/>
+<path d="M31 20 26 13M33 20 38 13" fill="none"/></g></svg></div><div class="enemy enemy-1" data-target="true"><svg viewBox="0 0 100 120" class="staff" preserveAspectRatio="xMidYMid meet" data-note="{&quot;name&quot;: &quot;Mi&quot;, &quot;octave&quot;: 4, &quot;accidental&quot;: &quot;flat&quot;, &quot;clef&quot;: &quot;bass&quot;, &quot;staffStep&quot;: 12}" aria-hidden="true"><g transform="translate(0 8)" fill="var(--text)" stroke="var(--text)"><path d="M4 28H96" fill="none" stroke-width=".9"/><path d="M4 40H96" fill="none" stroke-width=".9"/><path d="M4 52H96" fill="none" stroke-width=".9"/><path d="M4 64H96" fill="none" stroke-width=".9"/><path d="M4 76H96" fill="none" stroke-width=".9"/><path d="M8 43C5 20 36 16 31 40C29 53 17 61 9 64" fill="none" stroke-width="3"/><circle cx="9" cy="40" r="2.6"/><circle cx="39" cy="34" r="1.8"/><circle cx="39" cy="46" r="1.8"/><path d="M61 16H85" fill="none" stroke-width=".9"/><path d="M61 4H85" fill="none" stroke-width=".9"/><path d="M49 -10V10C64 0 57 -6 49 2" fill="none" stroke-width="1.6"/><ellipse cx="72" cy="4" rx="6" ry="4.4"/><path d="M66 4v29" fill="none" stroke-width="1.4"/></g></svg><svg viewBox="0 0 64 46" class="moth" aria-hidden="true"><g stroke="var(--primary)" stroke-width="1.4" stroke-linejoin="round">
+<path d="M31 22Q15 0 2 6Q-2 21 25 28Q5 29 15 43Q25 46 31 27Z" fill="var(--sage)"/>
+<path d="M33 22Q49 0 62 6Q66 21 39 28Q59 29 49 43Q39 46 33 27Z" fill="var(--sage)"/>
+<path d="M31 20 12 12M33 20 53 12M29 29 20 36M35 29 44 36" fill="none"/>
+<path d="M30 20Q28 37 32 43Q36 37 34 20Z" fill="var(--primary)"/>
+<path d="M31 20 26 13M33 20 38 13" fill="none"/></g></svg></div><div class="enemy enemy-2" data-target="true"><svg viewBox="0 0 100 120" class="staff" preserveAspectRatio="xMidYMid meet" data-note="{&quot;name&quot;: &quot;Do&quot;, &quot;octave&quot;: 6, &quot;accidental&quot;: &quot;sharp&quot;, &quot;clef&quot;: &quot;treble&quot;, &quot;staffStep&quot;: 12}" aria-hidden="true"><g transform="translate(0 8)" fill="var(--text)" stroke="var(--text)"><path d="M4 28H96" fill="none" stroke-width=".9"/><path d="M4 40H96" fill="none" stroke-width=".9"/><path d="M4 52H96" fill="none" stroke-width=".9"/><path d="M4 64H96" fill="none" stroke-width=".9"/><path d="M4 76H96" fill="none" stroke-width=".9"/><path d="M19 92C32 94 28 79 25 69L16 24C10 -1 39 0 28 21C18 39 1 40 5 62C10 80 36 77 35 58C33 44 12 44 11 60C10 72 23 75 29 65" fill="none" stroke-width="2.3"/><path d="M61 16H85" fill="none" stroke-width=".9"/><path d="M61 4H85" fill="none" stroke-width=".9"/><path d="M50 -6V13M55 -6V13" fill="none" stroke-width="1.3"/><path d="M46 3 59 -1M46 9 59 5" fill="none" stroke-width="2"/><ellipse cx="72" cy="4" rx="6" ry="4.4"/><path d="M66 4v29" fill="none" stroke-width="1.4"/></g></svg><svg viewBox="0 0 64 46" class="moth" aria-hidden="true"><g stroke="var(--primary)" stroke-width="1.4" stroke-linejoin="round">
+<path d="M31 22Q15 0 2 6Q-2 21 25 28Q5 29 15 43Q25 46 31 27Z" fill="var(--sage)"/>
+<path d="M33 22Q49 0 62 6Q66 21 39 28Q59 29 49 43Q39 46 33 27Z" fill="var(--sage)"/>
+<path d="M31 20 12 12M33 20 53 12M29 29 20 36M35 29 44 36" fill="none"/>
+<path d="M30 20Q28 37 32 43Q36 37 34 20Z" fill="var(--primary)"/>
+<path d="M31 20 26 13M33 20 38 13" fill="none"/></g></svg></div><div class="enemy enemy-3" data-target="true"><svg viewBox="0 0 100 120" class="staff" preserveAspectRatio="xMidYMid meet" data-note="{&quot;name&quot;: &quot;Do&quot;, &quot;octave&quot;: 2, &quot;accidental&quot;: &quot;sharp&quot;, &quot;clef&quot;: &quot;bass&quot;, &quot;staffStep&quot;: -4}" aria-hidden="true"><g transform="translate(0 8)" fill="var(--text)" stroke="var(--text)"><path d="M4 28H96" fill="none" stroke-width=".9"/><path d="M4 40H96" fill="none" stroke-width=".9"/><path d="M4 52H96" fill="none" stroke-width=".9"/><path d="M4 64H96" fill="none" stroke-width=".9"/><path d="M4 76H96" fill="none" stroke-width=".9"/><path d="M8 43C5 20 36 16 31 40C29 53 17 61 9 64" fill="none" stroke-width="3"/><circle cx="9" cy="40" r="2.6"/><circle cx="39" cy="34" r="1.8"/><circle cx="39" cy="46" r="1.8"/><path d="M61 88H85" fill="none" stroke-width=".9"/><path d="M61 100H85" fill="none" stroke-width=".9"/><path d="M50 90V109M55 90V109" fill="none" stroke-width="1.3"/><path d="M46 99 59 95M46 105 59 101" fill="none" stroke-width="2"/><ellipse cx="72" cy="100" rx="6" ry="4.4"/><path d="M78 100v-29" fill="none" stroke-width="1.4"/></g></svg><svg viewBox="0 0 64 46" class="moth" aria-hidden="true"><g stroke="var(--primary)" stroke-width="1.4" stroke-linejoin="round">
+<path d="M31 22Q15 0 2 6Q-2 21 25 28Q5 29 15 43Q25 46 31 27Z" fill="var(--sage)"/>
+<path d="M33 22Q49 0 62 6Q66 21 39 28Q59 29 49 43Q39 46 33 27Z" fill="var(--sage)"/>
+<path d="M31 20 12 12M33 20 53 12M29 29 20 36M35 29 44 36" fill="none"/>
+<path d="M30 20Q28 37 32 43Q36 37 34 20Z" fill="var(--primary)"/>
+<path d="M31 20 26 13M33 20 38 13" fill="none"/></g></svg></div><div class="guardian"><svg viewBox="0 0 170 148" class="tree" aria-hidden="true"><g stroke="var(--primary)" stroke-width="1.5" stroke-linejoin="round">
+<path d="M12 72Q0 53 22 44Q12 26 39 23Q39 8 61 14Q70 0 90 14Q110 7 120 27Q148 23 146 45Q170 48 157 69Q167 91 136 91Q123 105 103 91Q84 107 66 93Q43 104 30 89Q8 96 12 72Z" fill="var(--sage)"/>
+<path d="M19 58Q8 40 36 36Q39 18 63 26Q66 51 42 62Z" fill="var(--moss)"/>
+<path d="M101 22Q128 15 135 38Q157 35 153 58L128 72Q102 62 101 22Z" fill="var(--moss)"/>
+<path d="M65 136Q84 116 83 88L66 69 58 47 83 72 91 49 96 29 101 58 94 88Q96 117 113 137Z" fill="var(--success)"/>
+<path d="M82 130Q91 112 88 92M91 82 73 58M92 88 118 63" fill="none"/>
+<path d="M40 139Q72 132 128 140" fill="none"/></g></svg></div>
+<svg class="sound-wave" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="66" fill="none" stroke="var(--audio)" stroke-width="3"/><circle cx="42" cy="53" r="2.8" fill="var(--success)"/><circle cx="74" cy="25" r="2.8" fill="var(--success)"/><circle cx="132" cy="40" r="2.8" fill="var(--success)"/><circle cx="170" cy="74" r="2.8" fill="var(--success)"/><circle cx="150" cy="150" r="2.8" fill="var(--success)"/><circle cx="95" cy="175" r="2.8" fill="var(--success)"/><circle cx="41" cy="133" r="2.8" fill="var(--success)"/><circle cx="27" cy="92" r="2.8" fill="var(--success)"/></svg>
+<div class="solution">La bemol · octava 3</div><div class="pause-card"><h2>En pausa</h2><p>Tiempo y audio detenidos.</p><div class="action">Reanudar</div></div></div>
+<section class="answer"><p class="feedback">Elegí una nota y tocá.</p><div class="note-grid"><div class="choice " data-control="note">Do</div><div class="choice chosen" data-control="note">Re</div><div class="choice " data-control="note">Mi</div><div class="choice " data-control="note">Fa</div><div class="choice " data-control="note">Sol</div><div class="choice " data-control="note">La</div><div class="choice " data-control="note">Si</div></div><div class="accidentals"><div class="choice" data-control="accidental">Bemol</div><div class="choice chosen" data-control="accidental">Natural</div><div class="choice" data-control="accidental">Sostenido</div></div></section>
+<div class="action" data-control="confirm">Tocar</div></div><script>const p=new URLSearchParams(location.search);const state=p.get('state')||'ready';document.body.classList.add('state-'+state);
+const feedback=document.querySelector('.feedback');if(feedback){if(state==='hit'){feedback.textContent='Correcto. El jardín resuena.';document.querySelector('.points').textContent='100 pts';document.querySelectorAll('.note-grid .chosen').forEach(e=>e.classList.remove('chosen'))}if(state==='error')feedback.textContent='No coincide. Probá otra nota.';if(state==='life'){feedback.textContent='Una criatura alcanzó el árbol.';document.querySelector('.lives-label').textContent='2 vidas'}}
+if(state==='response'){document.body.classList.add('response');document.querySelector('.phase-title').textContent='Ahora repetí la secuencia';document.querySelector('.phase-progress').textContent='0 de 4 notas'}
+document.fonts.ready.then(()=>{document.documentElement.dataset.fonts='ready'});</script></body></html>

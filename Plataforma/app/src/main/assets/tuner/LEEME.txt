@@ -1,0 +1,26 @@
+Referencias del afinador A4: MIDI 36–64 (Do2–Mi4), A4=440 Hz.
+
+Guitarra eléctrica limpia: Emilyguitar, Epiphone Emily the Strange, D. Smolken /
+Karoryfer Lecolds. Grabación directa, cuerdas d'Addario Chromes flatwound.
+Fuente fijada: https://github.com/sfzinstruments/karoryfer.emilyguitar/tree/b4920dc662fd9cad6dcaccdeecffdd91c8725d8c
+El readme original indica uso comercial y no comercial libre de regalías.
+El autor declara actualmente CC0 para sus bibliotecas gratuitas, incluida Emilyguitar:
+https://shop.karoryfer.com/pages/free-samples (consultado 2026-10-26).
+
+Piano: University of Iowa Electronic Music Studios, Musical Instrument Samples.
+https://theremin.music.uiowa.edu/MISpiano.html
+Permiso de uso en cualquier proyecto sin restricciones:
+https://theremin.music.uiowa.edu/MIS.html (consultado 2026-10-26).
+No se asigna una licencia Creative Commons al piano.
+
+Derivados preparados para la tesis: mono, 44100 Hz, 1200 ms, Vorbis.
+Recorte del ataque previo, remuestreo, afinación a temperamento igual,
+normalización RMS con límite de pico, fades 10/80 ms.
+Guitarra: muestras mf/rr1 más cercanas, transpuestas como máximo dos semitonos;
+Do2 se obtiene de Reb2. Piano: una fuente mf por nota, afinación fina.
+Las razones de remuestreo, ganancias, recortes, URL y SHA-256 de cada original
+y derivado están en manifest.json. No son grabaciones de la guitarra personal.
+
+Reproducción exclusivamente como referencia en la app, sin guardar voz.
+Script de preparación/verificación: Plataforma/tools/prepare_tuner_references.py.
+La afinación del archivo no demuestra precisión acústica del teléfono.

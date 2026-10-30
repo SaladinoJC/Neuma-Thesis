@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.voice.GivenAnchorGameTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-30T22:27:16.688Z" hostname="DESKTOP-PP49S64" time="0.078">
+  <properties/>
+  <testcase name="given anchor plays no target and captures only one sung note" classname="ar.edu.unmdp.entrenamiento.voice.GivenAnchorGameTest" time="0.015"/>
+  <testcase name="failed given save keeps the same target only record and blocks new practice" classname="ar.edu.unmdp.entrenamiento.voice.GivenAnchorGameTest" time="0.008"/>
+  <testcase name="given automatic series uses five captures and starts with its own tolerance" classname="ar.edu.unmdp.entrenamiento.voice.GivenAnchorGameTest" time="0.043"/>
+  <testcase name="background and late cleanup callback never turn a given interruption into a completed response" classname="ar.edu.unmdp.entrenamiento.voice.GivenAnchorGameTest" time="0.007"/>
+  <testcase name="given manual success does not bypass its imitation prerequisite" classname="ar.edu.unmdp.entrenamiento.voice.GivenAnchorGameTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

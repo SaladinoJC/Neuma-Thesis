@@ -1,0 +1,65 @@
+{
+  "date": "2026-10-30T17:54:45.197927-03:00",
+  "status": "host-passed-ui-not-integrated",
+  "increment": "vocal-intervals-v1-core",
+  "jvm": {
+    "tests": 228,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "newJvmTests": 10,
+  "syntheticPcmYinSession": "Synthetic PCM only: anchorHz=220.0009575855788, targetHz=293.6707813710232, intervalCents=500.02791512946413, errorCents=0.02791512946413377",
+  "lint": {
+    "Error": 0,
+    "Fatal": 0,
+    "Warning": 10
+  },
+  "assemblies": {
+    "app": "passed",
+    "androidTest": "passed"
+  },
+  "sourceFilesVerified": 352,
+  "sourceManifestSha256": "2d7fc923c8715dfcf72fa8f7430546c1e92fce2f2f93f6e003ab6da13743d408",
+  "sourceComparison": {
+    "byteIdentical": 351,
+    "onlyOuterWhitespaceDiffers": [
+      "app/src/main/java/ar/edu/unmdp/entrenamiento/ui/EarTunerApp.kt"
+    ]
+  },
+  "execution": {
+    "offline": true,
+    "workers": 1,
+    "heapMiB": 1536,
+    "gc": "SerialGC",
+    "activeProcessorCount": 2,
+    "priority": "BelowNormal"
+  },
+  "informe": {
+    "pages": 36,
+    "pdfSha256": "4bb80d27371b3b75f86706900dd27a0bd939181ce96a130f973f4106b87b53d6",
+    "latexPasses": 3,
+    "visuallyReviewedPages": [
+      25,
+      26,
+      29
+    ],
+    "overfullBoxes": 0,
+    "underfullBoxes": 4
+  },
+  "androidTestsExecuted": false,
+  "emulatorStarted": false,
+  "installed": false,
+  "userFacingRelease": "unchanged; D5 0.12.15 candidate",
+  "profileFiles": "unchanged (8)",
+  "pending": [
+    "Playable imitation UI, coordinated reference/capture and lifecycle",
+    "Persistence/export",
+    "Mamdani DDA and interval progression",
+    "Android and real-voice validation; earlier Android checks; Defender D6"
+  ],
+  "notes": [
+    "Synthetic signals only; no vocal accuracy, hardware latency or educational efficacy claim",
+    "No UI, asset, dependency, protocol or issue changes; no push"
+  ]
+}
