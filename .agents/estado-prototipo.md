@@ -2,6 +2,24 @@
 
 Última actualización: 2026-10-30.
 
+## Publicación en GitHub de V6 — 2026-10-30
+
+Usuario: «ok, dejá todo en github con buenas practicas de git». Autorización de
+commit/push y entrega externa que sustituye las restricciones de publicación de
+las entradas históricas. Rama `trabajo/integracion-v0.12.15`, dos commits separados:
+`b2b524b` (implementación/pruebas/guías) y `413061a` (informe/evidencia V1–V6).
+Push atómico de rama y etiqueta anotada `v0.12.20-preview.1`, sin reescribir historial.
+La etiqueta apunta a `413061a22a3648bb3bf1ab51838235d55319cf30`.
+
+PR #30 se actualiza con el alcance final y se conserva en borrador hacia `main`.
+Entrega preliminar en borrador con cinco adjuntos (APK, PDF, ZIP de 195 archivos
+de evidencia V1–V6, manifiesto y SHA256SUMS), conservada en el repositorio privado.
+Enlaces, commits y condiciones en `docs/Entrega-GitHub-v0.12.20.md`.
+Este registro se versiona en un commit documental posterior al tag de la entrega.
+No hay merge, instalación, emulación ni nueva validación Android; código sin
+cambios desde las 292 JVM/lint/ensamblados de V6. Próximos pendientes vocales y D6
+conservados; Personaje pausado, sin subagentes.
+
 ## Intervalos vocales V6 — producción libre
 
 Usuario: «dale, segui con eso», tras ofrecer producción libre como siguiente
