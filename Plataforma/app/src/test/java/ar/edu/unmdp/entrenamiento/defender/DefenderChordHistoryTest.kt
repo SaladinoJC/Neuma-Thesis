@@ -78,9 +78,10 @@ class DefenderChordHistoryTest {
         fun strip(element: JsonElement): JsonElement = when (element) {
             is JsonArray -> JsonArray(element.map(::strip))
             is JsonObject -> JsonObject(element.filterKeys { it !in setOf("chord", "chordQuality", "qualities", "newlyUnlockedQualities", "selectedQuality", "quality",
-                "chordContents", "chordInversion", "chordClefs", "newlyUnlockedTargets", "inversion") }
+                "chordContents", "chordInversion", "chordClefs", "newlyUnlockedTargets", "inversion", "spawnIntervalMillis") }
                 .filterKeys { it != "variant" }.mapValues { (key, value) ->
-                    if (key == "version" && value is JsonPrimitive && value.content in setOf("defender-d4-v1", "defender-d5-v1")) JsonPrimitive("defender-d3-v1") else strip(value)
+                    if (key == "minimumTravelMillis") JsonPrimitive(6000)
+                    else if (key == "version" && value is JsonPrimitive && value.content in setOf("defender-d4-v1", "defender-d5-v1", "defender-pressure-v2")) JsonPrimitive("defender-d3-v1") else strip(value)
                 })
             else -> element
         }
@@ -91,6 +92,8 @@ class DefenderChordHistoryTest {
         val old = store.all().single()
         assertEquals("notes", old.variant)
         assertEquals("defender-d3-v1", old.game.configuration.version)
+        assertEquals(6000L, old.game.configuration.dda.minimumTravelMillis)
+        assertNull(old.game.configuration.spawnIntervalMillis)
         assertTrue(old.game.results.all { it.enemy.chord == null })
         assertEquals(setOf(DefenderChordQuality.MAJOR), defenderProgress(store.all(), "chords").unlockedQualities)
     }

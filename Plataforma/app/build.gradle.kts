@@ -13,8 +13,10 @@ android {
         applicationId = "ar.edu.unmdp.entrenamiento"
         minSdk = 26
         targetSdk = 36
-        versionCode = 35
-        versionName = "0.12.20"
+        versionCode = 42
+        versionName = "0.12.27"
+        buildConfigField("boolean", "QUIET_STUDIO", "false")
+        resValue("string", "variant_app_name", "Neuma Garden")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
@@ -22,6 +24,15 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures { compose = true; buildConfig = true }
+    buildTypes {
+        create("quietStudio") {
+            initWith(getByName("debug"))
+            applicationIdSuffix = ".quietstudio"
+            matchingFallbacks += listOf("debug")
+            buildConfigField("boolean", "QUIET_STUDIO", "true")
+            resValue("string", "variant_app_name", "Neuma Quiet Studio")
+        }
+    }
     testOptions { unitTests.isReturnDefaultValues = true }
 }
 

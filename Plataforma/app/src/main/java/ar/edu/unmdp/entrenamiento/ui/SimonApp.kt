@@ -58,6 +58,11 @@ fun SimonApp(ui: SimonUiState, onSimon: () -> Unit, onScale: (Scale) -> Unit,
     onGuidedTuner: () -> Unit = onTuner, onTrainingTuner: () -> Unit = onTuner, onVocalIntervals: () -> Unit = {}) {
     if (ui.screen == AppScreen.MENU) {
         val garden = menuState ?: androidx.compose.runtime.remember { GardenMenuState() }
+        if (BuildConfig.QUIET_STUDIO) {
+            QuietStudioMenu(garden, ui, onSimon, onInstruments, onRhythm, onDefender, onVocalIntervals,
+                onTuner, onGuidedTuner, onTrainingTuner, onHistory, onVoice, onData, onRetryStorage)
+            return
+        }
         MusicGardenMenu(garden, ui, instrumentProgress,
             onPlay = { when (it) { 0 -> onSimon(); 1 -> onInstruments(); 2 -> onRhythm(); 3 -> onDefender(); 4 -> onVocalIntervals() } },
             onTuner, onGuidedTuner, onHistory, onVoice, onData, onRetryStorage, onTrainingTuner)

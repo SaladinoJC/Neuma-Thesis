@@ -15,26 +15,24 @@ import java.util.Locale
 
 @Composable
 internal fun RhythmModeControls(ui: RhythmUiState, model: RhythmViewModel) {
-    FlowRow(horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(RhythmTokens.SpaceSm)) {
         FilterChip(selected = !ui.progression, onClick = { model.progression(false) }, enabled = !ui.busy,
-            modifier = Modifier.testTag("rhythm-mode-practice").heightIn(min = GardenTokens.TouchMinimum), label = { Text("Práctica") })
+            modifier = Modifier.testTag("rhythm-mode-practice").heightIn(min = RhythmTokens.TouchMinimum), label = { Text("Práctica") })
         FilterChip(selected = ui.progression, onClick = { model.progression(true) }, enabled = !ui.busy,
-            modifier = Modifier.testTag("rhythm-mode-progression").heightIn(min = GardenTokens.TouchMinimum), label = { Text("Progresión") })
+            modifier = Modifier.testTag("rhythm-mode-progression").heightIn(min = RhythmTokens.TouchMinimum), label = { Text("Progresión") })
     }
     if (ui.progression) {
-        Text("Tempo de la categoría más lenta. Dos ejercicios nuevos altos permiten avanzar.", color = GardenTokens.TextSecondary)
+        Text("Tempo de la categoría más lenta. Dos ejercicios nuevos altos permiten avanzar.", color = RhythmTokens.TextSecondary)
     } else {
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(RhythmTokens.SpaceSm)) {
             TextButton(onClick = { model.practiceTempo(ui.practiceBpm - 5) }, enabled = !ui.busy && ui.practiceBpm > 60,
-                modifier = Modifier.testTag("rhythm-tempo-down").heightIn(min = GardenTokens.TouchMinimum)) { Text("−5 BPM") }
-            Text("${ui.practiceBpm} BPM", modifier = Modifier.padding(vertical = GardenTokens.SpaceMd))
+                modifier = Modifier.testTag("rhythm-tempo-down").heightIn(min = RhythmTokens.TouchMinimum)) { Text("−5 BPM") }
+            Text("${ui.practiceBpm} BPM", modifier = Modifier.padding(vertical = RhythmTokens.SpaceMd))
             TextButton(onClick = { model.practiceTempo(ui.practiceBpm + 5) }, enabled = !ui.busy && ui.practiceBpm < 120,
-                modifier = Modifier.testTag("rhythm-tempo-up").heightIn(min = GardenTokens.TouchMinimum)) { Text("+5 BPM") }
+                modifier = Modifier.testTag("rhythm-tempo-up").heightIn(min = RhythmTokens.TouchMinimum)) { Text("+5 BPM") }
         }
-        Text("Todas las células disponibles para practicar. No cambia tu progreso.", color = GardenTokens.TextSecondary)
+        Text("Todas las células disponibles para practicar. No cambia tu progreso.", color = RhythmTokens.TextSecondary)
     }
-    OutlinedButton(onClick = model::openProgress, enabled = !ui.busy,
-        modifier = Modifier.testTag("rhythm-progress-open").heightIn(min = GardenTokens.TouchMinimum)) { Text("Progreso y DDA") }
 }
 
 @Composable
@@ -48,21 +46,21 @@ internal fun RhythmProgressApp(ui: RhythmUiState, model: RhythmViewModel) {
     val state = progress[category]
     val latest = ui.history.results.filter { category in it.result.score.selected }
         .maxWithOrNull(compareBy<RhythmRecord> { it.startedAtMillis }.thenBy { it.dda?.sequence ?: 0 })
-    TunerGardenTheme {
+    RhythmTheme {
         BackHandler(onBack = model::closeProgress)
-        Scaffold(containerColor = GardenTokens.Background, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
+        RhythmPageScaffold { padding ->
             LazyColumn(Modifier.fillMaxSize().padding(padding).testTag("rhythm-progress-screen"),
-                contentPadding = PaddingValues(GardenTokens.SpaceBase), verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceMd)) {
+                contentPadding = PaddingValues(RhythmTokens.SpaceBase), verticalArrangement = Arrangement.spacedBy(RhythmTokens.SpaceMd)) {
                 item {
                     TextButton(onClick = model::closeProgress, modifier = Modifier.testTag("rhythm-progress-back")) { Text("Volver al ejercicio") }
                     Text("Progreso de ritmo", style = MaterialTheme.typography.headlineSmall, modifier = Modifier.semantics { heading() })
-                    Text("${progress.unlocked.size}/${RhythmCategory.entries.size} células desbloqueadas · valores experimentales", color = GardenTokens.TextSecondary)
+                    Text("${progress.unlocked.size}/${RhythmCategory.entries.size} células desbloqueadas · valores experimentales", color = RhythmTokens.TextSecondary)
                     RhythmSaveStatus(ui, model, showCurrentStatus = false)
                 }
                 item {
                     HistoryChoice("Célula", categoryName, RhythmCategory.entries.sortedBy { it.code }.map { it.name to "${it.code} · ${it.label}" },
                         false, "rhythm-progress-category") { categoryName = requireNotNull(it) }
-                    Text("${category.code} · ${if (category in progress.unlocked) "Desbloqueada" else "Bloqueada"}", color = GardenTokens.Primary)
+                    Text("${category.code} · ${if (category in progress.unlocked) "Desbloqueada" else "Bloqueada"}", color = RhythmTokens.Primary)
                     Text("${state.bpm} BPM recomendados · ${state.highStreak}/2 resultados altos consecutivos", modifier = Modifier.testTag("rhythm-progress-value"))
                     Text(if (state.mastered) "Hito de dominio alto registrado. El acceso adquirido se conserva."
                         else "Todavía no hay un hito de dominio alto registrado.")
@@ -71,11 +69,11 @@ internal fun RhythmProgressApp(ui: RhythmUiState, model: RhythmViewModel) {
                     if (state.masteryEvidence.isNotEmpty()) Text("Ejercicios del hito: ${state.masteryEvidence.joinToString()}", style = MaterialTheme.typography.bodySmall)
                 }
                 item {
-                    FlowRow(horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
+                    FlowRow(horizontalArrangement = Arrangement.spacedBy(RhythmTokens.SpaceSm)) {
                         FilterChip(selected = !simulated, onClick = { simulated = false }, label = { Text("Decisión real") },
-                            modifier = Modifier.testTag("rhythm-dda-real").heightIn(min = GardenTokens.TouchMinimum))
+                            modifier = Modifier.testTag("rhythm-dda-real").heightIn(min = RhythmTokens.TouchMinimum))
                         FilterChip(selected = simulated, onClick = { simulated = true }, label = { Text("Simulación") },
-                            modifier = Modifier.testTag("rhythm-dda-simulated").heightIn(min = GardenTokens.TouchMinimum))
+                            modifier = Modifier.testTag("rhythm-dda-simulated").heightIn(min = RhythmTokens.TouchMinimum))
                     }
                 }
                 if (!simulated) item {
@@ -83,13 +81,13 @@ internal fun RhythmProgressApp(ui: RhythmUiState, model: RhythmViewModel) {
                     else RhythmRecordDecisions(latest, progress, category)
                 } else {
                     item {
-                        Text("Datos sintéticos · no se guardan en tu perfil", color = GardenTokens.TextSecondary)
+                        Text("Datos sintéticos · no se guardan en tu perfil", color = RhythmTokens.TextSecondary)
                         HistoryChoice("Escenario", scenarioName, RhythmDdaScenario.entries.map { it.name to it.label },
                             false, "rhythm-dda-scenario") { scenarioName = requireNotNull(it) }
                         OutlinedButton(onClick = { model.simulate(RhythmDdaScenario.valueOf(scenarioName)) }, enabled = !ui.simulationBusy,
-                            modifier = Modifier.testTag("rhythm-dda-run").heightIn(min = GardenTokens.TouchMinimum)) { Text("Ejecutar simulación") }
+                            modifier = Modifier.testTag("rhythm-dda-run").heightIn(min = RhythmTokens.TouchMinimum)) { Text("Ejecutar simulación") }
                         if (ui.simulationBusy) Text("Calculando simulación…")
-                        ui.simulationError?.let { Text(it, color = GardenTokens.ErrorText) }
+                        ui.simulationError?.let { Text(it, color = RhythmTokens.ErrorText) }
                     }
                     ui.simulation?.let { report ->
                         item {
@@ -114,13 +112,13 @@ internal fun RhythmRecordDecisions(record: RhythmRecord, progress: RhythmProgres
     record.dda?.let { commit ->
         Text("Motor ${commit.configuration.version} · ${commit.configuration.samplingPoints} puntos · centroide · AND/implicación mínimo · agregación máximo", style = MaterialTheme.typography.bodySmall)
         if (commit.evaluatedRevision != record.revision)
-            Text("Evaluación musical revisada. La progresión se conserva en la revisión ${commit.evaluatedRevision}, usada por ejercicios posteriores.", color = GardenTokens.TextSecondary)
-        if (commit.newlyUnlocked.isNotEmpty()) Text("Desbloqueadas: ${commit.newlyUnlocked.joinToString { it.code }}", color = GardenTokens.Primary)
+            Text("Evaluación musical revisada. La progresión se conserva en la revisión ${commit.evaluatedRevision}, usada por ejercicios posteriores.", color = RhythmTokens.TextSecondary)
+        if (commit.newlyUnlocked.isNotEmpty()) Text("Desbloqueadas: ${commit.newlyUnlocked.joinToString { it.code }}", color = RhythmTokens.Primary)
         if (commit.decisions.any { it.after != commit.after[it.category] })
-            Text("Se conserva el tempo y los desbloqueos adquiridos antes de la revisión tardía.", color = GardenTokens.TextSecondary)
+            Text("Se conserva el tempo y los desbloqueos adquiridos antes de la revisión tardía.", color = RhythmTokens.TextSecondary)
     }
     rhythmDiagnostics(record, progress).filter { category == null || it.category == category }.forEach { decision ->
-        Column(Modifier.fillMaxWidth().padding(vertical = GardenTokens.SpaceSm), verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceXs)) {
+        Column(Modifier.fillMaxWidth().padding(vertical = RhythmTokens.SpaceSm), verticalArrangement = Arrangement.spacedBy(RhythmTokens.SpaceXs)) {
             Text("${decision.category.code} · ${decision.category.label}", style = MaterialTheme.typography.titleMedium)
             Text(decision.reason.label, modifier = Modifier.testTag("rhythm-dda-reason"))
             Text("${decision.occurrences} apariciones objetivo · ${decision.successes}/${decision.units} unidades exitosas · ${decision.extras} extras atribuibles")

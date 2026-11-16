@@ -12,6 +12,69 @@ import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class InstrumentViewModelTest {
+    @Test fun `diez respuestas durante audio cancelan la melodia y guardan un solo resultado`() = runTest {
+        Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+        var activeModel: InstrumentViewModel? = null
+        try {
+            var playing = false
+            val player = object : InstrumentPlayer {
+                override suspend fun play(instrument: Instrument, melody: InstrumentMelody, onStarted: () -> Unit): Int {
+                    delay(100) // Preparación: todavía no se escuchó el instrumento.
+                    playing = true
+                    try {
+                        onStarted()
+                        delay(5000)
+                        return 134_505
+                    } finally { playing = false }
+                }
+            }
+            val model = InstrumentViewModel(InstrumentSession({ 0 }, player), player)
+            activeModel = model
+            model.open()
+            model.start()
+            repeat(10) { index ->
+                runCurrent()
+                model.answer(Instrument.PIANO) // No responde antes del inicio real.
+                runCurrent()
+                assertEquals(index, model.ui.value.game.answers.size)
+                advanceTimeBy(100)
+                runCurrent()
+                assertTrue(playing)
+                if (index == 0) {
+                    advanceTimeBy(5000)
+                    runCurrent()
+                    model.listen()
+                    runCurrent()
+                    advanceTimeBy(100)
+                    runCurrent()
+                    assertTrue(playing)
+                }
+                model.listen() // No superpone otra escucha.
+                model.answer(Instrument.PIANO)
+                model.answer(Instrument.VIOLIN) // Doble toque: se acepta solo el primero.
+                runCurrent()
+                assertFalse(playing)
+                assertEquals(index + 1, model.ui.value.game.answers.size)
+                assertTrue(model.ui.value.game.answers.last().correct)
+                assertEquals(if (index == 0) 2 else 1, model.ui.value.game.answers.last().listensUsed)
+                assertNull(model.ui.value.error)
+                if (index < 9) {
+                    assertEquals(InstrumentPhase.FEEDBACK, model.ui.value.game.phase)
+                    model.next()
+                }
+            }
+            advanceUntilIdle()
+            assertEquals(InstrumentPhase.FINISHED, model.ui.value.game.phase)
+            assertTrue(model.ui.value.history.single().completed)
+            assertEquals(10, model.ui.value.history.single().answers.size)
+            assertTrue(currentTime < 10000)
+        } finally {
+            activeModel?.home()
+            advanceUntilIdle()
+            Dispatchers.resetMain()
+        }
+    }
+
     @Test fun `historial ilegible bloquea partida manual hasta relectura correcta`() = runTest {
         Dispatchers.setMain(StandardTestDispatcher(testScheduler))
         try {

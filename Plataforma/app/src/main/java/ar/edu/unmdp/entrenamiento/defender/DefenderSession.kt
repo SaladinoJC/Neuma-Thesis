@@ -30,15 +30,17 @@ data class DefenderEnemy(val id: Int, val note: DefenderNote, val appearedAtMill
 @Serializable enum class DefenderPhase { SETUP, RUNNING, PAUSED, FINISHED, INTERRUPTED }
 @Serializable enum class DefenderResolution { ELIMINATED, ARRIVED }
 @Serializable
-data class DefenderConfiguration(val version: String = "defender-d5-v1", val travelMillis: Long = 10_000,
+data class DefenderConfiguration(val version: String = "defender-pressure-v2", val travelMillis: Long = 10_000,
     val noteSound: Boolean = true, val effectsSound: Boolean = true, val letterNames: Boolean = false,
     val stage: DefenderStage = DefenderStage.N1, val accidentals: Boolean = false, val maxEnemies: Int = 1,
     val dda: DefenderDdaConfiguration = DefenderDdaConfiguration(), val variant: String = "notes",
     val chordQuality: DefenderChordQuality = DefenderChordQuality.MAJOR,
-    val chordInversion: Int = 0, val chordClefs: DefenderChordClefs = DefenderChordClefs.TREBLE) {
+    val chordInversion: Int = 0, val chordClefs: DefenderChordClefs = DefenderChordClefs.TREBLE,
+    val spawnIntervalMillis: Long? = null) {
     init {
-        require(travelMillis in 6000..14_000 && travelMillis in dda.minimumTravelMillis..dda.maximumTravelMillis)
+        require(travelMillis in 3000..14_000 && travelMillis in dda.minimumTravelMillis..dda.maximumTravelMillis)
         require(maxEnemies in 1..4)
+        require(spawnIntervalMillis == null || spawnIntervalMillis in 1000..6000)
         require(variant in setOf("notes", "chords"))
         require(chordInversion in chordQuality.intervals.indices)
     }
@@ -60,6 +62,9 @@ data class DefenderState(val phase: DefenderPhase = DefenderPhase.SETUP, val liv
     val events: List<DefenderEvent> = emptyList(), val currentTravelMillis: Long = configuration.travelMillis,
     val ddaDecisions: List<DefenderDdaDecision> = emptyList(), val selectedQuality: DefenderChordQuality? = null) {
     val enemy: DefenderEnemy? get() = enemies.firstOrNull()
+    val spawnIntervalMillis: Long get() = configuration.spawnIntervalMillis ?: when {
+        activeMillis < 30_000 -> 4000; activeMillis < 60_000 -> 3500; activeMillis < 90_000 -> 3000; else -> 2500
+    }
 }
 
 /** Timestamp-based arcade. Rendering only observes this session; it cannot cause a collision. */
@@ -83,6 +88,7 @@ class DefenderSession(private val clock: () -> Long = { System.nanoTime() / 1_00
     fun start(seed: Int = 0, configuration: DefenderConfiguration = DefenderConfiguration(), origin: String = "practice") {
         require(origin in setOf("practice", "progression"))
         require(origin != "progression" || configuration.travelMillis == 10_000L) { "La progresión inicia cada partida con viaje de 10 s." }
+        require(origin != "progression" || configuration.spawnIntervalMillis == null) { "La progresión conserva la curva automática de aparición." }
         startedAt = clock(); pausedAt = 0; pausedTotal = 0
         nextId = 1; nextSpawnAt = 0; feedbackUntil = 0; lastFire = null
         state = DefenderState(phase = DefenderPhase.RUNNING, seed = seed, configuration = configuration, origin = origin,
@@ -195,7 +201,7 @@ class DefenderSession(private val clock: () -> Long = { System.nanoTime() / 1_00
         state = state.copy(currentTravelMillis = decision.afterTravelMillis, ddaDecisions = state.ddaDecisions + decision)
     }
 
-    private fun interval(at: Long): Long = when {
+    private fun interval(at: Long): Long = state.configuration.spawnIntervalMillis ?: when {
         at < 30_000 -> 4000; at < 60_000 -> 3500; at < 90_000 -> 3000; else -> 2500
     }
     private fun advance(target: Long) {

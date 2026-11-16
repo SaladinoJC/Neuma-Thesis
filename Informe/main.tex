@@ -6,6 +6,7 @@
 \begin{document}
 \input{preliminares/portada}
 \pagenumbering{roman}
+\input{preliminares/al-lector}
 \input{preliminares/agradecimientos}
 % Dedicatoria y frase: opcionales; agregar si el autor lo desea.
 \tableofcontents
@@ -32,11 +33,15 @@
 \input{capitulos/13-conclusiones}
 
 \chapter*{Referencias bibliográficas}
+\markboth{Referencias bibliográficas}{Referencias bibliográficas}
 \addcontentsline{toc}{chapter}{Referencias bibliográficas}
-\pendiente{Incorporar únicamente fuentes verificadas y citadas en el texto.}
 \begingroup
 \doublespacing
 \setlength{\bibitemsep}{0pt}
+% Permitir ajustar líneas con identificadores largos sin cambiar sus datos.
+\setlength{\emergencystretch}{2em}
+% Conservar cada entrada junta al extenderse la bibliografía.
+\appto\bibsetup{\interlinepenalty=10000\relax}
 \printbibliography[heading=none]
 \endgroup
 

@@ -15,7 +15,7 @@ inspeccionar las decisiones sin modificar el perfil real.
 La ejecución en Android debe comprobar además los controles, el texto
 ampliado, el acceso al panel y el recorrido de dos ejercicios con desbloqueo
 y repetición. Estas pruebas se prepararon pero no se ejecutaron en esta sesión
-por solicitud del usuario de no abrir el emulador. Las pruebas JVM y las
+porque decidí mantener cerrado el emulador en esa iteración. Las pruebas JVM y las
 simulaciones no sustituyen la comprobación del dispositivo ni una evaluación
 con estudiantes. Los resultados y límites del host se registran en la guía
 del incremento y su evidencia, separadamente de esas verificaciones pendientes.
@@ -37,7 +37,8 @@ del usuario de mantener cerrado el emulador. La evidencia seleccionada de host
 se conserva en \texttt{docs/evidencias/defender-d3/}; las medidas físicas y la
 validación con estudiantes continúan pendientes.
 \subsection{Casos de tríadas de Defender D4}
-Los casos de la sección~\ref{sec:implementacion-defender-d4} verifican el
+Los casos del incremento D4, relacionados con la
+sección~\ref{sec:implementacion-defender-d4}, verifican el
 catálogo de voces, intervalos, grafías y límites de pentagrama. La sesión
 pública comprueba respuesta completa, rechazo de raíz enarmónica distinta,
 conservación tras error, limpieza tras acierto, unicidad de objetivos y
@@ -168,7 +169,127 @@ bloqueo sin hito de ancla dada; solo se compilan por la restricción de no emula
 La evidencia se identifica en \texttt{docs/evidencias/intervalos-vocales-v6/}.
 Voz real, legibilidad nativa, TalkBack y calibración continúan pendientes.
 
+
+\section{Criterios de verificación del análisis de audio}
+\label{sec:verificacion-audio}
+\label{sec:latencia-verificacion-audio}
+Los criterios siguientes organizan la evaluación del procesamiento descrito en
+la sección~\ref{sec:implementacion-audio}; no presentan una nueva ejecución ni
+resultados medidos. Las latencias de entrada, salida e ida y vuelta se distinguen
+en la sección~\ref{sec:audio-estimacion}. La demora hasta una devolución visual
+requiere definir un evento final propio.
+
+Para Neuma deben identificarse por separado el tiempo de cálculo por ventana,
+el intervalo entre resultados y el tiempo hasta una devolución utilizable. La
+acumulación de muestras y una eventual exigencia de estabilidad también intervienen
+en ese recorrido. Ejecutar el cálculo fuera del hilo de interfaz organiza el
+trabajo concurrente, pero no demuestra por sí solo que se cumpla un plazo temporal.
+El análisis debe comprobar si el sistema sostiene la captura y el procesamiento
+en las condiciones del dispositivo y de la actividad.
+
+La verificación propuesta distingue tres objetos. Con señales sintéticas de
+frecuencia conocida se comprueban operaciones, errores de estimación y rechazos
+en condiciones controladas. Las grabaciones o capturas de voz permiten examinar
+variaciones y condiciones de adquisición que esos casos no reproducen. La
+interacción completa agrega permisos, interrupciones, presentación de referencias
+y devolución. Los resultados de cada prueba deben identificar señal de referencia,
+configuración, entorno y criterio aplicado, incluyendo los bloques rechazados.
+
+La evaluación debe conservar también la diferencia entre un pequeño desvío y
+una estimación de otra octava: duplicar la frecuencia produce una distancia de
+1200 cents según la ecuación~\ref{eq:distancia-cents}. A su vez, una tasa de error
+calculada únicamente sobre bloques aceptados debe acompañarse de información
+sobre cuántos fueron rechazados. Esta separación permite estudiar precisión,
+disponibilidad de estimaciones y demora sin ocultar una dimensión detrás de otra.
+Su comprobación técnica no acredita una mejora del aprendizaje musical.
+
+
 \section{Resultados obtenidos}
+\subsection{Revisión funcional informada el 12 de noviembre de 2026}
+El autor inició una pasada manual de Neuma 0.12.20 en Samsung S22 Ultra
+SM-S908E, con altavoz al 90\%, sin grabación de pantalla y en su habitación,
+descrita como silenciosa. Informó funcionamiento correcto de Simón,
+Instrumentos y Defender en los recorridos realizados; no se atribuye cobertura
+completa de sus casos. En Rhythm Tap señaló desalineación de conteo al subir
+tempo, dificultad con golpes rápidos y retraso audible de taps. El detalle de
+condiciones y sus límites se conserva en
+\path{docs/Pruebas-manuales-S22-Ultra-2026-11-12.md}.
+
+Las correcciones locales de 0.12.22 se verificaron con 302 pruebas JVM sin
+fallos, lint sin errores y compilación de aplicación y pruebas Android.
+Se reprodujo el uso de 60 BPM fijos en el contador y se comprobó su corrección
+con tempos de 60, 90 y 120 BPM. Los ensayos con desfases sintéticos de
+$\pm100$ ms verificaron la compensación de golpes densos, sin medir un desfase
+real del teléfono. La nueva calibración y la reproducción de taps, junto con
+los controles de presión de Defender, requieren comprobación física posterior.
+No se ejecutaron pruebas Android en esta revisión. Evidencia y procedimiento:
+\path{docs/Verificacion-ritmo-defender-v0.12.22.md}.
+
+El autor agregó una dificultad de confirmación de las cuerdas Si y Mi agudas
+en los tres modos del afinador. La revisión 0.12.23 superó 308 pruebas JVM,
+incluidas seis nuevas sobre pulsaciones breves, decaimiento sintético,
+continuidad y avance de recorridos. El banco utilizó senos de las dos alturas
+con amplitud decreciente; no representa una grabación de su guitarra. No se
+reprodujo detención de micrófono por silencio en ese banco. La respuesta física
+del nuevo criterio de 400 ms y del perfil de nivel más bajo queda pendiente;
+procedimiento y artefacto en \path{docs/Verificacion-afinador-v0.12.23.md}.
+
+La revisión visual comparativa 0.12.24 conserva la suite de 308 pruebas JVM y
+compila dos aplicaciones con paquetes distintos, Garden y Quiet Studio.
+Se verifican manifiestos y firmas para permitir actualización e instalación
+simultánea. La correspondencia de código de sesiones, audio, adaptación y
+almacenamiento se contrasta con el respaldo anterior. Estas comprobaciones no
+acreditan presentación, accesibilidad ni interacción en el S22 Ultra: la
+revisión nativa y la comparación con el director quedan pendientes. No se
+ejecutó emulador. El procedimiento figura en
+\path{docs/Comparacion-Garden-Quiet-Studio-v0.12.24.md}.
+
+\subsection{Verificación local del primer acabado Music Garden}
+El incremento 0.12.25, código 40, del 16 de noviembre de 2026 superó 308
+pruebas JVM sin fallos. Lint no informó errores y conservó 17 avisos en Garden
+y 19 en Quiet Studio. Se compilaron las dos aplicaciones y el APK de pruebas
+Android; se verificaron paquetes, versión y firma compatible con 0.12.24.
+La evidencia se conserva en \path{docs/evidencias/garden-instrumentos-0.12.25/}.
+
+Se preparó una prueba instrumentada del acceso desde Instrumentos al historial
+filtrado y del retorno con modalidad y nivel conservados. Esa prueba y las
+adaptaciones de los recorridos desplazables quedaron compiladas, sin ejecución.
+La revisión de código del incremento detectó y corrigió geometría de selección,
+foco, colores deshabilitados y registro de recursos. No se abrió emulador ni
+se ejecutó una revisión en teléfono: composición del invernadero, dimensiones,
+texto ampliado, accesibilidad y respuesta acústica siguen pendientes. Las
+comprobaciones locales no acreditan aceptación visual ni eficacia pedagógica.
+
+\subsection{Verificación local del acabado rítmico}
+La candidata 0.12.26, código 41, ejecutó las 308 pruebas JVM sin fallos; lint
+no informó errores y conservó 17 avisos Garden y 19 Quiet Studio. Se compilaron
+ambas aplicaciones y AndroidTest, y se comprobaron paquetes y firma compatible
+con 0.12.25. La revisión de código no identificó hallazgos pendientes después
+de corregir un recorrido de prueba que buscaba el compás antes de desplegar
+la preparación. Se reconstruyó AndroidTest tras esa corrección.
+
+Una prueba instrumentada nueva prepara el recorrido de calibración, historial
+y progreso con ancho de 320 dp y texto al 200\%, para comprobar conservación
+de partitura sin iniciar audio. Quedó compilada, sin ejecución. No se abrió
+emulador ni se midió un teléfono: presentación de la terraza, lectura musical,
+accesibilidad y respuesta acústica continúan pendientes. Las evidencias locales
+y el procedimiento figuran en la guía del acabado rítmico 0.12.26.
+
+\subsection{Verificación local del acabado vocal}
+La candidata 0.12.27, código 42, conserva los recorridos de Imitación, Ancla
+dada y Producción libre. La suite de 308 pruebas JVM se ejecutó sin fallos;
+se compilaron las aplicaciones Garden y Quiet Studio y las pruebas Android.
+Estas últimas no se ejecutaron. La revisión de código detectó una ayuda de
+señal que podía aparecer y desaparecer por muestra; se dejó visible durante
+toda la captura para evitar ese desplazamiento de controles.
+
+El SVG se comprobó contra los colores de los tokens y se verificó una
+exportación Android repetida con salida idéntica. Su previa se revisó en
+navegador, distinguiéndola de una captura nativa. La composición de pantallas,
+accesibilidad, micrófono y respuesta acústica siguen pendientes en teléfono.
+La guía del acabado vocal 0.12.27 conserva el método y las evidencias, sin
+atribuir eficacia pedagógica a las comprobaciones locales.
+
 \pendiente{Incorporar resultados comprobables con versión, fecha, datos, dispositivo y condiciones.
 Separar pruebas automatizadas, simulación, medición física y evaluación con estudiantes.}
 \section{Métricas de calidad}

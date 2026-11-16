@@ -1,0 +1,12 @@
+{
+  "Plataforma/app/build.gradle.kts": "18f782f19a61b6cd8512251f34329be0bbdf0a5fed90ec0e46bf90bb2f790091",
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/GardenInterior.kt": "be3dd861d823a6bf903ef4e10e7d27d3f375664d503d97dd0fa70a0dd40719e3",
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/MusicGardenMenu.kt": "7ece5eb524cf9abfb447b0a281ba791518f34f1a150571a702343a0f921712a9",
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/RhythmGardenInterior.kt": "2b43dfce823811bc61a8438a028f6344e4f6d77bbdcadca33c61144c6470ed11",
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/VocalIntervalApp.kt": "c2e26259cee5fe1e83e3bfae0e01bb2fe2fd90f324ef66f453552fe19441986f",
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/VocalIntervalHistoryApp.kt": "02463f2c33daa58f0acd22cf5f3fdd7d06a00bc3e91f807b3ef9769180ba213d",
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/VocalProgressApp.kt": "d848fb9b9042ae1f7e346e4837da82da7697c64cbc8dcaee8ef850947b71f021",
+  "assets/source/interiors/vocal-clearing.svg": "beb412f2ac6095f2858ace8db83314f74f10f6b4912eae5f31c12d8651ef7d62",
+  "tools/prepare_vocal_clearing.py": "55d5e49d81ff79518dae954ac36f9ef41681746a09ed34dd5b173ca7ab778e26",
+  "Plataforma/app/src/main/res/drawable/garden_vocal_clearing.xml": "f8286aa490b360129bcc2faf27415a9afd388aa38c94e90e3db3eae283fedc6c"
+}

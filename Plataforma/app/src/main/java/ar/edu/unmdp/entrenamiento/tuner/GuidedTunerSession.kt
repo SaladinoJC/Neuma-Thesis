@@ -21,8 +21,8 @@ data class GuidedTunerState(
 }
 
 /** Reglas puras. guided-distance-v1: 700/500 cents, 400 ms; hueco máximo 250 ms. */
-class GuidedTunerSession {
-    private val meter = TunerSession()
+class GuidedTunerSession(stableRequiredMillis: Long = 1000) {
+    private val meter = TunerSession(stableRequiredMillis)
     var state = GuidedTunerState()
         private set
     private var farSince: Long? = null

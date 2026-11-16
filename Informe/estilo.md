@@ -40,10 +40,20 @@ Las medidas del PDF permiten aproximar la composición; no reconstruyen su archi
 - El documento permite encabezados alternados para impresión a doble cara, pero los capítulos
   empiezan en la siguiente página disponible (`openany`), sin insertar hojas vacías de cortesía.
 - Los vínculos conservan una presentación discreta, sin el azul/verde intenso de la referencia.
-- Agradecimientos ocupa una hoja propia después de la portada, antes del índice general,
-  en la sección preliminar y con una entrada en el índice. Su texto queda pendiente del autor.
+- Por pedido del autor del 2026-11-02, después de la portada aparece una página con
+  su mensaje al lector, centrado verticalmente y alineado al margen izquierdo
+  (ajuste solicitado el 2026-11-02), sin título, encabezado ni número visible. Conserva
+  la tipografía y se cuenta dentro de los preliminares; no agrega entrada al índice.
+- Agradecimientos comienza en página propia después del mensaje al lector y antes
+  del índice general, con una entrada en el índice. Su borrador conserva pendientes del autor.
 - El resumen mantiene interlínea simple y la bibliografía APA mantiene doble espacio,
   conforme a las guías de tipo 1. La referencia estética no modifica esas pautas.
+- Las entradas bibliográficas se conservan completas entre páginas mediante un
+  ajuste local de `bibsetup`, sin cambiar interlineado, tipografía o datos de las citas.
+- En el capítulo 5, el título se divide antes de «empleadas» sin cortar la palabra,
+  conservando el texto corrido en índice/encabezados. La tabla de configuración
+  comienza en página propia, con leyenda al ancho del texto; ajustes locales del
+  04/11 que mantienen las medidas y la tipografía generales.
 
 No se transfieren textos, temas, categorías, referencias bibliográficas, instituciones, nombres,
 logotipos ni agradecimientos de la tesis de muestra. Tampoco se incorpora esa tesis al corpus

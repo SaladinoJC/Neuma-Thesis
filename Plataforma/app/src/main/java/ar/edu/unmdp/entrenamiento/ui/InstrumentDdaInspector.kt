@@ -30,22 +30,22 @@ internal fun InstrumentDdaInspector(ui: InstrumentUiState, onClose: () -> Unit,
     val index = if (selectedRound < 0) answers.lastIndex else selectedRound.coerceAtMost(answers.lastIndex)
     Dialog(onDismissRequest = onClose, properties = DialogProperties(usePlatformDefaultWidth = false)) {
         Surface(Modifier.fillMaxSize().padding(16.dp).testTag("dda-inspector"),
-            shape = RoundedCornerShape(18.dp), color = Night) {
+            shape = RoundedCornerShape(GardenTokens.RadiusLarge), color = MaterialTheme.colorScheme.surface) {
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
                     Text("Inspección DDA", style = MaterialTheme.typography.titleLarge)
                     TextButton(onClick = onClose, modifier = Modifier.testTag("dda-close")) { Text("Cerrar") }
                 }
-                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
                     FilterChip(selected = !simulated, onClick = { simulated = false; selectedRound = -1 }, label = { Text("Partida real") })
                     FilterChip(selected = simulated, onClick = { simulated = true; selectedRound = -1 },
                         label = { Text("Simulación") }, modifier = Modifier.testTag("dda-simulated"))
                 }
                 Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Text("Parámetros de prueba, pendientes de calibración.", color = Muted)
+                    Text("Parámetros de prueba, pendientes de calibración.", color = MaterialTheme.colorScheme.onSurfaceVariant)
                     if (simulated) {
-                        Text("DATOS SIMULADOS · No cambian tu partida ni tu historial.", color = Pink)
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Text("DATOS SIMULADOS · No cambian tu partida ni tu historial.", color = MaterialTheme.colorScheme.error)
+                        FlowRow(horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
                             InstrumentLevel.entries.forEach { level ->
                                 FilterChip(selected = levelName == level.name, onClick = { levelName = level.name },
                                     enabled = !ui.simulationBusy, label = { Text(level.label) }, modifier = Modifier.testTag("dda-level-${level.name}"))
@@ -58,13 +58,13 @@ internal fun InstrumentDdaInspector(ui: InstrumentUiState, onClose: () -> Unit,
                             }
                         }
                         if (ui.simulationBusy) Text("Calculando escenario…")
-                        ui.simulation?.let { Text("${ui.simulationScenario?.label} · ${it.level.label} · 10 preguntas", color = Lavender) }
+                        ui.simulation?.let { Text("${ui.simulationScenario?.label} · ${it.level.label} · 10 preguntas", color = MaterialTheme.colorScheme.primary) }
                     } else {
                         val origin = if (ui.game.answers.isNotEmpty()) ui.game.mode.name.lowercase(Locale.ROOT) else historical?.origin
                         Text(if (origin == "automatic") "Partida automática · ayuda adaptable" else "Práctica manual · ayuda fija")
                     }
                     if (index >= 0) {
-                        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                        FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
                             TextButton(onClick = { selectedRound = index-1 }, enabled = index > 0,
                                 modifier = Modifier.testTag("dda-previous-decision")) { Text("Anterior") }
                             Text("Pregunta ${answers[index].round}", modifier = Modifier.testTag("dda-selected-round"))
@@ -95,13 +95,13 @@ internal fun DecisionDetails(decision: InstrumentDdaDecision) {
         Text("Reglas · fuerza de activación", style = MaterialTheme.typography.titleMedium)
         inference.rules.forEach { Text("${it.id}: ${it.label} · ${number(it.strength)}") }
         Text("Centroide: ${inference.centroid?.let(::number) ?: "sin salida"}")
-        inference.diagnostic?.let { Text(it, color = Pink) }
+        inference.diagnostic?.let { Text(it, color = MaterialTheme.colorScheme.error) }
     }
     Text("Propuesta: ${deltaLabel(decision.proposedDelta)}")
     Text("Aplicada: ${deltaLabel(decision.appliedDelta)} · ${decision.listensBefore} → ${decision.listensAfter} escuchas",
-        modifier = Modifier.testTag("dda-applied"), color = Lavender)
+        modifier = Modifier.testTag("dda-applied"), color = MaterialTheme.colorScheme.primary)
     Text("Motivo: ${decision.reason.label}", modifier = Modifier.testTag("dda-reason"))
-    Text("Configuración: ${decision.configurationVersion}", color = Muted)
+    Text("Configuración: ${decision.configurationVersion}", color = MaterialTheme.colorScheme.onSurfaceVariant)
 }
 
 private fun deltaLabel(delta: Int): String = when (delta) {

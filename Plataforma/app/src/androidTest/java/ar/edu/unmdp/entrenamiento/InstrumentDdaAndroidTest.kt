@@ -20,7 +20,7 @@ class InstrumentDdaAndroidTest {
     fun inspectorReproduceRecuperacionSinCambiarLaPartidaReal() {
         compose.openMenuDestination("game-instruments")
         compose.waitUntil(10_000) { compose.onAllNodesWithTag("dda-open").fetchSemanticsNodes().isNotEmpty() }
-        compose.onNodeWithTag("dda-open").performClick()
+        compose.onNodeWithTag("dda-open").performScrollTo().performClick()
         compose.onNodeWithTag("dda-simulated").performClick()
         compose.onNodeWithTag("dda-level-C").performClick()
         compose.onNodeWithTag("dda-scenario-RECOVERY").performScrollTo().performClick()
@@ -31,12 +31,12 @@ class InstrumentDdaAndroidTest {
         compose.onNodeWithTag("dda-applied").performScrollTo().assertTextContains("2 → 3", substring = true)
         compose.onNodeWithTag("dda-reason").assertTextContains("próxima pregunta", substring = true)
         compose.onNodeWithTag("dda-close").performClick()
-        compose.onNodeWithText("Jugar instrumentos").performClick()
+        compose.onNodeWithText("Jugar instrumentos").performScrollTo().performClick()
         awaitAnswer()
         compose.onNodeWithText("2 escuchas restantes").assertIsDisplayed()
         compose.onNodeWithText("Nivel A").assertIsDisplayed()
-        compose.onNodeWithTag("instrument-option-0").performClick()
-        compose.onNodeWithTag("dda-open").performClick()
+        compose.onNodeWithTag("instrument-option-0").performScrollTo().performClick()
+        compose.onNodeWithTag("dda-open").performScrollTo().performClick()
         compose.onNodeWithTag("dda-reason").performScrollTo().assertTextContains("tres respuestas", substring = true)
         compose.onNodeWithTag("dda-close").performClick()
         compose.onNodeWithContentDescription("Volver al menú").performClick()
@@ -46,7 +46,7 @@ class InstrumentDdaAndroidTest {
     fun escenariosDeAciertosAyudadosYAlternanciaMantienenLaAyuda() {
         compose.openMenuDestination("game-instruments")
         compose.waitUntil(10_000) { compose.onAllNodesWithTag("dda-open").fetchSemanticsNodes().isNotEmpty() }
-        compose.onNodeWithTag("dda-open").performClick()
+        compose.onNodeWithTag("dda-open").performScrollTo().performClick()
         compose.onNodeWithTag("dda-simulated").performClick()
         for (scenario in listOf("HELPED", "ALTERNATING")) {
             compose.onNodeWithTag("dda-scenario-$scenario").performScrollTo().performClick()

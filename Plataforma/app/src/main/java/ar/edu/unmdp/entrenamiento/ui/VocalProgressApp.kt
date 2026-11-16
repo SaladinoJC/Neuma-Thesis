@@ -8,6 +8,8 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import ar.edu.unmdp.entrenamiento.voice.*
 import java.util.Locale
 
@@ -23,12 +25,13 @@ internal fun VocalProgressApp(ui: VocalIntervalUiState, model: VocalIntervalView
         .filter { it.result.targetSemitones == key && it.scaffoldingLevel == level && it.dda != null }.takeLast(20).asReversed()
     BackHandler(onBack = model::closeProgress)
     TunerGardenTheme {
-        Scaffold(containerColor = GardenTokens.Background, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
+        GardenPageScaffold { padding ->
             LazyColumn(Modifier.fillMaxSize().padding(padding).testTag("vocal-progress-screen"),
                 contentPadding = PaddingValues(GardenTokens.SpaceBase), verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceBase)) {
                 item {
                     TextButton(onClick = model::closeProgress, modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum).testTag("vocal-progress-back")) { Text("Volver a la práctica") }
-                    Text("Progreso vocal", style = MaterialTheme.typography.headlineMedium)
+                    Text("Progreso vocal", style = MaterialTheme.typography.headlineMedium,
+                        modifier = Modifier.semantics { heading() })
                     Text("Parámetros experimentales, sin calibración pedagógica")
                     VocalChoice("Ayuda auditiva", level, vocalScaffoldingChoices, true,
                         "vocal-progress-scaffolding") { level = it }
@@ -55,6 +58,7 @@ internal fun VocalProgressApp(ui: VocalIntervalUiState, model: VocalIntervalView
                         "vocal-progress-interval") { key = it }
                     val state = progress.forLevel(key, level)
                     Text(if (key in progress.unlockedFor(level)) "Desbloqueado" else "Bloqueado")
+                    GardenPaperPanel {
                     Text("${state.highSeries}/2 series altas · tolerancia recomendada ${state.toleranceCents} cents")
                     Text(if (state.mastered) "Hito registrado. El acceso adquirido se conserva." else "Todavía no hay hito para este intervalo y dirección.")
                     val group = vocalCurriculum.indexOfFirst { key in it }
@@ -64,6 +68,7 @@ internal fun VocalProgressApp(ui: VocalIntervalUiState, model: VocalIntervalView
                     if (level == 1 && group > 0) Text(vocalCurriculum[group - 1].joinToString { vocalIntervalLabel(it) })
                     if (state.masteryEvidence.isNotEmpty()) Text("Series del hito: ${state.masteryEvidence.joinToString()}", style = MaterialTheme.typography.bodySmall)
                     Text("Una serie alta exige cinco rondas elegibles altas. Entrar en tolerancia por sí solo no acredita esa categoría.")
+                    }
                 }
                 item {
                     if (records.isEmpty()) Text("No hay decisiones de progresión para este intervalo.")

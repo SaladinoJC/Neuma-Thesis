@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.*
 import androidx.compose.material3.*
 import androidx.compose.ui.Modifier
@@ -26,14 +27,16 @@ private fun title(item: HistoryItem) = item.simon?.let { "${it.scale.label} · $
     ?: "Captura de voz"
 
 @Composable
-fun HistoryApp(ui: HistoryUiState, model: HistoryViewModel, onHome: () -> Unit) {
+fun HistoryApp(ui: HistoryUiState, model: HistoryViewModel, returnLabel: String = "Volver al libro", onHome: () -> Unit) {
     val state = ui.history
     val back = { if (state.selected != null) model.back() else onHome() }
     BackHandler(onBack = back)
-    MaterialTheme(colorScheme = darkColorScheme(primary = Pink, background = Night, surface = Panel)) {
-        Scaffold { padding ->
+    TunerGardenTheme {
+        Scaffold(containerColor = GardenTokens.Background, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
             Column(Modifier.fillMaxSize().padding(padding).padding(horizontal = 18.dp)) {
-                TextButton(onClick = back) { Text(if (state.selected != null) "Volver al historial" else "Volver al menú") }
+                TextButton(onClick = back, modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum)) {
+                    Text(if (state.selected != null) "Volver al historial" else returnLabel)
+                }
                 Text("Resultados", style = MaterialTheme.typography.headlineMedium)
                 if (ui.loading) LinearProgressIndicator(Modifier.fillMaxWidth())
                 state.selected?.let { HistoryDetail(it) } ?: run {
@@ -48,7 +51,7 @@ fun HistoryApp(ui: HistoryUiState, model: HistoryViewModel, onHome: () -> Unit) 
                             levels.forEachIndexed { index, label -> FilterChip(selected = state.level == index,
                                 onClick = { model.filter(state.game, index, state.origin) }, label = { Text(label) }, modifier = Modifier.testTag("history-level-$index")) }
                         }
-                        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                             listOf(null to "Todos", "automatic" to "Automático", "manual" to "Manual").forEach { (origin, label) ->
                                 FilterChip(selected = state.origin == origin, onClick = { model.filter(state.game, state.level, origin) }, label = { Text(label) })
                             }
@@ -65,7 +68,9 @@ fun HistoryApp(ui: HistoryUiState, model: HistoryViewModel, onHome: () -> Unit) 
                     LazyColumn(Modifier.fillMaxWidth().weight(1f).testTag("history-list"), state = scroll,
                         verticalArrangement = Arrangement.spacedBy(10.dp), contentPadding = PaddingValues(vertical = 12.dp)) {
                         items(state.items, key = { it.key }) { result ->
-                            Surface(onClick = { model.select(result.key) }, color = Panel, modifier = Modifier.fillMaxWidth().testTag("history-row-${result.key}")) {
+                            Surface(onClick = { model.select(result.key) }, color = GardenTokens.Surface,
+                                shape = RoundedCornerShape(GardenTokens.RadiusLarge),
+                                modifier = Modifier.fillMaxWidth().testTag("history-row-${result.key}")) {
                                 Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(5.dp)) {
                                     Text(title(result), style = MaterialTheme.typography.titleMedium)
                                     Text("${date(result.atMillis)} · ${result.origin}")

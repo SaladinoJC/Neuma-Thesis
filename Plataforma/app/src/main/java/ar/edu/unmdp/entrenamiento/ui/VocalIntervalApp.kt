@@ -8,6 +8,7 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.verticalScroll
@@ -15,12 +16,17 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.*
 import androidx.core.net.toUri
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.compose.ui.unit.dp
+import ar.edu.unmdp.entrenamiento.R
 import ar.edu.unmdp.entrenamiento.voice.*
 import java.util.Locale
 import kotlin.math.abs
@@ -56,14 +62,22 @@ fun VocalIntervalApp(ui: VocalIntervalUiState, model: VocalIntervalViewModel, on
     }
     BackHandler(onBack = onHome)
     TunerGardenTheme {
-        Scaffold(containerColor = GardenTokens.Background, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
+        GardenPageScaffold { padding ->
             Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState())
                 .padding(GardenTokens.SpaceBase), verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceBase)) {
-                TextButton(onClick = onHome, modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum).testTag("vocal-home")) { Text("Volver al menú") }
-                Text("Intervalos vocales", style = MaterialTheme.typography.headlineMedium)
+                TextButton(onClick = onHome, modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum).testTag("vocal-home")) { Text("Volver al libro") }
+                val ended = ui.round?.result != null || ui.series?.ended == true
+                val practicing = !ended && (ui.referencePlaying || ui.heardReference || ui.round != null)
+                if (!ended && (!practicing || LocalDensity.current.fontScale <= 1.3f)) Image(
+                    painterResource(R.drawable.garden_vocal_clearing), null,
+                    modifier = Modifier.fillMaxWidth().height(if (practicing) 80.dp else 120.dp)
+                        .testTag(if (practicing) "vocal-clearing" else "vocal-cover"), contentScale = ContentScale.Fit)
+                Text("Intervalos vocales", style = MaterialTheme.typography.headlineMedium, modifier = Modifier.semantics { heading() })
+                GardenPaperPanel {
                 Text(if (ui.scaffoldingLevel == 3) "Elegí tu nota inicial y cantá ambas notas del intervalo, sin referencia sonora."
                     else if (ui.scaffoldingLevel == 2) "Escuchá el ancla y cantá solo la nota del intervalo indicado."
                     else "Escuchá dos notas y cantá la relación entre ellas en un registro cómodo.")
+                }
                 ui.series?.let { Text("${vocalScaffoldingLabel(it.scaffoldingLevel)} · Ronda ${it.ordinal} de 5" + if (it.ended) " · Cerrada" else "",
                     modifier = Modifier.testTag("vocal-series-status")) }
                 if (ui.round == null) {
@@ -137,6 +151,7 @@ fun VocalIntervalApp(ui: VocalIntervalUiState, model: VocalIntervalViewModel, on
                         VocalIntervalPhase.INTERRUPTED -> "Ronda interrumpida"
                         else -> "Prepará tu voz"
                     }
+                    GardenPaperPanel {
                     Text(status, style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.testTag("vocal-stage").semantics { liveRegion = LiveRegionMode.Polite })
                     Text(intervalNames[abs(ui.semitones)] + if (ui.semitones == 0) "" else if (ui.semitones > 0) " ascendente" else " descendente")
@@ -144,6 +159,8 @@ fun VocalIntervalApp(ui: VocalIntervalUiState, model: VocalIntervalViewModel, on
                         Text("Cantá sin vibrato hasta que se confirme el sostenido.")
                         Text(ui.frequencyHz?.let { String.format(Locale.ROOT, "%.1f Hz", it) } ?: "Esperando señal válida",
                             modifier = Modifier.testTag("vocal-frequency"))
+                        Text("Sostené una sola nota. Si no aparece una lectura, acercate al micrófono y evitá sonidos de fondo.",
+                            color = GardenTokens.TextSecondary)
                         if (phase == VocalIntervalPhase.TARGET) {
                             val error = ui.round.latestErrorCents
                             Text(error?.let { String.format(Locale.ROOT, "%+.1f cents respecto del intervalo", it) } ?: "Buscando la nota objetivo",
@@ -160,10 +177,14 @@ fun VocalIntervalApp(ui: VocalIntervalUiState, model: VocalIntervalViewModel, on
                         Button(onClick = model::startTarget, enabled = !ui.working,
                             modifier = Modifier.fillMaxWidth().heightIn(min = GardenTokens.TouchMinimum).testTag("vocal-target")) { Text("Cantar segunda nota") }
                     }
+                    }
                     ui.round.result?.let { result ->
+                        GardenPaperPanel {
                         if (result.interruption == null) {
                             Text(if (result.inTune == true) "Dentro de la tolerancia de práctica" else "Fuera de la tolerancia de práctica",
-                                style = MaterialTheme.typography.headlineSmall, modifier = Modifier.testTag("vocal-outcome"))
+                                style = MaterialTheme.typography.headlineSmall,
+                                color = if (result.inTune == true) GardenTokens.Primary else GardenTokens.ErrorText,
+                                modifier = Modifier.testTag("vocal-outcome"))
                             Text(String.format(Locale.ROOT, "Intervalo cantado: %.1f cents · objetivo: %d cents", result.intervalCents, ui.semitones * 100))
                             Text(String.format(Locale.ROOT, "Desviación: %+.1f cents", result.errorCents), modifier = Modifier.testTag("vocal-result-error"))
                             Text("Criterio experimental, pendiente de probar con voces reales.", color = GardenTokens.TextSecondary)
@@ -176,6 +197,7 @@ fun VocalIntervalApp(ui: VocalIntervalUiState, model: VocalIntervalViewModel, on
                         Button(onClick = model::newRound, enabled = !ui.working && !ui.historyBusy && ui.history.pending.isEmpty(),
                             modifier = Modifier.fillMaxWidth().heightIn(min = GardenTokens.TouchMinimum).testTag("vocal-new")) {
                             Text(if (!ui.progression) "Nueva ronda" else if (ui.series?.ended == false) "Siguiente ronda" else "Preparar otra serie") }
+                        }
                     }
                     if (ui.round.result == null) Text("Tiempo disponible: ${ui.remainingSeconds} s", color = GardenTokens.TextSecondary)
                 }

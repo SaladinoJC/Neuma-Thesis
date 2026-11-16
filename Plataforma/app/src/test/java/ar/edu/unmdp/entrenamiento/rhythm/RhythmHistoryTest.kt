@@ -34,7 +34,7 @@ class RhythmHistoryTest {
         assertEquals(result, record.result)
         assertEquals(result.score.fingerprint, record.fingerprint)
         assertEquals("rhythm-simple-v4", record.result.score.version)
-        assertEquals("rhythm-timing-v1", record.result.timingVersion)
+        assertEquals("rhythm-timing-v2-user-calibration", record.result.timingVersion)
         assertEquals(123L, record.result.taps.single().inputUptimeMillis)
         assertEquals(700L, record.startedAtMillis)
         assertEquals(700L, record.finishedAtMillis)

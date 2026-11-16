@@ -1,0 +1,12 @@
+{
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/InstrumentApp.kt": "f6301d2a6df37a9c564f89b15caf69304041434fab490c428d22b31db2f30a78",
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/GardenInterior.kt": "3277dc403023e9ab2751c000028d4a150daa39db648c1ba3875c3fdfa2cf02fb",
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/HistoryApp.kt": "084affc4c22687f563a18cea9e6f33e5a51b825a3ad766412f5b620f555abe6d",
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/InstrumentDdaInspector.kt": "ddd7cc924f33a3a9c0cc2d34b72962aab0ffdfb7b916b03f52971de0557873d5",
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/TunerGardenTheme.kt": "1db911025353d376643592c14192da60991f5fc056527c3c36f3e80ce7fe49bd",
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/MainActivity.kt": "1522e1e91f30f98f3d863034844ce615db436ecfff49dc67aff5957851baeced",
+  "Plataforma/app/build.gradle.kts": "5a70cc941684e6e9d4cc8726c1e6577275734aafc445d193dce098fd26c21e37",
+  "Plataforma/app/src/androidTest/java/ar/edu/unmdp/entrenamiento/InstrumentGardenAndroidTest.kt": "33a64d1b8cf110970fb953d77d21dda536950a840f1c0cdf5c8c5b002f1a434d",
+  "Plataforma/app/src/androidTest/java/ar/edu/unmdp/entrenamiento/InstrumentAndroidTest.kt": "a9a6afebde7dc175074724716201776313f173dbfc11707667d048fe53110a82",
+  "Plataforma/app/src/androidTest/java/ar/edu/unmdp/entrenamiento/InstrumentDdaAndroidTest.kt": "b5fb2ab9c3fc2f935caa058127bda11c0cd85402262ace3de4d5c6ba2407ce16"
+}

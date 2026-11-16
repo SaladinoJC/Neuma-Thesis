@@ -64,6 +64,8 @@ data class InstrumentState(
 ) {
     val listensRemaining: Int get() = listensAllowed - listensUsed
     val correctCount: Int get() = answers.count { it.correct }
+    val canAnswer: Boolean get() = phase == InstrumentPhase.RESPONSE ||
+        (phase == InstrumentPhase.PLAYBACK && listensUsed > 0)
 }
 
 /** Reglas independientes de Android. El objetivo solo se expone después de responder. */
@@ -131,12 +133,13 @@ class InstrumentSession(
             }
             check(started) { "El audio no llegó a reproducirse." }
         } finally {
-            state = state.copy(phase = if (state.listensUsed > 0) InstrumentPhase.RESPONSE else InstrumentPhase.READY)
+            if (state.phase == InstrumentPhase.PLAYBACK)
+                state = state.copy(phase = if (state.listensUsed > 0) InstrumentPhase.RESPONSE else InstrumentPhase.READY)
         }
     }
 
     suspend fun answer(selected: Instrument) {
-        if (state.phase != InstrumentPhase.RESPONSE || selected !in state.options) return
+        if (!state.canAnswer || selected !in state.options) return
         val answer = InstrumentAnswer(state.round, target, state.options, selected, selected == target,
             state.listensUsed, clock(), listensAllowed = state.listensAllowed, melody = checkNotNull(melody))
         val decision = decideInstrumentHelp(state.answers + answer, state.listensAllowed, lastChangeRound, state.mode, ddaConfiguration)

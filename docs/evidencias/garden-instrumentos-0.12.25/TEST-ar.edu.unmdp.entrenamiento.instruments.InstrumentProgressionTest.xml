@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.instruments.InstrumentProgressionTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-16T15:44:36.505Z" hostname="DESKTOP-PP49S64" time="0.125">
+  <properties/>
+  <testcase name="dos altas desbloquean B y las partidas ayudadas reinician racha sin perder nivel" classname="ar.edu.unmdp.entrenamiento.instruments.InstrumentProgressionTest" time="0.125"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

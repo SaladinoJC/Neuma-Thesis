@@ -150,6 +150,7 @@ private fun ColumnScope.DefenderGame(ui: DefenderUiState, model: DefenderViewMod
         Text(game.configuration.contentLabel, color = GardenTokens.Primary, fontWeight = FontWeight.Bold)
         Text("Vidas: ${game.lives}", color = GardenTokens.Primary, modifier = Modifier.testTag("defender-lives"))
         Text("${game.points} pts", fontWeight = FontWeight.Bold, modifier = Modifier.testTag("defender-score"))
+        Text("Viaje ${game.currentTravelMillis / 1000} s · aparición ${game.spawnIntervalMillis / 1000.0} s", style = MaterialTheme.typography.bodySmall)
         if (reduced) game.enemies.minOfOrNull { it.deadlineMillis - game.activeMillis }?.let {
             Text("Próxima llegada: ${(it.coerceAtLeast(0) + 999) / 1000} s", style = MaterialTheme.typography.bodySmall)
         }

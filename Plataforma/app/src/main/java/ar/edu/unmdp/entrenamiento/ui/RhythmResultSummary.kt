@@ -1,9 +1,13 @@
 package ar.edu.unmdp.entrenamiento.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
@@ -19,14 +23,22 @@ internal fun rhythmOccurrenceAt(score: RhythmScore, relativeNanos: Long): Rhythm
 @Composable
 internal fun RhythmResultSummary(result: RhythmResult, detailed: Boolean = false) {
     val score = result.score
+    var expanded by rememberSaveable(result) { mutableStateOf(false) }
+    val compact = !detailed
     val owners = score.occurrences.associateBy { it.index }
     fun ownerLabel(index: Int?): String {
         val owner = owners[index] ?: return "Sin categoría asignada"
         return "Compás ${owner.bar + 1} · ${owner.category.label} (${if (owner.target) "objetivo" else "conexión"})"
     }
-    Column {
+    Column(verticalArrangement = Arrangement.spacedBy(RhythmTokens.SpaceSm)) {
+        Text(result.calibration?.let { "Ajuste de toque aplicado: ${it.offsetNanos / 1_000_000} ms (${it.sampleCount} pulsos)." }
+            ?: "Sin ajuste de calibración.", color = RhythmTokens.TextSecondary)
         Text("Resumen · ${if (result.origin == "progression") "Progresión" else "Práctica"}", fontWeight = FontWeight.Bold, modifier = Modifier.testTag("rhythm-summary"))
         Text("A tiempo: ${result.attacks.count { it.kind == TapKind.ON_TIME }} / ${result.attacks.size} · Omitidos: ${result.omissions} · Extras: ${result.extras}")
+        if (compact) TextButton(onClick = { expanded = !expanded }, modifier = Modifier.heightIn(min = RhythmTokens.TouchMinimum).testTag("rhythm-result-details")) {
+            Text(if (expanded) "Ocultar detalles" else "Ver detalles de esta ejecución")
+        }
+        if (!compact || expanded) {
         Text("Adelantados: ${result.attacks.count { it.kind == TapKind.EARLY }} · Atrasados: ${result.attacks.count { it.kind == TapKind.LATE }}")
         val unevaluated = result.attacks.count { it.kind == null }
         if (unevaluated > 0) Text("Sin evaluar por interrupción: $unevaluated")
@@ -44,7 +56,7 @@ internal fun RhythmResultSummary(result: RhythmResult, detailed: Boolean = false
                 Text("${cells.size} apariciones objetivo · ${beats.numerator}/${beats.denominator} pulsos", style = MaterialTheme.typography.bodySmall)
             }
         }
-        Text("Cada golpe conserva su desvío con signo; los errores no detienen el ejercicio.", color = GardenTokens.TextSecondary)
+        Text("Cada golpe conserva su desvío con signo; los errores no detienen el ejercicio.", color = RhythmTokens.TextSecondary)
         result.attacks.forEach { attack ->
             if (detailed) Text(ownerLabel(attack.occurrenceIndex), style = MaterialTheme.typography.bodySmall)
             Text("Golpe ${attack.index + 1}: ${attack.kind?.let(::rhythmKindLabel) ?: "Sin evaluar (interrupción)"}" +
@@ -67,6 +79,7 @@ internal fun RhythmResultSummary(result: RhythmResult, detailed: Boolean = false
                 false -> "${silence.extraCount} golpes extra"
                 null -> "Sin evaluar (interrupción)"
             }, style = MaterialTheme.typography.bodySmall)
+        }
         }
     }
 }

@@ -1,5 +1,76 @@
 # Music Garden — Dirección artística y sistema visual
 
+**Tercer acabado, vocal 0.12.27 (16/11/2026):** portada propia SVG/VectorDrawable
+del claro de canto, reutilizada en preparación y referencia/captura; se retira
+en resultados y durante práctica con texto >130 %. Papel, paneles y tipografías
+compartidos en captura/devolución/historial/progreso, sin alterar los tres modos,
+permisos, ayudas, tolerancias, audio o datos. Se centralizan áreas seguras; ritmo
+conserva su excepción Quiet Studio. Previa del SVG revisada en navegador, no
+Android; composición nativa pendiente. Sin sonidos, háptica o animación nuevos.
+Guía: [Acabado-Intervalos-vocales-v0.12.27.md](Acabado-Intervalos-vocales-v0.12.27.md).
+
+**Segundo acabado, Rhythm Tap 0.12.26 (16/11/2026):** por pedido de continuar,
+se aplica terraza estática original a previa/conteo/ejecución Garden y papel a
+preparación/calibración/historial/progreso/resultados. Partitura VexFlow limpia,
+preparación plegable, resumen expandible, avisos de guardado visibles y pad que
+puede crecer con texto. Decoración ausente en resultados, Quiet Studio y durante
+ejecución con texto >130 %. Se mantienen relojes, audio, evaluación y datos.
+No se añaden sonidos/háptica ni animación ambiental. Composición y verificación
+nativa pendientes; seguir no implica aprobación de la composición de Instrumentos.
+Guía: [Acabado-Rhythm-Tap-v0.12.26.md](Acabado-Rhythm-Tap-v0.12.26.md).
+
+**Acabado transversal, Q1–Q3 confirmadas el 16/11/2026:** preparación, resultados
+e historial como páginas del libro; escenario propio durante el juego. Se
+autoriza reorganizar distribución, controles y navegación interna conservando
+reglas musicales, audio, DDA, datos y estructura del menú. **Definir e incorporar
+sonidos de interfaz y respuesta táctil queda pendiente**; este incremento aborda
+acabado visual y movimiento conforme a las reglas vigentes. Personaje sigue
+pausado. Q4 acepta invernadero para Instrumentos; Q5/Q6 eligen para probar terraza
+en Rhythm Tap y claro de canto en intervalos vocales, con acabado concreto aún
+por evaluar. Entrevista y pendientes en
+[Acabado-Music-Garden.md](Acabado-Music-Garden.md).
+
+**Síntesis e implementación incremental autorizadas el 16/11/2026:** el autor
+confirma el recorrido y seis incrementos. Especificación en
+[Especificacion-acabado-Music-Garden.md](Especificacion-acabado-Music-Garden.md),
+GitHub #31–#37. La primera candidata 0.12.25 aplica papel/fuentes/tokens a
+Instrumentos, historial compartido e inspector; invernadero estático original en
+Canvas, marca de selección fija, anillo de foco y estados deshabilitados. No se
+añade animación ambiental ni se modifican reglas/audio/DDA/datos. La composición
+vectorial y su presentación nativa siguen pendientes de evaluación en teléfono;
+no se presenta el escenario como ilustración final aprobada.
+
+**Acuerdo posterior a la comparación, comunicado el 16/11/2026:** el usuario
+informa que acordó con su director continuar con la estética de videojuego
+Music Garden y el menú del libro. Esta es la dirección para el trabajo futuro;
+Quiet Studio se conserva como antecedente. No se eliminan variantes/perfiles ni
+se retoma automáticamente el personaje pausado. Las menciones de estética aún
+abierta del registro del 12/11 describen el estado anterior a este acuerdo.
+
+**Comparación Android autorizada el 12/11/2026:** Neuma Garden conserva esta
+dirección; Neuma Quiet Studio aplica el acuerdo del 31/10 al catálogo y al
+recorrido de Rhythm Tap. Su excepción acotada usa avena/lino, cerámica mate,
+salvia grisácea y arcilla apagada, desde `design-tokens.json:quietStudio`.
+Comparación y recuperación: [0.12.24](Comparacion-Garden-Quiet-Studio-v0.12.24.md).
+No se adopta una estética definitiva ni se migran otros juegos. Se reutilizan
+Fraunces/Nunito Sans y la notación estructurada; sin animación ambiental,
+bibliotecas nuevas ni sonido/háptica decorativos. Revisión visual nativa pendiente.
+
+**Afinador 0.12.23 (12/11/2026):** textos expresan permanencia efectiva y última
+confirmación al decaer la señal, usando tema/tokens existentes y pantalla
+desplazable; sin assets ni animaciones nuevas. Oído oculta también esa memoria
+de lectura en sus fases ocultas. Estados verificados por JVM y compilación;
+presentación, dimensiones y TalkBack nativos pendientes, sin emulador.
+
+**Correcciones del 12/11/2026, 0.12.22:** calibración de ritmo con preparación,
+conteo, toma de pulsos, candidato/error/cancelación y retorno; reutiliza tema
+papel/verdes, Fraunces/Nunito Sans, tokens, scroll y controles ≥48 dp. Pad nativo
+compartido sin animaciones; resultados muestran ajuste aplicado. Defender
+reutiliza controles de viaje e incorpora intervalo manual/automático con FlowRow.
+Sin ilustraciones, fuentes o dependencias nuevas; click sintetizado precargado
+inventariado. Pruebas de lógica y compilación verificadas; tamaños, texto 200 %,
+TalkBack y sincronización/acústica nativos pendientes, sin emulador.
+
 **Intervalos vocales V6 (2026-10-30):** Producción libre reutiliza selector,
 capturas, historial y panel con tema/tokens, papel/verdes y Fraunces/Nunito Sans.
 Omite escucha y registro de referencia; mensajes indican ancla propia y segunda
@@ -371,7 +442,7 @@ Próximo incremento técnico propuesto, cuando se solicite implementación: tema
 
 Comprobaciones pendientes: legibilidad y contraste renderizado, tamaños táctiles/teclas, texto ampliado, TalkBack, barras del sistema, trayectorias con notación y criaturas, reducción de movimiento, audio sin bloqueos y rendimiento en emulador/teléfono. La prueba visual documentada del navegador no las sustituye. Revisar especialmente los primeros acercamientos Q11–Q13 durante la demostración nativa.
 
-Esta etapa no autoriza implementar, publicar, hacer push ni modificar issues. La dirección y las referencias ya permiten diseñar incrementos coherentes sin volver a preguntar por paleta/materiales en cada minijuego.
+La etapa original de definición de esta guía no autorizaba implementación ni publicación. El acabado transversal tiene autorización posterior del autor el 16/11/2026, con alcance y tareas en la especificación indicada al inicio. Las referencias permiten diseñar incrementos coherentes sin volver a preguntar por paleta/materiales en cada minijuego.
 
 ## 13. Fuentes técnicas a revisar
 

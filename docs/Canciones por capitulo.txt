@@ -1,0 +1,30 @@
+Canciones por capitulo:
+
+Introducción: Also sprach Zarathustra o Speak to Me / Breathe (In the Air)
+
+Objetivos: Pulses de Steve Reich o Weird Fishes? no me convencen
+
+Marco Teorico / Estado del arte: High Hopes Everything in its right place
+
+Metodología: Pulses de Reich, Bolero de Ravel, no me convence
+
+Herramientas: Schism de tool
+
+Factibilidad
+
+Planificación temporal
+
+análisis de requerimientos
+
+Diseño del sistema
+
+Implementación
+
+Pruebas y validación
+
+Evaluación
+
+Conclusiones y trabajos futuros
+
+
+13 en total

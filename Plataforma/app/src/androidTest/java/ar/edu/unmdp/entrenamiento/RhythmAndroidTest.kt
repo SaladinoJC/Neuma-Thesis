@@ -20,10 +20,13 @@ class RhythmAndroidTest {
         compose.openMenuDestination("game-rhythm")
         compose.onNodeWithTag("rhythm-category-R20").performScrollTo().performClick()
         compose.onNodeWithTag("rhythm-category-R21").performScrollTo().performClick()
+        compose.openRhythmPreparationIfCollapsed()
         compose.onNodeWithTag("rhythm-generate").performScrollTo().performClick()
         compose.waitUntil(10_000) { compose.onAllNodesWithTag("rhythm-play").fetchSemanticsNodes().isNotEmpty() }
         compose.onNodeWithTag("rhythm-score").performScrollTo().assertIsDisplayed()
+        compose.openRhythmPreparationIfCollapsed()
         compose.onNodeWithTag("rhythm-metronome").performScrollTo().performClick()
+        compose.openRhythmPreparationIfCollapsed()
         compose.onNodeWithTag("rhythm-tap-sound").performScrollTo().performClick()
         lateinit var model: RhythmViewModel
         compose.runOnUiThread {
@@ -76,7 +79,7 @@ class RhythmAndroidTest {
         }
     }
     @Test fun audioRealAvanzaFramesYLiberaTimelineYTaps() = runBlocking {
-        val audio = AndroidRhythmAudio()
+        val audio = AndroidRhythmAudio(compose.activity)
         try {
             val start = audio.start(120, false)
             assertTrue(start.originNanos > 0)

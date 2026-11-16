@@ -20,9 +20,9 @@ import java.util.Locale
 @Composable
 internal fun RhythmSaveStatus(ui: RhythmUiState, model: RhythmViewModel, onData: (() -> Unit)? = null, showCurrentStatus: Boolean = true) {
     if (ui.historyBusy) Text("Actualizando historial…")
-    ui.history.error?.let { Text(it, color = GardenTokens.ErrorText, modifier = Modifier.testTag("rhythm-history-error")) }
+    ui.history.error?.let { Text(it, color = RhythmTokens.ErrorText, modifier = Modifier.testTag("rhythm-history-error")) }
     if (ui.history.pending.isNotEmpty()) Text("${ui.history.pending.size} ejercicio(s) pendientes en memoria. Reintentá o exportá una copia.",
-        color = GardenTokens.ErrorText, modifier = Modifier.testTag("rhythm-history-pending"))
+        color = RhythmTokens.ErrorText, modifier = Modifier.testTag("rhythm-history-pending"))
     if (ui.history.error != null || ui.history.pending.isNotEmpty()) {
         OutlinedButton(onClick = model::retryHistory, enabled = !ui.historyBusy, modifier = Modifier.testTag("rhythm-history-retry")) { Text("Reintentar historial") }
         if (onData != null) TextButton(onClick = onData, modifier = Modifier.testTag("rhythm-data")) { Text("Datos y exportación") }
@@ -43,11 +43,11 @@ internal fun RhythmHistoryApp(ui: RhythmUiState, model: RhythmViewModel, onData:
     val state = ui.history
     val detail = (state.results + state.pending).filter { it.id == ui.detailId }.maxByOrNull { it.revision }
     val back = { if (ui.detailId != null) model.detail(null) else model.closeHistory() }
-    TunerGardenTheme {
+    RhythmTheme {
         BackHandler(onBack = back)
-        Scaffold(containerColor = GardenTokens.Background, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
+        RhythmPageScaffold { padding ->
             LazyColumn(Modifier.fillMaxSize().padding(padding).testTag("rhythm-history-screen"),
-                contentPadding = PaddingValues(GardenTokens.SpaceBase), verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceMd)) {
+                contentPadding = PaddingValues(RhythmTokens.SpaceBase), verticalArrangement = Arrangement.spacedBy(RhythmTokens.SpaceMd)) {
                 item {
                     TextButton(onClick = back, modifier = Modifier.testTag("rhythm-history-back")) { Text(if (detail != null) "Volver al historial" else "Volver al ejercicio") }
                     Text(if (detail != null) "Detalle rítmico" else "Historial de ritmo", style = MaterialTheme.typography.headlineSmall,
@@ -56,7 +56,7 @@ internal fun RhythmHistoryApp(ui: RhythmUiState, model: RhythmViewModel, onData:
                 }
                 if (detail != null) {
                     item {
-                        RecordHeading(detail)
+                        GardenPaperPanel(color = RhythmTokens.Surface) { RecordHeading(detail) }
                         Text("Fin: ${rhythmDate(detail.finishedAtMillis)}")
                         OutlinedButton(onClick = { model.repeatRecord(detail.id) }, enabled = !ui.busy,
                             modifier = Modifier.testTag("rhythm-history-repeat")) { Text("Repetir como práctica") }
@@ -85,7 +85,7 @@ internal fun RhythmHistoryApp(ui: RhythmUiState, model: RhythmViewModel, onData:
                         TextButton(onClick = { filtersOpen = !filtersOpen }, modifier = Modifier.testTag("rhythm-history-filters")) { Text(if (filtersOpen) "Cerrar filtros" else "Filtrar historial") }
                         if (filtersOpen) {
                             val filter = state.filter
-                            Column(verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
+                            Column(verticalArrangement = Arrangement.spacedBy(RhythmTokens.SpaceSm)) {
                                 HistoryChoice("Categoría", filter.category?.name, RhythmCategory.entries.sortedBy { it.code }.map { it.name to "${it.code} · ${it.label}" }, true,
                                     "rhythm-history-category") { model.filterHistory(filter.copy(category = it?.let(RhythmCategory::valueOf))) }
                                 HistoryChoice("Compás", filter.beatsPerBar?.toString(), (2..4).map { it.toString() to "$it/4" }, true,
@@ -104,7 +104,7 @@ internal fun RhythmHistoryApp(ui: RhythmUiState, model: RhythmViewModel, onData:
                         Text(if (state.results.isEmpty()) "Todavía no hay ejercicios guardados." else "No hay ejercicios con estos filtros.", modifier = Modifier.testTag("rhythm-history-empty"))
                     }
                     items(state.entries.take(limit), key = { it.id }) { record ->
-                        Column(verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceXs)) {
+                        GardenPaperPanel(color = RhythmTokens.Surface) {
                             RecordHeading(record)
                             Text("${record.result.attacks.count { it.kind == TapKind.ON_TIME }}/${record.result.attacks.size} ataques a tiempo · ${record.result.extras} extras")
                             OutlinedButton(onClick = { model.detail(record.id) }, modifier = Modifier.testTag("rhythm-history-detail")) { Text("Ver partitura y resultado") }

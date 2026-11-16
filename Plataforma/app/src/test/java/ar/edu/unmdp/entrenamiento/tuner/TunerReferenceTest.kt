@@ -68,7 +68,7 @@ class TunerReferenceTest {
             stale(PitchEstimate(110.0), 0, 44100)
             assertNull(model.ui.value.tuning.frequency)
             assertEquals(0L, model.ui.value.tuning.stableMillis)
-            repeat(10) { send!!(PitchEstimate(110.0), 0, 44100); advanceTimeBy(100) }
+            repeat(4) { send!!(PitchEstimate(110.0), 0, 44100); advanceTimeBy(100) }
             assertEquals(1, model.ui.value.guided.firstPass.size)
             send!!(PitchEstimate(110.0), 0, 44100)
             assertEquals(2, model.ui.value.guided.firstPass.size)

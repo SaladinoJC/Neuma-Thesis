@@ -1,0 +1,559 @@
+--- a/Plataforma\app\build.gradle.kts
++++ b/Plataforma\app\build.gradle.kts
+@@ -13,8 +13,8 @@
+         applicationId = "ar.edu.unmdp.entrenamiento"
+         minSdk = 26
+         targetSdk = 36
+-        versionCode = 40
+-        versionName = "0.12.25"
++        versionCode = 41
++        versionName = "0.12.26"
+         buildConfigField("boolean", "QUIET_STUDIO", "false")
+         resValue("string", "variant_app_name", "Neuma Garden")
+         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+--- a/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\GardenInterior.kt
++++ b/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\GardenInterior.kt
+@@ -16,6 +16,7 @@
+ import androidx.compose.ui.geometry.Offset
+ import androidx.compose.ui.geometry.Size
+ import androidx.compose.ui.graphics.Path
++import androidx.compose.ui.graphics.Color
+ import androidx.compose.ui.graphics.StrokeCap
+ import androidx.compose.ui.graphics.drawscope.DrawScope
+ import androidx.compose.ui.graphics.drawscope.Stroke
+@@ -38,8 +39,9 @@
+ }
+ 
+ @Composable
+-internal fun GardenPaperPanel(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
+-    Surface(modifier.fillMaxWidth(), color = GardenTokens.Surface,
++internal fun GardenPaperPanel(modifier: Modifier = Modifier, color: Color = GardenTokens.Surface,
++    content: @Composable ColumnScope.() -> Unit) {
++    Surface(modifier.fillMaxWidth(), color = color,
+         shape = RoundedCornerShape(GardenTokens.RadiusLarge)) {
+         Column(Modifier.padding(GardenTokens.SpaceBase),
+             verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm), content = content)
+--- a/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\RhythmApp.kt
++++ b/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\RhythmApp.kt
+@@ -48,7 +48,7 @@
+     LaunchedEffect(state.phase) {
+         if (state.phase == RhythmPhase.PREVIEW || state.phase == RhythmPhase.RESULTS) {
+             editCategories = false
+-            if (quiet) showSettings = false
++            showSettings = false
+         }
+     }
+     val scroll = rememberScrollState()
+@@ -61,11 +61,11 @@
+     LaunchedEffect(active, scoreTop) { if (active) scroll.scrollTo(scoreTop) }
+     RhythmTheme {
+         BackHandler(onBack = onHome)
+-        Scaffold(containerColor = RhythmTokens.Background, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
++        RhythmPageScaffold { padding ->
+             Column(Modifier.fillMaxSize().padding(padding).padding(horizontal = RhythmTokens.SpaceBase),
+                 verticalArrangement = Arrangement.spacedBy(RhythmTokens.SpaceSm)) {
+                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+-                    TextButton(onClick = onHome) { Text("Menú") }
++                    TextButton(onClick = onHome, modifier = Modifier.heightIn(min = RhythmTokens.TouchMinimum)) { Text(if (quiet) "Menú" else "Libro") }
+                     Text(if (quiet) "Encontrá tu pulso" else "Rhythm Tap", style = MaterialTheme.typography.headlineSmall,
+                         modifier = Modifier.weight(1f))
+                 }
+@@ -74,11 +74,17 @@
+                     val mode = if ((score != null && state.origin == "progression") || (score == null && ui.progression)) "Progresión" else "Práctica"
+                     val tempo = score?.bpm ?: if (ui.progression) ui.history.progress.tempo(ui.selected) else ui.practiceBpm
+                     Text("$mode · 4 compases · $meter/4 · $tempo BPM", color = RhythmTokens.TextSecondary)
+-                    if (quiet && !active && state.phase != RhythmPhase.SETUP) TextButton(onClick = { showSettings = !showSettings }) {
++                    if (!active) RhythmSaveStatus(ui, model, onData)
++                    if (!active && state.phase != RhythmPhase.SETUP) TextButton(onClick = { showSettings = !showSettings },
++                        modifier = Modifier.heightIn(min = RhythmTokens.TouchMinimum).testTag("rhythm-settings")) {
+                         Text(if (showSettings) "Cerrar preparación" else "Preparación y calibración")
+                     }
+                     if (!active) {
+-                      if (!quiet || state.phase == RhythmPhase.SETUP || showSettings) {
++                      if (state.phase == RhythmPhase.SETUP || showSettings) {
++                        if (!quiet && state.phase == RhythmPhase.SETUP) {
++                            Text("Tu práctica en la terraza", style = MaterialTheme.typography.headlineSmall)
++                            Text("Elegí qué practicar, revisá la partitura y marcá el ritmo. El conteo te acompaña antes de empezar.", color = RhythmTokens.TextSecondary)
++                        }
+                         Text("Antes de tocar: calibración", style = MaterialTheme.typography.titleMedium)
+                         Text(ui.calibration?.let { "Ajuste de toque: ${it.offsetNanos / 1_000_000} ms. Recalibrá si cambiás la salida de audio." }
+                             ?: "Sin calibrar · ajuste de 0 ms. Calibrá si los golpes se registran adelantados o atrasados.", color = RhythmTokens.TextSecondary)
+@@ -88,9 +94,7 @@
+                             if (ui.calibration != null) TextButton(onClick = model::clearCalibration, enabled = !ui.busy,
+                                 modifier = Modifier.heightIn(min = RhythmTokens.TouchMinimum)) { Text("Quitar ajuste") }
+                         }
+-                        RhythmSaveStatus(ui, model, onData)
+                         RhythmModeControls(ui, model)
+-                        OutlinedButton(onClick = model::openHistory, modifier = Modifier.testTag("rhythm-open-history")) { Text("Historial de ritmo") }
+                         FlowRow(horizontalArrangement = Arrangement.spacedBy(RhythmTokens.SpaceSm)) {
+                             (2..4).forEach { beats ->
+                                 FilterChip(selected = ui.beatsPerBar == beats, enabled = !ui.busy,
+@@ -98,7 +102,7 @@
+                                     label = { Text("$beats/4") })
+                             }
+                         }
+-                        if (state.phase != RhythmPhase.SETUP) TextButton(onClick = { editCategories = !editCategories }, modifier = Modifier.testTag("rhythm-edit-categories")) {
++                        if (state.phase != RhythmPhase.SETUP) TextButton(onClick = { editCategories = !editCategories }, modifier = Modifier.heightIn(min = RhythmTokens.TouchMinimum).testTag("rhythm-edit-categories")) {
+                             Text(if (editCategories) "Cerrar selección" else "Cambiar células (${ui.selected.size})")
+                         }
+                         if (state.phase == RhythmPhase.SETUP || editCategories) Column(verticalArrangement = Arrangement.spacedBy(RhythmTokens.SpaceXs)) {
+@@ -121,7 +125,7 @@
+                             Text("Sonido de mis taps reales")
+                         }
+                         Button(onClick = { model.generate() }, enabled = !ui.busy && ui.selected.isNotEmpty(),
+-                            modifier = Modifier.testTag("rhythm-generate")) { Text("Generar ejercicio") }
++                            modifier = Modifier.heightIn(min = RhythmTokens.TouchMinimum).testTag("rhythm-generate")) { Text("Generar ejercicio") }
+                       }
+                     }
+                     ui.error?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+@@ -133,17 +137,29 @@
+                         RhythmPhase.RESULTS -> if (state.result?.completed == true) "Ejercicio completado" else "Ejercicio interrumpido"
+                     }, modifier = Modifier.testTag("rhythm-status"), fontWeight = FontWeight.SemiBold)
+                     if (ui.busy) LinearProgressIndicator(Modifier.fillMaxWidth())
+-                    if (score != null) Surface(color = if (quiet) RhythmTokens.Surface else RhythmTokens.Background,
++                    if (score != null) Surface(color = RhythmTokens.Surface,
+                         shape = RoundedCornerShape(RhythmTokens.RadiusLarge), modifier = Modifier.fillMaxWidth().onGloballyPositioned {
+                         val top = it.positionInParent().y.toInt()
+                         if (scoreTop != top) scoreTop = top
+                     }) {
+-                      RhythmScoreView(score, state, reduced, Modifier.fillMaxWidth().padding(if (quiet) RhythmTokens.SpaceSm else 0.dp)) { notationReady = it }
++                      Column {
++                        if (!quiet && state.phase != RhythmPhase.RESULTS && (!active || LocalDensity.current.fontScale <= 1.3f))
++                            RhythmGardenTerrace(Modifier.fillMaxWidth().height(80.dp).testTag("rhythm-terrace"))
++                        RhythmScoreView(score, state, reduced, Modifier.fillMaxWidth().padding(RhythmTokens.SpaceSm)) { notationReady = it }
++                      }
+                     }
+                     state.result?.let { result ->
+-                        RhythmResultSummary(result)
++                        GardenPaperPanel(color = RhythmTokens.Surface) { RhythmResultSummary(result) }
+                         Text("Podés consultar este ejercicio y repetirlo desde el historial.", color = RhythmTokens.TextSecondary)
+-                        OutlinedButton(onClick = model::repeat, modifier = Modifier.testTag("rhythm-repeat")) { Text("Repetir mismo patrón") }
++                        Button(onClick = { model.generate() }, enabled = !ui.busy && ui.selected.isNotEmpty(),
++                            modifier = Modifier.heightIn(min = RhythmTokens.TouchMinimum).testTag("rhythm-new-exercise")) { Text("Nuevo ejercicio") }
++                        OutlinedButton(onClick = model::repeat, modifier = Modifier.heightIn(min = RhythmTokens.TouchMinimum).testTag("rhythm-repeat")) { Text("Repetir mismo patrón") }
++                    }
++                    if (!active) FlowRow(horizontalArrangement = Arrangement.spacedBy(RhythmTokens.SpaceSm)) {
++                        OutlinedButton(onClick = model::openHistory, enabled = !ui.busy,
++                            modifier = Modifier.heightIn(min = RhythmTokens.TouchMinimum).testTag("rhythm-open-history")) { Text("Historial de ritmo") }
++                        OutlinedButton(onClick = model::openProgress, enabled = !ui.busy,
++                            modifier = Modifier.heightIn(min = RhythmTokens.TouchMinimum).testTag("rhythm-progress-open")) { Text("Progreso y DDA") }
+                     }
+                     Spacer(Modifier.height(12.dp))
+                 }
+@@ -159,7 +175,7 @@
+                             RhythmPhase.RESULTS -> "Finalizado"
+                             else -> "TAP"
+                         }, active, model::tapAtUptimeMillis, model::tapNow)
+-                    if (active) TextButton(onClick = model::background, modifier = Modifier.testTag("rhythm-interrupt")) { Text("Interrumpir ejercicio") }
++                    if (active) TextButton(onClick = model::background, modifier = Modifier.heightIn(min = RhythmTokens.TouchMinimum).testTag("rhythm-interrupt")) { Text("Interrumpir ejercicio") }
+                 }
+                 Spacer(Modifier.height(4.dp))
+             }
+--- a/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\RhythmCalibrationApp.kt
++++ b/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\RhythmCalibrationApp.kt
+@@ -15,14 +15,16 @@
+     val state = ui.calibrationState
+     RhythmTheme {
+         BackHandler(onBack = model::closeCalibration)
+-        Scaffold(containerColor = RhythmTokens.Background, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
++        RhythmPageScaffold { padding ->
+             Column(Modifier.fillMaxSize().padding(padding).padding(RhythmTokens.SpaceBase),
+                 verticalArrangement = Arrangement.spacedBy(RhythmTokens.SpaceSm)) {
+                 Column(Modifier.weight(1f).verticalScroll(rememberScrollState()),
+                     verticalArrangement = Arrangement.spacedBy(RhythmTokens.SpaceSm)) {
+                     Text("Calibrar Rhythm Tap", style = MaterialTheme.typography.headlineSmall)
++                    GardenPaperPanel(color = RhythmTokens.Surface) {
+                     Text("Conservá la misma salida de audio y volumen que usarás al jugar. Escuchá cuatro pulsos; después tocá una vez por pulso durante doce pulsos, siguiendo el sonido.")
+                     Text("El ajuste combina tu sincronización y la respuesta del equipo. No mide por separado la latencia física. El sonido de tus taps permanece apagado aquí.", color = RhythmTokens.TextSecondary)
++                    }
+                     Text(when {
+                         ui.busy -> "Preparando audio…"
+                         state.active && state.pulse == null -> "Prepará el conteo…"
+--- a/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\RhythmHistoryApp.kt
++++ b/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\RhythmHistoryApp.kt
+@@ -45,7 +45,7 @@
+     val back = { if (ui.detailId != null) model.detail(null) else model.closeHistory() }
+     RhythmTheme {
+         BackHandler(onBack = back)
+-        Scaffold(containerColor = RhythmTokens.Background, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
++        RhythmPageScaffold { padding ->
+             LazyColumn(Modifier.fillMaxSize().padding(padding).testTag("rhythm-history-screen"),
+                 contentPadding = PaddingValues(RhythmTokens.SpaceBase), verticalArrangement = Arrangement.spacedBy(RhythmTokens.SpaceMd)) {
+                 item {
+@@ -56,7 +56,7 @@
+                 }
+                 if (detail != null) {
+                     item {
+-                        RecordHeading(detail)
++                        GardenPaperPanel(color = RhythmTokens.Surface) { RecordHeading(detail) }
+                         Text("Fin: ${rhythmDate(detail.finishedAtMillis)}")
+                         OutlinedButton(onClick = { model.repeatRecord(detail.id) }, enabled = !ui.busy,
+                             modifier = Modifier.testTag("rhythm-history-repeat")) { Text("Repetir como práctica") }
+@@ -104,7 +104,7 @@
+                         Text(if (state.results.isEmpty()) "Todavía no hay ejercicios guardados." else "No hay ejercicios con estos filtros.", modifier = Modifier.testTag("rhythm-history-empty"))
+                     }
+                     items(state.entries.take(limit), key = { it.id }) { record ->
+-                        Column(verticalArrangement = Arrangement.spacedBy(RhythmTokens.SpaceXs)) {
++                        GardenPaperPanel(color = RhythmTokens.Surface) {
+                             RecordHeading(record)
+                             Text("${record.result.attacks.count { it.kind == TapKind.ON_TIME }}/${record.result.attacks.size} ataques a tiempo · ${record.result.extras} extras")
+                             OutlinedButton(onClick = { model.detail(record.id) }, modifier = Modifier.testTag("rhythm-history-detail")) { Text("Ver partitura y resultado") }
+--- a/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\RhythmProgressApp.kt
++++ b/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\RhythmProgressApp.kt
+@@ -33,8 +33,6 @@
+         }
+         Text("Todas las células disponibles para practicar. No cambia tu progreso.", color = RhythmTokens.TextSecondary)
+     }
+-    OutlinedButton(onClick = model::openProgress, enabled = !ui.busy,
+-        modifier = Modifier.testTag("rhythm-progress-open").heightIn(min = RhythmTokens.TouchMinimum)) { Text("Progreso y DDA") }
+ }
+ 
+ @Composable
+@@ -50,7 +48,7 @@
+         .maxWithOrNull(compareBy<RhythmRecord> { it.startedAtMillis }.thenBy { it.dda?.sequence ?: 0 })
+     RhythmTheme {
+         BackHandler(onBack = model::closeProgress)
+-        Scaffold(containerColor = RhythmTokens.Background, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
++        RhythmPageScaffold { padding ->
+             LazyColumn(Modifier.fillMaxSize().padding(padding).testTag("rhythm-progress-screen"),
+                 contentPadding = PaddingValues(RhythmTokens.SpaceBase), verticalArrangement = Arrangement.spacedBy(RhythmTokens.SpaceMd)) {
+                 item {
+--- a/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\RhythmResultSummary.kt
++++ b/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\RhythmResultSummary.kt
+@@ -1,12 +1,13 @@
+ package ar.edu.unmdp.entrenamiento.ui
+ 
+ import androidx.compose.foundation.layout.Column
++import androidx.compose.foundation.layout.Arrangement
++import androidx.compose.foundation.layout.heightIn
+ import androidx.compose.material3.MaterialTheme
+ import androidx.compose.material3.Text
+ import androidx.compose.material3.TextButton
+ import androidx.compose.runtime.*
+ import androidx.compose.runtime.saveable.rememberSaveable
+-import ar.edu.unmdp.entrenamiento.BuildConfig
+ import androidx.compose.ui.Modifier
+ import androidx.compose.ui.platform.testTag
+ import androidx.compose.ui.text.font.FontWeight
+@@ -23,18 +24,18 @@
+ internal fun RhythmResultSummary(result: RhythmResult, detailed: Boolean = false) {
+     val score = result.score
+     var expanded by rememberSaveable(result) { mutableStateOf(false) }
+-    val compact = BuildConfig.QUIET_STUDIO && !detailed
++    val compact = !detailed
+     val owners = score.occurrences.associateBy { it.index }
+     fun ownerLabel(index: Int?): String {
+         val owner = owners[index] ?: return "Sin categoría asignada"
+         return "Compás ${owner.bar + 1} · ${owner.category.label} (${if (owner.target) "objetivo" else "conexión"})"
+     }
+-    Column {
++    Column(verticalArrangement = Arrangement.spacedBy(RhythmTokens.SpaceSm)) {
+         Text(result.calibration?.let { "Ajuste de toque aplicado: ${it.offsetNanos / 1_000_000} ms (${it.sampleCount} pulsos)." }
+             ?: "Sin ajuste de calibración.", color = RhythmTokens.TextSecondary)
+         Text("Resumen · ${if (result.origin == "progression") "Progresión" else "Práctica"}", fontWeight = FontWeight.Bold, modifier = Modifier.testTag("rhythm-summary"))
+         Text("A tiempo: ${result.attacks.count { it.kind == TapKind.ON_TIME }} / ${result.attacks.size} · Omitidos: ${result.omissions} · Extras: ${result.extras}")
+-        if (compact) TextButton(onClick = { expanded = !expanded }, modifier = Modifier.testTag("rhythm-result-details")) {
++        if (compact) TextButton(onClick = { expanded = !expanded }, modifier = Modifier.heightIn(min = RhythmTokens.TouchMinimum).testTag("rhythm-result-details")) {
+             Text(if (expanded) "Ocultar detalles" else "Ver detalles de esta ejecución")
+         }
+         if (!compact || expanded) {
+--- a/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\RhythmTapPad.kt
++++ b/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\RhythmTapPad.kt
+@@ -24,9 +24,9 @@
+     tag: String = "rhythm-tap") {
+     val quiet = BuildConfig.QUIET_STUDIO
+     val shape = RoundedCornerShape(if (quiet) QuietTokens.PadRadius else RhythmTokens.RadiusLarge)
+-    Box(Modifier.fillMaxWidth().height(if (quiet) QuietTokens.PadHeight else 100.dp)
+-        .background(RhythmTokens.SurfaceSelected, shape)
+-        .then(if (quiet) Modifier.border(1.dp, RhythmTokens.Border, shape) else Modifier)
++    Box(Modifier.fillMaxWidth().heightIn(min = if (quiet) QuietTokens.PadHeight else 100.dp)
++        .background(if (active) RhythmTokens.SurfaceSelected else RhythmTokens.DisabledSurface, shape)
++        .border(1.dp, RhythmTokens.Border, shape)
+         .testTag(tag).semantics {
+             contentDescription = "Registrar un tap rítmico"
+             if (active) onClick { onAccessibleTap(); true } else disabled()
+@@ -35,6 +35,8 @@
+                 onTouch(event.eventTime)
+             true
+         }, contentAlignment = Alignment.Center) {
+-        Text(label, style = MaterialTheme.typography.headlineMedium)
++        Text(label, style = MaterialTheme.typography.headlineMedium,
++            color = if (active) RhythmTokens.Primary else RhythmTokens.DisabledText,
++            modifier = Modifier.padding(RhythmTokens.SpaceMd))
+     }
+ }
+--- a/Plataforma\app\src\androidTest\java\ar\edu\unmdp\entrenamiento\RhythmAndroidTest.kt
++++ b/Plataforma\app\src\androidTest\java\ar\edu\unmdp\entrenamiento\RhythmAndroidTest.kt
+@@ -20,10 +20,13 @@
+         compose.openMenuDestination("game-rhythm")
+         compose.onNodeWithTag("rhythm-category-R20").performScrollTo().performClick()
+         compose.onNodeWithTag("rhythm-category-R21").performScrollTo().performClick()
++        compose.openRhythmPreparationIfCollapsed()
+         compose.onNodeWithTag("rhythm-generate").performScrollTo().performClick()
+         compose.waitUntil(10_000) { compose.onAllNodesWithTag("rhythm-play").fetchSemanticsNodes().isNotEmpty() }
+         compose.onNodeWithTag("rhythm-score").performScrollTo().assertIsDisplayed()
++        compose.openRhythmPreparationIfCollapsed()
+         compose.onNodeWithTag("rhythm-metronome").performScrollTo().performClick()
++        compose.openRhythmPreparationIfCollapsed()
+         compose.onNodeWithTag("rhythm-tap-sound").performScrollTo().performClick()
+         lateinit var model: RhythmViewModel
+         compose.runOnUiThread {
+--- a/Plataforma\app\src\androidTest\java\ar\edu\unmdp\entrenamiento\RhythmHistoryAndroidTest.kt
++++ b/Plataforma\app\src\androidTest\java\ar\edu\unmdp\entrenamiento\RhythmHistoryAndroidTest.kt
+@@ -40,7 +40,9 @@
+         compose.setContent { val ui by current.ui.collectAsState(); RhythmApp(ui, current) { current.home() } }
+         try {
+             for (code in listOf("R10", "R15", "R17")) compose.onNodeWithTag("rhythm-category-$code").performScrollTo().performClick()
++            compose.openRhythmPreparationIfCollapsed()
+             compose.onNodeWithTag("rhythm-metronome").performScrollTo().performClick()
++            compose.openRhythmPreparationIfCollapsed()
+             compose.onNodeWithTag("rhythm-generate").performScrollTo().performClick()
+             compose.waitUntil(10_000) { current.ui.value.session.phase == RhythmPhase.PREVIEW }
+             val score = current.ui.value.session.score!!
+@@ -125,6 +127,7 @@
+         compose.setContent { val ui by model.ui.collectAsState(); RhythmApp(ui, model) { model.home() } }
+         try {
+             compose.onNodeWithTag("rhythm-category-R20").performScrollTo().performClick()
++            compose.openRhythmPreparationIfCollapsed()
+             compose.onNodeWithTag("rhythm-generate").performScrollTo().performClick()
+             compose.waitUntil(10_000) { model.ui.value.session.phase == RhythmPhase.PREVIEW }
+             compose.awaitRhythmScore()
+--- a/Plataforma\app\src\androidTest\java\ar\edu\unmdp\entrenamiento\RhythmHistoryNavigationAndroidTest.kt
++++ b/Plataforma\app\src\androidTest\java\ar\edu\unmdp\entrenamiento\RhythmHistoryNavigationAndroidTest.kt
+@@ -33,6 +33,7 @@
+         compose.onNodeWithText("Volver al menú").performScrollTo().performClick()
+         compose.openMenuDestination("game-rhythm")
+         compose.onNodeWithTag("rhythm-category-R20").performScrollTo().performClick()
++        compose.openRhythmPreparationIfCollapsed()
+         compose.onNodeWithTag("rhythm-generate").performScrollTo().performClick()
+         compose.waitUntil(10_000) { compose.onAllNodesWithTag("rhythm-play").fetchSemanticsNodes().isNotEmpty() }
+         lateinit var model: RhythmViewModel
+--- a/Plataforma\app\src\androidTest\java\ar\edu\unmdp\entrenamiento\RhythmProgressionAndroidTest.kt
++++ b/Plataforma\app\src\androidTest\java\ar\edu\unmdp\entrenamiento\RhythmProgressionAndroidTest.kt
+@@ -36,6 +36,7 @@
+             compose.onNodeWithTag("rhythm-category-R20").performScrollTo().performClick()
+             for (seed in listOf(1L, 2L)) {
+                 compose.runOnIdle { clock.set(seed) }
++                compose.openRhythmPreparationIfCollapsed()
+                 compose.onNodeWithTag("rhythm-generate").performScrollTo().performClick()
+                 compose.waitUntil(10_000) { model.ui.value.session.phase == RhythmPhase.PREVIEW }
+                 compose.awaitRhythmScore()
+--- a/Plataforma\app\src\androidTest\java\ar\edu\unmdp\entrenamiento\RhythmR2AndroidTest.kt
++++ b/Plataforma\app\src\androidTest\java\ar\edu\unmdp\entrenamiento\RhythmR2AndroidTest.kt
+@@ -35,6 +35,7 @@
+         try {
+             compose.onNodeWithTag("rhythm-category-R19").performScrollTo().performClick()
+             for (meter in 2..4) {
++                compose.openRhythmPreparationIfCollapsed()
+                 compose.onNodeWithTag("rhythm-meter-$meter").performScrollTo().performClick()
+                 compose.onNodeWithTag("rhythm-generate").performScrollTo().performClick()
+                 compose.waitUntil(5_000) { model.ui.value.session.phase == RhythmPhase.PREVIEW }
+--- a/Plataforma\app\src\androidTest\java\ar\edu\unmdp\entrenamiento\RhythmR3AndroidTest.kt
++++ b/Plataforma\app\src\androidTest\java\ar\edu\unmdp\entrenamiento\RhythmR3AndroidTest.kt
+@@ -67,7 +67,9 @@
+         try {
+             fun tap() { compose.onNodeWithTag("rhythm-tap").performSemanticsAction(SemanticsActions.OnClick) { it() } }
+             for (code in listOf("R03", "R07", "R14", "R09")) compose.onNodeWithTag("rhythm-category-$code").performScrollTo().performClick()
++            compose.openRhythmPreparationIfCollapsed()
+             compose.onNodeWithTag("rhythm-metronome").performScrollTo().performClick()
++            compose.openRhythmPreparationIfCollapsed()
+             compose.onNodeWithTag("rhythm-generate").performScrollTo().performClick()
+             compose.waitUntil(10_000) { model.ui.value.session.phase == RhythmPhase.PREVIEW }
+             val score = model.ui.value.session.score!!
+@@ -96,11 +98,13 @@
+             assertEquals(80_000_000L, result.attacks.first().deltaNanos)
+             assertEquals(result.taps.map { it.timestampNanos }, sounded)
+             compose.onNodeWithTag("rhythm-summary").performScrollTo().assertExists()
++            compose.onNodeWithTag("rhythm-result-details").performScrollTo().performClick()
+             for (code in listOf("R03", "R07", "R14", "R09")) compose.onNodeWithTag("rhythm-summary-$code").performScrollTo().assertExists()
+             screenshot("resumen")
+             compose.onNodeWithTag("rhythm-repeat").performScrollTo().performClick()
+             assertEquals(score, model.ui.value.session.score)
+             assertTrue(model.ui.value.session.repeated)
++            compose.openRhythmPreparationIfCollapsed()
+             compose.onNodeWithTag("rhythm-edit-categories").performScrollTo().performClick()
+             compose.onNodeWithTag("rhythm-category-R03").performScrollTo().assertIsSelected()
+         } finally { compose.runOnIdle { model.background() } }
+--- a/Plataforma\app\src\androidTest\java\ar\edu\unmdp\entrenamiento\RhythmR4AndroidTest.kt
++++ b/Plataforma\app\src\androidTest\java\ar\edu\unmdp\entrenamiento\RhythmR4AndroidTest.kt
+@@ -72,7 +72,9 @@
+         try {
+             fun tap() { compose.onNodeWithTag("rhythm-tap").performSemanticsAction(SemanticsActions.OnClick) { it() } }
+             for (code in listOf("R15", "R16", "R17", "R03")) compose.onNodeWithTag("rhythm-category-$code").performScrollTo().performClick()
++            compose.openRhythmPreparationIfCollapsed()
+             compose.onNodeWithTag("rhythm-tap-sound").performScrollTo().performClick()
++            compose.openRhythmPreparationIfCollapsed()
+             compose.onNodeWithTag("rhythm-generate").performScrollTo().performClick()
+             compose.waitUntil(10_000) { model.ui.value.session.phase == RhythmPhase.PREVIEW }
+             val score = model.ui.value.session.score!!
+@@ -96,12 +98,14 @@
+             assertEquals(1, result.extras); assertEquals(0, result.omissions)
+             assertEquals(attacks.size, result.attacks.count { it.kind == TapKind.ON_TIME })
+             assertTrue(sounded.isEmpty())
++            compose.onNodeWithTag("rhythm-result-details").performScrollTo().performClick()
+             for (code in listOf("R15", "R16", "R17", "R03")) compose.onNodeWithTag("rhythm-summary-$code").performScrollTo().assertExists()
+             captureRhythmEvidence(compose, "r4-notation", "resumen")
+             compose.onNodeWithTag("rhythm-repeat").performScrollTo().performClick()
+             assertEquals(score, model.ui.value.session.score)
+             assertEquals(score.fingerprint, model.ui.value.session.score!!.fingerprint)
+             assertTrue(model.ui.value.session.repeated)
++            compose.openRhythmPreparationIfCollapsed()
+             compose.onNodeWithTag("rhythm-tap-sound").performScrollTo().performClick()
+             compose.awaitRhythmScore()
+             compose.onNodeWithTag("rhythm-play").performClick()
+--- a/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\RhythmGardenInterior.kt
++++ b/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\RhythmGardenInterior.kt
+@@ -0,0 +1,71 @@
++package ar.edu.unmdp.entrenamiento.ui
++
++import androidx.compose.foundation.Canvas
++import androidx.compose.foundation.layout.*
++import androidx.compose.material3.Scaffold
++import androidx.compose.runtime.Composable
++import androidx.compose.ui.Modifier
++import androidx.compose.ui.geometry.Offset
++import androidx.compose.ui.geometry.Size
++import androidx.compose.ui.graphics.Path
++import androidx.compose.ui.graphics.StrokeCap
++import androidx.compose.ui.graphics.drawscope.Stroke
++import androidx.compose.ui.semantics.clearAndSetSemantics
++import androidx.compose.ui.unit.dp
++import ar.edu.unmdp.entrenamiento.BuildConfig
++
++/** Misma área segura en ambos temas; Quiet Studio conserva su superficie sin ornamentación. */
++@Composable
++internal fun RhythmPageScaffold(content: @Composable (PaddingValues) -> Unit) {
++    Scaffold(containerColor = RhythmTokens.Background, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
++        Box(Modifier.fillMaxSize().padding(padding)) {
++            if (!BuildConfig.QUIET_STUDIO) GardenPageDecoration(Modifier.matchParentSize())
++            content(PaddingValues(0.dp))
++        }
++    }
++}
++
++/** Terraza estática: el único seguimiento temporal lo realiza la notación real. */
++@Composable
++internal fun RhythmGardenTerrace(modifier: Modifier = Modifier) {
++    Canvas(modifier.clearAndSetSemantics {}) {
++        val w = size.width
++        val h = size.height
++        val hills = Path().apply {
++            moveTo(0f, h * .67f)
++            cubicTo(w * .16f, h * .18f, w * .30f, h * .50f, w * .47f, h * .42f)
++            cubicTo(w * .72f, h * .16f, w * .84f, h * .33f, w, h * .55f)
++            lineTo(w, h); lineTo(0f, h); close()
++        }
++        drawPath(hills, GardenTokens.SurfaceSelected)
++        for (x in listOf(.16f, .32f, .68f, .84f)) drawLine(GardenTokens.Sage,
++            Offset(w * x, h * .58f), Offset(w * x, h * .91f), 3.dp.toPx(), StrokeCap.Round)
++        drawLine(GardenTokens.Moss, Offset(w * .06f, h * .55f), Offset(w * .94f, h * .55f), 3.dp.toPx(), StrokeCap.Round)
++        drawLine(GardenTokens.Success, Offset(w * .04f, h * .94f), Offset(w * .96f, h * .94f), 4.dp.toPx(), StrokeCap.Round)
++        // Atril vacío: la partitura se graba por separado desde los datos del ejercicio.
++        val desk = Path().apply {
++            moveTo(w * .42f, h * .16f); lineTo(w * .58f, h * .16f)
++            lineTo(w * .60f, h * .50f); lineTo(w * .40f, h * .50f); close()
++        }
++        drawPath(desk, GardenTokens.Surface)
++        drawPath(desk, GardenTokens.Primary, style = Stroke(1.5.dp.toPx()))
++        drawLine(GardenTokens.Primary, Offset(w * .50f, h * .52f), Offset(w * .50f, h * .87f), 2.dp.toPx())
++        drawLine(GardenTokens.Primary, Offset(w * .44f, h * .91f), Offset(w * .50f, h * .79f), 2.dp.toPx())
++        drawLine(GardenTokens.Primary, Offset(w * .56f, h * .91f), Offset(w * .50f, h * .79f), 2.dp.toPx())
++        for (side in listOf(.10f, .90f)) {
++            val x = w * side
++            drawLine(GardenTokens.Primary, Offset(x, h * .92f), Offset(x, h * .25f), 1.5.dp.toPx())
++            for (index in 0..2) {
++                val y = h * (.32f + index * .16f)
++                val direction = if (index % 2 == 0) 1f else -1f
++                val leaf = Path().apply {
++                    moveTo(x, y)
++                    cubicTo(x + direction * h * .32f, y - h * .25f,
++                        x + direction * h * .35f, y + h * .05f, x, y)
++                }
++                drawPath(leaf, if (index % 2 == 0) GardenTokens.Moss else GardenTokens.Sage)
++            }
++            drawRect(GardenTokens.Warning, Offset(x - h * .10f, h * .83f), Size(h * .20f, h * .14f))
++        }
++    }
++}
+--- a/Plataforma\app\src\androidTest\java\ar\edu\unmdp\entrenamiento\RhythmGardenAndroidTest.kt
++++ b/Plataforma\app\src\androidTest\java\ar\edu\unmdp\entrenamiento\RhythmGardenAndroidTest.kt
+@@ -0,0 +1,66 @@
++package ar.edu.unmdp.entrenamiento
++
++import androidx.compose.foundation.layout.Box
++import androidx.compose.foundation.layout.fillMaxHeight
++import androidx.compose.foundation.layout.width
++import androidx.compose.runtime.*
++import androidx.compose.ui.Modifier
++import androidx.compose.ui.platform.LocalDensity
++import androidx.compose.ui.test.*
++import androidx.compose.ui.test.junit4.createComposeRule
++import androidx.compose.ui.unit.Density
++import androidx.compose.ui.unit.dp
++import androidx.test.platform.app.InstrumentationRegistry
++import ar.edu.unmdp.entrenamiento.rhythm.*
++import ar.edu.unmdp.entrenamiento.ui.RhythmApp
++import org.junit.Assert.assertEquals
++import org.junit.Rule
++import org.junit.Test
++
++/** Preparado para Android; compilarlo no acredita haberlo ejecutado. */
++class RhythmGardenAndroidTest {
++    @get:Rule val compose = createComposeRule()
++
++    @Test
++    fun preparacionPlegableYAuxiliaresConservanPartituraConTextoGrande() {
++        val instrumentation = InstrumentationRegistry.getInstrumentation()
++        var starts = 0
++        val audio = object : RhythmAudio {
++            override suspend fun start(bpm: Int, metronome: Boolean): RhythmAudioStart {
++                starts++
++                return RhythmAudioStart(0, "garden-ui-controlled", 0)
++            }
++            override fun tap() = Unit
++            override fun stop() = Unit
++        }
++        lateinit var model: RhythmViewModel
++        instrumentation.runOnMainSync { model = RhythmViewModel(audio, { 0L }, { 0L }, resultsStore = MemoryRhythmResults()) }
++        compose.setContent {
++            val ui by model.ui.collectAsState()
++            val density = LocalDensity.current
++            CompositionLocalProvider(LocalDensity provides Density(density.density, 2f)) {
++                Box(Modifier.width(320.dp).fillMaxHeight()) { RhythmApp(ui, model) { model.home() } }
++            }
++        }
++        try {
++            compose.waitUntil(10_000) { !model.ui.value.historyBusy }
++            compose.onNodeWithTag("rhythm-generate").performScrollTo().performClick()
++            compose.waitUntil(10_000) { model.ui.value.session.phase == RhythmPhase.PREVIEW }
++            compose.onNodeWithTag("rhythm-mode-practice").assertDoesNotExist()
++            val score = model.ui.value.session.score
++            compose.openRhythmPreparationIfCollapsed()
++            compose.onNodeWithTag("rhythm-calibration-open").performScrollTo().performClick()
++            compose.onNodeWithTag("rhythm-calibration-status").performScrollTo().assertExists()
++            compose.onNodeWithTag("rhythm-calibration-close").performClick()
++            compose.onNodeWithTag("rhythm-open-history").performScrollTo().performClick()
++            compose.onNodeWithTag("rhythm-history-screen").assertExists()
++            compose.onNodeWithTag("rhythm-history-back").performScrollTo().performClick()
++            compose.onNodeWithTag("rhythm-progress-open").performScrollTo().performClick()
++            compose.onNodeWithTag("rhythm-progress-screen").assertExists()
++            compose.onNodeWithTag("rhythm-progress-back").performScrollTo().performClick()
++            compose.onNodeWithTag("rhythm-settings").performScrollTo().assertExists()
++            assertEquals(score, model.ui.value.session.score)
++            assertEquals(0, starts)
++        } finally { instrumentation.runOnMainSync { model.background() } }
++    }
++}
+--- a/Plataforma\app\src\androidTest\java\ar\edu\unmdp\entrenamiento\RhythmPreparationNavigation.kt
++++ b/Plataforma\app\src\androidTest\java\ar\edu\unmdp\entrenamiento\RhythmPreparationNavigation.kt
+@@ -0,0 +1,10 @@
++package ar.edu.unmdp.entrenamiento
++
++import androidx.compose.ui.test.*
++import androidx.compose.ui.test.junit4.ComposeTestRule
++
++/** Los recorridos antiguos siguen accediendo a las mismas opciones desde la preparación plegable. */
++internal fun ComposeTestRule.openRhythmPreparationIfCollapsed() {
++    if (onAllNodesWithText("Preparación y calibración").fetchSemanticsNodes().isNotEmpty())
++        onNodeWithTag("rhythm-settings").performScrollTo().performClick()
++}

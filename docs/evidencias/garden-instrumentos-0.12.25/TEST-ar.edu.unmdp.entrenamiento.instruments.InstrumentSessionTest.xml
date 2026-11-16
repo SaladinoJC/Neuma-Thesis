@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.instruments.InstrumentSessionTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-11-16T15:44:36.633Z" hostname="DESKTOP-PP49S64" time="0.166">
+  <properties/>
+  <testcase name="responder durante la melodia registra una sola respuesta y conserva feedback al terminar audio" classname="ar.edu.unmdp.entrenamiento.instruments.InstrumentSessionTest" time="0.013"/>
+  <testcase name="diez respuestas cierran y persisten una partida una sola vez" classname="ar.edu.unmdp.entrenamiento.instruments.InstrumentSessionTest" time="0.019"/>
+  <testcase name="tres escuchas reales agotan la ayuda sin habilitar una cuarta" classname="ar.edu.unmdp.entrenamiento.instruments.InstrumentSessionTest" time="0.008"/>
+  <testcase name="abandonar durante una reescucha iniciada guarda solo las respuestas realizadas" classname="ar.edu.unmdp.entrenamiento.instruments.InstrumentSessionTest" time="0.017"/>
+  <testcase name="audio fallido antes de comenzar no consume escucha y puede reintentarse" classname="ar.edu.unmdp.entrenamiento.instruments.InstrumentSessionTest" time="0.009"/>
+  <testcase name="azar que repite una frase con primera nota unica no bloquea la siguiente pregunta" classname="ar.edu.unmdp.entrenamiento.instruments.InstrumentSessionTest" time="0.008"/>
+  <testcase name="primera escucha cuenta y las cuatro opciones no revelan el objetivo" classname="ar.edu.unmdp.entrenamiento.instruments.InstrumentSessionTest" time="0.01"/>
+  <testcase name="historial de v03 conserva nota aislada sin inventar una melodia" classname="ar.edu.unmdp.entrenamiento.instruments.InstrumentSessionTest" time="0.017"/>
+  <testcase name="las reescuchas repiten la frase y la siguiente pregunta cambia aunque repita instrumento" classname="ar.edu.unmdp.entrenamiento.instruments.InstrumentSessionTest" time="0.008"/>
+  <testcase name="cada respuesta conserva una melodia pentatonica breve que termina en tonica" classname="ar.edu.unmdp.entrenamiento.instruments.InstrumentSessionTest" time="0.028"/>
+  <testcase name="resultado completo sobrevive a nueva sesion y cada pregunta reinicia escuchas" classname="ar.edu.unmdp.entrenamiento.instruments.InstrumentSessionTest" time="0.025"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

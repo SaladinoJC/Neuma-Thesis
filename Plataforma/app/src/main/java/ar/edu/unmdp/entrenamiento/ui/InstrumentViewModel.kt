@@ -87,10 +87,15 @@ class InstrumentViewModel(private val session: InstrumentSession, private val pl
         }
     }
 
-    fun answer(instrument: Instrument) = act {
-        session.answer(instrument)
-        mutableUi.value = ui.value.copy(game = session.state, busy = false)
-        if (session.state.phase == InstrumentPhase.FINISHED) refreshHistory()
+    fun answer(instrument: Instrument) {
+        if (ui.value.busy || !foreground || returningHome || !session.state.canAnswer ||
+            instrument !in session.state.options) return
+        playback?.cancel()
+        act {
+            session.answer(instrument)
+            mutableUi.value = ui.value.copy(game = session.state, busy = false)
+            if (session.state.phase == InstrumentPhase.FINISHED) refreshHistory()
+        }
     }
 
     fun next() = act {
@@ -125,7 +130,7 @@ class InstrumentViewModel(private val session: InstrumentSession, private val pl
             actions.withLock {
                 try {
                     if (!foreground || returningHome) return@withLock
-                    session.listen { mutableUi.value = ui.value.copy(game = session.state) }
+                    session.listen { mutableUi.value = ui.value.copy(game = session.state, busy = false) }
                     mutableUi.value = ui.value.copy(game = session.state, busy = false)
                 } catch (timedOut: TimeoutCancellationException) {
                     currentCoroutineContext().ensureActive()

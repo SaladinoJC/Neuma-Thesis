@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.rhythm.RhythmNotationTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-16T17:29:50.374Z" hostname="DESKTOP-PP49S64" time="0.04">
+  <properties/>
+  <testcase name="elTresilloConservaDuracionesYLigaduraComparteUnAtaque" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmNotationTest" time="0.002"/>
+  <testcase name="elResultadoPersistidoColoreaLaNotaExactaYRepetirLimpiaElFeedback" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmNotationTest" time="0.038"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

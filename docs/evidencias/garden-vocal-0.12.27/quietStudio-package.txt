@@ -1,0 +1,1 @@
+package: name='ar.edu.unmdp.entrenamiento.quietstudio' versionCode='42' versionName='0.12.27' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'

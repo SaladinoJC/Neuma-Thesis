@@ -44,13 +44,14 @@ internal fun VocalIntervalHistoryApp(ui: VocalIntervalUiState, model: VocalInter
     val back = { if (selectedId != null) selectedId = null else model.closeHistory() }
     BackHandler(onBack = back)
     TunerGardenTheme {
-        Scaffold(containerColor = GardenTokens.Background, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
+        GardenPageScaffold { padding ->
             Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(GardenTokens.SpaceBase),
                 verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceBase)) {
                 TextButton(onClick = back, modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum).testTag("vocal-history-back")) {
                     Text(if (selected == null) "Volver a la práctica" else "Volver al historial")
                 }
-                Text(if (selected == null) "Historial vocal" else "Detalle de ronda", style = MaterialTheme.typography.headlineMedium)
+                Text(if (selected == null) "Historial vocal" else "Detalle de ronda", style = MaterialTheme.typography.headlineMedium,
+                    modifier = Modifier.semantics { heading() })
                 VocalIntervalSaveNotice(ui, model)
                 if (selected == null) {
                     if (entries.isEmpty() && !ui.historyBusy) Text(if (ui.history.error == null) "Todavía no hay rondas guardadas."
@@ -70,7 +71,7 @@ internal fun VocalIntervalHistoryApp(ui: VocalIntervalUiState, model: VocalInter
                     }
                     if (entries.size > shown) OutlinedButton(onClick = { shown += 20 },
                         modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum).testTag("vocal-history-more")) { Text("Mostrar otras 20 rondas") }
-                } else VocalIntervalRecordDetail(selected)
+                } else GardenPaperPanel { VocalIntervalRecordDetail(selected) }
                 TextButton(onClick = onData, enabled = !ui.historyBusy,
                     modifier = Modifier.fillMaxWidth().heightIn(min = GardenTokens.TouchMinimum).testTag("vocal-history-data")) { Text("Datos y demostración") }
             }

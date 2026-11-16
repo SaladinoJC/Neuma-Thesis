@@ -1,4 +1,201 @@
-\chapter{Herramientas y tecnologías empleadas}
+\chapter[Herramientas y tecnologías empleadas]{Herramientas y tecnologías\\empleadas}
 \label{cap:herramientas}
-\pendiente{Registrar herramientas, versiones, función y justificación de selección.
-Describir el apoyo de IA y la revisión humana conforme a las guías aportadas.}
+Este capítulo presenta las herramientas y tecnologías que utilicé para construir
+Neuma, verificar sus componentes, organizar el proyecto y preparar el informe.
+La selección se apoyó en las necesidades de la aplicación y en propuestas técnicas
+de los agentes que acepté y revisé durante el desarrollo. Mi experiencia previa
+en aplicaciones Android era limitada y se concentraba en React Native; por ello,
+la revisión del comportamiento obtenido tuvo un papel central en la aceptación
+de las propuestas. El proceso de trabajo y supervisión se describe en el
+capítulo~\ref{cap:metodologia}.
+
+\section{Plataforma Android e interfaz}
+\label{sec:herramientas-android}
+Elegí Android como plataforma exclusiva y adopté Kotlin y Jetpack Compose para
+el desarrollo nativo. Buscaba acceso directo a las capacidades de audio e
+interacción del sistema y un entorno que facilitara el control de latencia y
+la implementación de los juegos. También consideré una eventual conexión con
+un teclado MIDI. Estos criterios orientaron la elección frente a continuar con
+React Native, que conocía de experiencias previas. La decisión expresa una
+expectativa técnica de integración; no deriva de una comparación experimental
+de rendimiento entre ambos enfoques. La conexión MIDI permanece como posibilidad
+considerada, fuera de la implementación descrita.
+
+Jetpack Compose proporciona un enfoque declarativo para construir interfaces
+Android \parencite{androidCompose}. En Neuma lo utilizo para representar pantallas
+y estados de interacción, con componentes Material 3 adaptados a la dirección
+artística del proyecto. La aplicación incorpora ViewModel y componentes Lifecycle
+para vincular el estado de las actividades con la interfaz. Las corrutinas de
+Kotlin permiten organizar operaciones asíncronas \parencite{kotlinCorrutinas};
+en el código se utilizan, entre
+otras tareas, para captura de audio y coordinación con los modelos de presentación.
+Esta combinación sostiene una interfaz nativa y permite mantener las reglas
+musicales y de adaptación en componentes separados.
+
+La configuración fija un nivel mínimo de API 26, compilación y destino API 36,
+y bytecode compatible con JVM 17. Para las bibliotecas Compose utiliza una
+\textit{Bill of Materials} (BOM), que agrupa versiones compatibles entre sí
+\parencite{androidComposeBom}. Los valores del proyecto se reúnen en la
+tabla~\ref{tab:versiones-herramientas}; describen la configuración examinada,
+sin implicar que todas las herramientas mantuvieran esa versión durante el trabajo.
+
+\section{Audio, notación y almacenamiento local}
+\label{sec:herramientas-audio-datos}
+El acceso al micrófono utiliza \texttt{AudioRecord}, que permite leer muestras
+desde la entrada de audio de Android. Para reproducir referencias y sonidos,
+la aplicación utiliza \texttt{AudioTrack}, que admite el envío de búferes PCM
+a la salida de audio \parencite{androidAudioRecord,androidAudioTrack}.
+Estas APIs proporcionan acceso a las muestras que procesa el prototipo y a las
+señales que genera o reproduce. Su incorporación mantiene el procesamiento
+musical en el dispositivo; la latencia y la precisión deben analizarse bajo
+las condiciones de prueba descritas en el capítulo~\ref{cap:pruebas}.
+
+Sobre esas muestras se ejecuta una implementación propia de YIN en Kotlin.
+El ajuste de dificultad también utiliza código propio, con un motor de inferencia
+Mamdani y configuraciones por actividad. Son componentes del sistema cuya
+selección e integración se apoyan en el marco conceptual del
+capítulo~\ref{cap:marco}. El cálculo difuso se desarrolla en la
+sección~\ref{sec:diseno-dda}, y el procesamiento de audio y la estimación de tono,
+en la sección~\ref{sec:implementacion-audio}.
+
+Para la notación de Rhythm Tap incorporé VexFlow, una biblioteca de grabado musical
+que puede generar representaciones SVG y Canvas \parencite{vexflowDocumentacion}.
+La integración utiliza SVG en una WebView con recursos empaquetados localmente,
+incluidas las fuentes Bravura y Academico. La biblioteca permite generar la
+partitura desde datos estructurados y resolver su disposición musical. La
+WebView cumple esa función dentro de una aplicación nativa; la entrada táctil
+de ejecución, el audio y la evaluación permanecen en los componentes Android.
+El inventario de recursos conserva las versiones, procedencia y licencias de
+la biblioteca y las fuentes.
+
+Los resultados, el progreso y las configuraciones se almacenan en archivos JSON
+del espacio privado de la aplicación. Para convertir las estructuras de Kotlin
+a ese formato y recuperarlas se utiliza \texttt{kotlinx.serialization}
+\parencite{kotlinSerializacion}.
+El almacenamiento específico de la aplicación proporciona un ámbito interno
+para estos archivos \parencite{androidArchivosPrivados}. En el prototipo, los
+archivos respaldan la persistencia local y la exportación de registros en JSON
+y ZIP. Esta solución respalda la conservación y consulta local de los datos
+del prototipo.
+
+\section{Construcción, pruebas y automatización}
+\label{sec:herramientas-verificacion}
+La construcción utiliza Gradle y Android Gradle Plugin. El repositorio incluye
+Gradle Wrapper, que fija la distribución empleada y permite invocar la construcción
+con una versión definida \parencite{gradleWrapper}. El SDK de Android aporta las
+herramientas de plataforma y compilación, y Android Debug Bridge (ADB) interviene
+en la comunicación con dispositivos o emuladores. Los scripts del proyecto
+configuran el entorno de Java y Android y generan los paquetes APK de prueba.
+
+Para las pruebas locales se utilizan JUnit y las utilidades de prueba de corrutinas.
+Estas pruebas se ejecutan en la JVM de la computadora de desarrollo, de acuerdo
+con la distinción de Android entre pruebas locales y pruebas que requieren el
+entorno de la plataforma \parencite{androidPruebasLocales}. AndroidX Test y Compose
+UI Test proporcionan el soporte de las pruebas instrumentadas y de interfaz.
+Android Lint complementa esas ejecuciones con análisis estático.
+
+Los scripts PowerShell reúnen tareas de compilación y verificación y conservan
+reportes, paquetes y hashes para identificar lo producido. Otros scripts Python
+y JavaScript apoyan la preparación de recursos de audio e imagen y las
+comprobaciones de notación. Su función es hacer ejecutables operaciones
+recurrentes y conservar sus salidas. Los casos, condiciones y resultados de
+cada verificación corresponden al capítulo~\ref{cap:pruebas}.
+
+Para producir ilustraciones estáticas también se utilizó una herramienta integrada
+de generación de imágenes. El inventario de recursos registra originales,
+prompts y exportaciones, y los scripts Python preparan las copias para Android.
+Esa procedencia se conserva por recurso, junto con las licencias de fuentes y
+bibliotecas y la identificación de materiales aportados por mí.
+
+\section{Organización, relevamiento y escritura}
+\label{sec:herramientas-documentacion}
+Utilicé Git para el historial de cambios y GitHub para alojar el repositorio,
+organizar tareas y especificaciones mediante Issues y conservar entregas.
+La interfaz de línea de comandos \texttt{gh} permite consultar y actualizar
+esas tareas desde el entorno de trabajo. Los documentos Markdown reúnen
+definiciones, decisiones y registros junto al código. Estos recursos sostienen
+la trazabilidad explicada en la sección~\ref{sec:metodo-desarrollo}.
+
+Para el relevamiento preparé la encuesta y el formulario de contacto independiente
+en Google Forms. El repositorio conserva un generador Apps Script como apoyo a
+su preparación, además del cuestionario y las instrucciones de revisión. El propósito,
+la población y el análisis previsto se describen en la
+sección~\ref{sec:metodo-encuesta}.
+
+Para redactar el informe adopté LaTeX por capítulos. La compilación utiliza
+XeLaTeX de la distribución \mbox{MiKTeX}. LaTeX proporciona composición de documentos
+técnicos y científicos
+\parencite{latexIntroduccion}; en el proyecto permite mantener una fuente editable
+con referencias cruzadas y salida PDF. BibLaTeX y Biber gestionan las citas y
+referencias con el estilo APA configurado para el informe. Un script PowerShell
+automatiza la compilación, mientras que Python y \texttt{pdftotext} permiten
+extraer las guías institucionales con referencias a sus páginas. Markdown se
+reserva para planificación, procedencia de fuentes y seguimiento de escritura.
+
+\section{Asistentes y agentes de inteligencia artificial}
+\label{sec:herramientas-ia}
+Al comienzo del proyecto utilicé Gemini Deep Research desde Gemini para explorar
+conceptos, localizar antecedentes y obtener informes de investigación.
+La herramienta ofrece investigación asistida a partir de consultas y fuentes;
+el procedimiento que seguí y la lectura complementaria se detallan en la
+sección~\ref{sec:metodo-revision} \parencite{geminiDeepResearch}.
+
+Comencé el desarrollo con Claude Code CLI y posteriormente migré a Codex CLI.
+Ambas herramientas permiten trabajar desde la terminal sobre el repositorio,
+examinar archivos, realizar cambios y ejecutar comandos
+\parencite{anthropicClaudeCode,openaiCodexCli}.
+Las utilicé para implementación y revisión de código, discusión de decisiones
+y trabajo de escritura. En la etapa actual combino Codex CLI y GrokBot en
+simultáneo.
+
+Trabajé principalmente con los modelos que identifiqué como Opus 5.5 en Claude
+Code y GPT 6.1 Sol en Codex, alternando con modelos más livianos para tareas
+sencillas. Para tareas complejas, diseño y planificación utilicé configuraciones
+de razonamiento alto cuando estaban disponibles. La elección respondía a la
+complejidad percibida de cada tarea; no realicé una evaluación comparativa
+controlada entre modelos. La revisión de aportes, el contraste entre asistentes
+y la responsabilidad sobre su aceptación se describen en el
+capítulo~\ref{cap:metodologia}.
+
+\section{Configuración técnica de referencia}
+\label{sec:herramientas-versiones}
+La tabla~\ref{tab:versiones-herramientas} resume valores declarados en los archivos
+de construcción y recursos de Neuma 0.12.20, consultados el 4 de noviembre de 2026.
+El número de versión de una dependencia, el de un conjunto BOM y el nivel de API
+Android identifican elementos diferentes de la configuración. Las versiones de
+intérpretes y aplicaciones auxiliares que no se reconstruyeron se conservan fuera
+de esta tabla.
+
+\clearpage
+\begingroup
+\small
+\singlespacing
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\begin{longtable}{p{0.34\textwidth}p{0.18\textwidth}p{0.38\textwidth}}
+\caption{Configuración técnica de referencia de Neuma 0.12.20.}
+\label{tab:versiones-herramientas}\\
+\toprule
+Elemento & Versión o nivel & Función \\
+\midrule
+\endfirsthead
+\toprule
+Elemento & Versión o nivel & Función \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Android SDK & 26 / 36 / 36 & API mínima, compilación y destino, respectivamente. \\
+Kotlin y plugins Kotlin & 2.2.10 & Lenguaje y soporte de Compose y serialización. \\
+Compose BOM & 2025.08.01 & Conjunto de versiones de bibliotecas Compose. \\
+Lifecycle & 2.9.2 & Estado y ciclo de vida. \\
+Corrutinas Kotlin & 1.10.2 & Operaciones asíncronas y pruebas. \\
+Serialization JSON & 1.9.0 & Conversión de datos al formato JSON. \\
+VexFlow & 5.0.0 & Grabado musical en Rhythm Tap. \\
+Gradle Wrapper & 8.14.3 & Distribución de Gradle fijada en el repositorio. \\
+Android Gradle Plugin & 8.11.0 & Construcción y empaquetado. \\
+Destino de bytecode JVM & 17 & Compatibilidad Java/Kotlin. \\
+JUnit & 4.13.2 & Pruebas locales. \\
+AndroidX JUnit / runner & 1.2.1 / 1.6.2 & Soporte de pruebas instrumentadas. \\
+\end{longtable}
+\endgroup

@@ -1,5 +1,16 @@
 # Afinador de instrumentos con entrenamiento de oído — especificación v1
 
+> Actualización solicitada por el autor el 12/11/2026: en los tres modos,
+> Si y Mi agudas de su guitarra criolla decaen antes de confirmarse. 0.12.23
+> usa provisionalmente 400 ms continuos dentro del margen (sustituye el segundo
+> de los párrafos históricos), sin sumar silencios o huecos >250 ms ni cambiar
+> ±5/±2 cents. Solo el afinador utiliza RMS mínimo 0,003; voz conserva 0,01.
+> Libre distingue última confirmación de lectura vigente cuando decae la señal.
+> En Oído, una comprobación nueva que ya cumple afinación y estabilidad puede
+> avanzar sin otra pulsación; si falla, conserva error inicial y requiere nueva
+> evidencia para corregir. Historial guarda política/análisis efectivos.
+> Son elecciones experimentales del agente, con [prueba física pendiente](Verificacion-afinador-v0.12.23.md).
+
 Estado: alcance funcional, puntos de prueba y división en seis incrementos aprobados por el usuario el 2026-10-22. A1–A6 implementados en software hasta v0.12.7 el 2026-10-29; prueba física pendiente e issues sin cerrar. [Verificación A6](Demostracion-afinador-A6.md) y [antecedente A1](Verificacion-afinador-v0.11.md).
 
 Publicada como [issue #8](https://github.com/SaladinoJC/Tesis/issues/8); [plan de implementación y tickets #9–#14](Plan-tareas-afinador-v1.md).

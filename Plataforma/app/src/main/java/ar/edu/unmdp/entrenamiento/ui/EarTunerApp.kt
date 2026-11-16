@@ -113,7 +113,7 @@ fun EarTunerApp(ui: TunerUiState, model: TunerViewModel, onHome: () -> Unit) {
                         val measurement = ear.measurement
                         Text(measurement.measuredMidi?.let(::noteName) ?: "Tocá nuevamente", modifier = Modifier.testTag("ear-live-note"))
                         Text(measurement.cents?.let(::deviation) ?: "Esperando señal válida", modifier = Modifier.testTag("ear-live-cents"))
-                        Text("Sostené un segundo dentro de ±${measurement.criterion.margin.toInt()} cents para continuar.")
+                        Text("Dejá sonar la cuerda ${measurement.stableRequiredMillis} ms dentro de ±${measurement.criterion.margin.toInt()} cents para continuar.")
                         if (ear.phase == EarPhase.REVIEW && ear.review.phase == GuidedPhase.REVIEW) {
                             OutlinedButton(onClick = model::leavePending, enabled = !busy, modifier = Modifier.testTag("ear-pending")) { Text("Dejar pendiente y continuar") }
                         }

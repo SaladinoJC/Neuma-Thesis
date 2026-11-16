@@ -1,6 +1,93 @@
 \chapter{Planificación temporal}
 \label{cap:planificacion}
+La planificación de referencia es el cronograma adjunto al protocolo, conservado
+en el archivo \path{Plan_de_trabajo_y_Gantt_Saladino.xlsx}. Este capítulo presenta
+sus actividades, plazos y dependencias. El seguimiento de la dedicación se
+registra por separado para facilitar la comparación con la ejecución al cerrar
+el informe, en febrero de 2027. Hasta ese momento mantengo el plan original
+como referencia histórica.
+
 \section{Diagrama de Gantt}
-\pendiente{Consultar el archivo de planificación disponible; distinguir plan inicial y ejecución.}
-\section{Camino crítico}
-\pendiente{Identificar dependencias y actividades críticas con una justificación reproducible.}
+El protocolo prevé el trabajo entre el 1 de agosto de 2026 y el 27 de febrero
+de 2027, con informes de avance el 1 de diciembre de 2026 y el 1 de febrero
+de 2027. El archivo de planificación distribuye las tareas hasta el 20 de
+febrero de 2027. Conservo ambas referencias: el fin de la distribución del
+archivo y la fecha de finalización del protocolo corresponden a datos distintos.
+La defensa se mantiene prevista para marzo de 2027, sujeta a la coordinación
+académica correspondiente.
+
+El presupuesto original es de 400 horas: 30 horas previas estimadas, 335 horas
+de actividades previstas y 35 horas de reserva. La planilla organiza esa
+dedicación con una capacidad declarada de 10 a 20 horas semanales. La reserva
+está destinada a fallos, repeticiones de mediciones y demoras; representa tiempo
+disponible en la estimación inicial, sin obligación de consumirlo. La dedicación
+actual y las condiciones de continuidad se describen en el
+capítulo~\ref{cap:factibilidad}.
+
+Las figuras~\ref{fig:gantt-original-1} y~\ref{fig:gantt-original-2} representan
+los intervalos de la hoja \textit{Detalle de tareas}, divididos para facilitar
+su lectura y con los identificadores del archivo original. P01--P05 corresponden
+a actividades consignadas allí como previas y estimadas; F01--F21, a actividades
+previstas; R01 identifica la reserva. Las barras muestran intervalos calendario,
+no una dedicación continua durante todos sus días. Tampoco indican porcentajes
+de avance o verificaciones actuales.
+
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=\textwidth]{figuras/gantt-original-1.pdf}
+  \caption{Plan original: investigación y componentes iniciales (P01--F08).
+  Elaboración a partir de la hoja \textit{Detalle de tareas} del plan entregado.}
+  \label{fig:gantt-original-1}
+\end{figure}
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=\textwidth]{figuras/gantt-original-2.pdf}
+  \caption{Plan original: integración, evaluación, informes y entrega (F09--R01).
+  Los estados y la reserva corresponden a la previsión del archivo original.}
+  \label{fig:gantt-original-2}
+\end{figure}
+\clearpage
+
+\section{Dependencias y camino crítico}
+La hoja \textit{Detalle de tareas} conserva relaciones entre actividades que
+permiten reconocer las condiciones previstas para la integración y la evaluación.
+El ejercicio vocal F09 depende de la estimación de tono F06 y del motor de
+dificultad F08. La integración F13 depende de los juegos F09/F10 y del registro
+F12. Estas relaciones vinculan la construcción de componentes con una versión
+que pueda someterse a evaluación.
+
+Las pruebas de uso F15 dependen de la integración F13 y de la preparación del
+protocolo y los instrumentos F14. Su análisis F16 alimenta la memoria final F20.
+En paralelo, la validación técnica F17 depende de las mediciones iniciales F07
+y de la integración F13; sus resultados también son insumos de F20 y de la
+documentación y publicación F21. El cierre documental y la entrega requieren,
+por lo tanto, resultados de ambas líneas de evaluación.
+
+El cálculo formal del camino crítico requiere duraciones calendario y tipos
+de precedencia definidos. El archivo reúne horas, intervalos superpuestos y
+dependencias, sin precisar para cada vínculo si exige terminar una tarea o
+permite avanzar con resultados parciales. Conservo esa red sin atribuirle
+holguras numéricas. Su formalización se completará en la revisión del cierre
+de febrero.
+
+\section{Registro de dedicación y revisión al cierre}
+El 4 de noviembre de 2026 inicié un registro separado de dedicación para reunir
+la información necesaria para la revisión final. Cada entrada identifica fecha
+o período, actividad, relación con las tareas del plan cuando puede establecerse,
+cantidad de horas, procedencia y tipo de dato. Distingo estimaciones retrospectivas,
+tiempos informados, tiempos medidos y actividades cuyo tiempo permanece pendiente.
+
+Para reconstruir períodos anteriores utilizo mis estimaciones y los registros
+que ubican las actividades. Git aporta fechas de cambios, pero el intervalo
+entre commits no mide dedicación. La reconstrucción conserva su método y no
+distribuye horas por la cantidad de cambios.
+
+En las próximas sesiones registraré la actividad y el tiempo personal dedicado;
+cuando falte ese dato, la entrada quedará pendiente. Los tiempos de compilación
+o ejecución autónoma de agentes se mantendrán diferenciados de mi dedicación.
+Si una sesión reemplaza parte de un período estimado, se ajustará el registro
+para evitar contar ambas cifras sobre el mismo trabajo.
+
+En febrero de 2027 compararé fechas, dedicación y dependencias con el plan,
+analizando los cambios de alcance y sus motivos a partir de los registros
+disponibles.

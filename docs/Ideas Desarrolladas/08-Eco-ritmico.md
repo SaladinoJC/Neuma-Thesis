@@ -1,5 +1,11 @@
 # 8. Eco rítmico (lectura + generador procedural de ritmos)
 
+> Solicitud del autor del 12/11/2026 tras prueba física de 0.12.20: corregir
+> sincronización/conteo y taps, y añadir calibración previa. 0.12.22 incorpora
+> alineación personal explícita separada de la puntuación, sin cambiar ventanas
+> ni aprender de los ejercicios. [Contrato actualizado](../Especificacion-ritmo-v1.md)
+> y [verificación con límites físicos](../Verificacion-ritmo-defender-v0.12.22.md).
+
 > Actualización 2026-10-29, confirmada por el usuario después de investigar Glisso: autoriza seguimiento lateral continuo, fondo integrado y acierto verde sobre cada nota, con VexFlow si es viable. Sustituye la presentación por renglones/seguimiento vertical descrita en las rondas anteriores. Conserva catálogo, taps nativos, audio y evaluación. [Implementación y verificación](../Rhythm-Tap-lectura-lateral.md).
 
 > Actualización 2026-10-22: el usuario retomó la definición de Rhythm Tap, generador y renderizador. Confirmó categorías asociadas a células concretas, cuatro compases con inicio manual y compás de entrada, y ampliación prevista a ocho/dieciséis con desplazamiento sincronizado. Cobertura progresiva inicial/intermedia y luego avanzada. Ver [definición en curso](../Definicion-ritmo.md). El catálogo y las reglas del DDA Mamdani vigente se están concretando; la lista de tags y el curriculum del texto siguiente conservan el diseño anterior y no fijan por sí solos el nuevo catálogo.

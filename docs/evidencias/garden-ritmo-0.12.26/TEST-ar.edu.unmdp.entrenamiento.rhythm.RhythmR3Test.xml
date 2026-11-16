@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.rhythm.RhythmR3Test" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-16T17:29:51.702Z" hostname="DESKTOP-PP49S64" time="0.049">
+  <properties/>
+  <testcase name="mezclaConCategoriasAnterioresEsReproducibleYSigueSiendoUnaSeleccionExplicita" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmR3Test" time="0.028"/>
+  <testcase name="ventanasDensasRecalculadasA120BpmTienenFronterasInclusivasYUnTapPorAtaque" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmR3Test" time="0.005"/>
+  <testcase name="derivaSinMetronomoConservaGrillaYDesviosAcumulados" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmR3Test" time="0.001"/>
+  <testcase name="silencioCortoNoPideTapNiDuplicaUnaRespuestaAdelantadaValida" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmR3Test" time="0.002"/>
+  <testcase name="cadaCelulaConservaOrdenDuracionSilenciosYCuotaEnLasTresMetricas" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmR3Test" time="0.009"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

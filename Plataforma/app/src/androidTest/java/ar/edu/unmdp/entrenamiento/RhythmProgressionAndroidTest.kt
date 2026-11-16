@@ -36,6 +36,7 @@ class RhythmProgressionAndroidTest {
             compose.onNodeWithTag("rhythm-category-R20").performScrollTo().performClick()
             for (seed in listOf(1L, 2L)) {
                 compose.runOnIdle { clock.set(seed) }
+                compose.openRhythmPreparationIfCollapsed()
                 compose.onNodeWithTag("rhythm-generate").performScrollTo().performClick()
                 compose.waitUntil(10_000) { model.ui.value.session.phase == RhythmPhase.PREVIEW }
                 compose.awaitRhythmScore()

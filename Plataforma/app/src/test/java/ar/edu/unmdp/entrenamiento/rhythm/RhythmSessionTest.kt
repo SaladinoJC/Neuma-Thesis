@@ -4,6 +4,43 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class RhythmSessionTest {
+    @Test fun `cuatro semicorcheas a 120 BPM conservan timestamps y admiten ajuste positivo y negativo`() {
+        for (offset in listOf(-100_000_000L, 100_000_000L)) {
+            val session = RhythmSession()
+            session.generate(setOf(RhythmCategory.SIXTEENTHS), 42L)
+            session.preview(requireNotNull(session.state.score).copy(bpm = 120))
+            session.play(0, calibration = RhythmCalibration(offset, 0, 12))
+            val attacks = session.state.attacks.toList()
+            for (attack in attacks) {
+                val raw = 2_000_000_000L + attack.offsetNanos + offset
+                session.advance(raw + 200_000_000L) // Entrega tardía de UI, se conserva el instante del contacto.
+                session.tap(raw)
+            }
+            session.advance(20_000_000_000L)
+            val result = requireNotNull(session.state.result)
+            assertTrue(result.attacks.all { it.kind == TapKind.ON_TIME })
+            assertEquals(attacks.size, result.taps.size)
+            assertEquals(0, result.extras)
+            assertEquals(0, result.omissions)
+            assertEquals(offset, result.calibration?.offsetNanos)
+            assertEquals(2_000_000_000L + attacks.first().offsetNanos + offset, result.taps.first().timestampNanos)
+        }
+    }
+    @Test fun `conteo visual sigue cada pulso del tempo real a 60 90 y 120 BPM`() {
+        for (bpm in listOf(60, 90, 120)) for (meter in 2..4) {
+            val session = RhythmSession()
+            session.generate(setOf(RhythmCategory.QUARTER), 42L, meter)
+            session.preview(requireNotNull(session.state.score).copy(bpm = bpm))
+            session.play(0)
+            for (beat in 0 until meter) {
+                session.advance(Beat(beat).nanos(bpm))
+                assertEquals("$bpm BPM, $meter/4, pulso $beat", beat + 1, session.state.countInBeat)
+            }
+            session.advance(Beat(meter).nanos(bpm))
+            assertNull(session.state.countInBeat)
+            assertEquals(RhythmPhase.PLAYING, session.state.phase)
+        }
+    }
     @Test fun `fronteras inclusivas y un solo tap por ataque sin depender del metronomo`() {
         for ((ms, expected) in listOf(-150L to TapKind.EARLY, -60L to TapKind.ON_TIME,
             60L to TapKind.ON_TIME, 150L to TapKind.LATE, 151L to TapKind.EXTRA)) {

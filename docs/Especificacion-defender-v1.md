@@ -1,5 +1,16 @@
 # Defender — especificación de notas, acordes y piano
 
+> Actualización confirmada por solicitud del autor el 12/11/2026: permitir
+> viaje de hasta 3 s con buen desempeño o en práctica y controlar la rapidez
+> de aparición. 0.12.22 baja el mínimo DDA/manual a 3 s, conservando paso de
+> 1 s y ajustes solo a futuros enemigos. Práctica permite intervalo fijo
+> manual de 1–6 s en pasos de 0,5 s (rango elegido provisionalmente por el
+> agente), o la curva automática existente de 4 a 2,5 s. Progresión conserva
+> esa curva y viaje inicial de 10 s; no hereda intervalos manuales. Se mantiene
+> el cupo/espacio disponible y la pausa sin ráfagas acumuladas. Estas reglas
+> sustituyen el mínimo de 6 s de los párrafos históricos siguientes.
+> [Verificación](Verificacion-ritmo-defender-v0.12.22.md).
+
 > Actualización visual confirmada por el usuario el 2026-10-26 (Music Garden, Q1–Q4): [ART_DIRECTION.md](ART_DIRECTION.md) reemplaza la estética espacial de esta especificación por jardín de papel recortado con tinta, árbol sin rostro, polillas de alas vegetales y acción «Tocar». Se conservan las reglas funcionales y la orientación vertical/radial. «Base», «enemigo» y «disparo» en el detalle siguiente describen el contrato previo; no requieren renombrar el modelo interno para adaptar la presentación. Ilustraciones concretas pendientes de revisión; sin implementación visual en esta etapa. La issue publicada no se modificó.
 
 Estado: síntesis y valores iniciales confirmados mediante «perfeto»; puntos de prueba, división y dependencias aprobados mediante «perfecto» el 2026-10-22. D1/D2 implementados y verificados en software; D3/D4/D5 implementados localmente en 0.12.13/0.12.14/0.12.15, con revisión Android pendiente. D6/D7 pendientes. [D3](Demostracion-defender-D3.md), [D4](Demostracion-defender-D4.md), [D5](Demostracion-defender-D5.md). Las reglas siguientes siguen siendo la especificación, no una declaración de que las tres variantes ya existen.

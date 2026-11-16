@@ -1,0 +1,46 @@
+{
+  "date": "2026-11-16",
+  "version": "0.12.26",
+  "versionCode": 41,
+  "jvm": {
+    "tests": 308,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "lint": {
+    "debug": {
+      "Warning": 17
+    },
+    "quietStudio": {
+      "Warning": 19
+    }
+  },
+  "android_tests": "compiled_only_not_executed",
+  "native_visual_review": "pending_no_emulator",
+  "review": {
+    "standards_open": 0,
+    "spec_open": 0
+  },
+  "artifacts": [
+    {
+      "variant": "debug",
+      "path": "Plataforma/build/apk-archives/neuma-garden-v0.12.26-ritmo.apk",
+      "sha256": "b3f8886a922d52f1fbe7ab142877364ae7d1accb2b4da38fd3d0dd84919a6064",
+      "bytes": 15387976,
+      "signature_compatible_with": "neuma-garden-v0.12.25-instrumentos.apk",
+      "package": "package: name='ar.edu.unmdp.entrenamiento' versionCode='41' versionName='0.12.26' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'"
+    },
+    {
+      "variant": "quietStudio",
+      "path": "Plataforma/build/apk-archives/neuma-quiet-studio-v0.12.26.apk",
+      "sha256": "1101c6f70770dc0f6372459b5399f3e263cf20e736139984b54addd4af67a414",
+      "bytes": 14565709,
+      "signature_compatible_with": "neuma-quiet-studio-v0.12.25.apk",
+      "package": "package: name='ar.edu.unmdp.entrenamiento.quietstudio' versionCode='41' versionName='0.12.26' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'"
+    }
+  ],
+  "issue": 33,
+  "previous_increment_native_review": "still_pending_user_requested_continuation",
+  "personal_hours": "pending_H0014"
+}

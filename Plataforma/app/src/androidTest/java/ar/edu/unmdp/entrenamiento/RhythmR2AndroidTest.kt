@@ -35,6 +35,7 @@ class RhythmR2AndroidTest {
         try {
             compose.onNodeWithTag("rhythm-category-R19").performScrollTo().performClick()
             for (meter in 2..4) {
+                compose.openRhythmPreparationIfCollapsed()
                 compose.onNodeWithTag("rhythm-meter-$meter").performScrollTo().performClick()
                 compose.onNodeWithTag("rhythm-generate").performScrollTo().performClick()
                 compose.waitUntil(5_000) { model.ui.value.session.phase == RhythmPhase.PREVIEW }
@@ -58,7 +59,7 @@ class RhythmR2AndroidTest {
     }
 
     @Test fun audioRealAceptaLasTresMetricasYLiberaRecursos() = runBlocking {
-        val audio = AndroidRhythmAudio()
+        val audio = AndroidRhythmAudio(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext)
         for (meter in 2..4) {
             try {
                 audio.start(120, false, meter)

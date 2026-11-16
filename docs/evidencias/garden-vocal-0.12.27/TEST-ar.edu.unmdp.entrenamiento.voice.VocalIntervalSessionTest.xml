@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.voice.VocalIntervalSessionTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-16T18:40:11.121Z" hostname="DESKTOP-PP49S64" time="0.073">
+  <properties/>
+  <testcase name="synthetic PCM traverses the real YIN and public round to a fourth" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalSessionTest" time="0.07"/>
+  <testcase name="stale callbacks wrong phases and post closure input are ignored" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalSessionTest" time="0.0"/>
+  <testcase name="imitation evaluates a fifth from the sung anchor regardless of register" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalSessionTest" time="0.0"/>
+  <testcase name="a drifting attack must leave the full stable window before acquisition" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalSessionTest" time="0.0"/>
+  <testcase name="transposing both sung notes does not change the interval" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalSessionTest" time="0.001"/>
+  <testcase name="silence invalid frequencies and long gaps cannot bridge a hold" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalSessionTest" time="0.0"/>
+  <testcase name="bounded telemetry interrupts without granting a completed round" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalSessionTest" time="0.0"/>
+  <testcase name="descending octave and explicitly separated unison are playable" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalSessionTest" time="0.0"/>
+  <testcase name="timeout during silence or between notes never invents a musical outcome" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalSessionTest" time="0.001"/>
+  <testcase name="a stable wrong octave remains an error rather than being folded" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalSessionTest" time="0.0"/>
+  <system-out><![CDATA[Synthetic PCM only: anchorHz=220.0009575855788, targetHz=293.6707813710232, intervalCents=500.02791512946413, errorCents=0.02791512946413377
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

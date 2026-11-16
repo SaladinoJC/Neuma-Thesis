@@ -1,12 +1,153 @@
 \chapter{Factibilidad}
 \label{cap:factibilidad}
+El análisis de factibilidad examina si puedo desarrollar y evaluar Neuma con los
+recursos y el tiempo disponibles. El problema y el alcance se presentan en los
+capítulos~\ref{cap:introduccion} y~\ref{cap:objetivos}; aquí considero las
+condiciones que permiten llevarlos adelante y los riesgos que pueden afectar
+su cumplimiento. Distingo la previsión inicial del protocolo de la situación
+conocida al redactar este capítulo, el 4 de noviembre de 2026, cuando ya existe
+un prototipo implementado.
+
 \section{Factibilidad técnica}
-\pendiente{Identificar recursos, capacidades y restricciones técnicas.}
+Dispongo de una notebook MSI Thin GF63 con procesador Intel Core i5-10500H,
+16 GB de RAM DDR4 y una GPU NVIDIA RTX 3050 con 4 GB de memoria gráfica.
+También dispongo de un Samsung S22 Ultra para las pruebas en un teléfono físico.
+Ambos equipos eran de mi propiedad antes de iniciar el proyecto y no necesité
+comprar equipamiento específico. La computadora proporciona el entorno de
+desarrollo y construcción; el teléfono permite abordar la captura, reproducción
+e interacción bajo condiciones de uso reales.
+
+La aplicación utiliza las tecnologías descritas en el capítulo~\ref{cap:herramientas}.
+La existencia de una candidata compilada y de verificaciones automatizadas de
+reglas y componentes respalda la posibilidad de construir e integrar la solución.
+Los registros de la candidata 0.12.20 distinguen esas comprobaciones en computadora
+de las verificaciones Android y acústicas todavía pendientes. Los resultados y
+condiciones de cada prueba se reúnen en el capítulo~\ref{cap:pruebas}.
+
+La principal incertidumbre técnica se concentra en el comportamiento del audio
+con voz real, ruido y diferencias entre dispositivos, y en el ajuste de los
+parámetros de adaptación. Mi experiencia previa en desarrollo Android y audio
+en tiempo real es limitada; la construcción incremental, la revisión de propuestas
+y las pruebas permiten abordar esa complejidad por partes. La disponibilidad
+del S22 Ultra facilita una primera evaluación física, aunque la cobertura de
+otros equipos dependerá de los dispositivos a los que pueda acceder.
+
+El protocolo inicial propone una arquitectura con C++/Oboe y procesamiento
+híbrido DSP/ML. En el desarrollo adopté primero la línea base en Kotlin con YIN,
+tratando las alternativas como ampliaciones condicionadas a mediciones, según
+lo expuesto en el alcance. La factibilidad de la entrega depende de comprobar
+la suficiencia de esa línea base y acordar con el director el tratamiento de
+las diferencias respecto del protocolo. La incorporación de nuevas tecnologías
+deberá responder a una limitación identificada y considerar el tiempo de
+integración y verificación que requiera.
+
 \section{Factibilidad operativa}
-\pendiente{Analizar usuarios, condiciones de uso y recursos necesarios.}
+El uso previsto complementa otras formas de estudio musical y se apoya en un
+teléfono Android, sus medios de reproducción y, para los ejercicios vocales,
+su micrófono. La ejecución local y el perfil almacenado en el dispositivo
+permiten plantear la práctica sin una cuenta remota ni conexión permanente.
+Los ejercicios de voz requieren condiciones acústicas que permitan obtener
+una señal utilizable; la comprensión de las consignas y devoluciones también
+debe examinarse con participantes.
+
+Cuento con personas a quienes puedo proponer las pruebas. Esto proporciona una
+vía de convocatoria, cuya concreción dependerá de su interés, disponibilidad y
+aceptación de las condiciones. Las modalidades autónoma mediante APK y presencial
+acompañada permiten contemplar distintas disponibilidades. Las tareas, registros
+y criterios se desarrollan en la sección~\ref{sec:metodo-evaluacion}.
+
+En la modalidad autónoma, la instalación y actualización de la APK forman parte
+de las condiciones de acceso al prototipo y pueden requerir orientación.
+Antes de convocar las pruebas deberé disponer de una versión suficientemente
+estable y de instrucciones de instalación y uso. El relevamiento preparado y
+las pruebas previstas permitirán revisar las necesidades y dificultades; su
+preparación todavía no constituye evidencia de aceptación o utilidad del producto.
+
 \section{Factibilidad temporal}
-\pendiente{Contrastar actividades y disponibilidad con el plan de trabajo.}
+Actualmente dedico aproximadamente 12 horas semanales al proyecto. Mantengo
+fines de febrero de 2027 como fecha prevista de finalización y marzo de 2027
+como mes provisional de defensa. El protocolo fija el cierre el 27 de febrero;
+entre la fecha de este análisis y ese día hay unas 16 semanas, equivalentes a
+aproximadamente 200 horas de dedicación potencial si sostengo el ritmo declarado.
+Esta proyección no descuenta interrupciones y comprende el conjunto de tareas:
+desarrollo, pruebas, análisis, escritura y revisiones.
+
+El plan original contempla 400 horas: 30 previas estimadas, 335 previstas y
+35 de reserva, con una capacidad declarada de 10 a 20 horas semanales. La
+dedicación actual se encuentra dentro de ese intervalo, pero exige revisar
+la distribución de las semanas que habían sido planificadas con una carga mayor.
+Las 400 horas son una estimación de partida; el avance del prototipo no permite
+deducir por sí solo cuántas horas restan ni qué parte de la reserva sigue disponible.
+
+La continuidad hasta el cierre requiere priorizar la estabilización del alcance
+evaluable, las mediciones físicas, las pruebas de uso y la terminación del informe.
+Las ampliaciones competirán por esa misma disponibilidad y deberán revisarse
+según su aporte al cumplimiento de los objetivos. El capítulo~\ref{cap:planificacion}
+desarrollará las tareas, dependencias y diferencias entre el plan inicial y la
+ejecución; la compatibilidad temporal deberá actualizarse con esa revisión y
+con los acuerdos del director.
+
 \section{Factibilidad económica}
-\pendiente{Documentar supuestos y costos, diferenciando estimaciones de valores reales.}
+La infraestructura principal está disponible y no requirió compras específicas
+para el proyecto. Esto reduce la necesidad de un desembolso inicial en equipos,
+aunque su uso y mi dedicación siguen siendo recursos empleados en el trabajo.
+El prototipo funciona en el dispositivo y no requiere contratar un servidor para
+ejecutar los ejercicios y conservar el perfil local.
+
+Al momento de este análisis pago USD 20 mensuales por Codex y USD 30 mensuales
+por Grok, que suman USD 50 mensuales en suscripciones. Ese monto identifica el
+gasto mensual en servicios de apoyo. Para determinar un costo acumulado atribuible
+a Neuma sería necesario precisar los períodos y la proporción de uso dedicada
+al proyecto; por ello, no lo presento como costo total del Trabajo Final. La
+continuidad de los servicios de apoyo implica sostener ese gasto o revisar las
+herramientas utilizadas si cambia su disponibilidad.
+
+El análisis se limita a los recursos disponibles y los gastos identificados.
+No asigno un valor monetario a mis horas ni estimo amortización de los equipos.
+La entrega gratuita prevista para quienes utilicen Neuma es una decisión de
+acceso al producto, compatible con que su desarrollo demande tiempo y servicios
+de apoyo. La publicación abierta requerirá completar la revisión de licencias
+de código y recursos.
+
 \section{Riesgos}
-\pendiente{Registrar riesgos iniciales, probabilidad, impacto y mitigaciones.}
+La tabla~\ref{tab:riesgos-factibilidad} reúne riesgos que pueden afectar el
+cierre y las medidas previstas para tratarlos. Su identificación es cualitativa,
+a partir del protocolo, el estado del prototipo y los recursos disponibles;
+no se dispone de datos para asignar probabilidades numéricas. Las respuestas
+indicadas orientan el trabajo pendiente y deberán actualizarse con las pruebas
+y revisiones.
+
+\begingroup
+\small
+\singlespacing
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\begin{longtable}{p{0.22\textwidth}p{0.29\textwidth}p{0.39\textwidth}}
+\caption{Riesgos de factibilidad y medidas previstas.}
+\label{tab:riesgos-factibilidad}\\
+\toprule
+Riesgo & Efecto sobre la entrega & Medida prevista \\
+\midrule
+\endfirsthead
+\toprule
+Riesgo & Efecto sobre la entrega & Medida prevista \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Audio y diversidad de equipos & Estimaciones inestables o respuesta tardía que dificulten los ejercicios vocales. & Medir con referencias y voz en condiciones registradas; corregir la línea base y delimitar las condiciones de funcionamiento. \\
+Calibración del DDA & Ajustes poco adecuados o progresión inconsistente. & Revisar entradas, reglas y decisiones; comprobar límites y ajustar parámetros a partir de los registros. \\
+Errores en propuestas o código asistido & Fallos de integración o explicaciones incorrectas. & Mantener especificaciones, revisión humana, pruebas y contraste de fuentes; conservar versiones recuperables. \\
+Ampliación del alcance & Desplazamiento de mediciones, escritura y revisión. & Priorizar el alcance evaluable y revisar nuevas funciones con relación al tiempo disponible. \\
+Convocatoria y coordinación & Menos pruebas de uso o demoras para realizarlas. & Convocar con anticipación, ofrecer ambas modalidades y acordar con el director el procedimiento y las revisiones. \\
+Servicios de apoyo y publicación & Interrupciones del trabajo o demoras por recursos sin licencia aclarada. & Conservar código y documentación local; revisar herramientas si cambia su acceso y auditar licencias antes de publicar. \\
+\end{longtable}
+\endgroup
+
+\section{Síntesis de factibilidad}
+La infraestructura disponible, la base de software implementada y el acceso a
+posibles participantes permiten continuar con la construcción y evaluación del
+prototipo. Mi dedicación y los gastos de apoyo identificados proporcionan un
+marco concreto para organizar esa continuidad. La viabilidad del cierre previsto
+queda condicionada a estabilizar el alcance, completar la evaluación física y
+de uso y reservar tiempo para el informe y su revisión con el director.

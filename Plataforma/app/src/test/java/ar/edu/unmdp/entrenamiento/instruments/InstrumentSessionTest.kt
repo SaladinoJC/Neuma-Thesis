@@ -1,6 +1,10 @@
 package ar.edu.unmdp.entrenamiento.instruments
 
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.runCurrent
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.Rule
@@ -9,6 +13,30 @@ import java.io.File
 
 class InstrumentSessionTest {
     @get:Rule val temporaryFolder = TemporaryFolder()
+
+    @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+    @Test fun `responder durante la melodia registra una sola respuesta y conserva feedback al terminar audio`() = runTest {
+        val player = object : InstrumentPlayer {
+            override suspend fun play(instrument: Instrument, melody: InstrumentMelody, onStarted: () -> Unit): Int {
+                onStarted()
+                delay(5000)
+                return 134_505
+            }
+        }
+        val session = InstrumentSession({ 0 }, player)
+        session.start(InstrumentLevel.A)
+        session.answer(Instrument.PIANO)
+        assertTrue(session.state.answers.isEmpty())
+        launch { session.listen() }
+        runCurrent()
+        session.answer(Instrument.PIANO)
+        session.answer(Instrument.VIOLIN)
+        assertEquals(InstrumentPhase.FEEDBACK, session.state.phase)
+        assertTrue(session.state.answers.single().correct)
+        assertEquals(1, session.state.answers.single().listensUsed)
+        advanceUntilIdle()
+        assertEquals(InstrumentPhase.FEEDBACK, session.state.phase)
+    }
 
     @Test
     fun `azar que repite una frase con primera nota unica no bloquea la siguiente pregunta`() = runTest {

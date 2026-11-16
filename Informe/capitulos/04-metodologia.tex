@@ -1,4 +1,256 @@
 \chapter{Metodología}
 \label{cap:metodologia}
-\pendiente{Describir el proceso efectivamente seguido: relevamiento, desarrollo incremental,
-gestión de decisiones y validación. Separar procedimientos, resultados y propuestas.}
+Este capítulo describe cómo organicé la investigación, el desarrollo y la
+verificación de Neuma. El trabajo combinó consultas bibliográficas asistidas por
+IA, definición de requisitos, implementación por incrementos y revisión de resultados.
+La evaluación técnica y las sesiones exploratorias previstas completan ese proceso
+con preguntas sobre funcionamiento y uso de la aplicación.
+
+\section{Organización del trabajo}
+\label{sec:metodo-organizacion}
+Organicé el proyecto como un proceso iterativo de ingeniería. La investigación,
+la definición de actividades, la implementación y la escritura se alimentaron
+entre sí: los antecedentes aportaron conceptos y alternativas; las pruebas del
+prototipo permitieron revisar decisiones; y la documentación conservó el estado
+de cada incremento. Esta organización me permitió trabajar sobre recorridos
+ejecutables mientras precisaba el alcance de la aplicación.
+
+Antes de implementar una funcionalidad establecía su objetivo, las restricciones
+y los criterios de aceptación. Durante el desarrollo revisaba las decisiones
+necesarias para concretarla. Al recibir el resultado, examinaba el resumen de
+cambios y los reportes de pruebas, y probaba las funcionalidades. Cuando encontraba
+problemas o diferencias respecto de lo esperado, proporcionaba retroalimentación
+concreta y solicitaba las correcciones correspondientes. Ese recorrido se repetía
+hasta resolver los aspectos necesarios para aceptar el incremento.
+
+La revisión también incluyó mi experiencia de estudio musical y conversaciones
+espontáneas con colegas a quienes mostré el prototipo. Estas devoluciones aportaron
+criterios para reconsiderar la utilidad de actividades, la interacción y la
+presentación. Las utilicé como insumos de diseño; las sesiones con tareas y
+observaciones registradas de forma sistemática corresponden a la evaluación
+exploratoria prevista en la sección~\ref{sec:metodo-evaluacion}.
+
+Para seguir la evolución del trabajo conservé definiciones, especificaciones,
+planes de incrementos, decisiones de arquitectura, guías de verificación y registros
+de continuidad. La identificación de versiones y commits permite relacionar esos
+documentos con el código y la evidencia de una entrega. En la escritura mantengo
+separadas las decisiones adoptadas, las propuestas en revisión y las comprobaciones
+realizadas, de modo que un cambio de diseño pueda interpretarse en su contexto.
+
+En distintas tareas del proyecto contrasté los aportes de asistentes y agentes
+con el propósito de reducir sesgos y
+detectar errores. En algunos casos pedí a un modelo que
+criticara la propuesta o respuesta de otro, con el propósito de identificar
+supuestos, omisiones y aspectos por revisar. Incorporé estas observaciones a mi
+evaluación junto con la consulta de fuentes y las pruebas pertinentes, manteniendo
+la decisión final sobre los cambios. La sección~\ref{sec:herramientas-ia}
+identifica las herramientas utilizadas y su lugar en el desarrollo.
+
+\section{Desarrollo asistido por agentes y guiado por especificaciones}
+\label{sec:metodo-desarrollo}
+Elegí trabajar con agentes de programación porque, desde mi experiencia profesional
+y en proyectos personales y académicos, considero esta forma de trabajo mucho más
+eficiente. En Neuma, esa elección se concretó en delegar implementación, ejecución
+de pruebas y correcciones técnicas, mientras mantuve la responsabilidad sobre
+requisitos, decisiones de diseño y aceptación final. La lectura directa del código
+fue selectiva, principalmente para verificar decisiones arquitectónicas, comprender
+una implementación o investigar un comportamiento inesperado.
+
+Ya aplicaba \textit{harness engineering} antes de este proyecto. En la experiencia
+descrita por \textcite{lopopolo2026harness}, el enfoque comprende el diseño del entorno
+en el que actúan los agentes: herramientas, contexto accesible, restricciones y
+mecanismos de retroalimentación. Retomé esa organización mediante instrucciones
+del repositorio, documentación de dominio, decisiones registradas y comprobaciones
+ejecutables. Los archivos \texttt{AGENTS.md}, \texttt{CONTEXT.md}, los registros
+de continuidad y los ADR proporcionaron referencias compartidas para retomar
+el trabajo entre sesiones.
+
+En mi experiencia, esta organización permitió sostener la coherencia del desarrollo.
+La dificultad más persistente fue mantener una estética definida a través de
+iteraciones y sesiones. Para abordarla documenté la dirección artística, los tokens,
+los recursos y los criterios de interacción. La evolución de las herramientas
+también me exigió aprender y ajustar prácticas durante el proyecto. Esas decisiones
+forman parte del proceso de trabajo y de su mejora progresiva.
+
+También conocía el desarrollo guiado por especificaciones, o
+\textit{Specification-Driven Development} (SDD), aunque antes no lo había aplicado
+de manera técnica y sistemática. La documentación de Spec Kit expone el enfoque
+y relaciona las especificaciones con planes, tareas y criterios de verificación
+\parencite{githubSpecDriven}. En Neuma profundicé su aplicación al definir
+comportamientos observables antes de implementarlos y mantenerlos como referencia
+para revisar el resultado. Utilizo esa documentación como referencia del enfoque;
+la descripción de mi proceso se apoya en los artefactos propios del proyecto.
+
+Las definiciones funcionales precisaron las actividades y sus restricciones;
+las especificaciones reunieron los comportamientos y condiciones de aceptación;
+y los planes los dividieron en incrementos ejecutables. Este vínculo permitió
+revisar tanto el cumplimiento de una función como su integración con audio,
+persistencia, progreso y navegación. Cuando una prueba o una devolución motivaba
+un cambio, revisaba el comportamiento esperado y su documentación.
+
+Rhythm Tap ofrece un ejemplo de esta trazabilidad. Su definición del 22 de octubre
+de 2026 precisó la lectura de partituras nuevas, las categorías seleccionables y
+la ejecución mediante golpes en pantalla. La especificación y el plan organizaron
+seis incrementos, desde el recorrido básico hasta la progresión y el ajuste de
+tempo. Estos documentos están conservados en el commit \texttt{c0f9307}.
+El incremento R6, identificado como versión 0.12.12 del 30 de octubre, documenta
+la adaptación entre ejercicios, la persistencia del progreso y sus casos de
+verificación. Su implementación y evidencia quedaron incorporadas al historial
+en \texttt{d5de1e6}. La sección~\ref{sec:implementacion-ritmo-r6} desarrolla sus
+decisiones técnicas; el capítulo~\ref{cap:pruebas} presenta los criterios de prueba.
+
+La supervisión combinó dos comprobaciones complementarias: la revisión del resumen
+y los reportes del agente, y el uso de las funcionalidades implementadas. Esa
+combinación permitió relacionar los resultados automatizados con la experiencia
+de interacción. Para interpretar cada entrega conservo qué comprobaciones se
+ejecutaron, en qué entorno y cuáles permanecieron pendientes.
+
+\section{Procedimiento de revisión bibliográfica}
+\label{sec:metodo-revision}
+La investigación inicial combinó consultas de investigación asistida por IA con lectura
+manual de resúmenes y partes concretas de artículos. Organicé las consultas en
+tres fases: metodología, conceptos y preguntas de investigación; estado del arte
+y extracción de datos; y síntesis, brechas y propuestas viables para la tesis.
+Esta división permitió explorar el vocabulario, localizar antecedentes y examinar
+alternativas de desarrollo antes de concretar las decisiones del prototipo.
+
+En el prompt solicité delimitar juegos serios, gamificación, aprendizaje basado
+en juegos y sistemas musicales interactivos o adaptativos. Pedí formular preguntas
+sobre habilidades entrenadas, tecnologías, mecánicas, evidencia de aprendizaje y
+limitaciones. La primera fase debía proponer un protocolo de revisión antes de
+ejecutar la búsqueda. Las fases siguientes debían comparar soluciones, examinar
+su viabilidad y separar brechas de investigación, tecnología y producto, incluyendo
+una búsqueda deliberada de antecedentes que cuestionaran la novedad de la propuesta.
+
+Las instrucciones priorizaban los diez años previos, especialmente 2020--2026,
+con excepciones para trabajos fundamentales. Ante restricciones de acceso, pedí
+identificar el material disponible y declarar los datos que no pudieran determinarse.
+La extracción solicitada reunía autoría y año, objetivo, población, habilidad,
+tecnología, gamificación, evaluación, resultados y limitaciones. También indiqué
+separar evidencia, interpretación y conclusión, y evitar referencias o cifras
+inventadas. Estos elementos describen cómo orienté las consultas asistidas.
+
+Complementé los informes con consultas manuales a artículos sobre espaciamiento,
+gamificación y diseño de juegos serios. Entre las lecturas que identifiqué en la
+reconstrucción del proceso se encuentran los trabajos de
+\textcite{yuan2022spacing}, \textcite{lieder2024behavior},
+\textcite{sailer2017motivates} y \textcite{bellotti2010designing}.
+Consulté sus resúmenes y pasajes pertinentes para las preguntas del proyecto;
+el registro de fuentes distingue ese acceso de una lectura integral.
+
+Los documentos de investigación conservan las fases y referencias obtenidas.
+Para describir la revisión histórica dispongo de esos informes, del prompt
+aportado durante la reconstrucción y de las lecturas que pude identificar.
+La documentación reunida hasta el momento no permite reconstruir un flujo
+completo de búsqueda, deduplicación y selección con conteos verificables. Por
+ello, presento este recorrido como investigación bibliográfica asistida y
+consulta focalizada de antecedentes, conservando la propuesta inicial de revisión
+sistemática como parte de su planificación.
+
+Para preparar el marco teórico y el estado del arte realicé consultas
+complementarias el 2 y 3 de noviembre de 2026. Tomé candidatos de los borradores,
+busqué publicaciones originales y contrasté prestaciones en sitios oficiales de
+productos. Registré los pasajes utilizados, los datos bibliográficos y los límites
+de acceso. Para la comparación de sistemas extraje propósito, respuesta musical,
+tecnología o mecanismo, evaluación y alcance de los resultados.
+
+Los registros de fuentes del informe permiten seguir estas consultas y distinguir
+publicaciones, documentación técnica y descripciones comerciales. La síntesis
+del capítulo~\ref{cap:marco} organiza sus aportes por problemas del proyecto.
+Utilicé asistencia de IA para localizar, contrastar y sintetizar materiales, así
+como para elaborar borradores del informe; mantengo la responsabilidad de revisar
+el contenido y aceptar su incorporación.
+
+\section{Relevamiento de necesidades}
+\label{sec:metodo-encuesta}
+Para complementar los insumos informales, preparé un cuestionario sobre hábitos,
+dificultades y necesidades de práctica auditiva, destinado a personas que
+actualmente aprenden o practican música. Incluye formación institucional,
+clases particulares y aprendizaje por cuenta propia, sin exigir experiencia
+previa en entrenamiento auditivo. Su propósito es orientar prioridades de
+desarrollo de Neuma a partir de las experiencias declaradas por quienes respondan.
+El relevamiento se incorpora cuando ya existe un prototipo: lo utilizaré para
+revisar prioridades, detectar necesidades no contempladas y orientar cambios.
+Las respuestas podrán motivar la modificación o el descarte de actividades,
+en conjunto con la revisión del diseño y el alcance del proyecto.
+
+La primera versión contiene 17 preguntas, en su mayoría cerradas, sobre perfil
+y experiencia musical, frecuencia y actividades de práctica, dificultad percibida,
+comprobación de respuestas, recursos, aplicaciones y prioridades. Registra edad
+por intervalos y no solicita nombre, correo, institución ni ubicación.
+La invitación opcional a futuras pruebas utiliza un formulario de contacto
+independiente, sin vincular el correo con las respuestas. La duración objetivo
+es de cinco a siete minutos y permanece pendiente de comprobar mediante un piloto.
+
+Preveo difundir el relevamiento entre compañeros y colegas y a través de
+instituciones educativas accesibles. La participación será voluntaria; el análisis
+propuesto es descriptivo y conservará el denominador de cada pregunta, los saltos
+y las respuestas no aplicables. Este procedimiento permitirá caracterizar a
+quienes participen, sin atribuir representatividad a toda la población musical
+ni interpretar la dificultad percibida como una medición de destreza.
+
+Preparé los formularios de encuesta y contacto para presentarlos a mi director.
+Todavía no se difundieron ni produjeron resultados.
+Antes de abrirlo debo revisar las consignas y la duración en un piloto, concretar
+el acceso y la conservación de los datos y acordar con mi director la información
+y el procedimiento de participación de menores. La encuesta no excluye por edad;
+su población es distinta de las sesiones de uso inicialmente previstas con
+personas adultas. Conservaré la versión aplicada, los canales y fechas de difusión
+y las decisiones de diseño que eventualmente se apoyen en sus resultados.
+
+\section{Estrategia de verificación y evaluación}
+\label{sec:metodo-evaluacion}
+Organicé la verificación técnica según el objeto de cada comprobación. Las pruebas
+de reglas y sesiones utilizan entradas, tiempo, azar, audio y almacenamiento
+controlados para examinar estados, resultados y progreso. Las pruebas Android
+abordan recorridos de interfaz, servicios de audio y ciclo de vida. Los reportes
+conservan entorno, versión y ejecución efectiva para relacionar el resultado
+con sus condiciones. El detalle por incremento se presenta en el
+capítulo~\ref{cap:pruebas}.
+
+En audio distingo el análisis de señales sintéticas de frecuencia conocida de
+la captura y medición en un dispositivo físico. La evaluación contempla error
+de estimación, disponibilidad de resultados y tiempos, con las referencias y
+configuraciones utilizadas en cada ensayo. Para el DDA examino en los registros
+la correspondencia entre observaciones, reglas, decisión y cambio aplicado,
+incluidos límites y condiciones de progresión.
+
+Para la evaluación de uso preveo pruebas exploratorias con estudiantes de música
+mayores de edad que posean conocimientos básicos. Según la disponibilidad de
+cada participante, propondré dos modalidades independientes: uso autónomo mediante
+la entrega del paquete de instalación Android (APK) y sesiones presenciales
+acompañadas. Algunas personas podrán participar a distancia, sin un encuentro
+presencial. Ambas modalidades incluirán unas pocas actividades comunes y la
+posibilidad de explorar libremente la aplicación, para contar con una base
+compartida y recoger dificultades que surjan fuera de las tareas propuestas.
+
+Los criterios de evaluación serán la comprensión de las consignas, la posibilidad
+de completar el ejercicio, la interpretación de la devolución y la comprensión
+de cómo continuar. En las sesiones presenciales dejaré que la persona intente
+resolver cada actividad antes de intervenir; ofreceré ayuda cuando la solicite
+o encuentre una dificultad que le impida avanzar. Registraré esa intervención
+para distinguir lo realizado de manera autónoma de lo completado con orientación.
+Al cierre recogeré comentarios sobre utilidad percibida y dificultades.
+
+Utilizaré una ficha por participante, identificado mediante un código, para
+registrar tareas, dificultades, ayuda necesaria, comentarios y problemas
+encontrados. En la modalidad autónoma recogeré la experiencia mediante un breve
+formulario final. En el análisis distinguiré las observaciones directas de las
+sesiones presenciales de las experiencias informadas por quienes utilicen la
+aplicación por su cuenta. Las conversaciones espontáneas mantenidas durante
+el desarrollo conservarán su carácter de insumos de diseño, separado de estos
+registros previstos.
+
+Los hallazgos alimentarán un ciclo de corrección y nueva comprobación, según
+su impacto y el tiempo disponible. Para cada problema registraré su descripción,
+impacto, cambio realizado y forma de comprobar la corrección. Conservaré también
+los problemas que permanezcan abiertos, de modo que el informe permita seguir
+tanto las mejoras como las limitaciones de la versión evaluada.
+
+Estas pruebas están previstas y todavía no se ejecutaron. Antes de realizarlas
+deberé acordar con mi director las tareas concretas, la duración y la cantidad
+de participantes, y precisar la versión y los instrumentos de registro. Del mismo
+modo, los ensayos físicos deberán identificar dispositivos, señales de referencia
+y método de medición. En este trabajo priorizo funcionamiento y uso; la retención
+y la transferencia del aprendizaje corresponden a preguntas de evaluación
+pedagógica diferentes.

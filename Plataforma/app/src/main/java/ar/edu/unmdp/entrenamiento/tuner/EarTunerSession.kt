@@ -30,9 +30,9 @@ data class EarTunerState(
  * Parámetros provisionales de estabilidad de evaluación, independientes del margen de aprobación.
  * El estado público elimina toda medición oculta, incluidas pistas de estabilidad.
  */
-class EarTunerSession {
-    private val meter = TunerSession()
-    private var review = GuidedTunerSession()
+class EarTunerSession(private val stableRequiredMillis: Long = 1000) {
+    private val meter = TunerSession(stableRequiredMillis)
+    private var review = GuidedTunerSession(stableRequiredMillis)
     var state = EarTunerState()
         private set
     private var since: Long? = null
@@ -45,9 +45,10 @@ class EarTunerSession {
     fun begin(snapshot: TunerSetupSnapshot, finalReview: Boolean, classification: Boolean) {
         this.classification = null
         meter.configure(snapshot.copy(tracking = TunerTracking.STRINGS))
-        review = GuidedTunerSession()
+        review = GuidedTunerSession(stableRequiredMillis)
         state = EarTunerState(phase = EarPhase.HIDDEN, setup = meter.setup,
-            finalReview = finalReview, classificationEnabled = classification)
+            finalReview = finalReview, classificationEnabled = classification,
+            configurationVersion = if (stableRequiredMillis <= 400) "ear-check-v2-plucked" else "ear-check-v1")
         target(6)
     }
     private fun resetEvidence() { since = null; lastTime = null; stable = false; farSince = null; warning = false }
@@ -59,7 +60,7 @@ class EarTunerSession {
     private fun publish() {
         val raw = if (state.phase == EarPhase.REVIEW || (state.phase == EarPhase.COMPLETE && state.finalReview)) review.state.measurement else meter.state
         state = state.copy(measurement = if (state.hidden) raw.copy(measuredMidi = null, frequency = null,
-            cents = null, inTune = false, stableMillis = 0) else raw,
+            cents = null, inTune = false, stableMillis = 0, lastConfirmation = null) else raw,
             farWarning = if (state.phase == EarPhase.REVIEW) review.state.farWarning else warning,
             review = review.state)
     }
@@ -121,22 +122,29 @@ class EarTunerSession {
             val result = EarStringResult(requireNotNull(meter.state.fixedString), requireNotNull(meter.state.targetMidi),
                 requireNotNull(meter.state.measuredMidi), cents, direction(cents) == EarDirection.IN_TUNE,
                 timeMillis, classification)
+            if (result.initialPassed && meter.state.inTune) {
+                state = state.copy(results = state.results + result, classification = classification, message = null)
+                nextString(); publish(); return
+            }
             // La corrección requiere evidencia nueva; no reutiliza el tiempo de evaluación.
             meter.start(); resetEvidence()
             state = state.copy(phase = EarPhase.CORRECTING, results = state.results + result,
                 classification = classification, message = null)
         } else if (state.phase == EarPhase.CORRECTING && meter.state.inTune) {
             state = state.copy(results = state.results.dropLast(1) + state.results.last().copy(corrected = true, correctedCents = meter.state.cents))
-            val number = requireNotNull(meter.state.fixedString)
-            if (number > 1) { classification = null; target(number - 1); return }
-            meter.stop(); resetEvidence()
-            if (state.finalReview) {
-                review.beginReview(requireNotNull(state.setup))
-                state = state.copy(phase = EarPhase.REVIEW, message = null)
-            } else state = state.copy(phase = EarPhase.COMPLETE)
+            nextString()
         }
         if (state.phase == EarPhase.CHECKING && cents == null) state = state.copy(message = "Sin lectura válida. Tocá nuevamente la cuerda.")
         publish()
+    }
+    private fun nextString() {
+        val number = requireNotNull(meter.state.fixedString)
+        if (number > 1) { classification = null; target(number - 1); return }
+        meter.stop(); resetEvidence()
+        if (state.finalReview) {
+            review.beginReview(requireNotNull(state.setup))
+            state = state.copy(phase = EarPhase.REVIEW, message = null)
+        } else state = state.copy(phase = EarPhase.COMPLETE)
     }
     fun leavePending() { if (state.phase == EarPhase.REVIEW) { review.leavePending(); publish() } }
     fun suspendMeasurement() {

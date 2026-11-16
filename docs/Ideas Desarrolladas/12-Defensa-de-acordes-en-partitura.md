@@ -1,5 +1,11 @@
 # 12. Defensa de acordes en partitura
 
+> Solicitud del autor del 12/11/2026: viaje mínimo de 3 s y control del
+> intervalo de aparición, comunes a notas y acordes por nombre en 0.12.22.
+> La práctica permite intervalo manual; progresión conserva curva automática.
+> [Contrato actualizado](../Especificacion-defender-v1.md) y
+> [verificación](../Verificacion-ritmo-defender-v0.12.22.md). No implementa piano.
+
 > Actualización 2026-10-22: el usuario confirmó planificar las tres variantes de Defender en orden notas (13) → acordes por nombre (12) → piano virtual (14), conservando supervivencia con tres vidas y sin coste directo de vida por intento incorrecto. Ver [definición en curso](../Definicion-defender.md). Esta ficha describe la segunda etapa; el DDA previo por ventanas/umbrales necesita concretarse con el Mamdani vigente. No implica aprobación del director ni código implementado.
 
 > Quinta ronda de la entrevista: mayor→menor→disminuido→aumentado→séptimas (dominante, mayor7, menor7, semidisminuido), primero tríadas fundamentales y luego séptimas/inversiones. Respuesta raíz+calidad, sin exigir identificar la inversión; raíz no necesariamente es el bajo. Sol→fa→mezcla con progreso propio, escritura exacta de raíz y sin duplicados simultáneos por raíz escrita+calidad. La referencia vertical, movimiento radial, audio y feedback comunes están definidos en la entrevista. Estas decisiones resuelven la ambigüedad de inversión/respuesta y prevalecen sobre detalles anteriores incompatibles.

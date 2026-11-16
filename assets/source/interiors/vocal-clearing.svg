@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="512" viewBox="0 0 768 512">
+  <title>Claro de canto — Neuma Music Garden</title>
+  <desc>Claro botánico con anfiteatro natural vacío. Sin personajes, instrumentos ni notación musical.</desc>
+  <path data-token="surfaceSelected" fill="#E1E9DB" d="M100 369 Q112 153 282 98 Q422 43 605 155 Q680 217 666 381 Q413 484 100 369Z"/>
+  <path data-token="sage" fill="#A7B99E" d="M54 396 Q189 312 325 355 Q512 292 712 390 Q725 451 548 479 Q249 509 66 445Z"/>
+  <path data-token="moss" fill="#718563" d="M85 417 Q200 371 330 400 Q531 351 689 415 Q593 467 382 474 Q175 463 85 417Z"/>
+  <path data-token="success" fill="#D9AD69" d="M182 377 Q381 294 588 377 L613 402 Q386 491 158 404Z"/>
+  <path data-token="background" fill="#F5EEDC" d="M184 370 Q384 294 584 370 Q386 445 184 370Z"/>
+  <path data-token="success" fill="#D9AD69" d="M219 345 Q384 280 551 345 L566 368 Q383 437 205 367Z"/>
+  <path data-token="surface" fill="#FFF9ED" d="M220 340 Q384 277 550 340 Q383 403 220 340Z"/>
+  <path data-token="sage" fill="#A7B99E" d="M269 329 Q385 284 505 330 Q387 373 269 329Z"/>
+  <path data-token="surfaceSelected" fill="#E1E9DB" d="M291 323 Q384 293 482 324 Q386 354 291 323Z"/>
+  <path data-token="primaryPressed" fill="#254633" d="M87 405 Q113 283 95 145 L129 132 Q151 260 141 394 L171 424 L119 419 L97 433Z"/>
+  <path data-token="moss" fill="#718563" d="M124 154 Q133 259 121 393 L142 403 Q153 276 142 166Z"/>
+  <path data-token="primary" fill="#315844" d="M65 245 Q24 164 93 116 Q77 59 143 58 Q190 12 236 58 Q306 44 324 99 Q299 144 242 135 Q196 188 147 168 Q127 222 65 245Z"/>
+  <path data-token="moss" fill="#718563" d="M91 114 Q123 61 178 81 Q194 40 236 58 L249 113 Q203 153 147 168Z"/>
+  <path data-token="sage" fill="#A7B99E" d="M150 78 L235 59 L271 94 L222 118 L178 107Z"/>
+  <path data-token="primaryPressed" fill="#254633" d="M627 404 Q605 281 632 149 L664 157 Q647 276 677 414 L651 431 L633 412 L600 423Z"/>
+  <path data-token="moss" fill="#718563" d="M635 170 Q621 300 647 410 L663 411 Q642 277 653 167Z"/>
+  <path data-token="primary" fill="#315844" d="M542 151 Q485 156 454 105 Q469 54 533 57 Q569 14 611 50 Q679 40 687 99 Q741 148 709 212 Q654 222 624 173 Q582 184 542 151Z"/>
+  <path data-token="moss" fill="#718563" d="M493 102 L533 57 Q568 77 578 114 Q616 90 655 116 L624 173 L567 164Z"/>
+  <path data-token="sage" fill="#A7B99E" d="M544 64 L610 51 L648 76 L604 106 L575 95Z"/>
+  <path data-token="primary" fill="#315844" d="M53 423 Q19 376 58 337 Q99 356 89 394 Q122 361 155 391 Q149 433 111 443Z"/>
+  <path data-token="moss" fill="#718563" d="M69 433 Q61 386 108 369 Q143 400 111 443Z"/>
+  <path data-token="sage" fill="#A7B99E" d="M113 430 Q128 386 176 407 Q168 443 113 430Z"/>
+  <path data-token="primary" fill="#315844" d="M609 444 Q591 403 624 382 Q663 384 660 417 Q678 370 720 390 Q742 438 685 450Z"/>
+  <path data-token="moss" fill="#718563" d="M651 443 Q652 401 687 399 Q710 438 685 450Z"/>
+  <path data-token="sage" fill="#A7B99E" d="M572 425 Q593 393 628 410 Q636 436 609 444Z"/>
+  <path data-token="success" fill="#D9AD69" d="M170 436 Q176 426 185 434 Q189 444 176 447Z M593 456 Q598 444 608 449 Q614 460 601 464Z"/>
+</svg>

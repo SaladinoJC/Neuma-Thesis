@@ -2,6 +2,10 @@
 
 Materiales y prototipo del Trabajo Final de Ingeniería en Informática de la Universidad Nacional de Mar del Plata. El proyecto explora juegos serios, procesamiento de audio y ajuste dinámico de dificultad; el alcance y la arquitectura están en definición.
 
+**Recuperación del cierre 16/11/2026:** [respaldo y pasos para otra computadora](docs/Respaldo-GitHub-2026-11-16.md).
+La rama `trabajo/integracion-v0.12.15` contiene la candidata Neuma 0.12.27 y el
+informe de 92 páginas; el nombre de la rama es histórico.
+
 ## Organización
 
 - [`docs/`](docs/): protocolo, investigación, planificación y fichas de minijuegos. [`IdeasPrototipo.md`](docs/IdeasPrototipo.md) contiene una selección sugerida para el prototipo.

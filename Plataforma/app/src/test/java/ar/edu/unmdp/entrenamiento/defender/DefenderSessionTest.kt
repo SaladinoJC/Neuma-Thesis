@@ -7,6 +7,19 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 class DefenderSessionTest {
+    @Test fun `practica respeta intervalo manual de apariciones y viaje de tres segundos`() {
+        var now = 0L
+        val session = DefenderSession { now }
+        session.start(1, DefenderConfiguration(travelMillis = 3000, spawnIntervalMillis = 1000, maxEnemies = 4))
+        now = 2000; session.tick()
+        assertEquals(listOf(0L, 1000L, 2000L), session.state.enemies.map { it.appearedAtMillis })
+        assertTrue(session.state.enemies.all { it.travelMillis == 3000L })
+        session.pause()
+        now = 12000; session.resume()
+        now = 12500; session.tick()
+        assertEquals(3, session.state.events.count { it.kind == "SPAWN" })
+        assertEquals(2500L, session.state.activeMillis)
+    }
     @Test fun `disparo previo a tercera llegada corrige game over y sigue sin duplicar resultados`() {
         var now = 0L
         val session = DefenderSession { now }; session.start(7)

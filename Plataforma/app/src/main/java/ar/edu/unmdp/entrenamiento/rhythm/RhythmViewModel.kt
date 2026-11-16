@@ -12,15 +12,17 @@ data class RhythmUiState(val session: RhythmState = RhythmState(), val selected:
     val historyBusy: Boolean = false, val historyOpen: Boolean = false, val detailId: String? = null,
     val currentRecordId: String? = null, val progression: Boolean = false, val practiceBpm: Int = 60,
     val progressOpen: Boolean = false, val simulation: RhythmDdaSimulation? = null, val simulationBusy: Boolean = false,
-    val simulationError: String? = null)
+    val simulationError: String? = null, val calibrationOpen: Boolean = false,
+    val calibrationState: RhythmCalibrationState = RhythmCalibrationState(), val calibration: RhythmCalibration? = null)
 
-class RhythmViewModel(private val audio: RhythmAudio = AndroidRhythmAudio(),
+class RhythmViewModel(private val audio: RhythmAudio,
     private val clock: () -> Long = System::nanoTime,
     private val uptimeMillis: () -> Long = SystemClock::uptimeMillis,
     private val generationDispatcher: CoroutineDispatcher = Dispatchers.Default,
     resultsStore: RhythmResults = MemoryRhythmResults(),
     wallClock: () -> Long = System::currentTimeMillis) : ViewModel() {
     private val session = RhythmSession()
+    private val calibrationSession = RhythmCalibrationSession()
     private val history = RhythmHistorySession(resultsStore, wallClock)
     private val mutableUi = MutableStateFlow(RhythmUiState())
     val ui = mutableUi.asStateFlow()
@@ -30,6 +32,46 @@ class RhythmViewModel(private val audio: RhythmAudio = AndroidRhythmAudio(),
     private var simulationJob: Job? = null
     private var repeatedFromId: String? = null
     private var inputOffset = 0L
+    fun openCalibration() {
+        if (!session.active && !ui.value.busy && job?.isActive != true)
+            mutableUi.value = ui.value.copy(calibrationOpen = true, error = null)
+    }
+    fun startCalibration() {
+        if (!ui.value.calibrationOpen || ui.value.busy || session.active || job?.isActive == true) return
+        calibrationSession.reset()
+        mutableUi.value = ui.value.copy(busy = true, error = null, calibrationState = calibrationSession.state)
+        job = viewModelScope.launch {
+            try {
+                val start = audio.start(80, true, 4)
+                ensureActive()
+                inputOffset = clock() - uptimeMillis() * 1_000_000L
+                calibrationSession.start(start.originNanos)
+                mutableUi.value = ui.value.copy(busy = false, calibrationState = calibrationSession.state)
+                while (isActive && calibrationSession.state.active) {
+                    calibrationSession.advance(clock())
+                    mutableUi.value = ui.value.copy(calibrationState = calibrationSession.state)
+                    if (calibrationSession.state.active) delay(16)
+                }
+            } catch (cancelled: CancellationException) { throw cancelled }
+            catch (failure: Exception) { mutableUi.value = ui.value.copy(error = "No se pudo calibrar: ${failure.message}") }
+            finally {
+                audio.stop(); calibrationSession.interrupt()
+                mutableUi.value = ui.value.copy(busy = false, calibrationState = calibrationSession.state)
+            }
+        }
+    }
+    fun applyCalibration() {
+        val candidate = calibrationSession.state.candidate ?: return
+        if (job?.isActive == true) return
+        mutableUi.value = ui.value.copy(calibration = candidate, calibrationOpen = false)
+    }
+    fun clearCalibration() {
+        if (!session.active && job?.isActive != true) mutableUi.value = ui.value.copy(calibration = null)
+    }
+    fun closeCalibration() {
+        if (calibrationSession.state.active || ui.value.busy) background()
+        mutableUi.value = ui.value.copy(calibrationOpen = false)
+    }
     init { historyAction { history.load() } }
     private fun publish() {
         val changed = session.state.result?.let(history::capture) == true
@@ -112,7 +154,7 @@ class RhythmViewModel(private val audio: RhythmAudio = AndroidRhythmAudio(),
         }
     }
     fun play() {
-        if (ui.value.busy || job?.isCompleted == false || session.state.phase != RhythmPhase.PREVIEW) return
+        if (ui.value.calibrationOpen || ui.value.busy || job?.isCompleted == false || session.state.phase != RhythmPhase.PREVIEW) return
         if (session.state.origin == "progression" && (ui.value.historyBusy || ui.value.history.error != null || ui.value.history.pending.isNotEmpty())) {
             mutableUi.value = ui.value.copy(error = "Guardá o recuperá el historial antes de iniciar progresión."); return
         }
@@ -125,7 +167,7 @@ class RhythmViewModel(private val audio: RhythmAudio = AndroidRhythmAudio(),
                 ensureActive()
                 inputOffset = clock() - uptimeMillis() * 1_000_000L
                 session.play(start.originNanos, options.metronome, options.tapSound, start.source,
-                    start.uncertaintyNanos, inputOffset)
+                    start.uncertaintyNanos, inputOffset, options.calibration)
                 history.begin(repeatedFromId)
                 mutableUi.value = ui.value.copy(busy = false)
                 while (isActive && session.active) {
@@ -145,6 +187,11 @@ class RhythmViewModel(private val audio: RhythmAudio = AndroidRhythmAudio(),
     fun tapAtUptimeMillis(eventTime: Long) = tap(eventTime * 1_000_000L + inputOffset, eventTime)
     fun tapNow() = tap(clock(), null)
     private fun tap(timestamp: Long, rawUptime: Long?) {
+        if (ui.value.calibrationOpen) {
+            calibrationSession.tap(timestamp)
+            mutableUi.value = ui.value.copy(calibrationState = calibrationSession.state)
+            return
+        }
         val active = session.active
         val before = session.state.taps.size
         session.tap(timestamp, rawUptime)
@@ -205,8 +252,8 @@ class RhythmViewModel(private val audio: RhythmAudio = AndroidRhythmAudio(),
         mutableUi.value = RhythmUiState()
     }
     fun background() {
-        job?.cancel(); audio.stop(); session.interrupt()
-        mutableUi.value = ui.value.copy(busy = false); publish()
+        job?.cancel(); audio.stop(); session.interrupt(); calibrationSession.interrupt()
+        mutableUi.value = ui.value.copy(busy = false, calibrationState = calibrationSession.state); publish()
     }
     fun home() = background()
     override fun onCleared() { background(); audio.close(); super.onCleared() }

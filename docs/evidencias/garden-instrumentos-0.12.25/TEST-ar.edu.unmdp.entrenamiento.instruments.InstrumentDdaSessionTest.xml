@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.instruments.InstrumentDdaSessionTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-16T15:44:36.313Z" hostname="DESKTOP-PP49S64" time="0.185">
+  <properties/>
+  <testcase name="alternancia de aciertos y errores mantiene ayuda con datos insuficientes al principio" classname="ar.edu.unmdp.entrenamiento.instruments.InstrumentDdaSessionTest" time="0.064"/>
+  <testcase name="practica manual conserva nivel y escuchas y no aplica la propuesta difusa" classname="ar.edu.unmdp.entrenamiento.instruments.InstrumentDdaSessionTest" time="0.01"/>
+  <testcase name="errores recientes recuperan ayuda y el historial explica el limite superior" classname="ar.edu.unmdp.entrenamiento.instruments.InstrumentDdaSessionTest" time="0.042"/>
+  <testcase name="sin reglas validas no se retira ayuda y se registra el diagnostico" classname="ar.edu.unmdp.entrenamiento.instruments.InstrumentDdaSessionTest" time="0.008"/>
+  <testcase name="aciertos con reescuchas conservan ayuda sin convertirlos en errores" classname="ar.edu.unmdp.entrenamiento.instruments.InstrumentDdaSessionTest" time="0.017"/>
+  <testcase name="automatico reduce ayuda para la siguiente pregunta y deja dos rondas entre cambios" classname="ar.edu.unmdp.entrenamiento.instruments.InstrumentDdaSessionTest" time="0.012"/>
+  <testcase name="minimo una escucha y una partida nueva reinicia ventana y espera" classname="ar.edu.unmdp.entrenamiento.instruments.InstrumentDdaSessionTest" time="0.032"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

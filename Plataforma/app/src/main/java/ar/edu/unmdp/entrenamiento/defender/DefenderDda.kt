@@ -38,7 +38,7 @@ fun defenderMasteryInference(): MamdaniConfiguration {
 
 @Serializable
 data class DefenderDdaConfiguration(val inference: MamdaniConfiguration = defenderTravelInference(),
-    val windowSize: Int = 5, val cooldownResolutions: Int = 3, val minimumTravelMillis: Long = 6000,
+    val windowSize: Int = 5, val cooldownResolutions: Int = 3, val minimumTravelMillis: Long = 3000,
     val maximumTravelMillis: Long = 14_000, val stepMillis: Long = 1000, val threshold: Double = .25,
     val masteryInference: MamdaniConfiguration = defenderMasteryInference()) {
     init {

@@ -72,7 +72,9 @@ class RhythmR4AndroidTest {
         try {
             fun tap() { compose.onNodeWithTag("rhythm-tap").performSemanticsAction(SemanticsActions.OnClick) { it() } }
             for (code in listOf("R15", "R16", "R17", "R03")) compose.onNodeWithTag("rhythm-category-$code").performScrollTo().performClick()
+            compose.openRhythmPreparationIfCollapsed()
             compose.onNodeWithTag("rhythm-tap-sound").performScrollTo().performClick()
+            compose.openRhythmPreparationIfCollapsed()
             compose.onNodeWithTag("rhythm-generate").performScrollTo().performClick()
             compose.waitUntil(10_000) { model.ui.value.session.phase == RhythmPhase.PREVIEW }
             val score = model.ui.value.session.score!!
@@ -96,12 +98,14 @@ class RhythmR4AndroidTest {
             assertEquals(1, result.extras); assertEquals(0, result.omissions)
             assertEquals(attacks.size, result.attacks.count { it.kind == TapKind.ON_TIME })
             assertTrue(sounded.isEmpty())
+            compose.onNodeWithTag("rhythm-result-details").performScrollTo().performClick()
             for (code in listOf("R15", "R16", "R17", "R03")) compose.onNodeWithTag("rhythm-summary-$code").performScrollTo().assertExists()
             captureRhythmEvidence(compose, "r4-notation", "resumen")
             compose.onNodeWithTag("rhythm-repeat").performScrollTo().performClick()
             assertEquals(score, model.ui.value.session.score)
             assertEquals(score.fingerprint, model.ui.value.session.score!!.fingerprint)
             assertTrue(model.ui.value.session.repeated)
+            compose.openRhythmPreparationIfCollapsed()
             compose.onNodeWithTag("rhythm-tap-sound").performScrollTo().performClick()
             compose.awaitRhythmScore()
             compose.onNodeWithTag("rhythm-play").performClick()

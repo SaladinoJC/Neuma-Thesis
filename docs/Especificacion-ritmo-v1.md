@@ -1,5 +1,17 @@
 # Rhythm Tap — especificación del primer alcance
 
+> Actualización solicitada por el autor el 12/11/2026 tras probar 0.12.20:
+> agregar sección de calibración previa y corregir conteo/taps. 0.12.22 ajusta
+> el contador al BPM real, recibe contactos nativos y precarga el sonido de tap.
+> Se admite una alineación personal explícita de 4 pulsos de entrada y 12 de
+> muestra a 80 BPM, validada por regularidad y aplicada solo tras confirmación.
+> Sustituye la exclusión de offsets de usuario de este borrador; se mantiene
+> prohibido aprender compensación de las partidas puntuadas. El ajuste incluye
+> respuesta personal/equipo, no una medición aislada de latencia técnica.
+> Se registran muestras, mediana, dispersión y tiempos originales/corregidos;
+> no se cambian las ventanas de evaluación. Los parámetros son elecciones
+> experimentales del agente. [Método y límites](Verificacion-ritmo-defender-v0.12.22.md).
+
 Estado: síntesis funcional y parámetros iniciales confirmados mediante «ok»; puntos de prueba y seis incrementos aprobados mediante «perfecto» el 2026-10-22. R1–R5 implementados y verificados en software hasta v0.12.10, incluido historial/exportación; progresión R6 pendiente. Consultar el plan y sus guías para alcance y límites comprobados.
 
 Publicada como [issue #15](https://github.com/SaladinoJC/Tesis/issues/15). [Plan aprobado y tickets #16–#21](Plan-tareas-ritmo-v1.md).

@@ -8,6 +8,55 @@ import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TunerCaptureTest {
+    @Test fun `cola sintetica decreciente de cuerdas agudas mantiene evidencia suficiente`() = runTest {
+        Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+        try {
+            for (hz in listOf(246.941651, 329.627557)) {
+                val recorder = object : VoiceCapture {
+                    override suspend fun capture(configuration: YinConfiguration, onMeasurement: suspend (PitchEstimate, Long, Int) -> Unit) {
+                        val estimator = YinEstimator(configuration)
+                        for (at in 0L..700L step 50) {
+                            val amplitude = .025 * kotlin.math.exp(-at / 400.0)
+                            val pcm = FloatArray(configuration.windowSize) { frame ->
+                                (amplitude * kotlin.math.sin(2 * kotlin.math.PI * hz * frame / configuration.sampleRate)).toFloat()
+                            }
+                            onMeasurement(estimator.estimate(pcm), 0, configuration.sampleRate)
+                            delay(50)
+                        }
+                        awaitCancellation()
+                    }
+                }
+                val model = TunerViewModel(recorder) { currentTime }
+                try {
+                    model.start(); runCurrent(); advanceTimeBy(450); runCurrent()
+                    assertTrue("La cola periódica de $hz Hz no debe cortarse antes de confirmar", model.ui.value.tuning.inTune)
+                } finally { model.stop(); runCurrent() }
+            }
+        } finally { Dispatchers.resetMain() }
+    }
+    @Test fun `pulsaciones breves de Si y Mi agudas se confirman antes de decaer sin detener microfono`() = runTest {
+        Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+        try {
+            for (hz in listOf(246.941651, 329.627557)) {
+                val recorder = object : VoiceCapture {
+                    override suspend fun capture(configuration: YinConfiguration, onMeasurement: suspend (PitchEstimate, Long, Int) -> Unit) {
+                        repeat(6) { onMeasurement(PitchEstimate(hz), 0, configuration.sampleRate); delay(100) }
+                        onMeasurement(PitchEstimate(reason = "Silencio o nivel insuficiente"), 0, configuration.sampleRate)
+                        awaitCancellation()
+                    }
+                }
+                val model = TunerViewModel(recorder) { currentTime }
+                try {
+                    model.start(); runCurrent(); advanceTimeBy(500); runCurrent()
+                    assertTrue("Debe confirmar antes de que decaiga la cuerda", model.ui.value.tuning.inTune)
+                    advanceTimeBy(300); runCurrent()
+                    assertTrue(model.ui.value.tuning.running)
+                    assertFalse(model.ui.value.tuning.inTune)
+                    assertNotNull(model.ui.value.tuning.lastConfirmation)
+                } finally { model.stop(); runCurrent() }
+            }
+        } finally { Dispatchers.resetMain() }
+    }
     @Test fun `cambiar afinacion drena captura y releer preferencias nunca reabre microfono`() = runTest {
         Dispatchers.setMain(StandardTestDispatcher(testScheduler))
         try {

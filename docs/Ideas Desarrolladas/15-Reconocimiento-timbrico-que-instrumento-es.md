@@ -17,6 +17,17 @@ En el siguiente incremento autorizado por el usuario, v0.4 implementa el DDA int
 
 Tras probar v0.3 en el celular, el usuario pidió variar el Do4 aislado mediante una melodía breve generada aleatoriamente al seleccionar el instrumento. Esta solicitud prevalece sobre la frase fija descrita en §15.2 y §15.3. En v0.3.1 se genera una frase nueva por pregunta, independiente de la identidad del instrumento; todas sus reescuchas conservan exactamente la misma. Se usa el mismo conjunto de notas reales, gramática y duración para todos los instrumentos, evitando asignar melodías características. Las respuestas registran la frase y las versiones de generador/banco. El diseño concreto de seis notas pentatónicas, cierre en tónica y tiempos es una elección provisional del agente, no una decisión calibrada o del director. Detalles y procedencia: [Melodias-instrumentos-v0.3.1.md](../Melodias-instrumentos-v0.3.1.md). Se mantienen las reglas DDA confirmadas abajo, todavía pendientes de implementación.
 
+## Respuesta durante la melodía — solicitud del usuario, 2026-11-12
+
+Tras probar 0.12.20 en el S22 Ultra, el usuario informa que todo funciona y
+solicita poder responder antes de que termine la melodía. En 0.12.21 se permite
+elegir desde el inicio real de audio, tanto en primera escucha como en
+reescuchas. La escucha iniciada cuenta como usada y se conserva la ausencia de
+penalización por tiempo. Detener la melodía al responder es una elección técnica
+del agente para evitar que continúe sobre el feedback o la siguiente pregunta.
+La verificación física del cambio queda pendiente; observaciones originales en
+[el registro del 12/11](../Pruebas-manuales-S22-Ultra-2026-11-12.md).
+
 ## Actualización confirmada — 2026-10-02
 
 El usuario revisó la política DDA en la entrevista `grill-with-docs`. Esta actualización prevalece sobre las descripciones de gobernanza por promedio móvil y de escuchas fijas que se conservan abajo como antecedente:

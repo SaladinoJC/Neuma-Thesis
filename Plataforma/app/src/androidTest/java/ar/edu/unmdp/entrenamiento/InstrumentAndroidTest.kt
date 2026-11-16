@@ -31,7 +31,7 @@ class InstrumentAndroidTest {
         compose.openMenuDestination("game-instruments")
         compose.onNodeWithTag("level-C").performScrollTo().performClick()
         screenshot("preparacion")
-        compose.onNodeWithText("Jugar instrumentos").performClick()
+        compose.onNodeWithText("Jugar instrumentos").performScrollTo().performClick()
         for (round in 1..10) {
             compose.waitUntil(30_000) {
                 compose.onAllNodesWithTag("instrument-option-0").fetchSemanticsNodes().any {
@@ -44,7 +44,7 @@ class InstrumentAndroidTest {
                 screenshot("pregunta")
                 compose.activityRule.scenario.recreate()
                 repeat(2) {
-                    compose.onNodeWithTag("instrument-listen").performClick()
+                    compose.onNodeWithTag("instrument-listen").performScrollTo().performClick()
                     compose.waitUntil(10_000) {
                         compose.onAllNodesWithTag("instrument-option-0").fetchSemanticsNodes().any { node ->
                             !node.config.contains(SemanticsProperties.Disabled)
@@ -55,14 +55,14 @@ class InstrumentAndroidTest {
                 compose.onNodeWithTag("instrument-listen").assertIsNotEnabled()
             }
             repeat(4) { compose.onNodeWithTag("instrument-option-$it").assertIsDisplayed() }
-            compose.onNodeWithTag("instrument-option-0").performClick()
+            compose.onNodeWithTag("instrument-option-0").performScrollTo().performClick()
             if (round == 1) screenshot("respuesta")
-            if (round < 10) compose.onNodeWithText("Siguiente pregunta").performClick()
+            if (round < 10) compose.onNodeWithText("Siguiente pregunta").performScrollTo().performClick()
         }
         compose.onNodeWithText("Partida terminada").assertIsDisplayed()
         compose.onNodeWithText("10 preguntas respondidas").assertIsDisplayed()
         screenshot("resumen")
-        compose.onNodeWithText("Volver al menú").performClick()
+        compose.onNodeWithText("Volver al menú").performScrollTo().performClick()
         compose.openMenuDestination("history-open")
         compose.onNodeWithTag("history-game-INSTRUMENTS").performClick()
         compose.onNodeWithTag("history-level-2").performScrollTo().performClick()
@@ -78,7 +78,7 @@ class InstrumentAndroidTest {
         compose.openMenuDestination("game-instruments")
         for (level in listOf("A", "B", "C")) compose.onNodeWithTag("level-$level").performScrollTo().assertIsDisplayed()
         compose.onNodeWithTag("level-A").performScrollTo().performClick()
-        compose.onNodeWithText("Jugar instrumentos").performClick()
+        compose.onNodeWithText("Jugar instrumentos").performScrollTo().performClick()
         compose.activityRule.scenario.recreate()
         compose.onNodeWithContentDescription("Volver al menú").performClick()
         compose.openMenuDestination("history-open")

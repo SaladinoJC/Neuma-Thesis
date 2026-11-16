@@ -54,5 +54,55 @@
   },
   "touch": {
     "preferredMinimumLogicalSize": 48
+  },
+  "quietStudio": {
+    "_note": "Variante comparativa autorizada por el autor el 12/11/2026. Paleta propuesta a partir del acuerdo del 31/10; no reemplaza Garden. Solo catálogo y recorrido Rhythm Tap. Valores sujetos a revisión en teléfono.",
+    "color": {
+      "background": "#F3EFE6",
+      "surface": "#FAF7F0",
+      "text": "#2E322F",
+      "primary": "#49594F",
+      "sage": "#B6BDAF",
+      "moss": "#7A8677",
+      "success": "#B79563",
+      "warning": "#9A6A53",
+      "audio": "#58777A",
+      "textSecondary": "#596157",
+      "onPrimary": "#FAF7F0",
+      "primaryPressed": "#39473E",
+      "surfaceSelected": "#DBE2D7",
+      "border": "#798075",
+      "errorText": "#895144",
+      "errorSurface": "#F0DED6",
+      "focus": "#456969",
+      "disabledSurface": "#E4DFD4",
+      "disabledText": "#666B61"
+    },
+    "material": {
+      "linen": "#E7E1D5"
+    },
+    "typography": {
+      "display": "Fraunces",
+      "body": "Nunito Sans",
+      "music": "Render vectorial estructurado existente; Bravura/SMuFL solo ante una necesidad justificada"
+    },
+    "spacing": {
+      "xs": 4,
+      "sm": 8,
+      "md": 12,
+      "base": 16,
+      "lg": 24,
+      "xl": 32
+    },
+    "radius": {
+      "small": 8,
+      "medium": 12,
+      "large": 16,
+      "pill": 24
+    },
+    "touch": {
+      "padHeight": 128,
+      "padRadius": 28
+    }
   }
 }

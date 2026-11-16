@@ -2,58 +2,44 @@ package ar.edu.unmdp.entrenamiento.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.*
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import ar.edu.unmdp.entrenamiento.R
 import ar.edu.unmdp.entrenamiento.instruments.*
-
-private val InstrumentBlue = Color(0xFF86B9FF)
-private val CorrectGreen = Color(0xFF7CDBB0)
 
 @Composable
 fun InstrumentApp(ui: InstrumentUiState, onLevel: (InstrumentLevel) -> Unit, onStart: () -> Unit,
     onListen: () -> Unit, onAnswer: (Instrument) -> Unit, onNext: () -> Unit, onHome: () -> Unit,
     onMode: (InstrumentMode) -> Unit, onInspect: () -> Unit, onCloseInspector: () -> Unit,
-    onScenario: (InstrumentDdaScenario, InstrumentLevel) -> Unit, onRetryStorage: () -> Unit = {}) {
-    MaterialTheme(colorScheme = darkColorScheme(primary = InstrumentBlue, secondary = Lavender,
-        background = Night, surface = Panel, onSurface = SoftWhite, onBackground = SoftWhite, onPrimary = Night)) {
+    onScenario: (InstrumentDdaScenario, InstrumentLevel) -> Unit, onRetryStorage: () -> Unit = {},
+    onHistory: () -> Unit = {}) {
+    TunerGardenTheme {
         BackHandler(onBack = onHome)
-        Scaffold(containerColor = Night, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
-            Column(Modifier.fillMaxSize().padding(padding).padding(horizontal = 20.dp)
-                .background(Brush.verticalGradient(listOf(Night, Color(0xFF101E30))))) {
-                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                    TextButton(onClick = onHome, modifier = Modifier.width(44.dp)
-                        .semantics { contentDescription = "Volver al menú" }, contentPadding = PaddingValues(0.dp)) {
-                        Text("‹", fontSize = 32.sp, color = SoftWhite)
-                    }
-                    Text("¿Qué instrumento es?", fontWeight = FontWeight.Bold, fontSize = 19.sp, modifier = Modifier.weight(1f))
-                    TextButton(onClick = onInspect, modifier = Modifier.testTag("dda-open")) { Text("DDA") }
+        Scaffold(containerColor = GardenTokens.Background, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
+            Box(Modifier.fillMaxSize().padding(padding)) {
+                GardenPageDecoration(Modifier.matchParentSize())
+                Column(Modifier.fillMaxSize().padding(horizontal = GardenTokens.SpaceLg)) {
+                    TextButton(onClick = onHome, modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum)
+                        .semantics { contentDescription = "Volver al menú" }) { Text("Volver al libro") }
+                    if (ui.setup) InstrumentSetup(ui, onLevel, onMode, onStart, onHistory, onInspect, onRetryStorage)
+                    else if (ui.game.phase in listOf(InstrumentPhase.FINISHED, InstrumentPhase.INTERRUPTED))
+                        InstrumentSummary(ui, onStart, onHome, onHistory, onInspect, onRetryStorage)
+                    else InstrumentQuestion(ui, onListen, onAnswer, onNext, onRetryStorage, onInspect)
                 }
-                ui.storageError?.let {
-                    Text(it, color = MaterialTheme.colorScheme.error)
-                    TextButton(onClick = onRetryStorage) { Text("Reintentar lectura") }
-                }
-                if (ui.setup) InstrumentSetup(ui, onLevel, onMode, onStart)
-                else if (ui.game.phase in listOf(InstrumentPhase.FINISHED, InstrumentPhase.INTERRUPTED))
-                    InstrumentSummary(ui, onStart, onHome)
-                else InstrumentQuestion(ui, onListen, onAnswer, onNext)
-                ui.error?.let { Text(it, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(vertical = 8.dp)) }
             }
         }
         if (ui.inspectorOpen) InstrumentDdaInspector(ui, onCloseInspector, onScenario)
@@ -62,94 +48,101 @@ fun InstrumentApp(ui: InstrumentUiState, onLevel: (InstrumentLevel) -> Unit, onS
 
 @Composable
 private fun ColumnScope.InstrumentSetup(ui: InstrumentUiState, onLevel: (InstrumentLevel) -> Unit,
-    onMode: (InstrumentMode) -> Unit, onStart: () -> Unit) {
-    Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(vertical = 14.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        Box(Modifier.fillMaxWidth().height(64.dp), contentAlignment = Alignment.Center) {
-            Surface(shape = CircleShape, color = InstrumentBlue.copy(alpha = .12f), modifier = Modifier.size(64.dp)) {
-                Box(contentAlignment = Alignment.Center) { Text("♫", color = InstrumentBlue, fontSize = 44.sp) }
-            }
+    onMode: (InstrumentMode) -> Unit, onStart: () -> Unit, onHistory: () -> Unit,
+    onInspect: () -> Unit, onRetryStorage: () -> Unit) {
+    Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(bottom = GardenTokens.SpaceLg),
+        verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceBase)) {
+        Image(painterResource(R.drawable.garden_instruments), null,
+            Modifier.fillMaxWidth().height(120.dp), contentScale = ContentScale.Fit)
+        Text("¿Qué instrumento es?", style = MaterialTheme.typography.headlineMedium)
+        Text("Escuchá una melodía y descubrí su timbre.", color = GardenTokens.TextSecondary)
+        GardenPaperPanel {
+            Text("10 preguntas · Sin límite de tiempo", style = MaterialTheme.typography.titleMedium)
+            Text("Cada pregunta trae una frase nueva. Al volver a escuchar, la melodía se repite igual.")
+            Text("Podés responder mientras suena.", color = GardenTokens.TextSecondary)
         }
-        Text("Escuchá. Reconocé. Descubrí.", fontSize = 27.sp, lineHeight = 32.sp, fontWeight = FontWeight.Bold)
-        Text("Reconocé el instrumento de una melodía breve. Cada pregunta cambia la frase; las reescuchas repiten la misma.",
-            color = Muted, lineHeight = 22.sp)
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text("10 preguntas", color = InstrumentBlue)
-            Text("Sin límite de tiempo", color = Muted)
+        Text("Elegí cómo practicar", style = MaterialTheme.typography.titleMedium)
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
+            FilterChip(selected = ui.selectedMode == InstrumentMode.AUTOMATIC,
+                enabled = !ui.busy, onClick = { onMode(InstrumentMode.AUTOMATIC) },
+                label = { Text("Automático") }, modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum).testTag("mode-automatic"))
+            FilterChip(selected = ui.selectedMode == InstrumentMode.MANUAL,
+                enabled = !ui.busy, onClick = { onMode(InstrumentMode.MANUAL) },
+                label = { Text("Práctica manual") }, modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum).testTag("mode-manual"))
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            FilterChip(selected = ui.selectedMode == InstrumentMode.AUTOMATIC, onClick = { onMode(InstrumentMode.AUTOMATIC) },
-                label = { Text("Automático") }, modifier = Modifier.testTag("mode-automatic"))
-            FilterChip(selected = ui.selectedMode == InstrumentMode.MANUAL, onClick = { onMode(InstrumentMode.MANUAL) },
-                label = { Text("Práctica manual") }, modifier = Modifier.testTag("mode-manual"))
-        }
-        Text(if (ui.selectedMode == InstrumentMode.AUTOMATIC) "${InstrumentLevel.entries[ui.progress.level].label} · La ayuda se adapta entre preguntas, con una a tres escuchas."
-            else "Elegí un nivel. La práctica manual conserva tres escuchas.", color = Muted)
-        ProgressSummary(ui.progress, InstrumentLevel.entries.map { it.label })
-        Text("Práctica manual y simulación no desbloquean niveles.", color = Muted)
-        Text("Práctica manual: elegí el nivel", fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(top = 6.dp))
+        Text(if (ui.selectedMode == InstrumentMode.AUTOMATIC)
+            "Empezás en ${InstrumentLevel.entries[ui.progress.level].label}. La ayuda se adapta entre preguntas, con una a tres escuchas."
+            else "Elegí un nivel para practicar con tres escuchas por pregunta. Esta modalidad no desbloquea niveles.",
+            color = GardenTokens.TextSecondary)
+        GardenProgressSummary(ui.progress, InstrumentLevel.entries.map { it.label })
+        Text("Niveles · Tocá uno para practicarlo", style = MaterialTheme.typography.titleMedium)
         InstrumentLevel.entries.forEach { level ->
             val selected = if (ui.selectedMode == InstrumentMode.AUTOMATIC) ui.progress.level == level.ordinal else ui.selectedLevel == level
-            Surface(onClick = { onLevel(level) }, enabled = !ui.busy,
-                modifier = Modifier.fillMaxWidth().testTag("level-${level.name}"),
-                shape = RoundedCornerShape(16.dp), color = if (selected) InstrumentBlue.copy(alpha = .12f) else Panel,
-                border = BorderStroke(1.dp, if (selected) InstrumentBlue else Muted.copy(alpha = .25f))) {
-                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(5.dp)) {
-                    Text("${level.label} · ${level.description}", fontWeight = FontWeight.Bold)
-                    Text(level.instruments.joinToString(" · ") { it.label }, fontSize = 12.sp, color = Muted)
-                }
-            }
+            GardenLevelChoice("${level.label} · ${level.description}", level.instruments.joinToString(" · ") { it.label },
+                selected, !ui.busy, Modifier.testTag("level-${level.name}"), onClick = { onLevel(level) })
         }
+        InstrumentErrors(ui, onRetryStorage)
+        Button(onClick = onStart, enabled = !ui.busy && ui.storageError == null,
+            shape = RoundedCornerShape(GardenTokens.RadiusLarge),
+            modifier = Modifier.fillMaxWidth().heightIn(min = GardenTokens.TouchMinimum).testTag("instrument-start"),
+            contentPadding = PaddingValues(GardenTokens.SpaceBase)) { Text("Jugar instrumentos") }
+        InstrumentSecondaryActions(ui, onHistory, onInspect)
     }
-    Button(onClick = onStart, enabled = !ui.busy && ui.storageError == null, shape = RoundedCornerShape(16.dp),
-        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp).height(54.dp)) { Text("Jugar instrumentos", fontWeight = FontWeight.Bold) }
 }
 
 @Composable
 private fun ColumnScope.InstrumentQuestion(ui: InstrumentUiState, onListen: () -> Unit,
-    onAnswer: (Instrument) -> Unit, onNext: () -> Unit) {
+    onAnswer: (Instrument) -> Unit, onNext: () -> Unit, onRetryStorage: () -> Unit, onInspect: () -> Unit) {
     val state = ui.game
     val feedback = state.phase == InstrumentPhase.FEEDBACK
-    Column(Modifier.weight(1f).padding(bottom = 16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text("Pregunta ${state.round} de 10", fontWeight = FontWeight.Bold)
-            Text(state.level.label, color = InstrumentBlue)
+    // Reiniciar scroll al presentar otra pregunta, no durante reproducción o respuesta.
+    val scroll = key(state.round) { rememberScrollState() }
+    Column(Modifier.weight(1f).verticalScroll(scroll).padding(bottom = GardenTokens.SpaceLg),
+        verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceMd)) {
+        FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceBase)) {
+            Text("Pregunta ${state.round} de 10", style = MaterialTheme.typography.titleMedium)
+            Text(state.level.label, color = GardenTokens.TextSecondary)
         }
         LinearProgressIndicator(progress = { state.answers.size / 10f }, modifier = Modifier.fillMaxWidth(),
-            color = InstrumentBlue, trackColor = Panel)
-        Column(Modifier.weight(1f).fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center) {
-            Surface(color = InstrumentBlue.copy(alpha = .1f), shape = CircleShape, modifier = Modifier.size(92.dp)) {
-                Box(contentAlignment = Alignment.Center) {
-                    Text(if (ui.busy) "♫" else "?", color = InstrumentBlue, fontSize = 48.sp, fontWeight = FontWeight.Bold)
-                }
-            }
-            Text(if (ui.busy) "Escuchá la melodía…" else if (feedback) "Compará tu respuesta" else "¿Cuál escuchaste?",
-                fontSize = 24.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 18.dp), textAlign = TextAlign.Center)
-        }
+            color = GardenTokens.Primary, trackColor = GardenTokens.SurfaceSelected)
+        GardenGreenhouse(Modifier.fillMaxWidth().height(120.dp).testTag("instrument-greenhouse"))
+        Text(if (state.phase == InstrumentPhase.PLAYBACK) "Escuchá la melodía…"
+            else if (feedback) "Compará tu respuesta" else "¿Cuál escuchaste?", style = MaterialTheme.typography.headlineSmall)
         OutlinedButton(onClick = onListen,
-            enabled = !ui.busy && !feedback && state.listensRemaining > 0,
-            modifier = Modifier.fillMaxWidth().height(50.dp).testTag("instrument-listen"), shape = RoundedCornerShape(14.dp)) {
+            enabled = !ui.busy && state.phase in listOf(InstrumentPhase.READY, InstrumentPhase.RESPONSE) && state.listensRemaining > 0,
+            modifier = Modifier.fillMaxWidth().heightIn(min = GardenTokens.TouchMinimum).testTag("instrument-listen"),
+            shape = RoundedCornerShape(GardenTokens.RadiusLarge), contentPadding = PaddingValues(GardenTokens.SpaceMd)) {
             Text(if (state.listensUsed == 0) "Escuchar la melodía" else "Volver a escuchar")
         }
         Text("${state.listensRemaining} ${if (state.listensRemaining == 1) "escucha restante" else "escuchas restantes"}",
-            modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center, color = Muted, fontSize = 12.sp)
-        state.options.chunked(2).forEachIndexed { rowIndex, options ->
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                options.forEachIndexed { columnIndex, instrument ->
-                    val answer = state.answers.lastOrNull().takeIf { feedback }
-                    val accent = when {
-                        answer?.target == instrument -> CorrectGreen
-                        answer?.selected == instrument -> Pink
-                        else -> InstrumentBlue
-                    }
-                    Surface(onClick = { onAnswer(instrument) },
-                        enabled = !ui.busy && state.phase == InstrumentPhase.RESPONSE,
-                        modifier = Modifier.weight(1f).height(76.dp).testTag("instrument-option-${rowIndex * 2 + columnIndex}"),
-                        color = if (feedback) accent.copy(alpha = .12f) else Panel,
-                        shape = RoundedCornerShape(16.dp), border = BorderStroke(1.dp, accent.copy(alpha = .5f))) {
-                        Box(contentAlignment = Alignment.Center) {
-                            Text(instrument.label, fontWeight = FontWeight.SemiBold, color = SoftWhite, fontSize = 17.sp)
+            color = GardenTokens.TextSecondary)
+        val largeText = LocalDensity.current.fontScale > 1.3f
+        BoxWithConstraints(Modifier.fillMaxWidth()) {
+            val columns = if (maxWidth < 300.dp || largeText) 1 else 2
+            Column(verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
+                state.options.chunked(columns).forEachIndexed { rowIndex, options ->
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
+                        options.forEachIndexed { columnIndex, instrument ->
+                            val answer = state.answers.lastOrNull().takeIf { feedback }
+                            val correct = answer?.target == instrument
+                            val incorrect = answer?.selected == instrument && !correct
+                            val ink = if (incorrect) GardenTokens.ErrorText else GardenTokens.Text
+                            GardenChoiceFocus(Modifier.weight(1f)) { interaction ->
+                                Surface(onClick = { onAnswer(instrument) }, enabled = !ui.busy && state.canAnswer, interactionSource = interaction,
+                                    modifier = Modifier.fillMaxWidth().heightIn(min = 64.dp).testTag("instrument-option-${rowIndex * columns + columnIndex}"),
+                                    color = when { correct -> GardenTokens.SurfaceSelected; incorrect -> GardenTokens.ErrorSurface;
+                                        !state.canAnswer || ui.busy -> GardenTokens.DisabledSurface; else -> GardenTokens.Surface },
+                                    shape = RoundedCornerShape(GardenTokens.RadiusLarge),
+                                    border = BorderStroke(if (correct || incorrect) 2.dp else 1.dp,
+                                        if (incorrect) GardenTokens.ErrorText else GardenTokens.Border)) {
+                                    Column(Modifier.padding(GardenTokens.SpaceMd), verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceXs)) {
+                                        Text(instrument.label, fontWeight = FontWeight.SemiBold,
+                                            color = if (!feedback && (!state.canAnswer || ui.busy)) GardenTokens.DisabledText else ink)
+                                        if (correct) Text("Respuesta correcta", style = MaterialTheme.typography.bodySmall, color = GardenTokens.Primary)
+                                        if (incorrect) Text("Tu respuesta", style = MaterialTheme.typography.bodySmall, color = GardenTokens.ErrorText)
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -157,46 +150,68 @@ private fun ColumnScope.InstrumentQuestion(ui: InstrumentUiState, onListen: () -
         }
         if (feedback) {
             val answer = state.answers.last()
-            Text(if (answer.correct) "¡Correcto! Era ${answer.target.label}." else "Era ${answer.target.label}. Elegiste ${answer.selected.label}.",
-                color = if (answer.correct) CorrectGreen else Pink, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
-            if (state.mode == InstrumentMode.AUTOMATIC) Text("Próxima pregunta: ${answer.ddaDecision?.listensAfter ?: 3} escuchas",
-                color = Muted, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
-            Button(onClick = onNext, enabled = !ui.busy, modifier = Modifier.fillMaxWidth().height(50.dp),
-                shape = RoundedCornerShape(14.dp)) { Text("Siguiente pregunta") }
-        } else {
-            Text("Tomate el tiempo que necesites.", color = Muted, fontSize = 12.sp,
-                modifier = Modifier.fillMaxWidth().padding(vertical = 14.dp), textAlign = TextAlign.Center)
-        }
+            GardenPaperPanel(Modifier.semantics { liveRegion = LiveRegionMode.Polite }) {
+                Text(if (answer.correct) "¡Correcto! Era ${answer.target.label}." else "Era ${answer.target.label}. Elegiste ${answer.selected.label}.",
+                    color = if (answer.correct) GardenTokens.Primary else GardenTokens.ErrorText)
+                if (state.mode == InstrumentMode.AUTOMATIC) Text("Próxima pregunta: ${answer.ddaDecision?.listensAfter ?: 3} escuchas", color = GardenTokens.TextSecondary)
+            }
+            Button(onClick = onNext, enabled = !ui.busy, modifier = Modifier.fillMaxWidth().heightIn(min = GardenTokens.TouchMinimum),
+                contentPadding = PaddingValues(GardenTokens.SpaceBase)) { Text("Siguiente pregunta") }
+        } else Text("Podés responder mientras suena.", color = GardenTokens.TextSecondary)
+        InstrumentErrors(ui, onRetryStorage)
+        TextButton(onClick = onInspect, modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum).testTag("dda-open")) { Text("Inspección DDA") }
     }
 }
 
 @Composable
-private fun ColumnScope.InstrumentSummary(ui: InstrumentUiState, onStart: () -> Unit, onHome: () -> Unit) {
+private fun ColumnScope.InstrumentSummary(ui: InstrumentUiState, onStart: () -> Unit, onHome: () -> Unit,
+    onHistory: () -> Unit, onInspect: () -> Unit, onRetryStorage: () -> Unit) {
     val state = ui.game
-    Column(Modifier.weight(1f).padding(vertical = 18.dp),
-        verticalArrangement = Arrangement.spacedBy(14.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        Column(Modifier.weight(1f).verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(14.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(if (state.phase == InstrumentPhase.FINISHED) "Partida terminada" else "Partida interrumpida",
-                fontSize = 27.sp, fontWeight = FontWeight.Bold)
-            Text("${state.correctCount} / ${state.answers.size}", color = InstrumentBlue, fontSize = 54.sp, fontWeight = FontWeight.Bold)
-            Text("${state.answers.size} preguntas respondidas", color = Muted)
-            Text(state.level.label, color = InstrumentBlue)
-            ProgressSummary(ui.progress, InstrumentLevel.entries.map { it.label })
-            state.result?.mastery?.let { MasteryButton(it) }
-            state.answers.forEach { answer ->
-                Surface(color = Panel, shape = RoundedCornerShape(12.dp), modifier = Modifier.fillMaxWidth()) {
-                    Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        Text("${answer.round}. ${answer.target.label} · ${if (answer.correct) "Correcto" else "Incorrecto"}",
-                            color = if (answer.correct) CorrectGreen else Pink, fontWeight = FontWeight.SemiBold)
-                        Text("Tu respuesta: ${answer.selected.label} · ${answer.listensUsed} ${if (answer.listensUsed == 1) "escucha" else "escuchas"}",
-                            color = Muted, fontSize = 12.sp)
-                    }
-                }
+    Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(bottom = GardenTokens.SpaceLg),
+        verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceBase)) {
+        Text(if (state.phase == InstrumentPhase.FINISHED) "Partida terminada" else "Partida interrumpida", style = MaterialTheme.typography.headlineMedium)
+        GardenPaperPanel {
+            Text("${state.correctCount} / ${state.answers.size}", style = MaterialTheme.typography.headlineLarge, color = GardenTokens.Primary)
+            Text("${state.answers.size} preguntas respondidas")
+            Text(state.level.label, color = GardenTokens.TextSecondary)
+            Text(if (state.mode == InstrumentMode.AUTOMATIC) "Modalidad automática" else "Práctica manual", color = GardenTokens.TextSecondary)
+        }
+        GardenProgressSummary(ui.progress, InstrumentLevel.entries.map { it.label })
+        Text("Repasá lo que escuchaste", style = MaterialTheme.typography.titleMedium)
+        state.answers.forEach { answer ->
+            GardenPaperPanel {
+                Text("${answer.round}. ${answer.target.label} · ${if (answer.correct) "Correcto" else "Incorrecto"}",
+                    color = if (answer.correct) GardenTokens.Primary else GardenTokens.ErrorText, fontWeight = FontWeight.SemiBold)
+                Text("Tu respuesta: ${answer.selected.label} · ${answer.listensUsed} ${if (answer.listensUsed == 1) "escucha" else "escuchas"}", color = GardenTokens.TextSecondary)
             }
         }
-        Button(onClick = onStart, enabled = !ui.busy && ui.storageError == null, modifier = Modifier.fillMaxWidth().height(52.dp),
-            shape = RoundedCornerShape(14.dp)) { Text("Otra partida") }
-        TextButton(onClick = onHome, modifier = Modifier.fillMaxWidth()) { Text("Volver al menú") }
+        InstrumentErrors(ui, onRetryStorage)
+        Button(onClick = onStart, enabled = !ui.busy && ui.storageError == null,
+            modifier = Modifier.fillMaxWidth().heightIn(min = GardenTokens.TouchMinimum),
+            contentPadding = PaddingValues(GardenTokens.SpaceBase)) { Text("Otra partida") }
+        OutlinedButton(onClick = onHome, modifier = Modifier.fillMaxWidth().heightIn(min = GardenTokens.TouchMinimum)) { Text("Volver al menú") }
+        InstrumentSecondaryActions(ui, onHistory, onInspect)
+        state.result?.mastery?.let { MasteryButton(it) }
+    }
+}
+
+@Composable
+private fun InstrumentSecondaryActions(ui: InstrumentUiState, onHistory: () -> Unit, onInspect: () -> Unit) {
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
+        TextButton(onClick = onHistory, enabled = !ui.busy && ui.storageError == null,
+            modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum).testTag("instrument-history")) { Text("Ver historial") }
+        TextButton(onClick = onInspect, modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum).testTag("dda-open")) { Text("Inspección DDA") }
+    }
+}
+
+@Composable
+private fun InstrumentErrors(ui: InstrumentUiState, onRetryStorage: () -> Unit) {
+    if (ui.busy) LinearProgressIndicator(Modifier.fillMaxWidth().testTag("instrument-busy"))
+    if (ui.storageError != null || ui.error != null) GardenPaperPanel(Modifier.semantics { liveRegion = LiveRegionMode.Polite }) {
+        ui.storageError?.let {
+            Text(it, color = GardenTokens.ErrorText)
+            TextButton(onClick = onRetryStorage, enabled = !ui.busy) { Text("Reintentar lectura") }
+        }
+        ui.error?.let { Text(it, color = GardenTokens.ErrorText) }
     }
 }

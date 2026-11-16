@@ -4,7 +4,7 @@
 Este Trabajo Final de Ingeniería en Informática aborda el diseño y la evaluación de
 Neuma, una plataforma de entrenamiento auditivo musical para dispositivos Android.
 La propuesta reúne ejercicios presentados como juegos serios, análisis de respuestas
-vocales y ajuste de la dificultad según el desempeño del estudiante. El proyecto se
+vocales y ajuste de la dificultad según el desempeño del usuario. El proyecto se
 encuadra en la modalidad de Proyecto y/o Diseño de Ingeniería en Informática.
 
 La aplicación está dirigida principalmente a estudiantes de conservatorio y, de manera
@@ -14,7 +14,7 @@ partituras necesaria para las actividades que la utilizan. El público previsto 
 niños, adolescentes y adultos. Neuma se concibe como un recurso complementario de las
 clases o del aprendizaje realizado por otros medios.
 
-El escenario de uso considerado es la práctica individual: el estudiante escucha una
+El escenario de uso considerado es la práctica individual: el usuario escucha una
 consigna musical, responde mediante los controles del juego o mediante la voz y recibe
 información sobre su respuesta. Según la actividad, el sistema debe interpretar una
 secuencia de notas, una elección tímbrica, una ejecución rítmica o una respuesta vocal.
@@ -29,13 +29,13 @@ los desafíos y conservar información que permita examinar las decisiones del s
 El marco teórico y los antecedentes que fundamentan estos componentes se desarrollarán
 en el capítulo~\ref{cap:marco}.
 \section{Motivación}
-El proyecto surge de la experiencia del autor como estudiante de música en el
-conservatorio. Durante su formación encontró dificultades para practicar determinados
+El proyecto surge de mi experiencia como estudiante de música en el
+conservatorio. Durante mi formación encontré dificultades para practicar determinados
 contenidos y limitaciones en las herramientas que utilizaba: algunas no se ajustaban
-a su forma de estudiar y otras restringían el acceso mediante planes pagos. También
-percibió que, en ciertas actividades, mejorar el desempeño dentro del juego no tenía
-una relación clara con la habilidad musical que deseaba desarrollar. Conversaciones
-informales con otros estudiantes de música de la ciudad permitieron reconocer
+a mi forma de estudiar y otras restringían el acceso mediante planes pagos. También
+percibí que, en ciertas actividades, mejorar el desempeño dentro del juego no tenía
+una relación clara con la habilidad musical que deseaba desarrollar. En conversaciones
+informales con otros estudiantes de música de la ciudad reconocí
 inquietudes similares. Estas experiencias constituyen el origen de la propuesta y
 no representan un relevamiento sistemático de necesidades ni una evaluación comparativa
 de las aplicaciones disponibles.
@@ -47,8 +47,8 @@ también es necesario establecer bajo qué condiciones funciona, qué informaci�
 y cuáles son sus límites. Por ello, el desarrollo del prototipo se acompaña de un registro
 de datos y de una evaluación de su comportamiento.
 
-Desde la perspectiva de la práctica musical, se busca ofrecer actividades en las que el
-estudiante pueda reconocer el resultado de sus respuestas y continuar ejercitándose con
+Desde la perspectiva de la práctica musical, busco ofrecer actividades en las que el
+usuario pueda reconocer el resultado de sus respuestas y continuar ejercitándose con
 desafíos ajustados a su desempeño. Esta finalidad orienta el diseño de la aplicación.
 Para orientar las actividades hacia ese propósito, el diseño deberá explicitar qué
 habilidad musical practica cada una e incorporar variaciones pertinentes que reduzcan
@@ -56,7 +56,7 @@ la dependencia de pistas particulares del minijuego. Por ejemplo, el ajuste de a
 de oído busca ejercitar la escucha de diferencias de altura, mientras que la variación
 tímbrica en ejercicios de intervalos pretende evitar que la respuesta dependa siempre
 de una misma sonoridad. La pertinencia de cada variación deberá examinarse según la
-actividad. La transferencia a situaciones musicales externas a la aplicación se adopta
+actividad. Adopto la transferencia a situaciones musicales externas a la aplicación
 como intención de diseño; demostrarla requeriría una evaluación específica que excede
 las pruebas técnicas y exploratorias previstas en este trabajo.
 
@@ -68,7 +68,7 @@ dificultad. La publicación gratuita del código y su documentación forma parte
 producto previsto en el protocolo.
 \section{Problema a resolver}
 El problema consiste en diseñar e integrar un sistema móvil que interprete las respuestas
-del estudiante, produzca retroalimentación durante la práctica y ajuste los ejercicios
+del usuario, produzca retroalimentación durante la práctica y ajuste los ejercicios
 de acuerdo con indicadores de desempeño. El protocolo presentado el 28 de septiembre
 de 2026 plantea evaluar esa integración mediante la precisión de detección de tono,
 la latencia de la retroalimentación y el funcionamiento del ajuste de dificultad.
@@ -95,8 +95,17 @@ vocal de intervalos. El plan de trabajo adjunto acota el mínimo a un juego voca
 juego sencillo, con tres actividades adicionales opcionales. La selección inicial y el
 mínimo planificado se conservan como referencias distintas para revisar el alcance final.
 
+Como alcance de entrega propuesto, el 4 de noviembre de 2026 definí cuatro
+actividades: intervalos vocales, reconocimiento de instrumentos, Rhythm Tap y
+Defender. Incluyo la respuesta en piano virtual de Defender y la selección
+automática de ayuda vocal como compromisos propuestos todavía pendientes de
+desarrollo. Los requerimientos se reúnen en el capítulo~\ref{cap:requerimientos};
+la aprobación académica de este alcance queda sujeta a revisión del director.
+Simón permanece pendiente de reformulación, reemplazo o eliminación, y el
+afinador se conserva como módulo complementario.
+
 Se mantiene como compromiso mínimo la integración de un ejercicio de reproducción vocal
-de intervalos: el estudiante escuchará una referencia, responderá con la voz y recibirá
+de intervalos: el usuario escuchará una referencia, responderá con la voz y recibirá
 retroalimentación, con dificultad ajustada a su desempeño. Este ejercicio deberá
 demostrar la articulación entre análisis vocal y adaptación. La prueba técnica de voz
 y el afinador aportan componentes al desarrollo, pero no sustituyen por sí solos esa
@@ -112,9 +121,9 @@ Existen diferencias técnicas entre los documentos de partida. El análisis de f
 del protocolo incluye una capa C++ con Oboe, transporte mediante estructuras sin bloqueos
 y un detector híbrido DSP/ML dentro del producto mínimo. En cambio, el plan de trabajo
 considera Oboe y el aprendizaje automático como opciones por validar y condiciona este
-último a los resultados de la línea base y al tiempo disponible. Para el desarrollo se
-adopta su tratamiento como alternativas cuya incorporación dependerá de las mediciones.
-Esta orientación, confirmada por el autor, deberá justificarse mediante evidencia y
+último a los resultados de la línea base y al tiempo disponible. Para el desarrollo
+adopto su tratamiento como alternativas cuya incorporación dependerá de las mediciones.
+Esta decisión deberá justificarse mediante evidencia y
 acordarse con el director por su diferencia con la formulación del protocolo.
 
 La versión de entrega se prevé gratuita en todas sus funciones, sin suscripción y

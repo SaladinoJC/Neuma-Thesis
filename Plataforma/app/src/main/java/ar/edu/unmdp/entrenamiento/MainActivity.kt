@@ -79,6 +79,7 @@ class MainActivity : ComponentActivity() {
         rhythm = ViewModelProvider(this, object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T = RhythmViewModel(
+                audio = ar.edu.unmdp.entrenamiento.rhythm.AndroidRhythmAudio(applicationContext),
                 resultsStore = ar.edu.unmdp.entrenamiento.rhythm.JsonRhythmResults(File(filesDir, "rhythm-results.json"))) as T
         })[RhythmViewModel::class.java]
         model = ViewModelProvider(this, object : ViewModelProvider.Factory {
@@ -158,7 +159,11 @@ class MainActivity : ComponentActivity() {
                 requestedOrientation = if (ui.screen == AppScreen.MENU || instrumentUi.open || auxiliary.isNotEmpty())
                     ActivityInfo.SCREEN_ORIENTATION_PORTRAIT else ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
                 WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars =
-                    auxiliary in setOf("rhythm", "tuner", "data", "defender", "vocal")
+                    instrumentUi.open || auxiliary in setOf("rhythm", "tuner", "data", "defender", "vocal", "history") ||
+                        (BuildConfig.QUIET_STUDIO && ui.screen == AppScreen.MENU && !instrumentUi.open && auxiliary.isEmpty())
+                WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightNavigationBars =
+                    instrumentUi.open || auxiliary in setOf("rhythm", "tuner", "data", "defender", "vocal", "history") ||
+                        (BuildConfig.QUIET_STUDIO && ui.screen == AppScreen.MENU && !instrumentUi.open && auxiliary.isEmpty())
             }
             if (auxiliary == "rhythm") RhythmApp(rhythmUi, rhythm, reduceMotion = gardenMenu.reduceMotion,
                 onData = { rhythm.home(); auxiliary = "data" }) {
@@ -182,12 +187,14 @@ class MainActivity : ComponentActivity() {
                 voice.stop()
                 auxiliary = ""
             }
-            else if (auxiliary == "history") HistoryApp(historyUi, history) { auxiliary = "" }
+            else if (auxiliary == "history") HistoryApp(historyUi, history,
+                returnLabel = if (instrumentUi.open) "Volver a Instrumentos" else "Volver al libro") { auxiliary = "" }
             else if (auxiliary == "pitch-lab") PitchLabApp(pitchUi, pitchLab) { auxiliary = "data" }
             else if (auxiliary == "data") DemonstrationApp(dataUi, demonstration, onHome = { auxiliary = "" }, onPitchLab = { pitchLab.load(); auxiliary = "pitch-lab" })
             else if (instrumentUi.open) InstrumentApp(instrumentUi, instruments::selectLevel, instruments::start,
                 instruments::listen, instruments::answer, instruments::next, instruments::home,
-                instruments::selectMode, instruments::openInspector, instruments::closeInspector, instruments::simulateScenario, instruments::retryStorage)
+                instruments::selectMode, instruments::openInspector, instruments::closeInspector, instruments::simulateScenario, instruments::retryStorage,
+                onHistory = { history.filter(ar.edu.unmdp.entrenamiento.history.HistoryGame.INSTRUMENTS); history.load(); auxiliary = "history" })
             else SimonApp(ui, model::openSimon, model::selectScale, model::start, model::answer, model::home,
                 instruments::open, instrumentUi.history, model::selectAutomatic,
                 onVoice = { auxiliary = "voice" }, onData = { auxiliary = "data" }, onHistory = { history.load(); auxiliary = "history" }, onRetryStorage = model::retryStorage,

@@ -31,6 +31,10 @@ Estos detalles son hipótesis de diseño: al planificar o implementar, comprobar
 
 La aplicación de entrenamiento musical adopta la dirección artística **Music Garden / Botanical Storybook** definida en `docs/ART_DIRECTION.md`. Antes de crear o modificar pantallas, componentes visuales, assets o animaciones, leer ese documento y el inventario `assets/ASSET_MANIFEST.md`.
 
+Para el acabado transversal autorizado el 16/11/2026, consultar `docs/Especificacion-acabado-Music-Garden.md` y las tareas #31–#37; acuerdos de entrevista en `docs/Acabado-Music-Garden.md`. Sonidos de interfaz y respuesta táctil quedan pendientes de definición e incorporación; Personaje sigue pausado.
+
+**Dirección confirmada tras reunión con el director, informada por el usuario el 16/11/2026:** continuar con estética de videojuego **Music Garden**, incluido el menú del libro. La comparación del 12/11 entre **Neuma Garden** y **Neuma Quiet Studio** queda como antecedente; conservar ambas variantes y sus datos sin nuevas migraciones implícitas. Consultar `docs/Comparacion-Garden-Quiet-Studio-v0.12.24.md` para paquetes, compilación y recuperación. Este acuerdo visual no confirma por sí solo el alcance funcional ni retoma la implementación pausada del personaje.
+
 Nombre de producto: **Neuma**. Logo/icono **temporales**, del paquete corregido `docs/logo/` (2026-10-29). Consultar `docs/logo/LEEME.md` al adaptar la marca. Esta adopción no aprueba el rediseño Quiet Studio de `preview/` ni sustituye la dirección artística vigente.
 
 ### Reglas no negociables
@@ -65,6 +69,8 @@ Nombre de producto: **Neuma**. Logo/icono **temporales**, del paquete corregido 
 - Mantener este archivo como índice breve de contexto estable. Registrar aquí las decisiones confirmadas y cambiar o retirar las instrucciones que dejen de representar al proyecto.
 
 ## Trabajo sobre el prototipo
+
+- Al iniciar y cerrar sesiones de tesis o prototipo, consultar `docs/seguimiento/LEEME.md` y actualizar `docs/seguimiento/horas.csv` con tiempo personal informado/medido o pendiente. Comparar Gantt y ejecución recién al cierre de febrero de 2027, por decisión del usuario del 04/11/2026.
 
 - Antes de implementar un minijuego, leer `docs/IdeasPrototipo.md`, su ficha en `docs/Ideas Desarrolladas/` y el estado del prototipo. Las fichas pueden registrar decisiones particulares como confirmadas; conservar esa atribución y distinguirla de la aprobación del conjunto de cinco juegos o del stack.
 - Construir incrementos pequeños que se puedan ejecutar y demostrar. Registrar cómo ejecutarlos y comprobar la conducta modificada con pruebas o una verificación manual reproducible, según corresponda.

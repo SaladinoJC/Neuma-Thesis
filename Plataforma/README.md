@@ -1,4 +1,74 @@
+# Acabado vocal — candidata 0.12.27 / código 42 (16/11/2026)
+
+Tercer incremento Music Garden: portada propia y claro de canto SVG/vector,
+papel compartido y paneles en captura/resultados/historial/progreso. Tres modos,
+permisos explícitos, referencias, audio, DDA y datos conservados. Previa del
+recurso revisada en navegador; revisión nativa/acústica pendiente, sin emulador.
+APK Garden: `build/apk-archives/neuma-garden-v0.12.27-vocal.apk`.
+[Guía, evidencia y comprobación](../docs/Acabado-Intervalos-vocales-v0.12.27.md).
+Regenerar el recurso: `python tools/prepare_vocal_clearing.py` desde la raíz.
+
+# Acabado Rhythm Tap — candidata 0.12.26 / código 41 (16/11/2026)
+
+Segundo incremento Music Garden: terraza estática, partitura limpia, preparación
+plegable, resultados con detalles, historial/progreso accesibles y pad adaptable.
+Calibración y recorridos auxiliares con papel; Quiet conserva su paleta y omite
+la decoración Garden. Audio, relojes, evaluación y datos conservados.
+308 JVM aprobadas, lint sin errores, APK/AndroidTest compilados; revisión nativa
+pendiente, sin emulador. Instalar encima de Garden sin desinstalar:
+`build/apk-archives/neuma-garden-v0.12.26-ritmo.apk`.
+[Guía, evidencia y comprobación](../docs/Acabado-Rhythm-Tap-v0.12.26.md).
+
+# Acabado Music Garden — candidata 0.12.25 / código 40 (16/11/2026)
+
+Primer incremento: Instrumentos con preparación/resultados en papel, invernadero
+vectorial, selección/foco accesibles y acceso directo al historial con retorno al
+origen. Historial e inspector compartidos adaptados al tema. Reglas, audio, DDA
+y datos conservados; sin emulador ni revisión nativa atribuida. APK Garden:
+`build/apk-archives/neuma-garden-v0.12.25-instrumentos.apk`. Procedimiento,
+evidencia y pendientes en [guía de la candidata](../docs/Acabado-Instrumentos-v0.12.25.md).
+Especificación y seis tareas: GitHub #31–#37. Sonidos de interfaz, respuesta
+táctil y Personaje continúan pendientes. Los registros siguientes son históricos.
+
+# Comparación para la reunión — 0.12.24 (12/11/2026)
+
+Instalar `build/apk-archives/neuma-garden-v0.12.24.apk` sobre Neuma existente;
+instalar también `build/apk-archives/neuma-quiet-studio-v0.12.24.apk` como app
+independiente. Quiet Studio adapta catálogo y Rhythm Tap. Ambas contienen las
+correcciones funcionales de 0.12.21–0.12.23. [Instalación, compilación, respaldo
+y verificación](../docs/Comparacion-Garden-Quiet-Studio-v0.12.24.md).
+
+
 # Neuma — aplicación Android
+
+**Candidata local 0.12.23 / código 38 (12/11/2026):** afinador adaptado a
+pulsaciones breves: 400 ms de permanencia dentro del margen, análisis específico
+con umbral RMS 0,003 y última confirmación identificada al decaer la señal en
+Libre. Guiado y Oído comparten la política; una comprobación de Oído ya afinada
+puede avanzar sin pedir otra pulsación. No se modifican márgenes Normal/Pro ni
+análisis vocal. [Evidencia y límites](../docs/Verificacion-afinador-v0.12.23.md).
+APK: `build/apk-archives/neuma-v0.12.23-afinador-cuerdas-pulsadas.apk`.
+Incluye cambios anteriores de instrumentos, ritmo y Defender. Instalar encima;
+respuesta en guitarra real y nueva presentación siguen pendientes de probar.
+
+**Candidata local 0.12.22 / código 37 (12/11/2026):** corrige el conteo de Rhythm
+Tap al tempo real, incorpora calibración previa explícita y registra su ajuste
+por partida. El pad recibe contactos nativos y el sonido de taps usa SoundPool
+precargado; la mejora acústica requiere prueba en el teléfono. Defender permite
+viaje de 3 s y aparición manual de 1–6 s en práctica; progresión conserva su
+curva de apariciones y puede adaptar viaje hasta 3 s. Incluye la mejora de
+Instrumentos de 0.12.21. [Diagnóstico, verificación y recorrido](../docs/Verificacion-ritmo-defender-v0.12.22.md).
+APK: `build/apk-archives/neuma-v0.12.22-ritmo-calibracion-defender.apk`.
+Instalar encima sin desinstalar. Los resultados físicos informados sobre
+0.12.20 no validan automáticamente esta candidata.
+
+**Candidata local 0.12.21 / código 36 (12/11/2026):** ¿Qué instrumento es?
+permite responder desde el inicio real de la melodía, incluida una reescucha.
+La elección cancela el audio y conserva una única respuesta y las escuchas
+consumidas. [Verificación y recorrido](../docs/Verificacion-instrumentos-v0.12.21.md).
+APK: `build/apk-archives/neuma-v0.12.21-instrumentos-respuesta-anticipada.apk`.
+Instalar encima para conservar datos. Validación física del cambio pendiente;
+las observaciones del autor sobre 0.12.20 conservan su versión original.
 
 [Entrega 0.12.20 en GitHub](../docs/Entrega-GitHub-v0.12.20.md): PR #30 en borrador y etiqueta `v0.12.20-preview.1`; APK, informe PDF, respaldo de verificaciones V1–V6 y hashes adjuntos a una entrega preliminar en borrador.
 

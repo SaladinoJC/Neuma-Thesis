@@ -1,8 +1,464 @@
 \chapter{Marco teórico y estado del arte}
 \label{cap:marco}
+Este capítulo reúne los conceptos necesarios para comprender las actividades de
+Neuma: las habilidades musicales involucradas, la organización de la práctica,
+el uso de juegos y la adaptación del desafío. Introduce también los fundamentos
+del análisis vocal. Los procedimientos y decisiones concretas del prototipo se
+desarrollan en los capítulos de diseño, implementación y pruebas. El estado del
+arte complementa estos fundamentos con el análisis comparativo de antecedentes;
+el procedimiento de la selección focalizada se describe en la sección~\ref{sec:metodo-revision}.
+
 \section{Marco teórico}
-\pendiente{Definir los conceptos musicales, juegos serios, procesamiento de audio y adaptación
-necesarios para comprender el sistema; verificar cada referencia primaria.}
+\subsection{Conceptos musicales y habilidades de entrenamiento}
+\label{sec:conceptos-habilidades}
+\label{sec:altura-frecuencia}
+\label{sec:intervalos-musicales}
+\label{sec:afinacion-cents}
+\label{sec:ritmo-pulso}
+\label{sec:lectura-musical}
+\label{sec:timbre-instrumentos}
+\label{sec:escucha-conjuntos}
+\label{sec:percepcion-produccion}
+El entrenamiento auditivo exige distinguir las propiedades del sonido de las
+acciones que se solicitan al usuario. La altura, o \textit{pitch}, es una
+propiedad perceptiva; la frecuencia fundamental caracteriza la periodicidad
+de la señal. Aunque suelen relacionarse, no son equivalentes, y los sonidos
+vocales y musicales se apartan de la periodicidad ideal
+\parencite[p.~1917]{decheveigne2002yin}. Esta diferencia importa al interpretar
+una respuesta vocal a partir de una estimación computacional.
+
+Un intervalo expresa la distancia entre dos alturas: es melódico si las notas
+se suceden y armónico si suenan simultáneamente. Su denominación combina número
+y cualidad, como en una tercera mayor
+\parencite[sección~5.1]{hutchinsonIntervalos}. En el temperamento igual de doce
+divisiones, la octava corresponde a una razón de frecuencias de dos a uno y se
+divide en doce semitonos iguales. La frecuencia situada \(n\) semitonos respecto
+de una referencia es
+\begin{equation}
+  f_n=f_{\mathrm{ref}}\,2^{n/12}.
+  \label{eq:frecuencia-semitonos}
+\end{equation}
+La distancia entre dos frecuencias positivas puede expresarse en cents:
+\begin{equation}
+  c(f_2,f_1)=1200\log_2\left(\frac{f_2}{f_1}\right).
+  \label{eq:distancia-cents}
+\end{equation}
+Una octava comprende 1200 cents y un semitono temperado, 100
+\parencite{wolfeNotasFrecuencias}. Comparar una nota con una referencia externa
+y comparar el intervalo entre dos notas producidas son tareas diferentes;
+estas relaciones permiten expresar el objetivo y el desvío de cada respuesta.
+En Neuma las utilizo para formular criterios de afinación y reproducción de
+intervalos, cuyas tolerancias se definen en el diseño.
+
+La dimensión temporal requiere distinguir pulso, tempo y ritmo. El pulso actúa
+como referencia; el tempo indica su velocidad, expresable en pulsos por minuto
+o BPM; el ritmo organiza sonidos y silencios respecto de esa referencia. El
+compás agrupa los pulsos y las figuras representan duraciones relativas.
+El puntillo añade la mitad del valor de una figura y la ligadura de prolongación
+suma duraciones de notas de igual altura sin iniciar otra nota en la unión.
+Las subdivisiones binarias, ternarias y los grupos de valoración especial
+permiten describir patrones antes de fijar su velocidad
+\parencite[secciones~4.2--4.5]{hutchinsonIntervalos}.
+La sincronización sensoriomotora estudia la relación temporal entre estímulos
+y acciones; la revisión de \textcite{repp2005synchronization} reúne investigaciones
+con golpes de los dedos ante referencias auditivas. Este antecedente ofrece una
+referencia para describir la ubicación temporal de las acciones en los ejercicios
+rítmicos.
+
+La lectura musical relaciona esa organización sonora con una representación
+escrita. Las claves fijan referencias para interpretar las posiciones del
+pentagrama, y la lectura de acordes exige reconocer relaciones entre notas.
+En una inversión, la nota más grave puede diferir de la fundamental
+\parencite[secciones~1.2, 6.1, 6.3 y 8.1]{hutchinsonIntervalos}. La primera vista
+añade la ejecución inicial de material no practicado. El estudio de
+\textcite{imai2021sightreading} sobre movimientos oculares en pianistas destaca
+que los procedimientos difieren en la familiarización permitida antes de tocar.
+Por ello, primera lectura, reconocimiento de notación y práctica repetida deben
+describirse según la preparación y respuesta que admite cada tarea.
+
+El timbre comprende atributos perceptivos no descritos únicamente por altura,
+intensidad o duración. Su carácter multidimensional y su relación con la
+identificación de fuentes incluyen aspectos como el ataque y la distribución
+de energía entre frecuencias \parencite{mcadams2013timbre}. En conjuntos se añade
+la organización perceptiva de fuentes simultáneas: \textcite{iverson1995streams}
+encontró que atributos estáticos y dinámicos de timbres orquestales influían en
+la segregación de secuencias y la identificación de melodías intercaladas.
+La identidad instrumental debe distinguirse de funciones como melodía o
+acompañamiento y de formas de realización como el arpegio; una misma armonía
+admite distintas texturas \parencite[sección~14.3]{hutchinsonIntervalos}.
+
+Finalmente, percibir una relación y producirla mediante la voz requieren
+observaciones específicas. En participantes con formación musical escasa o nula
+y sin formación vocal, \textcite{pfordresher2007singing} observaron que una
+imitación vocal menos precisa no implicaba menor exactitud en discriminación
+de alturas. Este resultado respalda distinguir percepción y producción dentro
+de las tareas estudiadas. En Neuma, identificar un instrumento, leer una figura,
+ejecutar un patrón temporal y cantar un intervalo constituyen respuestas
+diferentes, aun cuando compartan contenido musical.
+
+\subsection{Aprendizaje musical y organización de la práctica}
+\label{sec:aprendizaje-practica}
+\label{sec:aprendizaje-musical}
+\label{sec:autorregulacion}
+\label{sec:desempeno-aprendizaje}
+\label{sec:practica-distribuida}
+\label{sec:feedback-andamiaje}
+\label{sec:referencias-melodicas}
+La relación entre escuchar, leer y producir puede examinarse mediante el concepto
+de audiación de Gordon: asimilación y comprensión mental de la música, diferenciada
+de la percepción inmediata y de una imagen sonora sin comprensión musical
+\parencite[pp.~3--4]{gordon2012sequences}. Tomo este concepto como referencia para
+relacionar escucha, representación y producción en el diseño de las actividades:
+qué relación musical presenta una consigna y qué necesita reconocer o producir
+el usuario para resolverla.
+
+La organización del estudio también forma parte de la práctica musical. El modelo
+de \textcite[pp.~67--68]{zimmerman2002selfregulated} describe un ciclo de anticipación,
+ejecución y autorreflexión: planificar objetivos, supervisar la actuación y revisar
+los resultados para preparar el siguiente intento. En un estudio longitudinal
+de práctica instrumental infantil, \textcite{mcpherson2001practice} observaron
+diferencias individuales de autorregulación y un uso limitado de estrategias
+de supervisión y corrección. Este antecedente sitúa la planificación y la revisión
+del propio desempeño como aspectos relevantes de la práctica musical. Para Neuma,
+retomo esa relación al organizar la elección de contenidos y la información
+disponible después de un intento.
+
+El resultado de una tarea constituye desempeño; el aprendizaje supone cambios
+duraderos. La revisión de \textcite{soderstrom2015learning} distingue retención,
+observada después de un intervalo temporal, de transferencia a condiciones o
+tareas diferentes. La facilidad durante la práctica puede resultar insuficiente
+para anticipar esos resultados. Repetir un ejercicio y resolver otro nuevo
+permiten observar situaciones distintas. Por ello, vinculo el seguimiento del
+desempeño con el contenido practicado y las condiciones del intento. Esta
+distinción orienta tanto la variación de ejercicios como la interpretación
+de los registros.
+
+La distribución temporal ofrece otro criterio de organización. La práctica
+distribuida separa encuentros con un contenido, mientras que la práctica masiva
+concentra las repeticiones. El efecto de espaciamiento, o \textit{spacing effect},
+es la ventaja de retención que puede producir esa distribución. Deben distinguirse
+el intervalo entre episodios y el intervalo de retención hasta la prueba final;
+\textcite{cepeda2008spacing}, en aprendizaje de hechos, mostraron que la separación
+más favorable dependía del plazo de evaluación. La cantidad de práctica, las
+separaciones y el momento de la prueba son, por tanto, variables necesarias
+para estudiar ese efecto.
+
+La evidencia musical introduce diferencias según el material. En aprendizaje de
+canciones, \textcite{katz2021spacing} encontraron beneficios más claros para las
+palabras que para las notas. En una melodía sin letra, \textcite{katz2025melodic}
+observaron mejor recuerdo de notas e intervalos tras repasos espaciados, sin
+ventaja global de una semana sobre dos días; el análisis se restringió a quienes
+alcanzaron el criterio inicial. En identificación de seis intervalos,
+\textcite{hua2015intervals} encontró un beneficio más pronunciado para intervalos
+amplios y dependiente de las condiciones de presentación. Por su parte,
+\textcite{molloy2012auditory} observaron mejoras entre sesiones y después del
+entrenamiento en discriminación de frecuencias, y menor eficiencia de sesiones
+extensas en fases posteriores; algunas comparaciones variaron también la cantidad
+total de ensayos. Estos trabajos orientan mi propuesta de apoyar la continuidad
+de la práctica y las oportunidades de repaso. La organización temporal debe
+considerarse junto con el contenido y el volumen de trabajo, manteniendo abierta
+su adecuación a cada actividad.
+
+La retroalimentación permite revisar qué ocurrió y cómo continuar. El modelo
+de \textcite{hattie2007feedback} diferencia información sobre tarea, proceso,
+autorregulación y persona, relacionándola con las metas y los próximos pasos.
+La noción de andamiaje de \textcite{wood1976tutoring} describe un apoyo que controla
+componentes inicialmente fuera del alcance del aprendiz para que atienda a otros
+que puede resolver. Aquel estudio se realizó con niños en una tarea de construcción.
+Retomo el concepto para especificar qué parte del desafío resuelve una ayuda y
+qué debe aportar el usuario, como ocurre al ofrecer dos notas de referencia,
+solo una nota inicial o una consigna de producción libre.
+
+En entrenamiento de intervalos, una melodía familiar puede actuar como referencia
+asociativa. \textcite{smith1994familiar} observaron mejoras en identificación de
+terceras y cuartas mediante etiquetas de melodías conocidas, con beneficio más
+limitado en discriminación difícil. Su utilidad depende, por tanto, de la tarea.
+Estos fundamentos permiten distinguir información sobre el error, una ayuda para
+resolverlo y el resultado posterior. Las condiciones concretas de referencias,
+metas y apoyos de Neuma se reúnen en el capítulo~\ref{cap:diseno}.
+
+\subsection{Juegos serios, gamificación y motivación}
+\label{sec:juegos-serios-gamificacion}
+\label{sec:mecanicas-aprendizaje}
+\label{sec:motivacion-autonomia}
+\label{sec:metas-constancia}
+\label{sec:evidencia-gamificacion}
+Los juegos serios conservan la condición de juego y se orientan a propósitos que
+exceden el entretenimiento. La gamificación utiliza elementos de diseño de juegos
+en contextos que no constituyen por sí mismos un juego
+\parencite{deterding2011gamification}. La distinción permite analizar tanto una
+actividad completa como elementos que organizan la práctica. En Neuma distingo
+las reglas y objetivos de cada juego de los apoyos transversales para organizar
+el entrenamiento.
+
+El aprendizaje basado en juegos vincula la actividad con resultados de aprendizaje
+definidos. \textcite{plass2015foundations} plantean alinear las mecánicas con esos
+objetivos y examinar los elementos que añaden procesamiento ajeno al contenido.
+También describen la posibilidad de fallar con consecuencias reducidas y reintentar.
+Utilizo estos criterios para revisar la correspondencia entre consigna, acción
+y habilidad musical, y para organizar el tratamiento del error y el reintento.
+
+La teoría de la autodeterminación aporta una perspectiva sobre la experiencia de
+juego. \textcite{ryan2006motivation} consideran autonomía, competencia y vinculación
+social. En sus estudios encontraron asociaciones entre autonomía y competencia
+percibidas y disfrute o preferencia por continuar. Estas asociaciones ofrecen
+criterios para analizar la motivación durante la práctica. De modo complementario,
+\textcite{silverman2023streaks} estudiaron cómo representar una racha conservada o
+interrumpida afecta la continuidad de conducta en contextos de consumo. En el
+proyecto, considero las metas y rachas como apoyos a la participación, con registros
+diferenciados del desempeño musical.
+
+El metaanálisis de \textcite{sailer2020gamification} encontró efectos positivos
+de gamificación educativa sobre resultados cognitivos, motivacionales y conductuales,
+con heterogeneidad entre estudios. Los dos últimos fueron menos estables al
+considerar trabajos con mayor rigor metodológico, y persistían límites para evaluar
+su duración mediante pruebas demoradas. Esta evidencia fundamenta el interés
+por integrar juego y práctica musical, atendiendo a las condiciones del diseño.
+Para Neuma priorizo desafíos vinculados con la habilidad objetivo, superación
+personal y autonomía con orientación; los criterios concretos se desarrollan
+en el capítulo~\ref{cap:diseno}.
+
+\subsection{Adaptación de dificultad y lógica difusa}
+\label{sec:desafio-dda}
+\label{sec:conjuntos-difusos}
+El ajuste dinámico de dificultad, o DDA por \textit{Dynamic Difficulty Adjustment},
+modifica condiciones del juego a partir de información de la interacción.
+\textcite{hunicke2005dda} analiza requisitos de adaptación y presenta un sistema
+que regula recursos en un juego de acción, destacando la coherencia de reglas y
+devoluciones. Retomo ese criterio para relacionar los cambios de dificultad con
+las reglas de cada actividad. Con Neuma busco sostener un desafío abordable a
+partir del desempeño observado y conservar información que permita examinar
+por qué se aplicó cada ajuste.
+
+La lógica difusa permite expresar categorías con pertenencia gradual. Un conjunto
+difuso \(A\), definido sobre un universo \(X\), asigna a cada elemento un grado
+\(\mu_A(x)\) entre cero y uno; la pertenencia binaria es un caso particular
+\parencite[pp.~338--340]{zadeh1965fuzzy}. Esta pertenencia describe compatibilidad
+con una categoría y no debe interpretarse como probabilidad de dominio de una
+habilidad. Las funciones que representan categorías como desempeño bajo o alto
+son parte del modelo elegido.
+
+Las reglas relacionan esas categorías con consecuencias. El experimento de
+\textcite{mamdani1975linguistic} convierte reglas heurísticas de un operador en
+control automático de una máquina de vapor. En la inferencia Mamdani, las
+pertenencias activan reglas cuyas consecuencias difusas se combinan; la
+desfusificación obtiene luego una salida numérica
+\parencite{mathworksProcesoDifuso,mathworksDesfusificacion}. Este esquema permite
+explicitar los criterios de ajuste y revisar la relación entre observaciones,
+reglas y consecuencias. Esa posibilidad de inspección fundamenta su uso en el
+proyecto. Los operadores, el centroide y las restricciones
+de aplicación del proyecto se desarrollan en la sección~\ref{sec:diseno-dda}.
+
+Adaptar el desafío y habilitar contenidos son decisiones diferentes: la primera
+modifica condiciones de una actividad y la segunda regula acceso mediante reglas
+de progresión. Su evaluación requiere identificar qué se observa, qué cambia y
+cuándo se aplica. Separar ambas decisiones permite ajustar condiciones de práctica
+conservando el progreso habilitado y comprobar cada mecanismo mediante sus
+propios registros y casos de prueba.
+
+\subsection{Audio digital y estimación de frecuencia fundamental}
+\label{sec:audio-estimacion}
+\label{sec:muestreo-audio}
+El análisis vocal utiliza una representación digital de la señal. El muestreo
+uniforme toma valores separados por \(1/f_s\) segundos, donde \(f_s\) es la frecuencia
+de muestreo. Para señales limitadas en banda, la reconstrucción exige que el
+contenido espectral quede por debajo de \(f_s/2\)
+\parencite[apéndice~D, Sampling Theorem]{smithMuestreo}. Esa condición concierne
+al espectro completo, no solamente a la frecuencia fundamental. El análisis de un
+flujo utiliza segmentos finitos o ventanas, que pueden solaparse al incorporar
+muestras nuevas.
+
+YIN estima frecuencia fundamental mediante comparaciones temporales de la señal
+consigo misma. Utiliza una función de diferencias, normalización por media
+acumulada, búsqueda de un mínimo bajo umbral e interpolación del período
+\parencite[pp.~1919--1921]{decheveigne2002yin}. Su fundamento es obtener un
+desplazamiento compatible con la periodicidad. La implementación basada en YIN de
+Neuma y sus diferencias frente al artículo se explican en la
+sección~\ref{sec:estimacion-yin}. Esta base permite organizar la captura, el cálculo
+y la comparación con el objetivo musical como etapas identificables del sistema.
+
+Una estimación aceptada constituye un dato intermedio para evaluar la respuesta
+musical. Deben distinguirse ausencia de señal suficiente, ausencia de periodicidad
+admisible y una frecuencia válida que difiere del objetivo. Otras voces o una
+referencia reproducida pueden entrar en el micrófono aunque se capture un único
+canal. Por ello, delimito el análisis a una respuesta monofónica y defino
+condiciones de captura coherentes con la tarea. La separación entre admisión
+de señal y evaluación musical permite ofrecer una devolución acorde con el
+estado observado.
+
+La devolución también tiene una dimensión temporal. Android distingue latencia
+de entrada, de salida y de ida y vuelta, que incorpora procesamiento
+\parencite{androidLatenciaAudio}. El tiempo de cálculo de una ventana, el intervalo
+entre estimaciones y la demora hasta una devolución visual describen magnitudes
+diferentes. El diseño de las ventanas y el tratamiento de señal se presentan en
+la sección~\ref{sec:implementacion-audio}; los criterios de evaluación técnica,
+en la sección~\ref{sec:verificacion-audio}.
+
+\subsection{Síntesis y relación con las actividades de Neuma}
+\label{sec:sintesis-marco}
+Los fundamentos anteriores permiten describir cada actividad por el contenido
+musical que presenta, la respuesta que solicita y las condiciones en que la observa.
+En el reconocimiento de instrumentos se identifica una fuente dentro de un banco
+de estímulos y alternativas. La lectura de notas y acordes por nombre observa
+reconocimiento de notación, mientras que la lectura rítmica con golpes en pantalla
+registra inicios y relaciones temporales. Esta caracterización permite formular
+un criterio de respuesta propio de cada actividad.
+
+En los ejercicios vocales, reproducir una nota o un intervalo añade producción a
+la escucha. La referencia ofrecida, las ayudas y el material condicionan la
+interpretación del desempeño. Repetir el mismo ejercicio y resolver otro con
+relaciones equivalentes permiten observaciones diferentes. La actividad de Simón
+añade reproducción ordenada de una secuencia; su fundamentación específica sobre
+memoria musical queda pendiente de completar.
+
+La propuesta futura de escucha de conjuntos amplía el análisis hacia instrumentos
+y funciones en grabaciones anotadas; su diseño se describe en el
+capítulo~\ref{cap:diseno}, junto con las ayudas y los apoyos a la continuidad.
+Distingo esas propuestas de las actividades implementadas para mantener la
+trazabilidad entre fundamento, diseño y verificación.
+
+En conjunto, adopto estos fundamentos para definir tareas musicales observables,
+apoyos identificados, retroalimentación pertinente y reglas de adaptación
+revisables. La evaluación técnica y las sesiones exploratorias previstas permiten
+examinar el funcionamiento y el uso del sistema. La retención y la transferencia
+duraderas requieren una evaluación pedagógica específica; las distingo de los
+resultados de funcionamiento y participación.
+
 \section{Estado del arte}
-\pendiente{Comparar antecedentes, limitaciones y aportes. Documentar el método de búsqueda;
-atribuir carácter sistemático solo al procedimiento efectivamente registrado.}
+\label{sec:estado-arte}
+Los antecedentes se comparan según la habilidad trabajada, la respuesta del
+usuario, el mecanismo de adaptación y la evidencia disponible. Se reúnen
+publicaciones sobre sistemas y métodos con documentación de aplicaciones de
+entrenamiento. Esta última permite identificar prestaciones declaradas por sus
+responsables, mientras que los estudios permiten examinar condiciones y resultados
+de evaluación. La selección focalizada que sustenta esta versión se describe en
+la sección~\ref{sec:metodo-revision}; no representa un inventario exhaustivo del área.
+
+\subsection{Práctica musical digital y juegos educativos}
+\label{sec:antecedentes-practica}
+La combinación de escucha, lectura y producción ya aparece en herramientas de
+entrenamiento musical. La documentación de Perfect Ear presenta ejercicios de
+intervalos, escalas, acordes, canto, lectura y ritmo. EarMaster Cloud reúne
+actividades auditivas y vocales con asignación de tareas y seguimiento de resultados
+por docentes \parencite{perfectearFunciones,earmasterCloud}. Tomo estos repertorios
+como referencia funcional para relacionar contenidos, modalidades de respuesta
+e información de seguimiento. La documentación permite caracterizar la oferta
+de práctica; los resultados educativos se examinan mediante los estudios
+que presentan una evaluación.
+
+Los juegos educativos permiten examinar cómo una tarea musical se incorpora a
+reglas de interacción. iClef, de \textcite{barate2013iclef}, propone lectura de
+partituras con cambios frecuentes de clave en dispositivos móviles. Los autores
+informan uso en clases de estudiantes de música y valoraciones favorables de
+diversión e implicación mediante cuestionarios. La evaluación de eficacia de
+aprendizaje queda como una línea para ampliar. Para Neuma, el antecedente aporta
+una relación explícita entre tarea de lectura y desafío lúdico: el contenido
+musical forma parte de las acciones necesarias para avanzar.
+
+En entrenamiento rítmico, \textcite{znidersic2025storytelling} compararon versiones
+con y sin narrativa de \textit{Steady the Drums!}, un juego de realidad virtual
+en el que patrones de percusión controlan unidades. El estudio de dos semanas
+combinó cuestionarios, registros de juego y pruebas rítmicas iniciales y finales.
+La narrativa recibió mejores valoraciones hedónicas, mientras que la versión sin
+narrativa mostró mayor exactitud durante el juego. Hubo mejoras en medidas
+rítmicas, pero no en todas las condiciones de tempo o dificultad. El diseño
+compara dos versiones activas y no establece retención demorada ni eficacia frente
+a ausencia de entrenamiento. Para Neuma, el antecedente muestra por qué conviene
+separar disfrute, desempeño dentro del juego y resultado en una prueba musical.
+
+En conjunto, estos trabajos ofrecen formas de vincular una habilidad con la
+interacción. Comparo sus aportes atendiendo a la plataforma, la modalidad de
+respuesta y la evaluación. Para Neuma, retomo como criterio que el desafío se
+resuelva mediante la habilidad musical prevista y que los registros permitan
+identificar la tarea efectivamente realizada.
+
+\subsection{Análisis vocal y adaptación basada en desempeño}
+\label{sec:antecedentes-audio-adaptacion}
+El análisis vocal requiere distinguir la estimación acústica de la evaluación
+musical. Sobre la base temporal de YIN, \textcite{mauch2014pyin} proponen pYIN:
+generan candidatos con probabilidades a partir de una distribución de umbrales
+y utilizan un modelo oculto de Markov para estimar una trayectoria de frecuencias.
+\textcite{kim2018crepe} presentan CREPE, una red convolucional que opera sobre
+la forma de onda y evalúan su precisión y robustez ante ruido. Ambos aportan
+alternativas de procesamiento para examinar la estimación vocal. Su incorporación
+al proyecto requiere considerar, además de precisión, demora y costo de ejecución
+en el teléfono objetivo.
+
+Organizo la selección técnica a partir de la implementación basada en YIN como
+línea de base existente. Esta referencia permite plantear una comparación de
+señales, errores, rechazos y tiempos bajo condiciones comunes antes de incorporar
+otra alternativa. Así, la elección de DSP o aprendizaje automático se vincula
+con las necesidades de la interacción vocal y las restricciones del dispositivo,
+como se indica en el alcance.
+
+La adaptación también cumple propósitos distintos. El CA-BAT de
+\textcite{harrison2018cabat} utiliza teoría de respuesta al ítem, selección
+adaptativa y generación automática para evaluar percepción del pulso. El
+participante identifica cuál de dos fragmentos contiene una referencia alineada
+con el pulso musical. Sus estudios apoyan el uso en laboratorio, con limitaciones
+para evaluación en línea. El ajuste busca obtener información sobre la capacidad
+del participante: es un antecedente de medición adaptativa, cuyo propósito difiere
+de regular la experiencia de práctica mediante el DDA de Neuma.
+
+SingPAD, presentado por \textcite{zhang2024singpad}, aporta registros de lectura
+cantada obtenidos de SingMaster para estudiar seguimiento del conocimiento
+o \textit{knowledge tracing}. Cada nota se vincula con conceptos musicales y
+una etiqueta de respuesta derivada de evaluación automática. Los autores comparan
+modelos para predecir respuestas a partir del historial. Su evaluación se concentra
+en esa capacidad predictiva. Para Neuma, el aporte relevante es la vinculación
+explícita entre contenido, producción vocal y registro, junto con la necesidad
+de documentar cómo se obtienen las etiquetas de respuesta y qué datos se incluyen.
+
+Estos antecedentes distinguen tres niveles: estimar la señal, interpretar una
+respuesta y decidir la intervención siguiente. En Neuma relaciono esos niveles
+mediante criterios musicales y reglas de adaptación explícitas. La lógica difusa,
+presentada en la sección~\ref{sec:desafio-dda}, permite revisar cómo los indicadores
+de desempeño activan una decisión. Ese vínculo orienta la estructura del motor
+y de los registros con los que verifico su comportamiento.
+
+\subsection{Comparación y aporte del proyecto}
+\label{sec:comparacion-antecedentes}
+La tabla~\ref{tab:antecedentes} resume el aporte de cada grupo de antecedentes
+y el alcance de su comparación. Las diferencias entre objetos y preguntas de
+evaluación permiten identificar qué retomo de cada línea de trabajo.
+
+\begingroup
+\small
+\singlespacing
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{p{0.23\textwidth}p{0.31\textwidth}p{0.36\textwidth}}
+\caption{Antecedentes y alcance de su relación con Neuma.}
+\label{tab:antecedentes}\\
+\toprule
+Antecedente & Aporte relevante & Límite de comparación \\
+\midrule
+\endfirsthead
+\toprule
+Antecedente & Aporte relevante & Límite de comparación \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Perfect Ear y EarMaster Cloud & Repertorios de práctica; seguimiento docente en EarMaster Cloud. & Documentación funcional, sin evaluación independiente en esta comparación. \\
+iClef & Juego móvil centrado en lectura de claves. & Aceptación en clases; eficacia de aprendizaje por ampliar. \\
+Steady the Drums! & Comparación de narrativa, experiencia y ejecución rítmica. & Realidad virtual y dos versiones activas; sin prueba demorada de retención. \\
+pYIN y CREPE & Alternativas de estimación de frecuencia fundamental. & Precisión de procesamiento; desempeño en el teléfono objetivo por medir. \\
+CA-BAT & Selección adaptativa y evaluación de percepción del pulso. & Instrumento psicométrico; su adaptación no equivale a DDA de entrenamiento. \\
+SingPAD & Datos de canto, conceptos musicales y predicción de respuestas. & Evaluación de modelos predictivos; no ensayo de eficacia de una intervención. \\
+\end{longtable}
+\endgroup
+
+El aporte que propongo con Neuma es la integración y evaluación de un sistema
+Android que articula tareas musicales, procesamiento local, retroalimentación
+y adaptación inspeccionable. La relación entre estos componentes plantea
+decisiones de ingeniería concretas: admitir una señal antes de evaluar su
+afinación, conservar las condiciones musicales del intento y aplicar los ajustes
+de dificultad en momentos compatibles con las reglas del juego.
+
+Organizo esa integración de modo que las respuestas, las decisiones del motor
+y el progreso puedan examinarse a partir de registros. Esto permite vincular
+el criterio de cada actividad con su implementación y sus pruebas, y analizar
+precisión del procesamiento, comportamiento del ajuste y experiencia de uso.
+La contribución del trabajo se sostiene en esa construcción y en la evidencia
+obtenida bajo condiciones explícitas. Los antecedentes proporcionan referencias
+para justificarla y criterios para revisar sus resultados.

@@ -52,7 +52,7 @@ class DefenderD3ViewModelTest {
             val reports = DefenderScenario.entries.map { simulateDefender(it) }
             val fast = reports.first { it.scenario == DefenderScenario.FAST.label }.records.single().game
             val slow = reports.first { it.scenario == DefenderScenario.SLOW.label }.records.single().game
-            assertEquals(6000L, fast.currentTravelMillis)
+            assertEquals(3000L, fast.currentTravelMillis)
             assertEquals(14_000L, slow.currentTravelMillis)
             assertTrue(fast.ddaDecisions.any { it.reason == DefenderDdaReason.COOLDOWN })
             val steady = reports.first { it.scenario == DefenderScenario.STEADY.label }.records.single().game

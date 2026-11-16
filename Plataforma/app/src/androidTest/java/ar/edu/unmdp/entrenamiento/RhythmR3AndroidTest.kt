@@ -67,7 +67,9 @@ class RhythmR3AndroidTest {
         try {
             fun tap() { compose.onNodeWithTag("rhythm-tap").performSemanticsAction(SemanticsActions.OnClick) { it() } }
             for (code in listOf("R03", "R07", "R14", "R09")) compose.onNodeWithTag("rhythm-category-$code").performScrollTo().performClick()
+            compose.openRhythmPreparationIfCollapsed()
             compose.onNodeWithTag("rhythm-metronome").performScrollTo().performClick()
+            compose.openRhythmPreparationIfCollapsed()
             compose.onNodeWithTag("rhythm-generate").performScrollTo().performClick()
             compose.waitUntil(10_000) { model.ui.value.session.phase == RhythmPhase.PREVIEW }
             val score = model.ui.value.session.score!!
@@ -96,11 +98,13 @@ class RhythmR3AndroidTest {
             assertEquals(80_000_000L, result.attacks.first().deltaNanos)
             assertEquals(result.taps.map { it.timestampNanos }, sounded)
             compose.onNodeWithTag("rhythm-summary").performScrollTo().assertExists()
+            compose.onNodeWithTag("rhythm-result-details").performScrollTo().performClick()
             for (code in listOf("R03", "R07", "R14", "R09")) compose.onNodeWithTag("rhythm-summary-$code").performScrollTo().assertExists()
             screenshot("resumen")
             compose.onNodeWithTag("rhythm-repeat").performScrollTo().performClick()
             assertEquals(score, model.ui.value.session.score)
             assertTrue(model.ui.value.session.repeated)
+            compose.openRhythmPreparationIfCollapsed()
             compose.onNodeWithTag("rhythm-edit-categories").performScrollTo().performClick()
             compose.onNodeWithTag("rhythm-category-R03").performScrollTo().assertIsSelected()
         } finally { compose.runOnIdle { model.background() } }

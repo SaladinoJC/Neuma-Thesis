@@ -1,0 +1,343 @@
+--- a/Plataforma\app\build.gradle.kts
++++ b/Plataforma\app\build.gradle.kts
+@@ -13,8 +13,8 @@
+         applicationId = "ar.edu.unmdp.entrenamiento"
+         minSdk = 26
+         targetSdk = 36
+-        versionCode = 41
+-        versionName = "0.12.26"
++        versionCode = 42
++        versionName = "0.12.27"
+         buildConfigField("boolean", "QUIET_STUDIO", "false")
+         resValue("string", "variant_app_name", "Neuma Garden")
+         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+--- a/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\GardenInterior.kt
++++ b/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\GardenInterior.kt
+@@ -25,6 +25,18 @@
+ import androidx.compose.ui.semantics.selected
+ import androidx.compose.ui.unit.dp
+ import ar.edu.unmdp.entrenamiento.progress.Progress
++
++/** Papel compartido con áreas seguras; también admite la superficie lisa de una variante. */
++@Composable
++internal fun GardenPageScaffold(background: Color = GardenTokens.Background, decorated: Boolean = true,
++    content: @Composable (PaddingValues) -> Unit) {
++    Scaffold(containerColor = background, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
++        Box(Modifier.fillMaxSize().padding(padding)) {
++            if (decorated) GardenPageDecoration(Modifier.matchParentSize())
++            content(PaddingValues(0.dp))
++        }
++    }
++}
+ 
+ /** Papel y encuadernación; la decoración no contiene información musical. */
+ @Composable
+--- a/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\MusicGardenMenu.kt
++++ b/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\MusicGardenMenu.kt
+@@ -58,7 +58,7 @@
+     GardenGame("Instrumentos", "Reconocimiento de instrumentos", "Escuchá y descubrí qué instrumento está sonando.", R.drawable.garden_instruments, "game-instruments"),
+     GardenGame("Rhythm Tap", "Pulso y lectura", "Leé cuatro compases y marcá el ritmo.", R.drawable.garden_rhythm, "game-rhythm"),
+     GardenGame("Defender", "Lectura musical", "Reconocé notas y acordes para proteger el árbol.", R.drawable.garden_defender, "game-defender"),
+-    GardenGame("Intervalos vocales", "Escucha y voz", "Escuchá dos notas y cantá el intervalo entre ellas.", R.drawable.garden_instruments, "game-vocal-intervals"),
++    GardenGame("Intervalos vocales", "Escucha y voz", "Escuchá o elegí un ancla y cantá intervalos.", R.drawable.garden_vocal_clearing, "game-vocal-intervals"),
+ )
+ internal val gardenTitle = FontFamily(Font(R.font.garden_fraunces, FontWeight.SemiBold))
+ internal val gardenBody = FontFamily(Font(R.font.garden_nunito_sans))
+--- a/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\RhythmGardenInterior.kt
++++ b/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\RhythmGardenInterior.kt
+@@ -2,7 +2,6 @@
+ 
+ import androidx.compose.foundation.Canvas
+ import androidx.compose.foundation.layout.*
+-import androidx.compose.material3.Scaffold
+ import androidx.compose.runtime.Composable
+ import androidx.compose.ui.Modifier
+ import androidx.compose.ui.geometry.Offset
+@@ -17,12 +16,7 @@
+ /** Misma área segura en ambos temas; Quiet Studio conserva su superficie sin ornamentación. */
+ @Composable
+ internal fun RhythmPageScaffold(content: @Composable (PaddingValues) -> Unit) {
+-    Scaffold(containerColor = RhythmTokens.Background, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
+-        Box(Modifier.fillMaxSize().padding(padding)) {
+-            if (!BuildConfig.QUIET_STUDIO) GardenPageDecoration(Modifier.matchParentSize())
+-            content(PaddingValues(0.dp))
+-        }
+-    }
++    GardenPageScaffold(RhythmTokens.Background, decorated = !BuildConfig.QUIET_STUDIO, content = content)
+ }
+ 
+ /** Terraza estática: el único seguimiento temporal lo realiza la notación real. */
+--- a/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\VocalIntervalApp.kt
++++ b/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\VocalIntervalApp.kt
+@@ -8,6 +8,7 @@
+ import androidx.activity.compose.rememberLauncherForActivityResult
+ import androidx.activity.result.contract.ActivityResultContracts
+ import androidx.compose.foundation.layout.*
++import androidx.compose.foundation.Image
+ import androidx.compose.foundation.rememberScrollState
+ import androidx.compose.foundation.horizontalScroll
+ import androidx.compose.foundation.verticalScroll
+@@ -15,12 +16,17 @@
+ import androidx.compose.runtime.*
+ import androidx.compose.ui.Modifier
+ import androidx.compose.ui.platform.LocalContext
++import androidx.compose.ui.platform.LocalDensity
++import androidx.compose.ui.layout.ContentScale
++import androidx.compose.ui.res.painterResource
+ import androidx.compose.ui.platform.testTag
+ import androidx.compose.ui.semantics.*
+ import androidx.core.net.toUri
+ import androidx.lifecycle.Lifecycle
+ import androidx.lifecycle.LifecycleEventObserver
+ import androidx.lifecycle.compose.LocalLifecycleOwner
++import androidx.compose.ui.unit.dp
++import ar.edu.unmdp.entrenamiento.R
+ import ar.edu.unmdp.entrenamiento.voice.*
+ import java.util.Locale
+ import kotlin.math.abs
+@@ -56,14 +62,22 @@
+     }
+     BackHandler(onBack = onHome)
+     TunerGardenTheme {
+-        Scaffold(containerColor = GardenTokens.Background, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
++        GardenPageScaffold { padding ->
+             Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState())
+                 .padding(GardenTokens.SpaceBase), verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceBase)) {
+-                TextButton(onClick = onHome, modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum).testTag("vocal-home")) { Text("Volver al menú") }
+-                Text("Intervalos vocales", style = MaterialTheme.typography.headlineMedium)
++                TextButton(onClick = onHome, modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum).testTag("vocal-home")) { Text("Volver al libro") }
++                val ended = ui.round?.result != null || ui.series?.ended == true
++                val practicing = !ended && (ui.referencePlaying || ui.heardReference || ui.round != null)
++                if (!ended && (!practicing || LocalDensity.current.fontScale <= 1.3f)) Image(
++                    painterResource(R.drawable.garden_vocal_clearing), null,
++                    modifier = Modifier.fillMaxWidth().height(if (practicing) 80.dp else 120.dp)
++                        .testTag(if (practicing) "vocal-clearing" else "vocal-cover"), contentScale = ContentScale.Fit)
++                Text("Intervalos vocales", style = MaterialTheme.typography.headlineMedium, modifier = Modifier.semantics { heading() })
++                GardenPaperPanel {
+                 Text(if (ui.scaffoldingLevel == 3) "Elegí tu nota inicial y cantá ambas notas del intervalo, sin referencia sonora."
+                     else if (ui.scaffoldingLevel == 2) "Escuchá el ancla y cantá solo la nota del intervalo indicado."
+                     else "Escuchá dos notas y cantá la relación entre ellas en un registro cómodo.")
++                }
+                 ui.series?.let { Text("${vocalScaffoldingLabel(it.scaffoldingLevel)} · Ronda ${it.ordinal} de 5" + if (it.ended) " · Cerrada" else "",
+                     modifier = Modifier.testTag("vocal-series-status")) }
+                 if (ui.round == null) {
+@@ -137,6 +151,7 @@
+                         VocalIntervalPhase.INTERRUPTED -> "Ronda interrumpida"
+                         else -> "Prepará tu voz"
+                     }
++                    GardenPaperPanel {
+                     Text(status, style = MaterialTheme.typography.titleMedium,
+                         modifier = Modifier.testTag("vocal-stage").semantics { liveRegion = LiveRegionMode.Polite })
+                     Text(intervalNames[abs(ui.semitones)] + if (ui.semitones == 0) "" else if (ui.semitones > 0) " ascendente" else " descendente")
+@@ -144,6 +159,8 @@
+                         Text("Cantá sin vibrato hasta que se confirme el sostenido.")
+                         Text(ui.frequencyHz?.let { String.format(Locale.ROOT, "%.1f Hz", it) } ?: "Esperando señal válida",
+                             modifier = Modifier.testTag("vocal-frequency"))
++                        Text("Sostené una sola nota. Si no aparece una lectura, acercate al micrófono y evitá sonidos de fondo.",
++                            color = GardenTokens.TextSecondary)
+                         if (phase == VocalIntervalPhase.TARGET) {
+                             val error = ui.round.latestErrorCents
+                             Text(error?.let { String.format(Locale.ROOT, "%+.1f cents respecto del intervalo", it) } ?: "Buscando la nota objetivo",
+@@ -160,10 +177,14 @@
+                         Button(onClick = model::startTarget, enabled = !ui.working,
+                             modifier = Modifier.fillMaxWidth().heightIn(min = GardenTokens.TouchMinimum).testTag("vocal-target")) { Text("Cantar segunda nota") }
+                     }
++                    }
+                     ui.round.result?.let { result ->
++                        GardenPaperPanel {
+                         if (result.interruption == null) {
+                             Text(if (result.inTune == true) "Dentro de la tolerancia de práctica" else "Fuera de la tolerancia de práctica",
+-                                style = MaterialTheme.typography.headlineSmall, modifier = Modifier.testTag("vocal-outcome"))
++                                style = MaterialTheme.typography.headlineSmall,
++                                color = if (result.inTune == true) GardenTokens.Primary else GardenTokens.ErrorText,
++                                modifier = Modifier.testTag("vocal-outcome"))
+                             Text(String.format(Locale.ROOT, "Intervalo cantado: %.1f cents · objetivo: %d cents", result.intervalCents, ui.semitones * 100))
+                             Text(String.format(Locale.ROOT, "Desviación: %+.1f cents", result.errorCents), modifier = Modifier.testTag("vocal-result-error"))
+                             Text("Criterio experimental, pendiente de probar con voces reales.", color = GardenTokens.TextSecondary)
+@@ -176,6 +197,7 @@
+                         Button(onClick = model::newRound, enabled = !ui.working && !ui.historyBusy && ui.history.pending.isEmpty(),
+                             modifier = Modifier.fillMaxWidth().heightIn(min = GardenTokens.TouchMinimum).testTag("vocal-new")) {
+                             Text(if (!ui.progression) "Nueva ronda" else if (ui.series?.ended == false) "Siguiente ronda" else "Preparar otra serie") }
++                        }
+                     }
+                     if (ui.round.result == null) Text("Tiempo disponible: ${ui.remainingSeconds} s", color = GardenTokens.TextSecondary)
+                 }
+--- a/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\VocalIntervalHistoryApp.kt
++++ b/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\VocalIntervalHistoryApp.kt
+@@ -44,13 +44,14 @@
+     val back = { if (selectedId != null) selectedId = null else model.closeHistory() }
+     BackHandler(onBack = back)
+     TunerGardenTheme {
+-        Scaffold(containerColor = GardenTokens.Background, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
++        GardenPageScaffold { padding ->
+             Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(GardenTokens.SpaceBase),
+                 verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceBase)) {
+                 TextButton(onClick = back, modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum).testTag("vocal-history-back")) {
+                     Text(if (selected == null) "Volver a la práctica" else "Volver al historial")
+                 }
+-                Text(if (selected == null) "Historial vocal" else "Detalle de ronda", style = MaterialTheme.typography.headlineMedium)
++                Text(if (selected == null) "Historial vocal" else "Detalle de ronda", style = MaterialTheme.typography.headlineMedium,
++                    modifier = Modifier.semantics { heading() })
+                 VocalIntervalSaveNotice(ui, model)
+                 if (selected == null) {
+                     if (entries.isEmpty() && !ui.historyBusy) Text(if (ui.history.error == null) "Todavía no hay rondas guardadas."
+@@ -70,7 +71,7 @@
+                     }
+                     if (entries.size > shown) OutlinedButton(onClick = { shown += 20 },
+                         modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum).testTag("vocal-history-more")) { Text("Mostrar otras 20 rondas") }
+-                } else VocalIntervalRecordDetail(selected)
++                } else GardenPaperPanel { VocalIntervalRecordDetail(selected) }
+                 TextButton(onClick = onData, enabled = !ui.historyBusy,
+                     modifier = Modifier.fillMaxWidth().heightIn(min = GardenTokens.TouchMinimum).testTag("vocal-history-data")) { Text("Datos y demostración") }
+             }
+--- a/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\VocalProgressApp.kt
++++ b/Plataforma\app\src\main\java\ar\edu\unmdp\entrenamiento\ui\VocalProgressApp.kt
+@@ -8,6 +8,8 @@
+ import androidx.compose.runtime.saveable.rememberSaveable
+ import androidx.compose.ui.Modifier
+ import androidx.compose.ui.platform.testTag
++import androidx.compose.ui.semantics.heading
++import androidx.compose.ui.semantics.semantics
+ import ar.edu.unmdp.entrenamiento.voice.*
+ import java.util.Locale
+ 
+@@ -23,12 +25,13 @@
+         .filter { it.result.targetSemitones == key && it.scaffoldingLevel == level && it.dda != null }.takeLast(20).asReversed()
+     BackHandler(onBack = model::closeProgress)
+     TunerGardenTheme {
+-        Scaffold(containerColor = GardenTokens.Background, contentWindowInsets = WindowInsets.safeDrawing) { padding ->
++        GardenPageScaffold { padding ->
+             LazyColumn(Modifier.fillMaxSize().padding(padding).testTag("vocal-progress-screen"),
+                 contentPadding = PaddingValues(GardenTokens.SpaceBase), verticalArrangement = Arrangement.spacedBy(GardenTokens.SpaceBase)) {
+                 item {
+                     TextButton(onClick = model::closeProgress, modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum).testTag("vocal-progress-back")) { Text("Volver a la práctica") }
+-                    Text("Progreso vocal", style = MaterialTheme.typography.headlineMedium)
++                    Text("Progreso vocal", style = MaterialTheme.typography.headlineMedium,
++                        modifier = Modifier.semantics { heading() })
+                     Text("Parámetros experimentales, sin calibración pedagógica")
+                     VocalChoice("Ayuda auditiva", level, vocalScaffoldingChoices, true,
+                         "vocal-progress-scaffolding") { level = it }
+@@ -55,6 +58,7 @@
+                         "vocal-progress-interval") { key = it }
+                     val state = progress.forLevel(key, level)
+                     Text(if (key in progress.unlockedFor(level)) "Desbloqueado" else "Bloqueado")
++                    GardenPaperPanel {
+                     Text("${state.highSeries}/2 series altas · tolerancia recomendada ${state.toleranceCents} cents")
+                     Text(if (state.mastered) "Hito registrado. El acceso adquirido se conserva." else "Todavía no hay hito para este intervalo y dirección.")
+                     val group = vocalCurriculum.indexOfFirst { key in it }
+@@ -64,6 +68,7 @@
+                     if (level == 1 && group > 0) Text(vocalCurriculum[group - 1].joinToString { vocalIntervalLabel(it) })
+                     if (state.masteryEvidence.isNotEmpty()) Text("Series del hito: ${state.masteryEvidence.joinToString()}", style = MaterialTheme.typography.bodySmall)
+                     Text("Una serie alta exige cinco rondas elegibles altas. Entrar en tolerancia por sí solo no acredita esa categoría.")
++                    }
+                 }
+                 item {
+                     if (records.isEmpty()) Text("No hay decisiones de progresión para este intervalo.")
+--- a/assets\source\interiors\vocal-clearing.svg
++++ b/assets\source\interiors\vocal-clearing.svg
+@@ -0,0 +1,30 @@
++<svg xmlns="http://www.w3.org/2000/svg" width="768" height="512" viewBox="0 0 768 512">
++  <title>Claro de canto — Neuma Music Garden</title>
++  <desc>Claro botánico con anfiteatro natural vacío. Sin personajes, instrumentos ni notación musical.</desc>
++  <path data-token="surfaceSelected" fill="#E1E9DB" d="M100 369 Q112 153 282 98 Q422 43 605 155 Q680 217 666 381 Q413 484 100 369Z"/>
++  <path data-token="sage" fill="#A7B99E" d="M54 396 Q189 312 325 355 Q512 292 712 390 Q725 451 548 479 Q249 509 66 445Z"/>
++  <path data-token="moss" fill="#718563" d="M85 417 Q200 371 330 400 Q531 351 689 415 Q593 467 382 474 Q175 463 85 417Z"/>
++  <path data-token="success" fill="#D9AD69" d="M182 377 Q381 294 588 377 L613 402 Q386 491 158 404Z"/>
++  <path data-token="background" fill="#F5EEDC" d="M184 370 Q384 294 584 370 Q386 445 184 370Z"/>
++  <path data-token="success" fill="#D9AD69" d="M219 345 Q384 280 551 345 L566 368 Q383 437 205 367Z"/>
++  <path data-token="surface" fill="#FFF9ED" d="M220 340 Q384 277 550 340 Q383 403 220 340Z"/>
++  <path data-token="sage" fill="#A7B99E" d="M269 329 Q385 284 505 330 Q387 373 269 329Z"/>
++  <path data-token="surfaceSelected" fill="#E1E9DB" d="M291 323 Q384 293 482 324 Q386 354 291 323Z"/>
++  <path data-token="primaryPressed" fill="#254633" d="M87 405 Q113 283 95 145 L129 132 Q151 260 141 394 L171 424 L119 419 L97 433Z"/>
++  <path data-token="moss" fill="#718563" d="M124 154 Q133 259 121 393 L142 403 Q153 276 142 166Z"/>
++  <path data-token="primary" fill="#315844" d="M65 245 Q24 164 93 116 Q77 59 143 58 Q190 12 236 58 Q306 44 324 99 Q299 144 242 135 Q196 188 147 168 Q127 222 65 245Z"/>
++  <path data-token="moss" fill="#718563" d="M91 114 Q123 61 178 81 Q194 40 236 58 L249 113 Q203 153 147 168Z"/>
++  <path data-token="sage" fill="#A7B99E" d="M150 78 L235 59 L271 94 L222 118 L178 107Z"/>
++  <path data-token="primaryPressed" fill="#254633" d="M627 404 Q605 281 632 149 L664 157 Q647 276 677 414 L651 431 L633 412 L600 423Z"/>
++  <path data-token="moss" fill="#718563" d="M635 170 Q621 300 647 410 L663 411 Q642 277 653 167Z"/>
++  <path data-token="primary" fill="#315844" d="M542 151 Q485 156 454 105 Q469 54 533 57 Q569 14 611 50 Q679 40 687 99 Q741 148 709 212 Q654 222 624 173 Q582 184 542 151Z"/>
++  <path data-token="moss" fill="#718563" d="M493 102 L533 57 Q568 77 578 114 Q616 90 655 116 L624 173 L567 164Z"/>
++  <path data-token="sage" fill="#A7B99E" d="M544 64 L610 51 L648 76 L604 106 L575 95Z"/>
++  <path data-token="primary" fill="#315844" d="M53 423 Q19 376 58 337 Q99 356 89 394 Q122 361 155 391 Q149 433 111 443Z"/>
++  <path data-token="moss" fill="#718563" d="M69 433 Q61 386 108 369 Q143 400 111 443Z"/>
++  <path data-token="sage" fill="#A7B99E" d="M113 430 Q128 386 176 407 Q168 443 113 430Z"/>
++  <path data-token="primary" fill="#315844" d="M609 444 Q591 403 624 382 Q663 384 660 417 Q678 370 720 390 Q742 438 685 450Z"/>
++  <path data-token="moss" fill="#718563" d="M651 443 Q652 401 687 399 Q710 438 685 450Z"/>
++  <path data-token="sage" fill="#A7B99E" d="M572 425 Q593 393 628 410 Q636 436 609 444Z"/>
++  <path data-token="success" fill="#D9AD69" d="M170 436 Q176 426 185 434 Q189 444 176 447Z M593 456 Q598 444 608 449 Q614 460 601 464Z"/>
++</svg>
+--- a/tools\prepare_vocal_clearing.py
++++ b/tools\prepare_vocal_clearing.py
+@@ -0,0 +1,37 @@
++"""Export the editable Music Garden clearing as an Android VectorDrawable.
++
++The master uses only filled paths. Colours come from design-tokens.json; no
++musical notation is encoded in this decorative asset. Run from any directory.
++"""
++from pathlib import Path
++import xml.etree.ElementTree as ET
++import json
++
++
++def main():
++    root = Path(__file__).resolve().parents[1]
++    source = root / "assets/source/interiors/vocal-clearing.svg"
++    destination = root / "Plataforma/app/src/main/res/drawable/garden_vocal_clearing.xml"
++    colours = json.loads((root / "design-tokens.json").read_text(encoding="utf-8"))["color"]
++    svg = ET.parse(source).getroot()
++    paths = list(svg.findall("{http://www.w3.org/2000/svg}path"))
++    if svg.get("viewBox") != "0 0 768 512" or not paths:
++        raise ValueError("Unexpected master viewport or empty drawing")
++    lines = ['<?xml version="1.0" encoding="utf-8"?>',
++             '<!-- Generated by tools/prepare_vocal_clearing.py; edit the SVG master. -->',
++             '<vector xmlns:android="http://schemas.android.com/apk/res/android"',
++             '    android:width="192dp" android:height="128dp"',
++             '    android:viewportWidth="768" android:viewportHeight="512">']
++    for path in paths:
++        colour = colours[path.attrib["data-token"]]
++        if path.get("fill") != colour:
++            raise ValueError("Master colour differs from tokens: " + path.attrib["data-token"])
++        lines.append(f'    <path android:fillColor="{colour}" android:pathData="{path.attrib["d"]}" />')
++    lines.append("</vector>")
++    destination.parent.mkdir(parents=True, exist_ok=True)
++    destination.write_text("\n".join(lines) + "\n", encoding="utf-8")
++    print(f"Generated {destination.relative_to(root)} ({len(paths)} paths)")
++
++
++if __name__ == "__main__":
++    main()
+--- a/Plataforma\app\src\main\res\drawable\garden_vocal_clearing.xml
++++ b/Plataforma\app\src\main\res\drawable\garden_vocal_clearing.xml
+@@ -0,0 +1,32 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Generated by tools/prepare_vocal_clearing.py; edit the SVG master. -->
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="192dp" android:height="128dp"
++    android:viewportWidth="768" android:viewportHeight="512">
++    <path android:fillColor="#E1E9DB" android:pathData="M100 369 Q112 153 282 98 Q422 43 605 155 Q680 217 666 381 Q413 484 100 369Z" />
++    <path android:fillColor="#A7B99E" android:pathData="M54 396 Q189 312 325 355 Q512 292 712 390 Q725 451 548 479 Q249 509 66 445Z" />
++    <path android:fillColor="#718563" android:pathData="M85 417 Q200 371 330 400 Q531 351 689 415 Q593 467 382 474 Q175 463 85 417Z" />
++    <path android:fillColor="#D9AD69" android:pathData="M182 377 Q381 294 588 377 L613 402 Q386 491 158 404Z" />
++    <path android:fillColor="#F5EEDC" android:pathData="M184 370 Q384 294 584 370 Q386 445 184 370Z" />
++    <path android:fillColor="#D9AD69" android:pathData="M219 345 Q384 280 551 345 L566 368 Q383 437 205 367Z" />
++    <path android:fillColor="#FFF9ED" android:pathData="M220 340 Q384 277 550 340 Q383 403 220 340Z" />
++    <path android:fillColor="#A7B99E" android:pathData="M269 329 Q385 284 505 330 Q387 373 269 329Z" />
++    <path android:fillColor="#E1E9DB" android:pathData="M291 323 Q384 293 482 324 Q386 354 291 323Z" />
++    <path android:fillColor="#254633" android:pathData="M87 405 Q113 283 95 145 L129 132 Q151 260 141 394 L171 424 L119 419 L97 433Z" />
++    <path android:fillColor="#718563" android:pathData="M124 154 Q133 259 121 393 L142 403 Q153 276 142 166Z" />
++    <path android:fillColor="#315844" android:pathData="M65 245 Q24 164 93 116 Q77 59 143 58 Q190 12 236 58 Q306 44 324 99 Q299 144 242 135 Q196 188 147 168 Q127 222 65 245Z" />
++    <path android:fillColor="#718563" android:pathData="M91 114 Q123 61 178 81 Q194 40 236 58 L249 113 Q203 153 147 168Z" />
++    <path android:fillColor="#A7B99E" android:pathData="M150 78 L235 59 L271 94 L222 118 L178 107Z" />
++    <path android:fillColor="#254633" android:pathData="M627 404 Q605 281 632 149 L664 157 Q647 276 677 414 L651 431 L633 412 L600 423Z" />
++    <path android:fillColor="#718563" android:pathData="M635 170 Q621 300 647 410 L663 411 Q642 277 653 167Z" />
++    <path android:fillColor="#315844" android:pathData="M542 151 Q485 156 454 105 Q469 54 533 57 Q569 14 611 50 Q679 40 687 99 Q741 148 709 212 Q654 222 624 173 Q582 184 542 151Z" />
++    <path android:fillColor="#718563" android:pathData="M493 102 L533 57 Q568 77 578 114 Q616 90 655 116 L624 173 L567 164Z" />
++    <path android:fillColor="#A7B99E" android:pathData="M544 64 L610 51 L648 76 L604 106 L575 95Z" />
++    <path android:fillColor="#315844" android:pathData="M53 423 Q19 376 58 337 Q99 356 89 394 Q122 361 155 391 Q149 433 111 443Z" />
++    <path android:fillColor="#718563" android:pathData="M69 433 Q61 386 108 369 Q143 400 111 443Z" />
++    <path android:fillColor="#A7B99E" android:pathData="M113 430 Q128 386 176 407 Q168 443 113 430Z" />
++    <path android:fillColor="#315844" android:pathData="M609 444 Q591 403 624 382 Q663 384 660 417 Q678 370 720 390 Q742 438 685 450Z" />
++    <path android:fillColor="#718563" android:pathData="M651 443 Q652 401 687 399 Q710 438 685 450Z" />
++    <path android:fillColor="#A7B99E" android:pathData="M572 425 Q593 393 628 410 Q636 436 609 444Z" />
++    <path android:fillColor="#D9AD69" android:pathData="M170 436 Q176 426 185 434 Q189 444 176 447Z M593 456 Q598 444 608 449 Q614 460 601 464Z" />
++</vector>

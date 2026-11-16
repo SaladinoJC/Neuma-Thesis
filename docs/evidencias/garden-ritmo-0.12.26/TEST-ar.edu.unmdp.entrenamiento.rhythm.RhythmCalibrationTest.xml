@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.rhythm.RhythmCalibrationTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-16T17:29:49.402Z" hostname="DESKTOP-PP49S64" time="0.007">
+  <properties/>
+  <testcase name="faltantes golpes irregulares y cancelacion no producen un ajuste" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmCalibrationTest" time="0.004"/>
+  <testcase name="calibracion estima desfase consistente sin contar preparacion ni duplicados" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmCalibrationTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

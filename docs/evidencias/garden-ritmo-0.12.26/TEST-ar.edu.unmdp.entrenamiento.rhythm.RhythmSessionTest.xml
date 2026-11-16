@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.rhythm.RhythmSessionTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-16T17:29:51.874Z" hostname="DESKTOP-PP49S64" time="0.069">
+  <properties/>
+  <testcase name="fronteras inclusivas y un solo tap por ataque sin depender del metronomo" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmSessionTest" time="0.008"/>
+  <testcase name="Play cuenta antes de ejecutar evalua un tap una sola vez y permite repetir como practica" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmSessionTest" time="0.001"/>
+  <testcase name="timestamp del conteo entregado tarde no devuelve la ejecucion a conteo" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmSessionTest" time="0.0"/>
+  <testcase name="generar no inicia y produce cuatro compases exactos con procedencia y semilla" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmSessionTest" time="0.001"/>
+  <testcase name="conteo visual sigue cada pulso del tempo real a 60 90 y 120 BPM" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmSessionTest" time="0.012"/>
+  <testcase name="cuatro semicorcheas a 120 BPM conservan timestamps y admiten ajuste positivo y negativo" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmSessionTest" time="0.005"/>
+  <testcase name="corpus semillas y selecciones conservan duraciones apariciones y serializacion" classname="ar.edu.unmdp.entrenamiento.rhythm.RhythmSessionTest" time="0.039"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

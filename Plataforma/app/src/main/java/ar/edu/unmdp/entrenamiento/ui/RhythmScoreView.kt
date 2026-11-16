@@ -53,15 +53,15 @@ internal fun RhythmScoreView(score: RhythmScore, state: RhythmState, reduced: Bo
         }
     })
     val payload = remember(notation, reduced) {
-        Json.encodeToString(ScorePayload(notation, reduced, ScorePalette(GardenTokens.Text.css(),
-            GardenTokens.Primary.css(), GardenTokens.ErrorText.css(), GardenTokens.ErrorText.css(), GardenTokens.Focus.css())))
+        Json.encodeToString(ScorePayload(notation, reduced, ScorePalette(RhythmTokens.Text.css(),
+            RhythmTokens.Primary.css(), RhythmTokens.ErrorText.css(), RhythmTokens.ErrorText.css(), RhythmTokens.Focus.css())))
     }
     // Result revisions (including late input) have the same attack ownership as the session.
     val transport = Json.encodeToString(ScoreTransport(state.phase.name,
         state.elapsedNanos.toDouble() / Beat(1).nanos(score.bpm), (state.result?.attacks ?: state.attacks).map { it.kind?.name }))
     Column(modifier.testTag("rhythm-score")) {
         if (failed) {
-            Text("No se pudo abrir la partitura continua. Usá la lectura por compases.", color = GardenTokens.ErrorText)
+            Text("No se pudo abrir la partitura continua. Usá la lectura por compases.", color = RhythmTokens.ErrorText)
             score.bars.forEach { bar ->
                 Text("Compás ${bar.index + 1}", style = MaterialTheme.typography.labelMedium)
                 RhythmBarDrawing(bar, score, state, Modifier.fillMaxWidth().height(100.dp))
@@ -79,9 +79,9 @@ internal fun RhythmScoreView(score: RhythmScore, state: RhythmState, reduced: Bo
             if (!ready) Text("Preparando partitura…", modifier = Modifier.testTag("rhythm-score-loading"),
                 style = MaterialTheme.typography.bodySmall)
             if (state.phase == RhythmPhase.PREVIEW || state.phase == RhythmPhase.RESULTS) {
-                Text("Deslizá la partitura para revisar los cuatro compases.", color = GardenTokens.TextSecondary,
+                Text("Deslizá la partitura para revisar los cuatro compases.", color = RhythmTokens.TextSecondary,
                     style = MaterialTheme.typography.bodySmall)
-            } else if (reduced) Text("Lectura por pulsos · movimiento reducido", color = GardenTokens.TextSecondary,
+            } else if (reduced) Text("Lectura por pulsos · movimiento reducido", color = RhythmTokens.TextSecondary,
                 style = MaterialTheme.typography.bodySmall)
         }
     }

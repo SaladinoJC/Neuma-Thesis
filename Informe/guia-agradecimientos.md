@@ -1,5 +1,25 @@
 # Guía para escribir los agradecimientos
 
+## Versión vigente — 2026-11-02
+
+El autor reemplaza el primer borrador por un texto propio y aclara «luego lo
+completaré bien». Se transcribe en `preliminares/agradecimientos.tex`, conservando
+redacción, nombres, orden, puntuación y menciones abiertas. No se hace corrección
+ortográfica o de estilo en este reemplazo ni se agregan palabras para completarlo.
+
+La versión incluye familia/hermanos, Lydia, compañeros de trabajo y cursada,
+Seba, Leonel, docentes nombrados, Martin y amigos. Los bloques de Ipanema,
+Facu/Fiol/Raies/Shadlow y Abril quedan como los dejó el autor. La revisión final
+de nombres, ortografía y extensión queda para cuando retome este borrador.
+
+Este texto sustituye los párrafos y fragmentos musicales del borrador anterior;
+no se reinsertarán canciones o marcadores editoriales automáticamente. La página
+al lector anterior a Agradecimientos se conserva. Los acuerdos de 2026-10-30 que
+siguen son antecedentes de esa primera versión, no pendientes obligatorios de
+la nueva. La dedicatoria independiente a Abril continúa pendiente de su texto.
+
+## Antecedentes del primer borrador — 2026-10-30
+
 Fecha: 2026-10-30. Base confirmada por el autor mediante entrevista `grilling`, Q1–Q16.
 Autorización de esta etapa: «dale, guardemos la guia y preparemos el primer borrador».
 El texto editable está únicamente en `preliminares/agradecimientos.tex`; esta guía conserva

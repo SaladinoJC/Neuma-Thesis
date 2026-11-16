@@ -1,264 +1,432 @@
 \chapter{Implementación}
 \label{cap:implementacion}
-\section{Tecnologías implementadas}
-\pendiente{Describir cómo se aplicaron las tecnologías del capítulo de herramientas.}
-\section{Decisiones técnicas relevantes}
-\pendiente{Explicar alternativas, criterios de selección, dificultades y soluciones con evidencia.}
-\subsection{Progresión de Rhythm Tap: incremento R6}
+Este capítulo describe cómo se concretan los componentes del diseño en la
+candidata Neuma 0.12.20, código 35, cuya base quedó identificada por la etiqueta
+\path{v0.12.20-preview.1}, y las correcciones locales de 0.12.21--0.12.23
+del 12 de noviembre de 2026, la comparación visual 0.12.24 y el primer
+incremento de acabado Music Garden del 16 de noviembre. La candidata local
+más reciente es 0.12.27, código 42; estas ampliaciones no implican una nueva
+publicación de la etiqueta.
+Organizo la explicación por funcionamiento del
+sistema, conservando los incrementos como referencias de trazabilidad. Las
+herramientas se presentan en el capítulo~\ref{cap:herramientas} y los resultados
+de las verificaciones, en el capítulo~\ref{cap:pruebas}.
+
+\section{Organización del código}
+El módulo de aplicación reside en \path{Plataforma/app/}. Las fuentes Kotlin
+se organizan bajo \path{ar/edu/unmdp/entrenamiento/}: \texttt{ui} reúne las
+pantallas; \texttt{voice}, \texttt{instruments}, \texttt{rhythm} y
+\texttt{defender}, los componentes de las actividades; \texttt{dda}, el motor
+difuso; y \texttt{storage}, la coordinación de datos. Algunos ViewModels se
+ubican junto a su actividad y otros en \texttt{ui}; la responsabilidad se
+reconoce por el contrato, sin presuponer una distribución uniforme de archivos.
+
+Los recursos empaquetados incluyen muestras, fuentes y grabado musical en
+\path{src/main/assets/}, además de recursos Android en \path{src/main/res/}.
+Las pruebas locales están en \path{src/test/} y las instrumentadas, en
+\path{src/androidTest/}. Los scripts de \path{Plataforma/tools/} preparan recursos
+y reúnen verificaciones. Esta estructura materializa las responsabilidades
+de la sección~\ref{sec:arquitectura-neuma}; no representa varios módulos
+desplegados por separado.
+
+\section{Captura y análisis de la respuesta vocal}
+\label{sec:implementacion-audio}
+El módulo de captura y análisis se apoya en \path{voice/AndroidVoiceCapture.kt} y
+\path{voice/YinEstimator.kt}, bajo el paquete de la aplicación, y en el laboratorio
+\path{voice/PitchLab.kt}. No incorpora nuevas mediciones ni una calibración de
+voz real. Los fundamentos se presentan en la sección~\ref{sec:audio-estimacion}.
+
+La captura utiliza \texttt{AudioRecord} con un canal y muestras PCM de 16 bits,
+lecturas no bloqueantes y procesamiento fuera del hilo de interfaz. La API devuelve
+la cantidad leída o un error; el mínimo de búfer no garantiza continuidad bajo carga
+\parencite{androidAudioRecord}. El código acumula las lecturas hasta completar el
+bloque nuevo y arma la ventana del estimador. La frecuencia de muestreo y el formato
+deben ser coherentes en ambos componentes.
+
+\label{sec:ventanas-audio}
+Para analizar un flujo continuo se toma un bloque finito de muestras y se repite
+el cálculo al incorporar datos nuevos. Se denomina aquí ventana de análisis al
+bloque de \(N\) muestras utilizado para una estimación y salto a las \(H\) muestras
+que separan el comienzo de dos bloques consecutivos. En este contexto, ventana
+designa el segmento analizado, sin suponer que se aplique una función de ponderación.
+Las duraciones correspondientes se obtienen directamente de la frecuencia de
+muestreo:
+\begin{equation}
+  T_{\mathrm{ventana}}=\frac{N}{f_s},\qquad
+  T_{\mathrm{salto}}=\frac{H}{f_s}.
+  \label{eq:ventana-salto}
+\end{equation}
+La configuración \texttt{yin-v1} utiliza \(f_s=44\,100\) Hz, \(N=4096\) y
+\(H=1024\): aproximadamente 92,9 ms de muestras por ventana y 23,2 ms por salto.
+Son duraciones calculadas desde la configuración, no mediciones de latencia.
+Si \(H<N\), los bloques comparten muestras. Una mayor frecuencia de actualización
+no implica que cada resultado proceda de un segmento independiente ni que el
+sistema responda con una demora igual al salto.
+
+Esta distinción permite formular el compromiso temporal del proyecto. Para
+buscar un período deben estar disponibles las muestras que exige su comparación;
+las frecuencias más graves corresponden a períodos más largos. Aumentar el bloque
+aporta una historia temporal más extensa, pero también puede reunir parte de una
+transición entre notas. La elección de tamaño, salto y rango debe comprobarse
+con las señales y tareas previstas, conservando su configuración en los registros.
+
+
+\subsection{Algoritmo basado en YIN}
+\label{sec:estimacion-yin}
+YIN estima la frecuencia fundamental mediante comparaciones temporales de la
+señal consigo misma. Su función de diferencias acumula discrepancias cuadráticas
+para un desplazamiento \(\tau\); la normalización por media acumulada facilita
+la búsqueda del período \parencite[pp.~1919--1920]{decheveigne2002yin}.
+Adaptando la notación a un bloque, para \(W\) pares de muestras disponibles:
+\begin{equation}
+  d(\tau)=\sum_{j=0}^{W-1}\bigl(x[j]-x[j+\tau]\bigr)^2,
+  \qquad
+  d'(\tau)=\frac{d(\tau)}{\frac{1}{\tau}\sum_{k=1}^{\tau}d(k)}.
+  \label{eq:yin-diferencias}
+\end{equation}
+La segunda expresión corresponde a \(\tau>0\) y denominador positivo; para
+\(\tau=0\) se define \(d'(0)=1\). El método busca un mínimo normalizado bajo un
+umbral y refina el período mediante interpolación parabólica. A partir del
+desplazamiento estimado \(\widehat{\tau}\), expresado en muestras, se obtiene
+\(\widehat{f}_0=f_s/\widehat{\tau}\)
+\parencite[pp.~1920--1921]{decheveigne2002yin}.
+
+La versión del prototipo debe describirse como una implementación basada en YIN.
+Incluye diferencias, normalización, umbral e interpolación, pero adopta decisiones
+propias: rechaza el bloque si no encuentra un candidato bajo el umbral, interpola
+la función normalizada y no incorpora la búsqueda adicional del mejor candidato
+en un entorno temporal. El artículo contempla un mínimo global alternativo,
+refinamiento sobre la diferencia sin normalizar y una etapa de búsqueda temporal
+\parencite[pp.~1920--1921]{decheveigne2002yin}. Por ello, sus resultados publicados
+no se atribuyen automáticamente al código de Neuma.
+
+
+\subsection{Admisión de estimaciones y evaluación musical}
+\label{sec:admisibilidad-tono}
+Una estimación de frecuencia es un dato intermedio. Para evaluar una respuesta
+vocal, el proyecto necesita decidir primero si dispone de señal admisible y,
+después, cómo compara esa estimación con el objetivo musical. La ausencia de tono
+aceptado debe conservar un significado distinto de una nota válida fuera de la
+tolerancia de afinación.
+
+El prototipo utiliza el nivel RMS del bloque, calculado tras retirar su media,
+como una condición de admisión. Para muestras normalizadas, la expresión es
+\begin{equation}
+  \overline{x}=\frac{1}{N}\sum_{n=0}^{N-1}x[n],\qquad
+  x_{\mathrm{RMS}}=\sqrt{\frac{1}{N}\sum_{n=0}^{N-1}
+  \bigl(x[n]-\overline{x}\bigr)^2}.
+  \label{eq:rms-bloque}
+\end{equation}
+Esta magnitud describe el nivel numérico de la señal analizada; sin calibración
+del sistema de captura no representa una medición de presión sonora. Superar su
+umbral tampoco identifica por sí mismo una voz ni garantiza periodicidad.
+
+Además del nivel, la implementación comprueba la validez de las muestras, la
+existencia de un candidato y su pertenencia al rango configurado. El indicador
+derivado del mínimo normalizado se interpreta como un descriptor del cálculo,
+sin presentarlo como probabilidad calibrada de que la nota sea correcta. El
+criterio musical se formula luego mediante distancias como los cents de la
+sección~\ref{sec:afinacion-cents} y, cuando corresponda, condiciones temporales
+de estabilidad. Los umbrales de señal, de estimación y de aprobación musical
+cumplen funciones diferentes y deben evaluarse por separado.
+
+\section{Integración de intervalos vocales}
+\label{sec:implementacion-intervalos}
+\subsection{Recorrido de captura y evaluación}
+\texttt{VocalIntervalViewModel} conecta referencia sonora, capturador, sesión
+y registro. La imitación reproduce dos notas y recibe dos capturas nuevas:
+primero el ancla cantada y después el objetivo, mediante acciones explícitas.
+Ancla dada reproduce una nota y captura solo el objetivo; producción libre
+recibe ambas notas sin reproducción previa. En los tres modos la sesión
+conserva la procedencia del ancla y evalúa la relación que corresponde.
+
+Con ancla cantada, el intervalo se calcula como
+\(1200\log_2(f_2/f_1)\) y se compara con el objetivo en semitonos. Trasladar
+ambas notas al mismo tiempo conserva el intervalo, mientras que un desplazamiento
+de octava en una sola conserva su error. Con ancla dada, la comparación utiliza
+la frecuencia de la referencia reproducida, sin inventar mediciones de una
+primera nota no cantada.
+
+La sesión adquiere notas mediante sostenido y mediana en escala logarítmica.
+La configuración experimental utiliza 500 ms de sostenido, huecos máximos de
+100 ms y una amplitud de 35 cents para la estabilidad. Una segunda nota estable
+puede cerrar con error de afinación; silencio o discontinuidad reinician la
+adquisición. La tolerancia de aprobación es un parámetro distinto de la
+admisibilidad de señal descrita en la sección~\ref{sec:admisibilidad-tono}.
+
+El modelo serializa acciones y estimaciones. Una generación invalida las
+respuestas tardías de operaciones canceladas; la siguiente operación espera
+la liberación del recurso anterior. Cada etapa abre una captura nueva para
+evitar arrastrar muestras del ancla al objetivo. Conceder permiso no inicia
+por sí solo el micrófono. Cancelación, salida o segundo plano interrumpen sin
+reanudar automáticamente, y un temporizador limita también la espera en silencio.
+
+\subsection{Adaptación, series y registro}
+La progresión organiza series de cinco rondas del mismo intervalo, dirección
+y ayuda. La práctica manual permite ensayar contenidos sin conceder avance.
+El DDA considera el error absoluto medio y la dispersión del sostenido final,
+mediante el motor compartido. La tolerancia experimental comienza en 50 cents
+y cambia en pasos de hasta 5, dentro de 30--80 cents; el ajuste se utiliza
+en la ronda siguiente, sin modificar la que está siendo evaluada.
+
+Dos series altas elegibles permiten registrar el hito del contenido. Imitación,
+ancla dada y producción libre conservan tolerancia, racha y evidencia propias.
+Un hito puede habilitar acceso a la ayuda siguiente sin acreditar respuestas
+en ella. La selección entre las tres ayudas sigue siendo explícita; RF-16
+representa la gobernanza automática todavía por implementar.
+
+\texttt{VocalIntervalHistorySession} asigna identidad al comenzar la captura y
+registra cierres completos e interrupciones. Escuchar sin cantar no crea una
+ronda. El registro conserva referencia, ayuda, configuración de análisis,
+dispositivo y serie derivada, separado del laboratorio técnico de voz.
+En producción libre, las referencias MIDI son nulas y las escuchas, cero.
+La decisión y los estados de progreso se preparan con el guardado del mismo
+registro; el reintento conserva su identidad. Los perfiles anteriores cargan
+los mapas nuevos vacíos, sin transferir desempeño de otras ayudas.
+
+\section{Reconocimiento de instrumentos}
+\label{sec:implementacion-instrumentos}
+\texttt{InstrumentSession} prepara una melodía al crear cada pregunta y la
+mantiene en las reescuchas. El reproductor compone la frase con muestras locales
+del instrumento y conserva notas, duraciones y versión del generador para el
+resultado. Las opciones y el instrumento objetivo pertenecen al catálogo del
+nivel; la misma gramática de melodías se utiliza entre instrumentos para
+reducir diferencias de tarea ajenas al reconocimiento tímbrico.
+
+La política intrapartida utiliza aciertos y autonomía de escucha, sin penalizar
+el tiempo de respuesta. Desde la tercera respuesta examina una ventana de
+tres preguntas; puede cambiar una escucha para la siguiente pregunta, entre
+una y tres, y deja dos preguntas entre cambios. El ejemplo ya presentado
+conserva su ayuda. Un acierto con reescuchas sigue siendo correcto, aunque
+aporta información distinta sobre autonomía.
+
+El modo manual conserva la ayuda fija de práctica; el automático aplica la
+política y aporta evidencia a la progresión del nivel. El resultado reúne
+respuestas, melodías, escuchas y trazas de decisión. Los registros históricos
+de nota aislada conservan su identificación y no reciben una melodía ficticia.
+El inspector y los escenarios controlados permiten revisar esas políticas
+con datos simulados separados del perfil.
+
+Desde 0.12.21 se permite responder durante la melodía, una vez notificado el
+inicio real del audio. La elección cancela la reproducción y conserva una sola
+respuesta y la cantidad de escuchas iniciadas, sin penalización por rapidez.
+
+\section{Generación y ejecución de Rhythm Tap}
+\label{sec:implementacion-ritmo}
+\subsection{Partitura, entrada y revisión}
+El modelo rítmico conserva duraciones racionales, figuras, silencios, ligaduras
+y procedencia de categorías. El generador comprueba selección y compás antes
+de buscar un ejercicio, con cantidad de candidatos y tiempo de búsqueda
+acotados. El agotamiento de búsqueda se comunica como un fallo recuperable,
+distinto de una selección que no cumple las condiciones de factibilidad.
+
+La partitura se presenta antes de iniciar. Su modelo alimenta notación, ataques
+esperados y evaluación, de modo que la continuación de una ligadura no produzca
+un ataque adicional. El grabado local se integra en \texttt{RhythmScoreView};
+el desplazamiento lateral y el marcador siguen la ejecución, con una alternativa
+de ventanas estáticas al reducir movimiento.
+
+\texttt{RhythmViewModel} relaciona la marca temporal del evento táctil con el
+reloj de ejecución. La evaluación distingue ataques adelantados o atrasados,
+omisiones y golpes extra. Repetir conserva la partitura como práctica; generar
+otro identificador no convierte el mismo contenido en evidencia nueva de avance.
+
+\subsection{Progresión y revisiones del resultado}
 \label{sec:implementacion-ritmo-r6}
-El incremento local 0.12.12 del 30 de octubre de 2026 incorpora adaptación
-entre ejercicios y desbloqueo de categorías rítmicas. La práctica permite
-seleccionar cualquier categoría y un tempo manual; la progresión admite
-categorías desbloqueadas y utiliza el menor tempo recomendado de la selección.
-El tempo no cambia durante una ejecución. Dos resultados altos elegibles por
-categoría permiten aumentar cinco BPM en el siguiente ejercicio y registrar
-evidencia para habilitar sus dependientes. El inicio a 60 BPM, el techo de
-120 BPM y las funciones difusas constituyen una configuración experimental
-del prototipo, sin validación pedagógica.
+En progresión, cada categoría conserva tempo recomendado y evidencia propios.
+Al mezclarlas se utiliza el menor tempo recomendado, fijo durante la ejecución.
+Dos resultados altos elegibles permiten aumentar cinco BPM para un ejercicio
+posterior y acreditar el hito de la categoría. Inicio a 60 BPM, techo de
+120 BPM y prerrequisitos son parámetros experimentales.
 
-La implementación reutiliza el motor Mamdani y separa las métricas de ritmo
-de las utilizadas en reconocimiento tímbrico. La precisión considera ataques
-a tiempo e intervalos de silencio respetados; el control considera golpes
-extra atribuibles. Solo las apariciones objetivo aportan evidencia por
-categoría. Las repeticiones se detectan mediante una huella del contenido
-musical que no depende de la semilla ni del identificador del intento.
-Las simulaciones utilizan sesiones y almacenamiento en memoria separados del
-perfil del estudiante.
+La inferencia utiliza precisión de ataques y silencios, y control de golpes
+extra atribuibles, considerando las apariciones objetivo de cada categoría.
+Una huella del contenido musical independiente de semilla y UUID identifica
+las repeticiones. La categoría más rápida no gana tempo por ejecutarse al
+tempo recomendado de otra más lenta.
 
-Para coordinar resultado y progreso se decidió conservar ambos en el mismo
-archivo JSON de ritmo. La decisión se calcula dentro de la transacción del
-perfil y se confirma con una única sustitución del archivo, evitando una
-segunda escritura independiente del progreso. Se conservan los estados
-anterior y posterior, configuración, reglas activadas y revisión evaluada.
-Las revisiones tardías del último intento se recalculan desde su estado
-anterior sin retirar avances adquiridos. Si ya existe un intento posterior,
-se actualiza la evaluación musical pero se conserva la decisión que sirvió
-para continuar, identificando su revisión. Esta política es una elección
-técnica provisional del incremento.
+\texttt{prepareRhythmCommit} prepara resultado, decisión y progreso dentro del
+guardado coordinado. Si se corrige el último intento, recalcula desde su estado
+anterior conservando avances adquiridos. Cuando ya se confirmó uno posterior,
+actualiza la evaluación musical sin cambiar la decisión utilizada para continuar;
+la revisión evaluada identifica esa evidencia. Esta política evita repetir
+retroactivamente cambios de dificultad sobre ejercicios ya ejecutados.
 
-La guía \texttt{docs/Rhythm-Tap-R6.md} identifica el ticket, las fuentes de
-código y las verificaciones reproducibles. La integración visual y los
-recorridos Android de este incremento permanecen pendientes; su implementación
-no acredita sincronía acústica ni eficacia del entrenamiento.
-\subsection{Cierre de entrada y persistencia de Defender: incremento D3}
+\subsection{Conteo y alineación previa del toque}
+En 0.12.22 el conteo visual utiliza el tempo de la partitura; se corrigió una
+expresión que conservaba 60 BPM. La entrada recibe los eventos táctiles nativos
+con su marca original. El metrónomo mantiene una línea PCM y una preparación
+silenciosa de 750 ms antes del primer pulso; el sonido opcional de cada tap
+se precarga en \texttt{SoundPool}, evitando pausar y recargar una pista por golpe.
+Estas elecciones requieren comprobación acústica en el dispositivo.
+
+La calibración es una actividad separada: cuatro pulsos de escucha y doce
+de toma a 80 BPM. Propone la mediana del desfase y comprueba la regularidad
+de los contactos antes de ofrecer su aplicación explícita. El ajuste se resta
+del tiempo relativo al evaluar, sin cambiar las ventanas ni aprender de
+partidas puntuadas. El resultado conserva las muestras y el ajuste junto con
+tiempos originales y corregidos. Esta alineación incluye sincronización personal
+y respuesta del equipo; no permite aislar latencia física. Se conserva en memoria
+y debe repetirse al cambiar la salida de audio o iniciar un nuevo proceso.
+
+\section{Lectura musical en Defender}
+\label{sec:implementacion-defender}
+\subsection{Tiempo de entrada y cierre de partida}
 \label{sec:implementacion-defender-d3}
-El incremento local 0.12.13 incorpora adaptación intrapartida del tiempo de
-viaje y progreso persistente de lectura de notas. El motor utiliza los últimos
-cinco enemigos resueltos, incluyendo las llegadas, y considera supervivencia,
-precisión y fracción del viaje consumida. Un ajuste modifica únicamente los
-enemigos futuros; los visibles conservan su trayectoria y plazo. La progresión
-entre etapas exige partidas completas, evidencia mínima y dos resultados
-altos del mismo objetivo; la mezcla requiere evidencia de cada clave por
-separado. Las reglas y los valores de tiempo son experimentales.
+\texttt{DefenderSession} evalúa la marca temporal original de la pulsación frente
+al plazo de llegada del objetivo, independientemente del instante en que se
+procesa o anima. Los eventos permiten corregir una llegada cuando la entrada
+ocurrió antes; esa corrección puede deshacer el cierre por la tercera vida.
+Por ello, el resumen inicial se guarda como provisional, sin conceder progreso.
+Al cerrar su entrada mediante navegación se sella una revisión del mismo
+intento y se confirma su avance. Abandonar después de una corrección conserva
+la interrupción correspondiente.
 
-El tratamiento de entrada distingue la hora original de pulsación del momento
-en que la interfaz la entrega. Una corrección tardía de la tercera llegada
-puede devolver la partida al estado activo. Para coordinar este comportamiento
-con la persistencia se decidió guardar el resumen inicialmente como provisional,
-sin otorgar progreso. La navegación que cierra el resumen sella la entrada y
-confirma una nueva revisión del mismo intento, junto con su avance. Si antes
-de ese cierre se corrige la llegada y luego se abandona, se conserva una
-interrupción. No se introduce una compensación temporal arbitraria para
-decidir la validez de la respuesta.
+El DDA observa los últimos cinco objetivos resueltos, incluidas las llegadas,
+y combina supervivencia, precisión y fracción del viaje consumida. Sus ajustes
+modifican objetivos futuros; los visibles conservan condiciones asignadas.
+La progresión exige partida completa y evidencia pertinente al contenido,
+separada de la práctica manual.
 
-El archivo propio de Defender conserva eventos, configuración, resoluciones,
-decisiones y estados de progreso antes y después de la confirmación. Reutiliza
-la sustitución atómica y la barrera por perfil. Exportación, recuperación y
-reinicio incluyen este octavo archivo y los pendientes en memoria. Los
-escenarios sintéticos usan sesiones y almacenamiento separados del perfil.
-La guía \texttt{docs/Demostracion-defender-D3.md} documenta las decisiones
-técnicas provisionales y su verificación de host. La adaptación de interfaz
-a Music Garden está implementada, con inspección visual Android pendiente.
-\subsection{Grafía y progreso independiente de tríadas: incremento D4}
+La configuración local de 0.12.22 permite viaje mínimo de 3 s, solicitado por
+el autor tras probar el prototipo. La progresión conserva inicio en 10 s,
+paso de 1 s y cambios solo para enemigos futuros. En práctica se puede elegir
+intervalo de aparición fijo entre 1 y 6 s, en pasos de 0,5 s, o conservar la
+curva automática existente de 4 a 2,5 s según tiempo activo. Ese intervalo
+manual no se traslada a progresión. Los rangos siguen siendo experimentales.
+
+\subsection{Grafía, respuesta y sonido de acordes}
 \label{sec:implementacion-defender-d4}
-El incremento local 0.12.14 amplía Defender con tríadas mayores, menores,
-disminuidas y aumentadas, en estado fundamental y clave de sol. El modelo
-conserva la raíz escrita y las tres voces. La construcción determina primero
-las letras de tercera y quinta y luego sus alteraciones según los intervalos
-requeridos. Se excluyen las realizaciones que requieren dobles alteraciones;
-el catálogo queda acotado a dos líneas adicionales por extremo.
+El modelo conserva raíz escrita, calidad y voces con octava. La construcción
+determina letras de terceras, quintas y séptimas antes de asignar sus alteraciones.
+El catálogo excluye dobles alteraciones y filtra las disposiciones que exceden
+el rango escrito admitido. Notación, solución y sonido se derivan del mismo
+contenido.
 
-La identidad de respuesta comprende letra de raíz, alteración y calidad,
-sin octava. Dos raíces enarmónicas pueden compartir alturas MIDI y requerir
-respuestas distintas. Esta identidad también evita objetivos simultáneos
-equivalentes en registros diferentes. Notación, solución y sonido se derivan
-del mismo acorde; el acierto reproduce tres sinusoides simultáneas, promediadas
-en una pista PCM, sin muestras externas ni captura de micrófono.
+La respuesta por nombre utiliza raíz, alteración y calidad, sin octava: dos
+grafías enarmónicas pueden compartir alturas y exigir respuestas diferentes.
+Las voces del acorde se reproducen al acertar mediante síntesis simultánea
+de tres o cuatro sinusoides. La notación alterna cabezas en segundas escritas
+y dispone alteraciones en columnas. La respuesta mediante piano de RF-07
+permanece pendiente; esas reglas por nombre no sustituyen la evaluación futura
+del conjunto exacto de teclas.
 
-La sesión, el ajuste del viaje y el cierre provisional reutilizan D3.
-La progresión agrega una cadena de cuatro calidades independiente de las
-etapas de notas. Resultado y avance siguen en el archivo propio de Defender,
-con lectura compatible de registros anteriores que carecen de campos de
-acorde. La exportación conserva el avance previo de notas y agrega el
-desglose por variante. Son elecciones técnicas del incremento; los umbrales
-difusos siguen siendo experimentales. La guía
-\texttt{docs/Demostracion-defender-D4.md} registra alcance y verificaciones.
-La interfaz nativa, el audio en dispositivo y la evaluación pedagógica
-permanecen pendientes.
-\subsection{Inversiones y evidencia por objetivo: incremento D5}
+\subsection{Inversiones y progreso por contenido}
 \label{sec:implementacion-defender-d5}
-El incremento local 0.12.15 agrega cuatro calidades de séptima, inversiones
-cerradas y lectura en fa y mezcla a la variante de acordes por nombre.
-La raíz escrita se conserva como identidad conceptual y las voces guardan
-sus octavas efectivas; el bajo deja de coincidir necesariamente con la raíz.
-El modelo rota las voces elevadas una octava, sin omisiones ni duplicaciones,
-y comprueba la grafía y los límites del pentagrama antes del sorteo.
-La respuesta sigue siendo raíz y calidad. La síntesis reproduce las tres o
-cuatro alturas de la disposición mostrada.
+Las inversiones se obtienen rotando voces elevadas una octava, sin omisiones
+ni duplicaciones. La raíz conserva su identidad aunque el bajo sea otra nota.
+Se comprueban grafía y límites del pentagrama antes de sortear el objetivo,
+y la síntesis utiliza las alturas de la disposición mostrada.
 
-La progresión identifica cada combinación de calidad, inversión y contexto
-de claves. El grafo comprende 84 objetivos: las ocho fundamentales en sol
-permiten acceder a fa y primeras inversiones; las ocho fundamentales en fa
-permiten acceder a mezcla. Las inversiones requieren su antecedente en el
-mismo contexto. Una partida en mezcla exige evidencia mínima y resultado
-alto de ambas claves. Esta separación evita atribuir a una inversión o
-clave el desempeño observado únicamente en otra.
+El progreso distingue calidad, inversión y contexto de claves. La configuración
+comprende 84 objetivos derivados de ocho calidades, sus inversiones y los
+contextos sol, fa y mezcla. Una partida en mezcla requiere evidencia de ambas
+claves. Los datos anteriores de tríadas solo aportan evidencia de fundamentales
+en sol; no acreditan inversiones o claves que no se practicaron. Los mapas y
+estados de progreso se conservan en el documento de Defender, con decisiones
+y revisiones que permiten interpretar la compatibilidad de los registros.
 
-Para conservar los perfiles anteriores, el mapa de calidades de D4 se utiliza
-solo como evidencia de fundamentales en sol. Los demás contextos se almacenan
-con identificadores propios en el mismo archivo de Defender; no se agrega
-otro archivo al perfil. La lectura conserva las decisiones ya registradas.
-El pentagrama desplaza las cabezas de segundas escritas a lados opuestos de
-la plica común y dispone las alteraciones en columnas. La guía
-\texttt{docs/Demostracion-defender-D5.md} documenta el catálogo y los límites
-de estas elecciones técnicas. Los prerrequisitos siguen siendo experimentales
-y la revisión de legibilidad y audio en Android continúa pendiente.
-\section{Núcleo de intervalos vocales: imitación manual}
-El primer incremento vocal separa la evaluación de una ronda del acceso al
-micrófono y de la interfaz. La sesión recibe estimaciones de frecuencia del
-YIN existente y adquiere primero una nota ancla sostenida. Una acción explícita
-inicia la segunda nota, lo que permite representar también el unísono sin
-introducir todavía un detector de ataques.
+\section{Ajuste del afinador complementario para cuerdas pulsadas}
+La revisión local 0.12.23 responde a la observación del autor sobre Si y Mi
+agudas de guitarra criolla en los tres modos. El afinador utiliza 400 ms
+continuos dentro del margen y un perfil YIN con RMS mínimo 0,003; conserva
+los márgenes de afinación y no modifica el análisis vocal. Son parámetros
+experimentales que requieren comprobación con el instrumento real.
 
-El intervalo se obtiene mediante $1200\log_2(f_2/f_1)$ y se compara con el
-objetivo expresado en semitonos. Esta relación permite trasladar ambas notas
-de registro dentro del rango admitido; un cambio de octava en una sola nota
-conserva su error. La adquisición utiliza una ventana continua de estimaciones
-y una mediana en escala logarítmica. Como configuración experimental se eligen
-500 ms de sostenido, separación máxima de 100 ms entre estimaciones, variación
-máxima de 35 cents en la ventana y tolerancia final de 50 cents.
+Libre distingue la última confirmación de una medición vigente cuando decae
+la señal. En Oído, una comprobación nueva ya afinada puede avanzar sin exigir
+otra pulsación; un intento fallido conserva su error inicial y exige evidencia
+nueva para corregir. Los recorridos guardan la política y el análisis efectivos;
+silencio y lecturas de otra cuerda no se acumulan como estabilidad.
 
-La serie de mediciones conserva tiempos, etapas, frecuencias y desviaciones.
-Silencio o discontinuidad reinician el sostenido; interrumpir la ronda no
-produce un acierto ni un error musical. En V1 el núcleo todavía no estaba
-conectado como juego: reproducción, captura coordinada, persistencia, DDA
-Mamdani y progresión quedaban pendientes. La guía
-\texttt{docs/Intervalos-vocales-V1.md} registra el contrato y los parámetros,
-sin atribuir calibración vocal ni eficacia pedagógica a esta implementación.
+\section{Integración de datos y estados de error}
+\texttt{DemonstrationViewModel} coordina la salida de las operaciones activas
+antes de preparar la exportación JSON o el reinicio. Reúne resultados confirmados y
+pendientes identificados; la selección del destino y la escritura presentan
+sus estados de espera, cancelación o fallo. Al reiniciar, los modelos actualizan
+su estado visible después de la operación sobre el perfil.
 
-\subsection{Integración de una ronda manual: incremento V2}
-La candidata local 0.12.16 incorpora una quinta página de Juegos para acceder
-a la práctica vocal. El usuario selecciona el intervalo y escucha las dos
-notas de referencia antes de iniciar el micrófono. El modelo coordina la
-reproducción y la captura existentes; adquirir la primera nota libera el
-capturador y exige una acción explícita para medir la segunda. Esta segunda
-captura utiliza ventanas nuevas, evitando arrastrar el audio de la etapa previa.
+Las actividades reutilizan esa gestión, manteniendo las políticas particulares
+de cada registro. Las simulaciones sustituyen audio, tiempo o almacenamiento
+en los límites correspondientes y conservan procedencia diferenciada. La
+organización de documentos y sus límites de recuperación se describe en la
+sección~\ref{sec:diseno-datos}; aquí su integración permite seguir el recorrido
+desde una respuesta hasta su consulta o exportación.
 
-Las acciones y las estimaciones se procesan secuencialmente en el contexto
-del modelo. Una generación invalida callbacks de operaciones canceladas y
-la operación siguiente espera la liberación del recurso anterior. Pausar,
-cancelar o abandonar interrumpe sin otorgar un resultado musical incompleto.
-Un temporizador limita la ronda incluso durante silencio o espera entre notas.
-Solicitar permiso es una acción separada: concederlo no inicia captura automática.
+La candidata descrita integra las cuatro actividades con los límites señalados.
+Piano en Defender y selección automática de ayuda vocal siguen pendientes,
+además de las verificaciones Android y físicas identificadas por versión.
+Las guías R6, D3--D5 y V1--V6 conservan decisiones y evidencia incremental;
+sus resultados de prueba se presentan en el capítulo~\ref{cap:pruebas}.
 
-La pantalla reutiliza tema, tokens y tipografías de Music Garden y muestra
-desviación relativa en cents durante la segunda nota. En V2 el resumen se
-conservaba solo en memoria, sin persistencia, exportación, DDA ni progreso vocales.
-Los intervalos y registros se ofrecen como selección manual experimental,
-sin representar un currículum validado. La guía
-\texttt{docs/Intervalos-vocales-V2.md} identifica el flujo, la candidata y
-las verificaciones nativas pendientes por la restricción de no emular.
+\section{Variantes de presentación para revisión con el director}
+El 12 de noviembre de 2026 el autor solicitó conservar dos aplicaciones
+instalables para comparar sus presentaciones. La revisión 0.12.24 identifica
+la aplicación existente como Neuma Garden y añade Neuma Quiet Studio con
+un identificador de paquete distinto. Los perfiles permanecen independientes.
+La segunda variante adapta el catálogo y el recorrido de Rhythm Tap, incluida
+su calibración y consulta de resultados, con superficies cálidas y un resumen
+de ejecución cuyos detalles pueden desplegarse. Reutiliza los componentes de
+notación y las mismas sesiones, procesamiento de audio y reglas de adaptación.
+La implementación permite presentar ambas alternativas; no representa una
+elección definitiva de identidad ni una evaluación de usabilidad. El alcance,
+los artefactos y la recuperación de la versión previa se registran en
+\path{docs/Comparacion-Garden-Quiet-Studio-v0.12.24.md}.
 
-\subsection{Persistencia e historial vocal: incremento V3}
-La candidata 0.12.17 incorpora el resultado vocal al perfil mediante un archivo
-propio. Este registro se mantiene separado del laboratorio técnico de voz,
-de modo que una medición libre no se presenta como una ronda del juego.
-El identificador se asigna al iniciar la primera captura y permanece estable
-durante el guardado y sus reintentos. Se registran tanto rondas completas
-como interrupciones; escuchar sin comenzar a cantar no crea una ronda.
+\subsection{Continuidad de Music Garden y acabado de Instrumentos}
+El 16 de noviembre el autor informó que acordó con el director continuar con
+la estética de videojuego Music Garden y el menú del libro. Posteriormente
+confirmó un acabado por recorridos: preparación, resultados e historial sobre
+papel, con escenarios propios durante las partidas. Este acuerdo visual no
+constituye aprobación de todos los requerimientos ni de los criterios de evaluación.
 
-El cierre conserva la selección de referencia, las condiciones de análisis,
-el dispositivo y la serie derivada de estimaciones. El almacenamiento reutiliza
-la sustitución de archivo y la transacción del perfil existentes. Si falla,
-la copia pendiente sigue en memoria y bloquea una ronda nueva hasta recuperarla.
-El historial muestra resultados, detalle y mediciones por bloques; no almacena audio.
+La candidata 0.12.25 aplica ese primer recorrido a Instrumentos. Reutiliza el
+tema, los tokens y las fuentes del sistema; incorpora un invernadero vectorial
+estático, idéntico para todos los timbres y sin pistas sobre la respuesta. Los
+controles admiten crecimiento del texto y desplazamiento. La selección de nivel
+conserva un espacio fijo para la marca y distingue foco, selección y deshabilitado.
+El historial se abre filtrado por Instrumentos y retorna a la preparación o al
+resultado de origen, sin reiniciar modalidad ni nivel. Las sesiones, el audio,
+la adaptación y los formatos de datos conservan su funcionamiento.
 
-La exportación JSON agrega listas separadas de resultados vocales y pendientes.
-El ZIP de recuperación copia el archivo original sin interpretarlo e incluye
-pendientes serializados, conservando originales dañados. El reinicio incorpora
-el nuevo archivo después de drenar las operaciones. La guía
-\texttt{docs/Intervalos-vocales-V3.md} describe el esquema y los límites: no hay
-importación, checkpoint de una captura abierta ni garantía de conservar pendientes
-en memoria tras muerte del proceso. En V3, DDA y progresión seguían pendientes.
+La composición nativa es una primera versión por evaluar en teléfono. Los
+sonidos de interfaz y la respuesta táctil quedan pendientes de definición e
+incorporación; el personaje continúa pausado. El alcance y los recursos se
+registran en la especificación de acabado Music Garden y en el inventario de
+recursos, sin atribuir aprobación visual final ni validación de uso.
 
-\subsection{Adaptación y progresión vocal: incremento V4}
-La candidata 0.12.18 incorpora una partida de cinco rondas de imitación del
-mismo intervalo y dirección. El DDA modifica la tolerancia entre rondas de
-esa serie, manteniendo congelado el criterio mientras se canta. La inferencia
-Mamdani reutiliza el motor compartido y considera el error absoluto medio
-y la dispersión del sostenido final. Sus entradas normalizadas, funciones,
-reglas activadas y centroide quedan disponibles en un panel de inspección.
+\subsection{Terraza y organización del recorrido rítmico}
+Por pedido del autor de continuar, la candidata 0.12.26 extiende el acabado a
+Rhythm Tap. Una terraza vectorial estática enmarca la previa y la ejecución;
+la partitura conserva su grabado desde datos y una superficie limpia. La escena
+se omite en resultados y durante la ejecución con texto ampliado por encima del
+130\%, para priorizar el espacio de lectura. La preparación se pliega después
+de generar o terminar un ejercicio y puede volver a abrirse. Los accesos a
+historial y progreso, junto con avisos de guardado y recuperación, permanecen
+fuera de ese bloque plegado.
 
-La configuración experimental comienza en 50 cents y aplica pasos de hasta
-5, dentro de 30 a 80 cents. Dos series altas de cinco rondas elegibles otorgan
-un hito para ese intervalo con dirección; la práctica manual queda separada.
-El orden provisional de acceso comienza con unísono y octavas y continúa con
-cuartas/quintas, terceras/sextas, segundas/séptimas y tritonos. Esta organización
-no se presenta como un currículum validado. En V4 los otros andamiajes auditivos
-de la ficha todavía no estaban implementados.
+El resultado ofrece un resumen con desglose desplegable y accesos al generador
+existente y a la repetición. El pad admite crecimiento con el texto y conserva
+su receptor nativo durante resultados para procesar contactos entregados tarde.
+Calibración, historial y progreso reutilizan papel, tema y componentes; Quiet
+Studio conserva su paleta y omite la decoración Garden. El cambio se limita a
+presentación y acceso a acciones existentes, sin modificar sesiones, evaluación,
+audio, relojes ni persistencia. El escenario concreto y los recorridos nativos
+siguen pendientes de revisión en teléfono.
 
-La decisión y el resultado se guardan en una sola sustitución del archivo
-vocal. Se conserva la configuración y los snapshots de progreso antes y después;
-los reintentos no cuentan otra vez una decisión confirmada. El panel incluye
-simulaciones con almacenamiento aislado y la exportación incorpora el progreso
-confirmado.
+\subsection{Claro de canto y presentación de intervalos vocales}
+La candidata 0.12.27 incorpora una portada vocal propia y un claro de canto
+estático durante referencia y captura. El editable SVG se exporta a un recurso
+vectorial Android con colores comprobados contra los tokens; no contiene
+instrumentos, texto ni notación musical. La escena se retira en resultados y
+durante la práctica con texto ampliado por encima del 130\%. Preparación,
+captura, devolución, historial y progreso reutilizan papel y paneles compartidos.
+La ayuda para señal insuficiente permanece estable durante la captura, evitando
+que su aparición intermitente desplace los controles.
 
-La guía \texttt{docs/Intervalos-vocales-V4.md} registra las métricas,
-prerrequisitos, límites y elecciones provisionales de esta configuración.
-
-\subsection{Ancla dada: incremento V5}
-La candidata 0.12.19 incorpora el segundo andamiaje: reproducir solamente
-el ancla e indicar el intervalo por nombre. El usuario canta una única nota
-objetivo. La sesión evalúa su relación con la frecuencia reproducida, conservando
-la procedencia del ancla y sin generar mediciones vocales de una nota no cantada.
-La elección de registro se realiza antes de escuchar; un error de octava en
-la respuesta no se pliega para considerarlo equivalente.
-
-El hito de imitación habilita ancla dada para ese intervalo y dirección.
-Su tolerancia, racha y hito propios se almacenan en un mapa independiente,
-sin transferir el desempeño observado en imitación. Se reutilizan las series
-y reglas Mamdani experimentales, con confirmación atómica de resultado y decisión.
-La práctica manual permite ensayar sin otorgar avance automático.
-
-El historial y la exportación distinguen ambos andamiajes y la procedencia
-reproducida o cantada del ancla. Los perfiles anteriores mantienen sus datos
-de imitación sin acreditar respuestas del nuevo modo. El panel filtra decisiones
-y simulaciones por ayuda auditiva; las simulaciones usan memoria aislada.
-
-La guía \texttt{docs/Intervalos-vocales-V5.md} registra el flujo y sus límites.
-En V5, producción libre y una política global de selección automática de ayuda
-seguían pendientes; se mantenía la selección explícita de andamiaje.
-
-\subsection{Producción libre: incremento V6}
-La candidata 0.12.20 incorpora el tercer andamiaje: el sistema indica el intervalo
-y su dirección, sin reproducir notas. El usuario elige una nota inicial y canta
-ancla y objetivo en dos capturas explícitas. La evaluación relativa reutiliza
-la frecuencia sostenida del ancla cantada, sin exigir su afinación absoluta ni
-plegar errores de octava. La interfaz omite los controles de escucha y registro
-de referencia.
-
-El hito de ancla dada habilita producción libre para ese intervalo y dirección.
-Tolerancia, racha y evidencia propias se conservan en un tercer mapa, sin
-transferir desempeño. Las series y reglas Mamdani experimentales mantienen el
-criterio durante cada ronda; la práctica manual sigue sin conceder avance.
-
-Cada registro libre conserva cero escuchas y referencias MIDI nulas, junto a
-las mediciones derivadas de ambas capturas. Los perfiles V5 cargan con progreso
-libre vacío; sus hitos pueden habilitar acceso sin acreditar respuestas nuevas.
-Historial, panel y exportación distinguen los tres modos. La guía
-\texttt{docs/Intervalos-vocales-V6.md} documenta el contrato y sus límites.
-La selección automática global de ayuda sigue pendiente: los tres recorridos
-están implementados con elección explícita de andamiaje.
-
-\section{Estructura del código}
-\pendiente{Presentar módulos y responsabilidades; referenciar versiones concretas del repositorio.}
+La reorganización conserva Imitación, Ancla dada y Producción libre, así como
+sus referencias, capturas, ayudas, tolerancias y datos. El permiso de micrófono
+sigue separado del inicio de una captura. El contenedor compartido centraliza
+áreas seguras sin cambiar la excepción de presentación de ritmo en Quiet Studio.
+Se revisó la ilustración SVG en navegador; su composición nativa y los recorridos
+en teléfono siguen pendientes de evaluación.

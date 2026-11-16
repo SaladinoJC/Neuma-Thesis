@@ -58,7 +58,7 @@ private val gardenGames = listOf(
     GardenGame("Instrumentos", "Reconocimiento de instrumentos", "Escuchá y descubrí qué instrumento está sonando.", R.drawable.garden_instruments, "game-instruments"),
     GardenGame("Rhythm Tap", "Pulso y lectura", "Leé cuatro compases y marcá el ritmo.", R.drawable.garden_rhythm, "game-rhythm"),
     GardenGame("Defender", "Lectura musical", "Reconocé notas y acordes para proteger el árbol.", R.drawable.garden_defender, "game-defender"),
-    GardenGame("Intervalos vocales", "Escucha y voz", "Escuchá dos notas y cantá el intervalo entre ellas.", R.drawable.garden_instruments, "game-vocal-intervals"),
+    GardenGame("Intervalos vocales", "Escucha y voz", "Escuchá o elegí un ancla y cantá intervalos.", R.drawable.garden_vocal_clearing, "game-vocal-intervals"),
 )
 internal val gardenTitle = FontFamily(Font(R.font.garden_fraunces, FontWeight.SemiBold))
 internal val gardenBody = FontFamily(Font(R.font.garden_nunito_sans))
@@ -214,7 +214,7 @@ fun MusicGardenMenu(state: GardenMenuState, simon: SimonUiState, instrumentProgr
                     Text("Reducir movimiento", modifier = Modifier.weight(1f))
                     Switch(state.reduceMotion, null)
                 }
-                Text("Versión ${BuildConfig.VERSION_NAME}", fontSize = 13.sp, color = GardenTokens.TextSecondary)
+                Text("Neuma Garden · ${BuildConfig.VERSION_NAME}", fontSize = 13.sp, color = GardenTokens.TextSecondary)
             } }, confirmButton = { TextButton(onClick = { more = false }, modifier = Modifier.testTag("garden-close-more")) { Text("Cerrar") } })
     }
 }

@@ -17,9 +17,9 @@ class TunerViewModel(private val recorder: VoiceCapture = AndroidVoiceCapture(),
     private val referencePlayer: TunerReferencePlayer? = null,
     private val resultsStore: TunerResults = MemoryTunerResults(),
     private val clock: () -> Long = { System.nanoTime() / 1_000_000 }) : ViewModel() {
-    private val session = TunerSession()
-    private var guided = GuidedTunerSession()
-    private var ear = EarTunerSession()
+    private val session = TunerSession(TunerPluckedPolicy.stableMillis)
+    private var guided = GuidedTunerSession(TunerPluckedPolicy.stableMillis)
+    private var ear = EarTunerSession(TunerPluckedPolicy.stableMillis)
     private var history = TunerHistorySession(resultsStore)
     private val configuration = TunerConfigurationSession(configurationStore ?: MemoryTunerConfiguration(),
         initialConfiguration = if (configurationStore == null) TunerConfiguration() else null)
@@ -61,7 +61,7 @@ class TunerViewModel(private val recorder: VoiceCapture = AndroidVoiceCapture(),
         operation.start()
     }
     fun reload() = configure { configuration.load(); history.load() }
-    fun resetDisplay() { guided = GuidedTunerSession(); ear = EarTunerSession(); history = TunerHistorySession(resultsStore); mutableUi.value = ui.value.copy(historyOpen = false); reload() }
+    fun resetDisplay() { guided = GuidedTunerSession(TunerPluckedPolicy.stableMillis); ear = EarTunerSession(TunerPluckedPolicy.stableMillis); history = TunerHistorySession(resultsStore); mutableUi.value = ui.value.copy(historyOpen = false); reload() }
     suspend fun awaitConfigurationIdle() { referenceJob?.cancelAndJoin(); capture?.cancelAndJoin(); configurationJob?.join(); historyJob?.join() }
     fun pendingForExport() = history.state.pending.toList()
     fun filterHistory(filter: TunerHistoryFilter) { history.filter(filter); publish() }
@@ -134,7 +134,7 @@ class TunerViewModel(private val recorder: VoiceCapture = AndroidVoiceCapture(),
             val setup = requireNotNull(configuration.state.configuration)
             guided.begin(setup.snapshot(), setup.finalReview)
         } else session.start()
-        history.begin(requireNotNull(configuration.state.configuration))
+        history.begin(requireNotNull(configuration.state.configuration), TunerPluckedPolicy.stableMillis, TunerPluckedPolicy.analysis)
         publish(null)
         launchCapture()
     }
@@ -150,7 +150,7 @@ class TunerViewModel(private val recorder: VoiceCapture = AndroidVoiceCapture(),
                             if (generation == captureGeneration && clock() - latest > 250) { measure(PitchEstimate(), clock()); publish() }
                         }
                     }
-                    recorder.capture(YinConfiguration()) { estimate, _, _ ->
+                    recorder.capture(TunerPluckedPolicy.analysis) { estimate, _, _ ->
                         withContext(Dispatchers.Main.immediate) {
                             ensureActive()
                             if (generation == captureGeneration && measurement().running) {

@@ -85,10 +85,14 @@ class TunerHistorySession(private val store: TunerResults,
         current = current?.let { it.copy(requestedReferences = it.requestedReferences + TunerReferenceRequest(timbre, targetMidi)) }
     }
     fun filter(filter: TunerHistoryFilter) { state = state.copy(filter = filter) }
-    fun begin(configuration: TunerConfiguration) {
+    fun begin(configuration: TunerConfiguration, stableRequiredMillis: Long = 1000,
+        analysisConfiguration: ar.edu.unmdp.entrenamiento.voice.YinConfiguration = ar.edu.unmdp.entrenamiento.voice.YinConfiguration()) {
         current = if (!configuration.saveHistory || configuration.mode == TunerMode.FREE) null else
             TunerResult(newId(), now(), now(), configuration.snapshot(), configuration.mode,
-                configuration.referenceTimbre, configuration.finalReview, configuration.earClassification, false)
+                configuration.referenceTimbre, configuration.finalReview, configuration.earClassification, false,
+                stableRequiredMillis = stableRequiredMillis, analysisConfiguration = analysisConfiguration,
+                earCheckVersion = if (stableRequiredMillis <= 400) "ear-check-v2-plucked" else "ear-check-v1",
+                configurationVersion = if (stableRequiredMillis == TunerPluckedPolicy.stableMillis) TunerPluckedPolicy.version else "tuner-history-v1")
     }
     fun finish(guided: GuidedTunerState, ear: EarTunerState): Boolean {
         val result = current ?: return false

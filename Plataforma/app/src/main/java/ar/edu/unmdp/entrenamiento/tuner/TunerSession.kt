@@ -6,6 +6,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable enum class TunerCriterion(val margin: Double) { NORMAL(5.0), PRO(2.0) }
 @Serializable enum class TunerTracking { CHROMATIC, STRINGS }
+
+data class TunerConfirmation(val measuredMidi: Int, val frequency: Double, val cents: Double)
 data class TunerState(
     val running: Boolean = false,
     val criterion: TunerCriterion = TunerCriterion.NORMAL,
@@ -18,11 +20,15 @@ data class TunerState(
     val cents: Double? = null,
     val inTune: Boolean = false,
     val stableMillis: Long = 0,
+    val stableRequiredMillis: Long = 1000,
+    val lastConfirmation: TunerConfirmation? = null,
 )
 
-/** tuner-continuity-v1: a gap above 250 ms breaks the one-second evidence. */
-class TunerSession {
-    var state = TunerState()
+/** Continuidad con hueco máximo 250 ms. El valor de 1 s conserva el banco previo;
+ * la app inyecta los 400 ms experimentales de TunerPluckedPolicy. */
+class TunerSession(private val stableRequiredMillis: Long = 1000) {
+    init { require(stableRequiredMillis in 100..5000) }
+    var state = TunerState(stableRequiredMillis = stableRequiredMillis)
         private set
     private var since: Long? = null
     private var lastTime: Long? = null
@@ -33,7 +39,7 @@ class TunerSession {
         stop()
         setup = snapshot.copy(tuning = snapshot.tuning.copy(notesSixToFirst = snapshot.tuning.notesSixToFirst.toList()))
         strings = setup.tuning.notesSixToFirst.mapIndexed { index, midi -> (6 - index) to midi }.toMap()
-        state = TunerState(criterion = setup.criterion, tracking = setup.tracking)
+        state = TunerState(criterion = setup.criterion, tracking = setup.tracking, stableRequiredMillis = stableRequiredMillis)
     }
 
     fun start() { clear(); state = state.copy(running = true) }
@@ -49,7 +55,7 @@ class TunerSession {
     fun measure(estimate: PitchEstimate, timeMillis: Long) {
         if (!state.running) return
         val hz = estimate.frequency
-        if (hz == null || !hz.isFinite() || hz !in 55.0..1000.0) { clear(); return }
+        if (hz == null || !hz.isFinite() || hz !in 55.0..1000.0) { clear(keepConfirmation = true); return }
         val midi = requireNotNull(estimate.midi)
         val candidates = strings.entries.sortedBy { abs(requireNotNull(estimate.cents(it.value))) }
         // Absolute pitch only: no octave folding. Ambiguous/outlying notes keep chromatic reading.
@@ -66,11 +72,13 @@ class TunerSession {
         lastTime = timeMillis
         val stable = since?.let { (timeMillis - it).coerceAtLeast(0) } ?: 0
         state = state.copy(stringNumber = number, targetMidi = target, measuredMidi = midi,
-            frequency = hz, cents = cents, stableMillis = stable, inTune = stable >= 1000)
+            frequency = hz, cents = cents, stableMillis = stable, inTune = stable >= stableRequiredMillis,
+            lastConfirmation = if (stable >= stableRequiredMillis && cents != null) TunerConfirmation(midi, hz, cents) else null)
     }
-    private fun clear() {
+    private fun clear(keepConfirmation: Boolean = false) {
         since = null; lastTime = null
         state = state.copy(stringNumber = state.fixedString, targetMidi = state.fixedString?.let(strings::getValue),
-            measuredMidi = null, frequency = null, cents = null, stableMillis = 0, inTune = false)
+            measuredMidi = null, frequency = null, cents = null, stableMillis = 0, inTune = false,
+            lastConfirmation = if (keepConfirmation) state.lastConfirmation else null)
     }
 }

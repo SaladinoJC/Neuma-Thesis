@@ -45,12 +45,31 @@ internal fun DefenderModeControls(ui: DefenderUiState, model: DefenderViewModel)
             modifier = Modifier.testTag("defender-mode-progression").heightIn(min = GardenTokens.TouchMinimum))
     }
     if (!ui.progression) FlowRow(horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
-        TextButton(onClick = { model.travel(ui.travelMillis - 1000) }, enabled = ui.travelMillis > 6000,
+        TextButton(onClick = { model.travel(ui.travelMillis - 1000) }, enabled = ui.travelMillis > 3000,
             modifier = Modifier.testTag("defender-travel-down").heightIn(min = GardenTokens.TouchMinimum)) { Text("−1 s") }
         Text("Viaje ${ui.travelMillis / 1000} s", modifier = Modifier.padding(vertical = GardenTokens.SpaceMd))
         TextButton(onClick = { model.travel(ui.travelMillis + 1000) }, enabled = ui.travelMillis < 14_000,
             modifier = Modifier.testTag("defender-travel-up").heightIn(min = GardenTokens.TouchMinimum)) { Text("+1 s") }
     }
+    if (!ui.progression) {
+        Text("Intervalo de aparición (si hay espacio)", style = MaterialTheme.typography.titleSmall)
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
+            FilterChip(ui.spawnIntervalMillis == null, { model.spawnInterval(null) }, label = { Text("Automático") },
+                modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum).testTag("defender-spawn-auto"))
+            FilterChip(ui.spawnIntervalMillis != null, { model.spawnInterval(ui.spawnIntervalMillis ?: 4000) }, label = { Text("Manual") },
+                modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum).testTag("defender-spawn-manual"))
+        }
+        ui.spawnIntervalMillis?.let { interval ->
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
+                TextButton(onClick = { model.spawnInterval(interval - 500) }, enabled = interval > 1000,
+                    modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum).testTag("defender-spawn-down")) { Text("−0,5 s") }
+                Text("Cada ${String.format(java.util.Locale.forLanguageTag("es-AR"), "%.1f", interval / 1000.0)} s",
+                    modifier = Modifier.padding(vertical = GardenTokens.SpaceMd))
+                TextButton(onClick = { model.spawnInterval(interval + 500) }, enabled = interval < 6000,
+                    modifier = Modifier.heightIn(min = GardenTokens.TouchMinimum).testTag("defender-spawn-up")) { Text("+0,5 s") }
+            }
+        }
+    } else Text("Apariciones automáticas: de 4 a 2,5 s. El DDA puede acortar el viaje hasta 3 s.", color = GardenTokens.TextSecondary)
     FlowRow(horizontalArrangement = Arrangement.spacedBy(GardenTokens.SpaceSm)) {
         OutlinedButton(onClick = model::openHistory, modifier = Modifier.testTag("defender-history-open")) { Text("Historial") }
         OutlinedButton(onClick = model::openInspector, modifier = Modifier.testTag("defender-inspector-open")) { Text("Progreso y DDA") }

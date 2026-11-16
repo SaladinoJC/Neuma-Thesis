@@ -79,6 +79,27 @@ Un ejercicio completo: presentación del estímulo, respuesta del jugador y eval
 Unidad de juego con un inicio y un cierre común, que puede contener una o varias rondas según el minijuego. En reconocimiento tímbrico reúne una cantidad fijada de preguntas; en Simón termina al primer error; en Rhythm Tap es un único ejercicio generado que se ejecuta y evalúa.
 _Evitar_: usar «partida» y «ronda» como sinónimos.
 
+**Perfil local**:
+Conjunto de resultados, configuraciones y progreso conservados para la práctica en un dispositivo. No identifica una cuenta remota ni permite inferir cuántas personas lo utilizan.
+
+**Configuración de práctica**:
+Condiciones que definen una práctica: contenido, modo, ayuda y exigencia aplicable. Conserva el contexto necesario para interpretar sus respuestas y resultados.
+
+**Respuesta musical**:
+Producción o elección con la que el usuario responde a un ejercicio: canto, identificación de timbre, golpes rítmicos, nombres de notas/acordes o teclas. Es distinta de la evaluación que realiza el sistema.
+
+**Resultado de práctica**:
+Evaluación y estado de cierre de una ronda o partida según la actividad, junto con las condiciones de su realización. Una interrupción puede registrarse sin atribuirle un acierto o error musical.
+
+**Decisión de adaptación**:
+Relación entre evidencia de desempeño, inferencia, ajuste propuesto y cambio aplicado según la política de una actividad. Una propuesta puede conservar la exigencia efectiva por límites o condiciones de aplicación.
+
+**Progreso por habilidad**:
+Estado de acceso y exigencia conservado para un contenido y sus condiciones de práctica. Un avance en una actividad, dirección, ayuda o variante no acredita por sí solo las demás.
+
+**Ayuda auditiva vocal**:
+Referencia previa al canto: intervalo completo en imitación, solo ancla en ancla dada o ninguna referencia sonora en producción libre. Su selección es distinta de ajustar la tolerancia de afinación.
+
 **Escucha**:
 Una reproducción del ejemplo sonoro de una ronda de reconocimiento tímbrico.
 

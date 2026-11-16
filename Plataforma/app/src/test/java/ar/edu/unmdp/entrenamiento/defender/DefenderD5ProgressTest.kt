@@ -50,9 +50,10 @@ class DefenderD5ProgressTest {
         val route = simulateDefender(DefenderScenario.MIXED, "chords")
         fun old(element: JsonElement): JsonElement = when (element) {
             is JsonArray -> JsonArray(element.map(::old))
-            is JsonObject -> JsonObject(element.filterKeys { it !in setOf("chordContents", "chordInversion", "chordClefs", "newlyUnlockedTargets") }
-                .mapValues { (k, v) -> if (k == "version" && v is JsonPrimitive) when (v.content) {
-                    "defender-d5-v1" -> JsonPrimitive("defender-d4-v1")
+            is JsonObject -> JsonObject(element.filterKeys { it !in setOf("chordContents", "chordInversion", "chordClefs", "newlyUnlockedTargets", "spawnIntervalMillis") }
+                .mapValues { (k, v) -> if (k == "minimumTravelMillis") JsonPrimitive(6000)
+                else if (k == "version" && v is JsonPrimitive) when (v.content) {
+                    "defender-d5-v1", "defender-pressure-v2" -> JsonPrimitive("defender-d4-v1")
                     "defender-chords-v2" -> JsonPrimitive("defender-triads-v1")
                     else -> v
                 } else old(v) })

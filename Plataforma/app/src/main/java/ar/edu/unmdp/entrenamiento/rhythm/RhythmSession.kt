@@ -63,7 +63,8 @@ data class RhythmScore(val seed: Long, val selected: List<RhythmCategory>, val b
 enum class RhythmPhase { SETUP, PREVIEW, COUNT_IN, PLAYING, RESULTS }
 @Serializable enum class TapKind { PREPARATION, ON_TIME, EARLY, LATE, EXTRA, OMITTED }
 @Serializable data class RhythmTap(val timestampNanos: Long, val relativeNanos: Long, val kind: TapKind,
-    val attackIndex: Int? = null, val deltaNanos: Long? = null, val inputUptimeMillis: Long? = null)
+    val attackIndex: Int? = null, val deltaNanos: Long? = null, val inputUptimeMillis: Long? = null,
+    val uncorrectedRelativeNanos: Long? = null)
 @Serializable data class RhythmAttack(val index: Int, val occurrenceIndex: Int, val offsetNanos: Long,
     val narrowNanos: Long, val wideNanos: Long, val kind: TapKind? = null, val deltaNanos: Long? = null)
 @Serializable data class RhythmSilence(val occurrenceIndex: Int, val startNanos: Long, val endNanos: Long,
@@ -72,14 +73,22 @@ enum class RhythmPhase { SETUP, PREVIEW, COUNT_IN, PLAYING, RESULTS }
     val attacks: List<RhythmAttack>, val metronome: Boolean, val tapSound: Boolean, val repeated: Boolean,
     val origin: String = "practice", val timingVersion: String = "rhythm-timing-v1",
     val audioClockSource: String, val clockUncertaintyNanos: Long?, val inputClockOffsetNanos: Long,
-    val countInStartNanos: Long, val silences: List<RhythmSilence> = emptyList()) {
+    val countInStartNanos: Long, val silences: List<RhythmSilence> = emptyList(),
+    val calibration: RhythmCalibration? = null) {
     val omissions: Int get() = attacks.count { it.kind == TapKind.OMITTED }
     val extras: Int get() = taps.count { it.kind == TapKind.EXTRA }
 }
 data class RhythmState(val phase: RhythmPhase = RhythmPhase.SETUP, val score: RhythmScore? = null,
     val taps: List<RhythmTap> = emptyList(), val error: String? = null, val attacks: List<RhythmAttack> = emptyList(),
     val elapsedNanos: Long = 0L, val result: RhythmResult? = null, val repeated: Boolean = false,
-    val feedback: TapKind? = null, val origin: String = "practice")
+    val feedback: TapKind? = null, val origin: String = "practice", val countInStarted: Boolean = false) {
+    val countInBeat: Int? get() {
+        val current = score ?: return null
+        if (phase != RhythmPhase.COUNT_IN || !countInStarted) return null
+        return ((elapsedNanos + Beat(current.beatsPerBar).nanos(current.bpm)) / Beat(1).nanos(current.bpm) + 1)
+            .toInt().coerceIn(1, current.beatsPerBar)
+    }
+}
 
 class RhythmSession {
     var state = RhythmState()
@@ -90,6 +99,7 @@ class RhythmSession {
     private var audioClockSource = "controlled-clock"
     private var uncertainty: Long? = 0L
     private var inputOffset = 0L
+    private var calibration: RhythmCalibration? = null
     val active: Boolean get() = state.phase == RhythmPhase.COUNT_IN || state.phase == RhythmPhase.PLAYING
     val executionStartNanos: Long? get() = epoch?.plus(requireNotNull(state.score).let { Beat(it.beatsPerBar).nanos(it.bpm) })
 
@@ -134,11 +144,13 @@ class RhythmSession {
     }
     fun setup() { if (!active) { epoch = null; state = RhythmState() } }
     fun play(originNanos: Long, metronome: Boolean = true, tapSound: Boolean = true,
-        clockSource: String = "controlled-clock", uncertaintyNanos: Long? = 0L, inputClockOffsetNanos: Long = 0L) {
+        clockSource: String = "controlled-clock", uncertaintyNanos: Long? = 0L, inputClockOffsetNanos: Long = 0L,
+        calibration: RhythmCalibration? = null) {
         val score = state.score ?: return
         if (state.phase != RhythmPhase.PREVIEW) return
         epoch = originNanos; this.metronome = metronome; this.tapSound = tapSound
         audioClockSource = clockSource; uncertainty = uncertaintyNanos; inputOffset = inputClockOffsetNanos
+        this.calibration = calibration
         val raw = mutableListOf<Pair<Int, Long>>()
         var continuation = false
         score.occurrences.forEach { occurrence ->
@@ -155,7 +167,8 @@ class RhythmSession {
             RhythmAttack(index, owner, at, minOf(60_000_000L, d / 5), minOf(150_000_000L, d * 45 / 100))
         }
         state = state.copy(phase = RhythmPhase.COUNT_IN, taps = emptyList(), attacks = attacks,
-            elapsedNanos = -Beat(score.beatsPerBar).nanos(score.bpm), result = null, feedback = null, error = null)
+            elapsedNanos = -Beat(score.beatsPerBar).nanos(score.bpm), result = null, feedback = null, error = null,
+            countInStarted = false)
     }
     fun advance(nowNanos: Long) {
         if (!active) return
@@ -163,24 +176,27 @@ class RhythmSession {
         val elapsed = nowNanos - start
         val effectiveElapsed = maxOf(state.elapsedNanos, elapsed)
         val attacks = state.attacks.map { attack ->
-            if (attack.kind == null && effectiveElapsed > attack.offsetNanos + attack.wideNanos) attack.copy(kind = TapKind.OMITTED) else attack
+            if (attack.kind == null && effectiveElapsed - (calibration?.offsetNanos ?: 0L) > attack.offsetNanos + attack.wideNanos)
+                attack.copy(kind = TapKind.OMITTED) else attack
         }
         val newOmission = attacks.zip(state.attacks).any { (current, previous) -> current.kind == TapKind.OMITTED && previous.kind == null }
         state = state.copy(phase = if (effectiveElapsed < 0) RhythmPhase.COUNT_IN else RhythmPhase.PLAYING,
-            elapsedNanos = effectiveElapsed, attacks = attacks, feedback = if (newOmission) TapKind.OMITTED else state.feedback)
-        val end = endOffsetNanos()
+            elapsedNanos = effectiveElapsed, attacks = attacks, feedback = if (newOmission) TapKind.OMITTED else state.feedback,
+            countInStarted = nowNanos >= requireNotNull(epoch))
+        val end = endOffsetNanos() + maxOf(0L, calibration?.offsetNanos ?: 0L)
         if (effectiveElapsed >= end) finish(true)
     }
     fun tap(timestampNanos: Long, inputUptimeMillis: Long? = null) {
         val start = executionStartNanos ?: return
         if (!active && state.result?.completed != true) return
         if (timestampNanos < requireNotNull(epoch)) return
-        val relative = timestampNanos - start
+        val rawRelative = timestampNanos - start
+        val relative = rawRelative - (calibration?.offsetNanos ?: 0L)
         if (relative > endOffsetNanos()) return
         advance(timestampNanos)
         if (relative < 0) {
             state = state.copy(taps = state.taps + RhythmTap(timestampNanos, relative, TapKind.PREPARATION,
-                inputUptimeMillis = inputUptimeMillis), feedback = TapKind.PREPARATION)
+                inputUptimeMillis = inputUptimeMillis, uncorrectedRelativeNanos = rawRelative), feedback = TapKind.PREPARATION)
             if (state.phase == RhythmPhase.RESULTS) state = state.copy(result = result(true))
             return
         }
@@ -194,7 +210,7 @@ class RhythmSession {
             delta < 0 -> TapKind.EARLY
             else -> TapKind.LATE
         }
-        state = state.copy(taps = state.taps + RhythmTap(timestampNanos, relative, kind, match?.index, delta, inputUptimeMillis),
+        state = state.copy(taps = state.taps + RhythmTap(timestampNanos, relative, kind, match?.index, delta, inputUptimeMillis, rawRelative),
             attacks = state.attacks.map { if (it.index == match?.index) it.copy(kind = kind, deltaNanos = delta) else it }, feedback = kind)
         if (state.phase == RhythmPhase.RESULTS) state = state.copy(result = result(true))
     }
@@ -214,7 +230,8 @@ class RhythmSession {
     private fun result(completed: Boolean) = RhythmResult(requireNotNull(state.score), completed,
         state.taps.toList(), state.attacks.toList(), metronome, tapSound, state.repeated, origin = state.origin,
         audioClockSource = audioClockSource, clockUncertaintyNanos = uncertainty, inputClockOffsetNanos = inputOffset,
-        countInStartNanos = requireNotNull(epoch), silences = silenceResults(completed))
+        countInStartNanos = requireNotNull(epoch), silences = silenceResults(completed), calibration = calibration,
+        timingVersion = "rhythm-timing-v2-user-calibration")
 
     private fun silenceResults(completed: Boolean): List<RhythmSilence> {
         val score = requireNotNull(state.score)

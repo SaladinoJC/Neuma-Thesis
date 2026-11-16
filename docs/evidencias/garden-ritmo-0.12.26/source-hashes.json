@@ -1,0 +1,20 @@
+{
+  "Plataforma/app/build.gradle.kts": "3a69f519bd4f6ae37c5f2f4159839bdd087485ffbd25f608987418524d33d8af",
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/GardenInterior.kt": "8e7d22a52069045394b0120c8b4efd16267a56f737e6fb1dafa0f6872b7a397f",
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/RhythmApp.kt": "cc186d6fc17797bda73eb636fbd6edd516e273b7980bbbb829aaa6004d79852a",
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/RhythmCalibrationApp.kt": "9c99c69d2e1539c12efa396bd052da62fb63676d5755f176a3df37840f128d20",
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/RhythmHistoryApp.kt": "9059dd4ebc6bd9dabd507d1032540b06909552d4f0fc8e852412044f3d9309b2",
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/RhythmProgressApp.kt": "9fd73267f7a37db13478db5404e59c47c57a86965cbd19ba70ad3f58bc9b98de",
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/RhythmResultSummary.kt": "405c4021c178bed1db963636ecbd71254520fee5b7faeb43398e9dbb7cd2d81f",
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/RhythmTapPad.kt": "687b2a1be6324e828298407b14989d9d7243950c6f84d146e56b9fab035a608f",
+  "Plataforma/app/src/androidTest/java/ar/edu/unmdp/entrenamiento/RhythmAndroidTest.kt": "b106c15fefdd3d1e9c29cfc805f38aa367b6afe24ac185f2a84eea7aa6aa7e1d",
+  "Plataforma/app/src/androidTest/java/ar/edu/unmdp/entrenamiento/RhythmHistoryAndroidTest.kt": "67e90ec7562c6575a64da018773200044538ad54af4482f055633b78779943ea",
+  "Plataforma/app/src/androidTest/java/ar/edu/unmdp/entrenamiento/RhythmHistoryNavigationAndroidTest.kt": "a5a2c3c1ae759861b83cf8d6561fcd033c8818d1ad5af6e7906d7dadec0d3c47",
+  "Plataforma/app/src/androidTest/java/ar/edu/unmdp/entrenamiento/RhythmProgressionAndroidTest.kt": "2fede759ebaba770bd2305e514819c923e314084502a793709e8ea0ee071f2ec",
+  "Plataforma/app/src/androidTest/java/ar/edu/unmdp/entrenamiento/RhythmR2AndroidTest.kt": "f21046ee45e874ceb8e0686d9059da484140722ea76d5c4ce354b0d2fd0b0c5c",
+  "Plataforma/app/src/androidTest/java/ar/edu/unmdp/entrenamiento/RhythmR3AndroidTest.kt": "0a6cde0b4cb5cd2541c982876c52eb23575305661e580d09e0dc406c1301b9b8",
+  "Plataforma/app/src/androidTest/java/ar/edu/unmdp/entrenamiento/RhythmR4AndroidTest.kt": "6e18e14bfe67b1d2836a869cce3dacadbda7ee51fb2b6293c28e09f301e91f77",
+  "Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/RhythmGardenInterior.kt": "57d98ce0ab19ff62408083eabc3685d5573db833638af45e0623cfdcf07c5d40",
+  "Plataforma/app/src/androidTest/java/ar/edu/unmdp/entrenamiento/RhythmGardenAndroidTest.kt": "7101a8d204153f127bbf10f001d3394e91957676564251a2b3171b4fc8ca4f10",
+  "Plataforma/app/src/androidTest/java/ar/edu/unmdp/entrenamiento/RhythmPreparationNavigation.kt": "82419afb990873d2e4989bc9fffbaae7db542c4e8ecdfc7e35e74f914ac7a9ae"
+}

@@ -33,6 +33,7 @@ class RhythmHistoryNavigationAndroidTest {
         compose.onNodeWithText("Volver al menú").performScrollTo().performClick()
         compose.openMenuDestination("game-rhythm")
         compose.onNodeWithTag("rhythm-category-R20").performScrollTo().performClick()
+        compose.openRhythmPreparationIfCollapsed()
         compose.onNodeWithTag("rhythm-generate").performScrollTo().performClick()
         compose.waitUntil(10_000) { compose.onAllNodesWithTag("rhythm-play").fetchSemanticsNodes().isNotEmpty() }
         lateinit var model: RhythmViewModel

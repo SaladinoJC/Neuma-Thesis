@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.voice.VocalIntervalPersistenceTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-16T18:40:10.954Z" hostname="DESKTOP-PP49S64" time="0.165">
+  <properties/>
+  <testcase name="uncertain commit retains a pending snapshot blocks next round and retries without duplication" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalPersistenceTest" time="0.03"/>
+  <testcase name="repeated interruption saves a single frozen round and leaves the technical lab untouched" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalPersistenceTest" time="0.012"/>
+  <testcase name="corrupt or unsupported originals survive failed saving and recovery includes the pending round" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalPersistenceTest" time="0.049"/>
+  <testcase name="completed practice survives reopening with its reference and full derived measurements" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalPersistenceTest" time="0.02"/>
+  <testcase name="a history read completing after a round ends cannot erase its pending result" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalPersistenceTest" time="0.009"/>
+  <testcase name="permission denial and cancelled reference do not create phantom rounds" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalPersistenceTest" time="0.01"/>
+  <testcase name="non finite diagnostic input can be saved as a rejected frame without invalid JSON" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalPersistenceTest" time="0.016"/>
+  <testcase name="draining waits for storage before reset and stale results do not return afterwards" classname="ar.edu.unmdp.entrenamiento.voice.VocalIntervalPersistenceTest" time="0.017"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

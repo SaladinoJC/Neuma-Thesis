@@ -64,12 +64,16 @@ fun TunerApp(ui: TunerUiState, model: TunerViewModel, onHome: () -> Unit) {
                 Text(state.targetMidi?.let { "Objetivo: ${noteName(it)}" } ?: "Sin objetivo asignado")
                 Text(state.cents?.let { String.format(Locale.ROOT, "%+.1f cents", it) } ?: "Sin desviación válida")
                 Text(when {
-                    state.inTune -> "Afinado · un segundo estable"
+                    state.inTune -> "Afinado · ${state.stableRequiredMillis} ms estables"
                     state.cents == null -> "Esperando señal válida"
-                    kotlin.math.abs(state.cents) <= state.criterion.margin -> "Dentro del margen · sostené la nota"
+                    kotlin.math.abs(state.cents) <= state.criterion.margin -> "Dentro del margen · dejá sonar la cuerda"
                     state.cents < 0 -> "Grave respecto del objetivo"
                     else -> "Agudo respecto del objetivo"
                 }, modifier = Modifier.testTag("tuner-evaluation"))
+                if (configuration?.mode == TunerMode.FREE && state.frequency == null) state.lastConfirmation?.let {
+                    Text("Última confirmación: ${noteName(it.measuredMidi)} · ${String.format(Locale.ROOT, "%+.1f", it.cents)} cents. La señal decayó; volvé a pulsar para medir.",
+                        color = GardenTokens.TextSecondary, modifier = Modifier.testTag("tuner-last-confirmation"))
+                }
                 Text(state.fixedString?.let { "Cuerda $it fijada" }
                     ?: state.stringNumber?.let { "Cuerda $it detectada" } ?: "Sin cuerda asignada")
                 if (configuration?.mode != TunerMode.GUIDED) {

@@ -1,0 +1,336 @@
+{
+  "fuente": "docs/Plan_de_trabajo_y_Gantt_Saladino.xlsx",
+  "sha256_fuente": "8e445e56b7426c06182418edaa91ac7ba60b8387f98163e8548aee08350a558e",
+  "hoja": "Detalle de tareas",
+  "corte_registro": "2026-11-04",
+  "interpretacion": "Plan original; no representa ejecución, avance ni horas medidas.",
+  "tareas": [
+    {
+      "id": "P01",
+      "etapa": "Investigación",
+      "tarea": "Revisión sistemática: búsqueda y lectura inicial",
+      "inicio": "2026-08-01",
+      "fin": "2026-09-28",
+      "horas": 9,
+      "estado_original": "Realizada (estimada)",
+      "depende_de": []
+    },
+    {
+      "id": "P02",
+      "etapa": "Investigación",
+      "tarea": "Estado del arte y comparación de soluciones",
+      "inicio": "2026-08-05",
+      "fin": "2026-09-28",
+      "horas": 7,
+      "estado_original": "Realizada (estimada)",
+      "depende_de": []
+    },
+    {
+      "id": "P03",
+      "etapa": "Diseño",
+      "tarea": "Brainstorming de mecánicas y alcance",
+      "inicio": "2026-09-01",
+      "fin": "2026-09-16",
+      "horas": 5,
+      "estado_original": "Realizada (estimada)",
+      "depende_de": []
+    },
+    {
+      "id": "P04",
+      "etapa": "Diseño",
+      "tarea": "Desarrollo de fichas de minijuegos",
+      "inicio": "2026-09-11",
+      "fin": "2026-09-16",
+      "horas": 5,
+      "estado_original": "Realizada (estimada)",
+      "depende_de": [
+        "P03"
+      ]
+    },
+    {
+      "id": "P05",
+      "etapa": "Diseño",
+      "tarea": "Investigación y diseño preliminar de arquitectura",
+      "inicio": "2026-09-01",
+      "fin": "2026-09-28",
+      "horas": 4,
+      "estado_original": "Realizada (estimada)",
+      "depende_de": []
+    },
+    {
+      "id": "F01",
+      "etapa": "Investigación",
+      "tarea": "Cerrar revisión y trazabilidad de fuentes",
+      "inicio": "2026-09-29",
+      "fin": "2026-10-09",
+      "horas": 10,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "P01",
+        "P02"
+      ]
+    },
+    {
+      "id": "F02",
+      "etapa": "Planificación",
+      "tarea": "Fijar alcance, criterios de aceptación y plan de evaluación",
+      "inicio": "2026-09-29",
+      "fin": "2026-10-11",
+      "horas": 12,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F01"
+      ]
+    },
+    {
+      "id": "F03",
+      "etapa": "Arquitectura",
+      "tarea": "Comparar opciones Android y hacer pruebas de viabilidad",
+      "inicio": "2026-10-05",
+      "fin": "2026-10-25",
+      "horas": 16,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F02"
+      ]
+    },
+    {
+      "id": "F04",
+      "etapa": "Implementación",
+      "tarea": "Preparar proyecto Android y flujo de compilación",
+      "inicio": "2026-10-12",
+      "fin": "2026-10-30",
+      "horas": 14,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F03"
+      ]
+    },
+    {
+      "id": "F05",
+      "etapa": "Implementación",
+      "tarea": "Captura de audio monofónico y canal de análisis",
+      "inicio": "2026-10-26",
+      "fin": "2026-11-15",
+      "horas": 22,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F04"
+      ]
+    },
+    {
+      "id": "F06",
+      "etapa": "Implementación",
+      "tarea": "Estimación de tono con línea base DSP",
+      "inicio": "2026-11-02",
+      "fin": "2026-11-29",
+      "horas": 28,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F05"
+      ]
+    },
+    {
+      "id": "F07",
+      "etapa": "Evaluación técnica",
+      "tarea": "Medir precisión y latencia de la línea base",
+      "inicio": "2026-11-16",
+      "fin": "2026-12-13",
+      "horas": 16,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F06"
+      ]
+    },
+    {
+      "id": "F08",
+      "etapa": "Implementación",
+      "tarea": "Diseñar e implementar motor de ajuste de dificultad",
+      "inicio": "2026-11-02",
+      "fin": "2026-12-06",
+      "horas": 24,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F02"
+      ]
+    },
+    {
+      "id": "F09",
+      "etapa": "Implementación",
+      "tarea": "Construir minijuego vocal de intervalos",
+      "inicio": "2026-12-01",
+      "fin": "2027-01-10",
+      "horas": 30,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F06",
+        "F08"
+      ]
+    },
+    {
+      "id": "F10",
+      "etapa": "Implementación",
+      "tarea": "Construir segundo minijuego sencillo",
+      "inicio": "2026-12-01",
+      "fin": "2027-01-10",
+      "horas": 18,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F08"
+      ]
+    },
+    {
+      "id": "F11",
+      "etapa": "Producto",
+      "tarea": "Incorporar gamificación acotada",
+      "inicio": "2026-12-20",
+      "fin": "2027-01-15",
+      "horas": 8,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F09",
+        "F10"
+      ]
+    },
+    {
+      "id": "F12",
+      "etapa": "Implementación",
+      "tarea": "Registrar desempeño y métricas operativas",
+      "inicio": "2026-12-01",
+      "fin": "2027-01-10",
+      "horas": 14,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F08",
+        "F09"
+      ]
+    },
+    {
+      "id": "F13",
+      "etapa": "Integración",
+      "tarea": "Integrar juegos, audio, DDA y corregir defectos",
+      "inicio": "2026-12-20",
+      "fin": "2027-01-31",
+      "horas": 16,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F09",
+        "F10",
+        "F12"
+      ]
+    },
+    {
+      "id": "F14",
+      "etapa": "Evaluación con estudiantes",
+      "tarea": "Preparar protocolo, tareas e instrumentos de prueba",
+      "inicio": "2026-12-14",
+      "fin": "2027-01-20",
+      "horas": 12,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F02"
+      ]
+    },
+    {
+      "id": "F15",
+      "etapa": "Evaluación con estudiantes",
+      "tarea": "Realizar sesiones exploratorias",
+      "inicio": "2027-01-20",
+      "fin": "2027-02-07",
+      "horas": 10,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F13",
+        "F14"
+      ]
+    },
+    {
+      "id": "F16",
+      "etapa": "Evaluación con estudiantes",
+      "tarea": "Analizar observaciones y priorizar hallazgos",
+      "inicio": "2027-01-27",
+      "fin": "2027-02-15",
+      "horas": 12,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F15"
+      ]
+    },
+    {
+      "id": "F17",
+      "etapa": "Evaluación técnica",
+      "tarea": "Validar precisión, latencia y decisiones DDA",
+      "inicio": "2027-01-08",
+      "fin": "2027-02-10",
+      "horas": 16,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F07",
+        "F13"
+      ]
+    },
+    {
+      "id": "F18",
+      "etapa": "Informes",
+      "tarea": "Preparar primer informe de avance",
+      "inicio": "2026-11-20",
+      "fin": "2026-12-01",
+      "horas": 8,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F01",
+        "F02"
+      ]
+    },
+    {
+      "id": "F19",
+      "etapa": "Informes",
+      "tarea": "Preparar segundo informe de avance",
+      "inicio": "2027-01-18",
+      "fin": "2027-02-01",
+      "horas": 7,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F13"
+      ]
+    },
+    {
+      "id": "F20",
+      "etapa": "Redacción",
+      "tarea": "Redactar resultados, discusión y memoria final",
+      "inicio": "2026-12-01",
+      "fin": "2027-02-20",
+      "horas": 32,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F01",
+        "F07",
+        "F16",
+        "F17"
+      ]
+    },
+    {
+      "id": "F21",
+      "etapa": "Entrega",
+      "tarea": "Documentar y publicar versión gratuita de código abierto",
+      "inicio": "2027-02-01",
+      "fin": "2027-02-20",
+      "horas": 10,
+      "estado_original": "Prevista",
+      "depende_de": [
+        "F13",
+        "F17"
+      ]
+    },
+    {
+      "id": "R01",
+      "etapa": "Reserva",
+      "tarea": "Margen para fallos, repetición de mediciones y demoras",
+      "inicio": "2026-10-01",
+      "fin": "2027-02-20",
+      "horas": 35,
+      "estado_original": "Reserva",
+      "depende_de": []
+    }
+  ]
+}

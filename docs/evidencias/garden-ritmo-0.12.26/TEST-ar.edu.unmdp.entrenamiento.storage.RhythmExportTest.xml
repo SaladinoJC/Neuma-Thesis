@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.storage.RhythmExportTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-16T17:29:53.602Z" hostname="DESKTOP-PP49S64" time="0.196">
+  <properties/>
+  <testcase name="pendientesSeExportanSeparadosYLosDocumentosAnterioresSiguenLeyendose" classname="ar.edu.unmdp.entrenamiento.storage.RhythmExportTest" time="0.048"/>
+  <testcase name="recuperacionConservaBytesDeRitmoIlegibleYReinicioInterrumpidoLoElimina" classname="ar.edu.unmdp.entrenamiento.storage.RhythmExportTest" time="0.023"/>
+  <testcase name="exportarYReiniciarIncluyeRitmoSinPerderConfiguracionNiSeguimientoAnterior" classname="ar.edu.unmdp.entrenamiento.storage.RhythmExportTest" time="0.125"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

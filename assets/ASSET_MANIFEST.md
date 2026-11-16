@@ -1,5 +1,68 @@
 # Inventario inicial de assets — Music Garden
 
+## Acabado de intervalos vocales — 0.12.27 (16/11/2026)
+
+| ID | Editable / formato / dimensiones | Propósito y estados | Origen / condiciones |
+| --- | --- | --- | --- |
+| MG-VOCAL-CLEARING | `assets/source/interiors/vocal-clearing.svg`, SVG transparente 768 × 512, 26 paths; exportación `Plataforma/app/src/main/res/drawable/garden_vocal_clearing.xml`, VectorDrawable 192 × 128 dp / viewport 768 × 512. Regenerar con `python tools/prepare_vocal_clearing.py`. | Portada propia en el libro y preparación vocal (120 dp); claro de canto durante referencia/captura (80 dp), omitido con texto >130 % durante práctica y en resultados. Anfiteatro vacío, plantas y árboles; sin personas, instrumentos, pistas, notas ni partituras. Estático. | Dibujo vectorial original de esta sesión, editable SVG; roles y colores comprobados contra design-tokens.json. Sin arte externo, fuentes ni licencia adicional. Primera composición para probar, sin aprobación final ni revisión nativa atribuida. |
+
+Sustituye la reutilización provisional de MG3-N-001 en la portada vocal; no
+modifica el recurso de Instrumentos ni el del afinador. Libro y contexto vocal
+usan la misma exportación. `GardenPageScaffold` reutiliza MG-INTERIOR-PAPER y
+centraliza las áreas seguras; RhythmPageScaffold delega sin cambiar la excepción
+Quiet Studio. Preparación/resultados/detalle/progreso vocal usan paneles existentes.
+La previa del SVG se revisó en navegador; no es una captura Android ni acredita
+composición o accesibilidad en teléfono. Sin animación, sonidos o háptica nuevos.
+
+## Acabado de Rhythm Tap — 0.12.26 (16/11/2026)
+
+| ID | Editable / formato / dimensiones | Propósito y estados | Origen / condiciones |
+| --- | --- | --- | --- |
+| MG-RHYTHM-TERRACE | `Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/RhythmGardenInterior.kt`, `RhythmGardenTerrace`; Canvas vectorial de ancho útil adaptable × 80 dp de alto. | Terraza, baranda, plantas y atril vacío durante previa/conteo/ejecución Garden. Escena estática; se omite durante ejecución con texto >130 % para priorizar partitura. Ausente en resultados y en Quiet Studio. | Código original, Kotlin editable; colores de GardenTokens/design-tokens.json. Sin arte externo, bitmaps, dependencias ni licencia adicional. Composición elegida para probar; presentación nativa pendiente, sin aprobación de arte final atribuida. |
+
+`RhythmPageScaffold` reutiliza MG-INTERIOR-PAPER para preparación, calibración,
+historial, progreso y resultados Garden; Quiet conserva su superficie lisa.
+Atril decorativo sin notación: VexFlow/Bravura siguen representando la partitura
+desde datos estructurados. No se añaden sonidos ni háptica; metrónomo y audio
+de taps existentes se conservan. El pad mantiene receptor/timestamps y crece
+con el texto a partir de su altura mínima. Capturas y accesibilidad nativas
+pendientes; sin abrir emulador.
+
+## Acabado de Instrumentos — 0.12.25 (16/11/2026)
+
+| ID | Editable / formato / dimensiones | Propósito y estados | Origen / condiciones |
+| --- | --- | --- | --- |
+| MG-INTERIOR-PAPER | `Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/ui/GardenInterior.kt`, `GardenPageDecoration`; Canvas vectorial adaptable al viewport, líneas de encuadernación a 8/12 dp del borde. | Papel y margen lateral, estáticos, detrás del contenido; sin información musical ni interacción. | Código original de esta sesión, editable Kotlin; colores de `GardenTokens`/`design-tokens.json`; sin arte externo ni licencia de terceros incorporada. |
+| MG-INSTRUMENT-GREENHOUSE | Mismo editable, `GardenGreenhouse`/`greenhousePlant`; Canvas vectorial, ancho útil adaptable y alto de uso 120 dp, geometría normalizada. | Invernadero con vidrio, marco, plantas y roseta central durante escucha, respuesta y feedback; idéntico para todos los instrumentos. Estático, compatible con reducción de movimiento; no representa notas ni revela respuestas. | Código original de esta sesión, editable Kotlin; tokens existentes. Primera composición nativa pendiente de revisión en teléfono; no se presenta como ilustración final aprobada. |
+| MG-LEVEL-SELECTION | Mismo editable, `GardenLevelChoice`; marca vectorial en caja fija de 24 × 24 dp y anillo de foco de 2 dp con separación de 4 dp. | Selección, foco y deshabilitado de nivel; estado semántico independiente del color, sin cambio del título al seleccionar. | Código original; no fuente de iconos ni biblioteca nueva. La marca es de interfaz, no notación musical. |
+
+Se reutiliza MG3-N-001 en preparación, sin modificar su imagen ni mostrarla como
+pista durante la partida. Fraunces/Nunito Sans conservan su procedencia. No se
+añaden bitmaps, fuentes, audio ni háptica. Estados/dimensiones/texto 200 %/TalkBack
+nativos siguen pendientes por la indicación de no abrir emulador.
+
+## Comparación Quiet Studio — 0.12.24 (12/11/2026)
+
+Garden conserva todos sus recursos. Quiet Studio usa Fraunces/Nunito Sans y
+VexFlow/Bravura ya inventariados, sin imágenes, fuentes ni dependencias nuevas.
+Paleta editable `design-tokens.json:quietStudio`; generación Compose con
+`tools/prepare_quiet_tokens.py`. Autorización y límites en
+[comparación 0.12.24](../docs/Comparacion-Garden-Quiet-Studio-v0.12.24.md).
+
+| ID | Ruta / formato / dimensiones | Propósito y estados | Origen y editable |
+| --- | --- | --- | --- |
+| QUIET-LAUNCHER | `Plataforma/app/src/quietStudio/res/drawable/neuma_launcher_foreground.xml`, VectorDrawable 108 × 108 dp, viewport 1024 × 1024; `mipmap-anydpi-v26/ic_launcher.xml` y `mipmap-anydpi-v33/ic_launcher.xml`, adaptive XML. | Diferenciar launcher Quiet: símbolo bosque sobre marfil; Garden conserva bosque. Monocromo Android reutilizado; colores temáticos pueden igualarse. | Derivado del mismo símbolo Clivis temporal de `docs/logo/`, solo inversión a colores de marca existentes. Maestro SVG y procedencia conservados allí, sin arte externo nuevo. |
+| QUIET-CATALOG-MOTIFS | `ui/QuietStudioMenu.kt`, función `QuietMotif`, Canvas escalable 42 × 42 dp. | Cinco motivos geométricos estáticos en accesos del catálogo; decorativos, sin sustituir notación ni contener información exclusiva. | Dibujo original en código, editable Kotlin; sin recursos externos ni rasterizados. Estados de interacción del Surface Material existente. |
+
+Revisión nativa de ambos iconos, catálogo, texto ampliado y recorrido rítmico
+pendiente en teléfono; no se produjo captura nativa ni se ejecutó emulador.
+
+## Tap de ritmo precargado — 0.12.22 (12/11/2026)
+
+| ID | Ruta / formato | Propósito y estados | Origen y editable |
+| --- | --- | --- | --- |
+| RHYTHM-TAP-V1 | Caché de app `rhythm-tap-v1-<frecuencia>.wav`, generado antes de reproducir. WAV PCM16 mono, 35 ms, frecuencia de salida nativa (48 kHz de reserva); dimensiones visuales no aplican. | Feedback opcional de contactos, precargado en SoundPool; no suena en calibración. Pool liberado en salida/pausa. Archivo regenerable, fuera del perfil/exportación. | Síntesis original de seno 550 Hz con envolvente lineal y amplitud 0,18. Editable: `Plataforma/app/src/main/java/ar/edu/unmdp/entrenamiento/rhythm/RhythmAudio.kt`, funciones `click`/`wav`. Sin muestras externas ni licencia de terceros; mismo timbre previo, nueva preparación. Validación acústica pendiente. |
+
 **Intervalos vocales V6 (2026-10-30):** Producción libre no reproduce referencia
 ni agrega archivos de audio. Selección, ancla propia, objetivo, historial y panel
 son Compose con tema/tokens/fuentes existentes. Portada compartida provisional

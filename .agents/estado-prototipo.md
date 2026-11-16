@@ -1,6 +1,745 @@
 # Estado del prototipo
 
-Última actualización: 2026-10-30.
+Última actualización: 2026-11-16.
+
+## Cierre solicitado y respaldo GitHub — 2026-11-16
+
+El autor pide parar por hoy y respaldar todo el trabajo en GitHub ante posible
+pérdida de la PC. Informa **8 horas** personales; H0014 pasa a informado sin
+duplicar jornada. No continuar desarrollo de Defender ni otras funcionalidades.
+Se prepara respaldo integral del trabajo actual, ramas locales y materiales
+ignorados relevantes, sin cachés ni credenciales; guía de recuperación en
+`docs/Respaldo-GitHub-2026-11-16.md`. Repositorio privado, rama vigente
+`trabajo/integracion-v0.12.15`; candidata 0.12.27/código 42 e informe 92 páginas.
+Verificación de transferencia y referencias finales se registran al completarla.
+
+## Tercer acabado Music Garden: intervalos vocales — 2026-11-16
+
+El autor pide «Dale, ponete con eso», autorizando #34 sin aprobación visual previa
+inferida. **0.12.27/código 42**: portada propia del claro de canto SVG/VectorDrawable
+en libro y preparación; escena estática en referencia/captura, retirada en
+resultados y durante práctica con texto >130 %. Papel/paneles en captura,
+devolución, historial y progreso. Ayuda de señal estable durante captura.
+GardenPageScaffold centraliza áreas seguras; ritmo delega conservando Quiet sin
+decoración. Catálogo Quiet sin rediseño; pantallas vocales compartidas actualizadas.
+Tres modos, permisos explícitos, captura, referencias, YIN, tolerancias, DDA y
+datos sin cambios. Sin animación ni sonidos/háptica nuevos; Personaje pausado.
+
+SVG original editable, 26 paths, colores contra tokens y exportación idempotente
+comprobados. Previa del recurso revisada en navegador, no una captura Android.
+308 JVM ejecutadas sin fallos; lint 0 errores/17 avisos Garden y 19 Quiet;
+APK Garden/Quiet/AndroidTest compilados. Paquetes/versión/firmas compatibles con
+0.12.26 comprobados. Revisión Standards/Spec sin hallazgos pendientes después de
+estabilizar la ayuda de señal. VectorRaster resuelto ajustando tamaño intrínseco
+sin alterar viewport ni tamaño de uso. No se ejecutó Android ni se abrió emulador.
+
+Guía `docs/Acabado-Intervalos-vocales-v0.12.27.md`, evidencia duradera
+`docs/evidencias/garden-vocal-0.12.27/`, previa del asset identificada como tal.
+APK Garden `Plataforma/build/apk-archives/neuma-garden-v0.12.27-vocal.apk`.
+Inventario, capítulos 10/11 y seguimiento actualizados; PDF 92 páginas sin
+referencias indefinidas ni desbordes horizontales. #32/#33/#34 siguen abiertos
+por revisión nativa pendiente. Próximo: Defender #35; otros tres incrementos
+pendientes. Dedicación personal de la jornada pendiente H0014.
+
+## Segundo acabado Music Garden: Rhythm Tap — 2026-11-16
+
+El autor pide «Seguí con el siguiente», autorizando #33 sin inferir aprobación
+visual ni ejecución nativa de Instrumentos. Candidata **0.12.26/código 41**:
+terraza vectorial estática en previa/conteo/ejecución Garden, partitura limpia,
+preparación plegable, resumen con desglose, Nuevo ejercicio y accesos independientes
+a historial/progreso. Papel reutilizado en calibración/historial/progreso/resultados.
+Avisos de guardado/error fuera del bloque plegado; pad crece con texto y conserva
+listener nativo durante RESULTS para contactos tardíos. Quiet conserva paleta y
+omite escena/encuadernación; comparte mejoras de organización y pad.
+
+No se modifican sesión, generador, audio, relojes, evaluación, DDA ni persistencia.
+Terraza de 80 dp omitida durante ejecución con texto >130 % y en resultados;
+composición concreta provisional del agente, pendiente de evaluación en teléfono.
+308 JVM ejecutadas sin fallos, lint 0 errores (17/19 avisos), dos APK y AndroidTest
+compilados; versión/paquetes/firmas compatibles con 0.12.25 comprobados.
+Revisión Standards y Spec sin hallazgos abiertos; corregido recorrido de test R2
+por preparación plegable, luego recompilado AndroidTest. Nueva prueba de navegación
+con texto 200 %/320 dp solo compilada, no ejecutada. Sin emulador ni Android real.
+
+Guía `docs/Acabado-Rhythm-Tap-v0.12.26.md`, evidencia duradera
+`docs/evidencias/garden-ritmo-0.12.26/`; APK Garden
+`Plataforma/build/apk-archives/neuma-garden-v0.12.26-ritmo.apk`.
+Capítulos 10/11, fuentes, inventario y seguimiento actualizados. #32/#33 siguen
+abiertos por revisión nativa pendiente. Próximo incremento: intervalos vocales #34;
+otros cuatro pendientes. Personaje pausado, sonidos/háptica pendientes.
+Horas personales de la jornada pendientes en H0014, sin duplicar registro.
+
+## Primer acabado Music Garden: Instrumentos — 2026-11-16
+
+El autor confirma síntesis y división con «Ok, hagamos eso». Especificación #31,
+seis tareas #32–#37 y dependencias/subissues nativos publicados en GitHub mediante
+to-spec/to-tickets. Incremento #32 implementado localmente como 0.12.25/código 40:
+papel/fuentes/tokens en preparación y resultados, invernadero vectorial estático
+durante juego, selección con marca fija/foco/deshabilitado, historial filtrado
+con retorno a Instrumentos e inspector secundario. Historial compartido y roles
+tipográficos adaptados; Quiet Studio hereda esas superficies compartidas.
+Reglas, audio, DDA y datos sin cambios. Escenario concreto provisional del agente.
+
+Verificación: 308 JVM aprobadas; lint 0 errores/17 avisos Garden y 19 Quiet;
+APK Garden, Quiet y AndroidTest compilados, paquetes/versión/firmas compatibles
+con 0.12.24 comprobados. Revisión Standards/Spec sin hallazgos pendientes después
+de corregir selección/foco/deshabilitado e inventario. No se ejecutó Android ni
+se abrió emulador; revisión visual nativa y accesibilidad siguen pendientes.
+Guía `docs/Acabado-Instrumentos-v0.12.25.md`, evidencia duradera
+`docs/evidencias/garden-instrumentos-0.12.25/`; APK Garden archivado como
+`neuma-garden-v0.12.25-instrumentos.apk`. Capítulos 10/11 actualizados.
+
+#32 permanece abierto por revisión nativa pendiente; restantes cinco incrementos
+sin implementar. Próximo paso: revisar el primer recorrido en teléfono y ajustar
+composición si corresponde antes de extender la referencia a Rhythm Tap #33.
+Personaje pausado; sonidos de interfaz y respuesta táctil pendientes de definir
+e incorporar. Horas personales de la jornada pendientes en H0014.
+
+## Acabado transversal: entrevista en curso — 2026-11-16
+
+El autor invoca ask-matt y confirma Q1–Q3: páginas del libro en preparación,
+resultados e historial, escenarios propios en juego y autorización para
+reorganizar interiores conservando reglas/audio/DDA/datos. Sonidos de interfaz
+y respuesta táctil quedan explícitamente pendientes de definición e incorporación.
+Registro en `docs/Acabado-Music-Garden.md` y dirección artística. Se aplica el
+flujo grill-with-docs; la síntesis posterior quedó confirmada y se publicó la
+especificación, como consta en la entrada de cierre de este incremento.
+Auditoría de lectura delegada según grilling: estilos heredados en Instrumentos,
+Simón e historial; componentes Garden reutilizables y arte provisional identificado.
+No hay cambios de app ni nuevas pruebas. Personaje pausado y sin emulador.
+Q4–Q6 respondidas: invernadero Instrumentos aceptado; terraza Rhythm Tap y claro
+de canto vocal elegidos para probar, sin aprobación atribuida del acabado concreto.
+La nota de acabado incorpora síntesis, orden incremental y comprobaciones
+propuestas. Próximo paso: confirmar síntesis y división; luego especificación y
+tareas antes de implementar. Se conservan árbol/polillas, claro/piano y Simón
+horizontal. Dedicación pendiente H0014.
+
+## Acuerdo visual tras reunión y próximos caminos — 2026-11-16
+
+El autor informa que tuvo la reunión, que el director valoró favorablemente el
+trabajo y que acordaron mantener la estética de videojuego Music Garden con
+menú del libro. Fecha exacta de reunión no reiterada; se registra la fecha de
+comunicación. Quiet Studio queda como antecedente comparativo, sin borrar
+variantes ni perfiles. No se infiere aprobación del protocolo, del alcance
+funcional completo ni de criterios de evaluación.
+
+Se revisa el estado documental para recomendar consolidación del recorrido de
+juego, acabado visual transversal, repruebas físicas de audio/ritmo y evaluación
+con usuarios. Son prioridades propuestas por el agente, no nuevas decisiones
+confirmadas. Personaje continúa pausado; piano de Defender y ayuda vocal
+automática siguen pendientes según el alcance propuesto del 04/11.
+
+Sin cambios de aplicación, assets, compilaciones ni pruebas nuevas. Se actualizan
+AGENTS y dirección artística con el acuerdo; horas personales pendientes H0014.
+Próximo paso recomendado: auditar un recorrido Garden completo (libro → actividad
+→ resultado → progreso → libro), inventariar problemas y cerrar una primera
+actividad con acabado consistente antes de extenderlo a las demás.
+
+## Preparación de reunión con el director — 2026-11-13
+
+Por pedido del autor se prepara `docs/Guia-reunion-director-2026-11-13.md`:
+mapa del repositorio, arquitectura, audio/YIN, DDA Mamdani, actividades,
+persistencia, comparación visual y preguntas probables. Contrastada con código
+local 0.12.24 y registros; distingue alcance propuesto, pendientes y evidencia.
+Sin cambios de aplicación, pruebas nuevas ni acuerdos del director atribuidos.
+Las 308 JVM son la ejecución documentada del 12/11, no una nueva ejecución.
+Tiempo personal de preparación pendiente en H0013. Próximo paso: revisar la guía,
+comprobar demo física y registrar acuerdos reales después de la reunión.
+
+## Comparación Garden / Quiet Studio — 2026-11-12
+
+El usuario autoriza dos apps instalables para mostrar al director el 13/11 y
+acepta menú + Rhythm Tap. **0.12.24/código 39**: Garden mantiene paquete original
+y perfil; Quiet Studio usa `.quietstudio`, icono claro y datos independientes.
+Catálogo vertical y recorrido rítmico (incluidos calibración, historial y progreso)
+adaptados al acuerdo del 31/10; demás juegos conservan presentación actual.
+No se decide estética definitiva ni se retoma Personaje. Sin emulador/subagentes.
+Verificación final: 308 JVM aprobadas, lint 0 errores (Garden 17 avisos; Quiet 19),
+APK Garden/Quiet y pruebas Android compilados; paquetes/nombres y firma compatible
+comprobados. Revisión visual nativa pendiente. Informe LaTeX compilado correctamente.
+Reglas, audio, DDA y almacenamiento iguales a 0.12.23; no se transfiere validación
+física previa. Paleta/acabado concretos propuestos por el agente.
+Entrega, respaldo completo previo, compilación y lista física en
+`docs/Comparacion-Garden-Quiet-Studio-v0.12.24.md`. APK archivados
+`neuma-garden-v0.12.24.apk` y `neuma-quiet-studio-v0.12.24.apk`.
+Próximo paso: instalar ambos sin desinstalar Garden, recorrer catálogo → ritmo
+→ resultado y preparar demostración. Horas personales de la jornada en H0012
+siguen pendientes; la duración de herramientas no las sustituye.
+
+## Afinador: pulsaciones breves — 2026-11-12
+
+El autor precisa fallo percibido en Libre/Guiado/Oído, cuerdas 2 Si y 1 Mi de
+guitarra criolla: reconoce nota pero decae antes de fijarla. Versión de este
+bloque no informada tras ofrecer candidatas nuevas. Reproducción controlada:
+exigencia de 1 s y umbral RMS cortan evidencia breve; no se reproduce detención
+de micrófono por silencio. **0.12.23/código 38** aplica provisionalmente 400 ms
+y RMS 0,003 solo en afinador, sin cambiar ±5/±2 cents ni análisis vocal.
+Libre identifica última confirmación cuando decae; Oído avanza si comprobación
+nueva ya está afinada, conserva error inicial si falla y exige señal nueva
+para corrección. Historial guarda parámetros efectivos, sin cambiar anteriores.
+
+**308 JVM aprobadas**, lint **0 errores/17 avisos**, ambos APK compilados y firma
+compatible. No Android/emulador ni mediciones físicas. Evidencia y límites:
+`docs/Verificacion-afinador-v0.12.23.md`. APK
+`Plataforma/build/apk-archives/neuma-v0.12.23-afinador-cuerdas-pulsadas.apk`.
+Incluye mejoras previas; próximo paso reprueba de Si/Mi agudas en tres modos,
+ruido/silencio y demás cuerdas, además de pendientes R0/R1/D1. No emular,
+sin subagentes, Personaje pausado. Horas personales siguen pendientes en H0012.
+
+## Rhythm Tap y presión de Defender — 2026-11-12
+
+El autor informa problemas de conteo, golpes rápidos y sonido de taps en su
+pasada iniciada con 0.12.20, pide calibración y solicita viaje mínimo de 3 s
+y control de apariciones para Defender (que informa sin errores observados).
+Entrega local **0.12.22/código 37**, con la mejora previa de Instrumentos.
+Conteo al BPM real, preparación silenciosa, pad con contactos nativos y taps
+precargados en SoundPool. Calibración personal explícita de 4+12 pulsos a 80 BPM,
+compensación fija y muestras por resultado; no mide latencia física aislada.
+Defender baja mínimo manual/DDA a 3 s y ofrece intervalo fijo en práctica
+de 1–6 s en pasos de 0,5 s; progresión conserva curva automática de aparición.
+Rangos de calibración/aparición son elecciones experimentales del agente.
+
+**302 JVM aprobadas**, lint **0 errores/17 avisos**, ambos APK compilados y firma
+compatible comprobada. No se ejecutó Android ni emulador. Informe 10/11 y guía
+actualizados con trazabilidad; observaciones físicas de 0.12.20 no se transfieren
+a esta candidata. Evidencia en `docs/Verificacion-ritmo-defender-v0.12.22.md`;
+APK `Plataforma/build/apk-archives/neuma-v0.12.22-ritmo-calibracion-defender.apk`.
+Próximo paso: instalar encima y seguir R0/R1/D1, comparar conteo, contactos,
+clasificación y eco por separado; continuar los bloques pendientes de la guía.
+Conservar no emular, sin subagentes y Personaje pausado. Horas en H0012 pendientes.
+
+## Instrumentos: respuesta durante audio — 2026-11-12
+
+Tras informar que Instrumentos funciona correctamente en 0.12.20, el usuario
+solicita responder sin esperar el final de la melodía y continúa con Rhythm Tap.
+0.12.21/código 36 habilita respuesta al inicio real de audio, cancela reproducción
+al elegir y conserva conteo de escuchas y respuesta única. Detalles y validación
+en `docs/Verificacion-instrumentos-v0.12.21.md`. La prueba física del cambio está
+pendiente. No emular ni usar subagentes; Personaje sigue pausado. Próximo paso:
+recibir observaciones de Rhythm Tap y comprobar la mejora en el teléfono cuando
+el autor actualice. Horas de la jornada pendientes en H0012.
+
+## Pruebas físicas informadas — 2026-11-12
+
+El autor instaló la candidata 0.12.20 para seguir la guía S22 Ultra antes de la
+reunión del viernes 13/11. Informa Simón sin problemas en funcionamiento, DDA,
+resultados, giro e interrupción/cierre; no equivale a aprobar todos los casos
+de la guía. Continúa con reconocimiento de instrumentos. Condiciones y límites
+en `docs/Pruebas-manuales-S22-Ultra-2026-11-12.md`. Sin cambios de aplicación.
+Horas personales de esta jornada pendientes en H0012.
+
+## Cierre de jornada — 2026-11-04
+
+El autor informa **4 horas** trabajadas hoy y pide cerrar. H0006 se completa
+como `informado`, sustituyendo el pendiente. Registro total **101,57 h**:
+62,57 estimadas y 39 informadas, sin jornadas pendientes. CSV es la fuente vigente;
+las menciones anteriores a H0006 pendiente son antecedentes anteriores al cierre.
+
+Informe actual: **87 páginas**, compilado y revisado; capítulos 4–10 trabajados
+durante la jornada. Implementación consolidada en páginas físicas 62–68.
+Retomar con **capítulo 11: Pruebas y validación**, organizando evidencia existente
+y evaluaciones pendientes, sin atribuir mediciones físicas o de uso inexistentes.
+La comparación Gantt/ejecución sigue diferida a febrero. No continuar trabajo
+en esta jornada tras el cierre solicitado.
+
+## Escritura: Implementación consolidada — 2026-11-04
+
+El autor autoriza reorganizar el capítulo 10 por funcionamiento. Se describen
+código/versión, audio, intervalos, instrumentos, ritmo, Defender y datos desde
+0.12.20, conservando 12 etiquetas previas. Se integra V1–V6 y se condensan
+R6/D3–D5 sin borrar su atribución en guías/pruebas. Instrumentos ahora tiene
+descripción propia; ventanas/YIN conservan contenido y citas verificadas.
+
+Fuentes y límites en `Informe/fuentes-implementacion.md`; ajuste mínimo en
+capítulo 11 para atribución de pruebas D4. Piano y selección automática de ayuda
+siguen pendientes. Sin cambios de app, nuevas pruebas de producto, emulador,
+mediciones o publicación. Horas personales del 04/11 siguen pendientes en H0006.
+Próximo bloque posible: consolidar Pruebas y validación con evidencia disponible.
+
+## Escritura: diseño reconstruido desde código — 2026-11-04
+
+Capítulo 9 completa arquitectura del único módulo :app, modelo conceptual,
+persistencia y patrones, con diagramas PDF/SVG. Conserva el esquema difuso y
+criterios previos. El glosario CONTEXT incorpora siete términos precisados desde
+el código, sin nuevas reglas funcionales ni decisiones de arquitectura.
+Los diagramas representan responsabilidades/conceptos, no microservicios,
+tablas o clases universales. RF-07 piano y RF-16 ayuda automática siguen pendientes.
+
+Se documentan guardado coordinado por perfil, identidad/revisiones, pendientes
+en memoria, exportación/ZIP y reinicio, distinguiendo límites de durabilidad.
+Fuentes y trazabilidad en `Informe/fuentes-diseno.md`; verificación en seguimiento.
+Sin cambios de app, pruebas de producto, emulador o mediciones. Próximo bloque:
+consolidar Implementación a partir del sistema existente, sin duplicar diseño.
+Horas de la jornada siguen pendientes en H0006.
+
+## Escritura: requerimientos y alcance de entrega propuesto — 2026-11-04
+
+El autor confirma cuatro actividades como alcance propuesto sujeto al director:
+intervalos vocales, instrumentos, Rhythm Tap y Defender. Confirma también piano
+en Defender y selección automática de ayuda vocal como compromisos propuestos.
+Ambas funciones siguen pendientes (D6/D7 y gobernanza global de ayudas); esta
+sesión redacta el informe, sin autorizar por sí sola una implementación inmediata.
+Simón sigue en revisión; afinador complementario. Metas semanales, cosméticos,
+dictado y escucha de conjuntos conservan su condición de ampliaciones propuestas.
+
+Capítulos 1/8 coherentes con esa distinción. Capítulo 8 con 16 RF, siete RNF,
+cinco restricciones y seis casos UML/textuales. Precisión/latencia requieren
+cerrar umbrales con director; matriz de accesibilidad propuesta, sin validación
+atribuida. Fuentes y comprobaciones en `Informe/fuentes-requerimientos.md` y
+seguimiento; sin código de app, nuevas mediciones, emulador o publicación.
+Tiempo personal de la jornada 04/11 sigue pendiente en H0006; no sumar tiempo de
+ejecución del agente. Próximo bloque posible: arquitectura/modelo de dominio.
+
+## Horas: estimaciones previas y correcciones del autor — 2026-11-04
+
+Por pedido explícito se agregan las 30 h previas estimadas P01–P05 del Gantt
+al registro y se corrigen H0003/H0004 a 15/20 h informadas, reemplazando las
+estimaciones de 12 h. El subtotal inicial de 56,57 h queda como antecedente;
+el CSV vigente suma 97,57 h (62,57 estimadas y 35 informadas). H0006 del 04/11
+sigue pendiente. Consultar siempre `docs/seguimiento/horas.csv` para los valores
+vigentes. Sin comparación de ejecución ni cambios de Gantt/LaTeX.
+
+## Planificación y horas: comparación al cierre de febrero — 2026-11-04
+
+El autor pide explícitamente no comparar todavía Gantt/ejecución: realizarlo en
+febrero al cerrar informe/desarrollo. Solicita registrar horas anteriores y
+futuras. No tiene vacaciones previstas. El capítulo 7 conserva plan original,
+dos figuras reproducibles y dependencias; sin replanificación o desvíos actuales.
+Formalizar CPM/holguras al cierre, sin inferirlas de las superposiciones del XLSX.
+
+Indica unas 12 h/semana desde el comienzo de implementación y pide localizarlo.
+Primer código Git: `24afc0c`, 02/10/2026 16:10:31 (-03:00), coincide en día con
+creación local Gradle/manifest. Estimación retrospectiva 02/10–03/11: **56,57 h**,
+cuatro semanas y cinco días proporcionales. Son horas aproximadas, no medidas.
+
+Consultar `docs/seguimiento/LEEME.md` y actualizar `docs/seguimiento/horas.csv`
+al iniciar/cerrar sesiones (enlace en AGENTS). Jornada 04/11 pendiente de tiempo
+personal; completar la fila al informarlo, evitando doble conteo con estimaciones.
+Conservar separados datos estimados, informados, medidos y pendientes. Ni commits
+ni tiempos autónomos del agente miden dedicación del autor. Procedencia y
+verificación en `Informe/fuentes-planificacion.md` y seguimiento del informe.
+Próximo bloque posible: requerimientos. Sin cambios de app o nuevas pruebas.
+
+## Escritura: factibilidad y recursos confirmados — 2026-11-04
+
+El autor declara notebook MSI Thin GF63 (i5-10500H, 16 GB DDR4, RTX 3050 4 GB)
+y Samsung S22 Ultra, preexistentes y sin compras específicas; suscripciones propias
+USD 20/mes Codex y USD 30/mes Grok; dedicación aproximada 12 h/semana. Mantiene
+cierre previsto a fines de febrero de 2027 y defensa en marzo; cuenta con personas
+a quienes proponer pruebas, sin participantes comprometidos o sesiones inferidos.
+
+Capítulo 6 redactado en seis secciones con riesgos cualitativos y conclusión
+condicional. Se contrastan protocolo, plan y evidencia actual sin actualizar
+el XLSX original. Las 400 h originales no son horas reales; proyección hasta
+27/02 de unas 200 h potenciales a dedicación constante. Fuentes y método en
+`Informe/fuentes-factibilidad.md`; verificación del PDF en seguimiento. Sin
+cambios de app, nuevas pruebas, mediciones o publicación. Próximo bloque posible:
+planificación temporal desde el avance y disponibilidad reales.
+
+## Escritura: capítulos 4 y 5 revisados con el autor — 2026-11-04
+
+El autor confirma dos entrevistas `grilling`: evaluación de uso (Q1–Q10) y
+herramientas/distribución de contenido (Q1–Q9). El capítulo 4 precisa dos
+modalidades independientes según disponibilidad: APK para uso autónomo y sesiones
+presenciales acompañadas, actividades comunes y exploración libre, ayuda registrada,
+cuatro criterios de uso y seguimiento de problemas/correcciones. Las pruebas siguen
+previstas; tareas, duración y cantidad de participantes por acordar con el director.
+Informa formularios preparados para mostrar el viernes 06/11; sin difusión ni
+resultados declarados.
+
+Se redacta el capítulo 5, seis secciones y tabla de configuración 0.12.20,
+con funciones, versiones y motivos de selección. El autor confirma experiencia
+previa con React Native y preferencia nativa para acceso a capacidades Android,
+control buscado de latencia/interacción y posible MIDI; sin comparación medida
+ni integración MIDI atribuida. Declara Gemini Deep Research, Claude Code CLI,
+migración a Codex CLI y uso actual simultáneo de Codex/GrokBot. Nombres de modelos
+conservados como declaración de uso. Procedimientos/harness/SDD/supervisión
+permanecen en Metodología; referencias cruzadas evitan duplicar presentaciones.
+
+Guía y procedencia en `Informe/guia-herramientas.md` y
+`Informe/fuentes-herramientas.md`; 13 referencias oficiales agregadas, 60 citadas
+en total. Sin implementación, mediciones ni pruebas nuevas de la app. Verificación
+del PDF y próximo bloque registrados en `Informe/seguimiento.md`.
+
+## Encuesta: error de Apps Script corregido — 2026-11-03
+
+El usuario ejecuta el generador e informa «Datos no válidos al actualizar el
+formulario», `configurar_` línea 165 y `crearFormularios` línea 116. Corresponde
+a `setCustomClosedFormMessage` en el contacto recién creado sin publicar, antes
+de preguntas. Se elimina esa personalización opcional y se permite retomar
+`crearFormularios` en el mismo proyecto reutilizando solo el contacto registrado
+si sigue sin publicar, sin preguntas ni respuestas. Contenido manual u otro
+estado parcial detienen la recuperación; no se eliminan datos ni formularios.
+
+Regresión local: el simulador incorpora el rechazo reportado, falla con la llamada
+original y pasa tras retirarla. Comprueba recuperación sin duplicados y protección
+de contenido manual, además de privacidad/saltos existentes. No equivale a una
+verificación en Google. Guía actualizada: reemplazar Código.gs completo y ejecutar
+la misma función en el mismo proyecto, sin borrar propiedades. Pendiente confirmar
+que finaliza en la cuenta del usuario; sin publicación/respuestas/piloto informados.
+Cuestionario y texto del informe sin cambios en esta corrección técnica.
+
+## Encuesta de necesidades preparada tras entrevista — 2026-11-03
+
+El usuario confirma con «Perfecto» la síntesis de `grilling` Q1–Q13. Se acuerda
+relevar hábitos/dificultades auditivas en personas que actualmente aprenden o
+practican música de cualquier modalidad, nivel y edad. Edad por intervalos;
+sin nombre, correo, ubicación ni institución en la encuesta; contacto opcional
+separado para convocatoria futura con prototipo estable. Objetivo 5–7 minutos,
+mayoría cerradas, orientación de prioridades. Canales previstos: colegas,
+compañeros, Luis Gianneo, Rodolfo Ábalos e Ingeniería; no avales confirmados.
+
+`docs/encuesta-estudiantes-musica/` contiene 17 preguntas, formulario de contacto,
+guía de ejecución/piloto/análisis y generador Apps Script sin publicar. No hay
+herramienta conectada para crear Forms: aún no ejecutado en Google, no difundido
+ni con resultados. Simulación local comprueba configuración, saltos y repetición
+sin duplicar; no comprueba permisos remotos, interfaz ni duración. Se incorpora
+como actividad prevista en capítulo 4 y seguimiento. Opciones/redacción son
+propuestas del agente; pendientes información administrativa, acuerdo con director
+sobre menores, ejecución en cuenta y piloto antes de difusión. Sin cambios de app
+ni modificación de las sesiones exploratorias previstas con adultos.
+
+Informe recompilado: 68 páginas, sin errores/referencias indefinidas/desbordes;
+páginas 31–32 revisadas y título ajustado. Huella y detalle en seguimiento.
+
+## Escritura: modelos y revisión cruzada — 2026-11-03
+
+Por declaración y pedido del autor, metodología incorpora Gemini, GPT, Claude
+y Grok para contrastar aportes y realizar críticas entre modelos en algunos casos.
+Se presenta reducción de sesgos/detección de errores como propósito, manteniendo
+revisión humana y sin afirmar eliminación de sesgos o eficacia medida.
+PDF 67 páginas, compilación sin errores/desbordes; párrafo en página 29 revisado
+visualmente. Guía y fuentes actualizadas; SHA-256 en seguimiento. Sin código,
+nuevas fuentes bibliográficas, mediciones o cambios de prioridades.
+
+## Escritura: metodología redactada tras entrevista confirmada — 2026-11-03
+
+El autor confirma la síntesis Q1–Q8 con «ok». Capítulo 4 redactado en cuatro
+secciones: organización iterativa, agentes/harness/SDD, investigación bibliográfica
+y verificación/evaluación. Primera persona y roles explícitos; eficiencia como
+valoración profesional. Gemini Deep Research en tres fases y consulta manual
+parcial documentados; conversaciones espontáneas separadas de sesiones futuras.
+Se coteja la trazabilidad de Rhythm Tap con documentos, commits y evidencia.
+
+Cuatro fuentes nuevas de lecturas identificadas, hasta 47 citadas. Prompt conservado
+en `Informe/insumos/prompt-deep-research.md`; procedencia en `fuentes-metodologia.md`.
+PDF 67 páginas; metodología en físicas 28–32, bibliografía 58–63. Compilación sin
+errores, referencias indefinidas o desbordes; nueve avisos verticales y siete de
+líneas poco llenas. Revisión visual y ajuste local de bibliografía para no dividir
+entradas; SHA-256 en seguimiento. Sin cambios de software, pruebas de aplicación,
+emulador, mediciones o publicación.
+
+Próxima escritura: revisión del capítulo y herramientas/tecnologías desde registros
+reales. Precisar protocolos físicos y de uso antes de ejecutarlos. Simón permanece
+en revisión; no retomar su fundamentación de memoria hasta definir su sustitución,
+reformulación o eliminación. La investigación histórica puede ampliarse con registros
+adicionales; no se atribuye un flujo sistemático completo a los informes asistidos.
+
+## Escritura: Simón en revisión y prioridad metodología — 2026-11-03
+
+El autor informa que Simón cambiará: considera reformularlo, sustituirlo o
+eliminarlo por su aporte y encaje en la tesis. No hay alternativa elegida ni
+instrucción de eliminar código. Se pospone la fundamentación de memoria secuencial
+y su cierre académico hasta definir el rediseño; no perseguir ese pendiente como
+próximo incremento de escritura. Prioridad explícita: metodología del capítulo 4.
+Se inicia entrevista `grill-me` → `grilling` para reconstruir el proceso real;
+respuestas/acuerdos pendientes. No cambia la evidencia histórica de Simón.
+
+## Escritura: revisión argumental aplicada — 2026-11-03
+
+El autor autoriza reducir el tono defensivo del capítulo 3. Se explicitan vínculos
+entre bibliografía y decisiones de práctica, ayudas, motivación, DDA y audio.
+El estado del arte presenta el aporte como integración y evaluación de ingeniería
+con registros. Las cautelas generales se reúnen en la síntesis, conservando límites
+específicos y sin atribuir eficacia o superioridad. Primera persona mantenida.
+
+PDF 64 páginas, seis bloques teóricos y tres de antecedentes; mismas fuentes,
+etiquetas y ecuaciones. Compilación sin errores, referencias indefinidas o desbordes;
+diez avisos verticales y siete de líneas poco llenas. Páginas 18–27 revisadas
+visualmente, tabla completa en 27; SHA-256 en seguimiento. Guía y registros
+actualizados. Sin nuevas búsquedas, mediciones, código, emulación o publicación.
+Memoria secuencial y método histórico pendientes; revisión del texto por el autor.
+
+## Preparación de reunión: hoja de avances — 2026-11-03
+
+El usuario acepta preparar la hoja de avances. Se crea
+`docs/Hoja-avances-reunion-director-2026-11-06.md`, en primera persona: síntesis,
+contraste protocolo/desarrollo, actividades, evidencia por versión y decisiones
+para el director sobre alcance, audio, evaluación, participantes, cronograma y
+dirección visual. Distingue 292 JVM de la candidata 0.12.20 de las 57 Android
+de 0.12.10; prueba física estructurada prevista para el 04/11, sin resultados.
+Campos de actualización para prueba y acuerdos; enlaces a fuentes locales.
+
+Se revisan fechas, cifras y enlaces. Sin nuevos resultados, cambios de capítulos,
+software, emulación, instalación o publicación; seguimiento del informe enlaza
+el material de reunión. Próximo paso de preparación: completar la prueba manual
+y seleccionar el recorrido de demo con sus resultados. Los acuerdos propuestos
+siguen pendientes de revisión del director.
+
+## Escritura: voz del autor — 2026-11-03
+
+Preferencia confirmada: primera persona singular para experiencia, decisiones y
+acciones propias; evitar autorreferencias como «el autor» o «el estudiante».
+«Usuario» designa quien practica y «participante» a quien integra una evaluación;
+las poblaciones de estudiantes y atribuciones de fuentes se conservan.
+Correcciones aplicadas al cuerpo del informe y regla en `Informe/LEEME.md`.
+
+El autor consulta si el marco perjudica la presentación de Neuma. Se identifica
+fundamento pertinente, con exceso de cautelas repetidas; revisión de tono/argumento
+recomendada y todavía no aplicada. No suprimir límites o inventar beneficios.
+PDF 64 páginas, compilación sin errores/desbordes, diez avisos verticales y siete
+de líneas poco llenas. Motivación y método revisados visualmente; SHA-256 en
+seguimiento. Sin cambios de software, fuentes, resultados o prioridades.
+
+## Preparación de reunión: guía manual para S22 Ultra — 2026-11-03
+
+El usuario solicita una guía paso a paso para probar toda la aplicación en su
+teléfono. Se crea `docs/Guia-pruebas-manuales-S22-Ultra.md`: 39 casos, recorridos
+de los cinco juegos, afinador Libre/Guiado/Oído, voz, navegación, historiales,
+bancos aislados, archivos, interrupciones y accesibilidad. Matrices de 21 células
+rítmicas y ocho calidades de acordes; resultados esperados y plantillas de registro.
+Se distingue práctica, progreso real y simulación; reinicio destructivo opcional
+al final, con exportación previa y sin prometer restauración por importación.
+
+Referencia: candidata 0.12.20/código 35; existencia, tamaño y SHA-256 del APK
+comprobados. Enlaces locales y estructura del documento revisados. **Plan sin
+ejecutar en teléfono**: no hay nuevos resultados físicos, mediciones, compilación,
+emulación, instalación ni cambios de software o prioridades. Próximo paso de esta
+preparación: el autor ejecuta los casos y registra incidencias para seleccionar
+y estabilizar la demo; los pendientes funcionales anteriores siguen vigentes.
+
+## Escritura: primera síntesis del estado del arte — 2026-11-03
+
+El autor acepta el marco compacto y autoriza continuar antecedentes. Identifica
+los dos Markdown de investigación en `docs/` y permite investigación adicional.
+Se contrastan sus candidatos con fuentes primarias. Capítulo 3.2: tres subsecciones
+y una tabla sobre práctica/juegos, audio/adaptación y comparación/aporte.
+Ocho referencias nuevas; registro en `Informe/fuentes-estado-del-arte.md`. Se
+documenta en capítulo 4 la selección focalizada nueva, sin confundirla con la
+revisión histórica todavía por reconstruir.
+
+PDF 64 páginas, 43 referencias citadas; compilación con Biber sin errores,
+referencias indefinidas, etiquetas duplicadas o desbordes horizontales. Diez
+avisos verticales y siete de líneas poco llenas en la tabla. Páginas 24–27, 29 y
+56–60 revisadas visualmente; tabla sin dividirse. SHA-256 y detalle en seguimiento.
+La integración se plantea como aporte de ingeniería, sin afirmar exclusividad,
+superioridad difusa o eficacia pedagógica. Memoria secuencial de Simón y método
+histórico pendientes. Borrador para revisión del autor. Sin código, emulación,
+publicación o cambio de prioridades de implementación.
+
+## Escritura: marco reorganizado en seis bloques — 2026-11-03
+
+Por observación del autor y aceptación de la propuesta editorial, se condensa el
+marco: 30 subsecciones pasan a seis bloques, con síntesis inicial por actividad.
+Detalles de ayudas/progresión y cálculo difuso se trasladan a diseño; ventanas,
+YIN/RMS/captura a implementación; criterios de medición de audio a pruebas.
+Se preservan todas las etiquetas y ecuaciones; 35 fuentes siguen citadas.
+Guía, fuentes, LEEME y seguimiento registran la ubicación vigente.
+
+PDF 59 páginas (antes 66); capítulo 3 ocupa siete páginas, físicas 18–24,
+incluyendo síntesis y antecedentes pendientes. Compilación con Biber sin errores,
+citas indefinidas, avisos Biber o desbordes horizontales; once avisos verticales.
+Índice y páginas reestructuradas revisados visualmente. SHA-256 en seguimiento.
+El marco no está cerrado: falta fundamentar memoria secuencial de Simón y auditar
+antecedentes; mantener estructura compacta al continuar. Sin código, nuevas
+mediciones, emulador, publicación o cambio de prioridades de implementación.
+
+## Escritura: procesamiento de audio y estimación de tono — 2026-11-03
+
+El autor autoriza continuar tras DDA. Cinco subsecciones del capítulo 3: muestreo,
+ventanas/salto, YIN, admisibilidad y latencia/verificación. Se agregan tres fuentes
+y se amplía el acceso al artículo original de YIN. Se explicitan diferencias de
+la versión implementada, sin modificar software o atribuirle las métricas del
+original. Captura/estimador/laboratorio consultados solo en lectura. Sin nuevas
+mediciones o decisiones de parámetros; no se acredita eficacia pedagógica.
+
+PDF 66 páginas, 35 referencias únicas y citadas; compilación sin errores, citas
+indefinidas, avisos Biber o desbordes horizontales. Diez avisos verticales.
+Revisión visual de páginas 33–36 y 59–62; seguimiento y fuentes actualizados,
+SHA-256 en `Informe/seguimiento.md`. Próximo bloque de escritura: síntesis de
+habilidades/actividades y criterios observables, incluida memoria secuencial de
+Simón; antecedentes y reconstrucción del método pendientes. Borrador para revisión
+del autor. Sin código, emulación, publicación ni cambio de prioridades de implementación.
+
+## Escritura: fundamentos técnicos del DDA difuso — 2026-11-03
+
+Se retoma el pendiente del 02/11 por pedido del autor. Cuatro subsecciones del
+capítulo 3 sobre conjuntos difusos, Mamdani, centroide y adaptación/progresión;
+cuatro fuentes nuevas contrastadas con límites de acceso documentados. Se
+distingue pertenencia de probabilidad, salida inferida de ajuste aplicado y
+verificación del motor de evaluación pedagógica. Sin nuevos parámetros o reglas
+de juegos; núcleo Mamdani cotejado solo en lectura.
+
+PDF 62 páginas y 32 referencias únicas, todas citadas; compilación sin errores,
+citas indefinidas, avisos Biber o desbordes horizontales. Nueve avisos verticales.
+Páginas 31–33 y bibliografía 56–58 revisadas visualmente; seguimiento y registro
+de fuentes actualizados. SHA-256 en `Informe/seguimiento.md`. Próximo bloque de
+escritura: procesamiento de audio/estimación de tono; síntesis por actividad y
+estado del arte pendientes. Borrador para revisión del autor. Sin código,
+emulación, publicación ni cambios de prioridades de implementación.
+
+## Escritura: nuevo borrador de Agradecimientos — 2026-11-02
+
+Se reemplaza el texto anterior por los diez párrafos suministrados por el autor,
+conservando redacción y menciones abiertas para completar después. Sin corrección
+de estilo/ortografía, canciones añadidas o contenido inventado. Guía y seguimiento
+actualizados. PDF 60 páginas, Agradecimientos en página física 3 (ii), revisión
+visual y compilación sin errores/desbordes; siete avisos verticales existentes.
+Página al lector preservada. SHA-256 en `Informe/seguimiento.md`. Sin código ni
+cambios de prioridades; continúa pendiente el bloque técnico de DDA/audio.
+
+## Escritura: juegos serios y gamificación — 2026-11-02
+
+El autor confirma la tercera entrevista: desafíos entretenidos con foco musical,
+DDA para sostener dificultad abordable y evitar estancamientos, progreso por
+habilidad/desbloqueos, recompensas visuales complementarias, reintento conservando
+progreso, superación personal y recomendaciones compatibles con elegir/repasar.
+Acuerdos y límites en `Informe/guia-juegos-serios-y-gamificacion.md`; sin nuevas
+recompensas especificadas, cambios de juegos o rankings como requisito.
+
+Cinco subsecciones del capítulo 3 redactadas con cinco fuentes nuevas contrastadas:
+28 referencias citadas. El DDA se introduce conceptualmente; fundamento difuso y
+audio siguen pendientes, junto con síntesis por actividad y estado del arte.
+No se afirma eficacia de Neuma. PDF final 60 páginas, compilación sin errores,
+citas indefinidas o desbordes; siete avisos verticales. Revisión visual 28–31 y
+53–56, enlaces/diff comprobados. Procedencia en el registro de fuentes; SHA-256 y
+detalle en `Informe/seguimiento.md`. Borrador para revisión del autor.
+
+Página al lector preservada. Sin código, emulación, publicación ni cambio de las
+prioridades de implementación. M1/M2 y propuestas de nuevos juegos conservan sus
+agendas; contrastar estos criterios con cada especificación cuando se retome software.
+
+## Escritura: página al lector — 2026-11-02
+
+A pedido del autor se agrega `Informe/preliminares/al-lector.tex`, página propia
+entre portada y Agradecimientos, con el mensaje exacto al lector y «Gracias.» en
+párrafo separado. Sin título ni número visible, tipografía vigente. PDF 56 páginas,
+texto/orden y páginas físicas 2–3 comprobados; compilación sin errores/desbordes,
+siete avisos verticales existentes. SHA-256 en `Informe/seguimiento.md`.
+Se inicia entrevista de juegos serios/gamificación; sin redacción nueva de ese
+bloque ni cambios de software, emulador, prioridades o publicación.
+
+## Escritura: ritmo, lectura, timbre y conjuntos — 2026-11-02
+
+Autor confirma la síntesis de la segunda entrevista Q1–Q13. Acuerdos en
+`Informe/guia-ritmo-timbre-lectura.md`; propuestas futuras en
+`docs/Ideas-dictado-ritmico-y-escucha-de-conjuntos.md`: dictado por selección con
+reescuchas y escucha de instrumentos/funciones en mezclas anotadas por el autor.
+Tramos aptos, dos pasos y adaptación diferenciada; seis segundos es ilustrativo.
+El ejercicio rítmico actual conserva primera lectura sin modelo sonoro previo.
+No se implementan nuevos juegos ni se modifica la captura monofónica.
+
+Capítulo 3 ampliado con cuatro subsecciones musicales. Cuatro fuentes nuevas,
+23 referencias activas, procedencia y límites de consulta documentados. PDF final
+55 páginas, sin errores/citas indefinidas/desbordes horizontales; siete avisos
+verticales. Revisión visual 19–22 y 49–51, enlaces y diff comprobados. Detalle y
+SHA-256 en `Informe/seguimiento.md`. Borrador para revisión del autor.
+
+Continuar escritura con juegos serios/gamificación, audio/DDA y síntesis por
+habilidad; revisión histórica pendiente. M1/M2 conservan su agenda. Sin código,
+emulación, publicación ni cambio de prioridades previas de implementación.
+
+## Escritura: revisión de spacing effect — 2026-11-02
+
+Usuario pide definir y fundamentar el efecto de espaciamiento con experimentos
+musicales/auditivos y retirar el ejemplo de piano de 2017. Capítulo 3, sección 3.1.8,
+reescrito: definición, separación/retención, memoria melódica, identificación de
+intervalos y discriminación de frecuencias. Investigación y límites de acceso en
+`Informe/investigacion-spacing-musical.md`; 19 referencias activas tras cuatro
+incorporaciones y una retirada. La tesis de Hua se usa desde el resumen institucional;
+el estudio de melodías de 2025 es distinto del ejemplo retirado.
+
+PDF final 52 páginas, compilado con Biber sin errores/citas indefinidas/desbordes
+horizontales, seis avisos verticales. Páginas físicas 21–22 y 46–48 revisadas.
+Seguimiento y SHA-256 en `Informe/seguimiento.md`. Metas/rachas M2 conservan su
+alcance de apoyo a constancia; planificar repasos por contenido es una decisión
+adicional pendiente. Continúan pendientes los fundamentos restantes del marco y la
+revisión histórica. Sin código, emulación ni publicación en esta sesión.
+
+## Escritura: fundamentos de aprendizaje y práctica — 2026-11-02
+
+El usuario solicita continuar tras la entrevista. Capítulo 3 ampliado con siete
+subsecciones: audiación de Gordon, autorregulación, desempeño/retención y material
+nuevo, distribución temporal, feedback/andamiaje, referencias melódicas y metas/rachas.
+Diez fuentes nuevas, 16 citas bibliográficas en total. Selección y límites de acceso
+en `Informe/fuentes-marco-teorico.md`; borrador para revisión del autor, sin adopción
+completa de un currículo ni resultados de eficacia de Neuma.
+
+Compilación final con Biber: 50 páginas, sin errores/citas indefinidas/desbordes
+horizontales, siete avisos verticales. Páginas físicas 19–23 y 45–46 revisadas;
+encabezado de continuación de bibliografía corregido. Detalles y SHA-256 en
+`Informe/seguimiento.md`. Próximo frente de escritura: ritmo/timbre/lectura,
+juegos serios, audio/DDA y síntesis por actividad; antecedentes/revisión histórica
+siguen pendientes. M1/M2 de ayudas melódicas y constancia conservadas en su agenda,
+pendientes de software. Sin emulación, código, publicación ni cambios de prioridades
+de implementación por esta sesión de escritura.
+
+## Entrevista del marco teórico y mejoras a retomar — 2026-11-02
+
+Entrevista `grilling` Q1–Q13: lector informático sin formación musical, todas las
+habilidades de la entrega y fundamentación pedagógica desarrollada con teorías de
+educación musical y aprendizaje general. La teoría debe fundamentar y revisar el
+diseño. Experiencia del autor: Formación Básica en Conservatorio Luis Gianneo,
+solfeos, intervalos y dictados. Acuerdos y atribuciones en `Informe/guia-marco-teorico.md`.
+
+El usuario solicita «documentemos todas para implementarlas en un rato». Se registra
+`docs/Mejoras-pedagogicas-intervalos-y-constancia.md`: ofrecer referencia melódica del
+intervalo objetivo tras error; meta semanal de días de práctica como principal y
+racha diaria opcional. Detalles funcionales pendientes. Corrección explícita Q12:
+el canto es la respuesta del ejercicio, no una nueva ayuda por error; V4–V6 ya
+contemplan modalidades vocales. Revisar compatibilidad de ayuda audible con la
+producción libre y distinguir rachas de días de rachas de desempeño del DDA.
+
+Sesión documental: sin código, emulación, publicación ni cambios del PDF. No se
+crearon issues; al retomar implementación completar especificación/tickets y elegir
+el incremento, conservando estas propuestas y las prioridades previas. Continuar
+escritura con la guía del marco; método/revisión bibliográfica en su guía separada.
+
+## Escritura: marco teórico y metodología — 2026-11-02
+
+El usuario retoma escritura con `thesis-writing` y pide dejar asentados harness
+engineering y SDD (confirma Specification-Driven Development) para describir el
+proceso de desarrollo de tesis/software, junto con un tratamiento destacado de la
+investigación/revisión sistemática. Se reservan en Metodología el proceso de desarrollo
+y el método bibliográfico; hallazgos en Estado del arte, vocabulario en Marco teórico
+y registros extensos en anexos. Acuerdos e insumos en `Informe/guia-metodologica.md`;
+reconstrucción histórica de las prácticas y búsquedas pendiente, sin inventar registros.
+
+Capítulo 3: primer bloque de altura/frecuencia, intervalos, cents y discriminación/
+reproducción vocal. Capítulo 4: referencias introductorias y secciones pendientes.
+Seis citas verificadas, procedencia y límites en `Informe/fuentes-marco-teorico.md`.
+PDF recompilado con Biber: 44 páginas, sin errores, citas/referencias indefinidas ni
+desbordes horizontales; seis avisos verticales. Páginas físicas 16–20/40 revisadas.
+Texto pendiente de revisión del autor. Continuar marco teórico por secciones;
+detalles de esta sesión y próximos pasos en `Informe/seguimiento.md`.
+Sin cambios de software, emulación ni publicación; prioridades de implementación
+anteriores conservadas.
+
+## Cambio de dirección visual — entrevista cerrada, 2026-10-31
+
+El usuario solicita migrar a **Quiet Studio**, dejando Music Garden conservado
+para poder volver. Acuerdo Q1–Q13 en `docs/Diseno-Quiet-Studio.md`; consultar antes
+de retomar UI. Esta decisión del usuario sustituye la exigencia anterior de
+Music Garden para la migración futura, aunque `AGENTS.md` y el sistema visual
+todavía describen la implementación anterior y deben actualizarse al implementarla.
+
+Estudio íntimo y táctil; cerámica mate/fieltro/madera clara; colores cálidos claros
+sin blanco puro; catálogo directo en lista, sin práctica protagonista; quietud
+y respuesta al interactuar. Sonidos/vibraciones discretos configurables, ligados
+a acciones concretas sin interferir en ejercicios. Conservar reglas musicales.
+Defender se reinterpreta como **cuerdas que entran en resonancia**, sin bichos
+ni protección. Personaje conservado y retirado de la futura navegación por ahora.
+Resultado breve con métricas desplegables y repetir/salir.
+
+Primera prueba solicitada: **Catálogo → Ritmo → Resultado** o **Catálogo → Defender
+→ Resultado**, elección entre ambos aún abierta; no Simón. Antes de modificar,
+asegurar referencia Git recuperable de Music Garden; no se pidió selector de temas.
+No trasladar las simplificaciones funcionales de `preview/` a Android.
+
+Usuario: «Cerremos acá que me tengo que ir». Solo registro documental; sin cambios
+de UI/código/assets, compilación, emulación ni publicación. Próxima sesión:
+retomar este acuerdo y preparar la primera prueba, sin repetir Q1–Q13.
+Pendientes vocales y D6/#28/D7/#29 y validaciones Android siguen vigentes.
 
 ## Publicación en GitHub de V6 — 2026-10-30
 
@@ -653,6 +1392,17 @@ Pruebas de sesión y ViewModel: límite real de tres escuchas, intentos antes de
 Ejecución final v0.3: 21 pruebas JVM y 11 Android aprobadas, lint sin errores/14 advertencias y APK debug generado; 3 min 50 s en Pixel_6/API 34. Revisión en dos ejes: Spec sin hallazgos; Standards sin incumplimientos documentados, con dos duplicaciones corregidas mediante los componentes PCM/JSON compartidos y un ajuste para conservar la cancelación del timeout al notificar inicio de audio. Registro y APK en `docs/Verificacion-Instrumentos-v0.3.md`; artefacto `Plataforma/app/build/outputs/apk/debug/entrenamiento-auditivo-v0.3.apk` (11.329.014 bytes). No se probó el S22 Ultra ni se midió latencia acústica o eficacia pedagógica.
 
 ## Próximo paso sugerido
+
+**Prioridad vigente tras 0.12.23, 2026-11-12:** reprueba física del afinador en
+Si/Mi agudas y tres modos, separando señal, confirmación, avance y micrófono.
+Seguir también los pendientes de ritmo/Defender/Instrumentos, incluidos en la
+misma candidata. Las prioridades de versiones anteriores son antecedentes.
+
+**Prioridad vigente, 2026-11-12:** probar 0.12.22 en S22 Ultra según R0/R1/D1
+de la guía actualizada, además de respuesta anticipada en Instrumentos. Precisar
+si las semicorcheas pierden contactos o se clasifican fuera de ventana, y si
+mejora el eco con taps activados. No atribuir latencia/eficacia a las 302 JVM.
+Los próximos pasos de octubre siguientes quedan como antecedentes históricos.
 
 **Prioridad vigente tras V6 vocal, 2026-10-30:** producción libre implementada
 en 0.12.20 con progreso independiente, 292 JVM aprobadas y lint sin errores.

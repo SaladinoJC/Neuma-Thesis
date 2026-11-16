@@ -40,7 +40,9 @@ class RhythmHistoryAndroidTest {
         compose.setContent { val ui by current.ui.collectAsState(); RhythmApp(ui, current) { current.home() } }
         try {
             for (code in listOf("R10", "R15", "R17")) compose.onNodeWithTag("rhythm-category-$code").performScrollTo().performClick()
+            compose.openRhythmPreparationIfCollapsed()
             compose.onNodeWithTag("rhythm-metronome").performScrollTo().performClick()
+            compose.openRhythmPreparationIfCollapsed()
             compose.onNodeWithTag("rhythm-generate").performScrollTo().performClick()
             compose.waitUntil(10_000) { current.ui.value.session.phase == RhythmPhase.PREVIEW }
             val score = current.ui.value.session.score!!
@@ -125,6 +127,7 @@ class RhythmHistoryAndroidTest {
         compose.setContent { val ui by model.ui.collectAsState(); RhythmApp(ui, model) { model.home() } }
         try {
             compose.onNodeWithTag("rhythm-category-R20").performScrollTo().performClick()
+            compose.openRhythmPreparationIfCollapsed()
             compose.onNodeWithTag("rhythm-generate").performScrollTo().performClick()
             compose.waitUntil(10_000) { model.ui.value.session.phase == RhythmPhase.PREVIEW }
             compose.awaitRhythmScore()

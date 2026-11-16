@@ -9,7 +9,7 @@ import kotlin.random.Random
 data class DefenderUiState(val game: DefenderState = DefenderState(), val letterNames: Boolean = false,
     val noteSound: Boolean = true, val effectsSound: Boolean = true, val error: String? = null,
     val stage: DefenderStage = DefenderStage.N1, val accidentals: Boolean = false, val maxEnemies: Int = 4,
-    val progression: Boolean = false, val travelMillis: Long = 10_000,
+    val progression: Boolean = false, val travelMillis: Long = 10_000, val spawnIntervalMillis: Long? = null,
     val history: DefenderHistoryState = DefenderHistoryState(), val historyBusy: Boolean = false,
     val historyOpen: Boolean = false, val detailId: String? = null, val currentRecordId: String? = null,
     val inspectorOpen: Boolean = false, val simulation: DefenderSimulation? = null,
@@ -89,8 +89,13 @@ class DefenderViewModel(private val audio: DefenderAudio = AndroidDefenderAudio(
         mutableUi.value = ui.value.copy(chordQuality = value.quality, chordInversion = value.inversion, chordClefs = value.clefs)
     }
     fun travel(value: Long) {
-        if (ui.value.game.phase == DefenderPhase.SETUP && !ui.value.progression && value in 6000..14_000 && value % 1000 == 0L)
+        if (ui.value.game.phase == DefenderPhase.SETUP && !ui.value.progression && value in 3000..14_000 && value % 1000 == 0L)
             mutableUi.value = ui.value.copy(travelMillis = value)
+    }
+    fun spawnInterval(value: Long?) {
+        if (ui.value.game.phase == DefenderPhase.SETUP && !ui.value.progression &&
+            (value == null || (value in 1000..6000 && value % 500 == 0L)))
+            mutableUi.value = ui.value.copy(spawnIntervalMillis = value)
     }
     fun accidentals(value: Boolean) { if (ui.value.game.phase == DefenderPhase.SETUP) mutableUi.value = ui.value.copy(accidentals = value) }
     fun maxEnemies(value: Int) { if (value in 1..4 && ui.value.game.phase == DefenderPhase.SETUP) mutableUi.value = ui.value.copy(maxEnemies = value) }
@@ -109,7 +114,8 @@ class DefenderViewModel(private val audio: DefenderAudio = AndroidDefenderAudio(
         session.start(seed, DefenderConfiguration(noteSound = options.noteSound, effectsSound = options.effectsSound, letterNames = options.letterNames,
             stage = if (options.variant == "chords") DefenderStage.N1 else options.stage, accidentals = options.accidentals, maxEnemies = options.maxEnemies,
             travelMillis = if (options.progression) 10_000 else options.travelMillis, variant = options.variant,
-            chordQuality = options.chordQuality, chordInversion = options.chordInversion, chordClefs = options.chordClefs),
+            chordQuality = options.chordQuality, chordInversion = options.chordInversion, chordClefs = options.chordClefs,
+            spawnIntervalMillis = if (options.progression) null else options.spawnIntervalMillis),
             if (options.progression) "progression" else "practice")
         history.begin()
         mutableUi.value = options.copy(game = session.state, error = null)

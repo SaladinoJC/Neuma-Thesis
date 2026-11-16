@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ar.edu.unmdp.entrenamiento.ui.InstrumentViewModelTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-16T15:44:42.983Z" hostname="DESKTOP-PP49S64" time="0.135">
+  <properties/>
+  <testcase name="inspector y simulaciones usan la configuracion efectiva de la partida activa" classname="ar.edu.unmdp.entrenamiento.ui.InstrumentViewModelTest" time="0.034"/>
+  <testcase name="historial ilegible bloquea partida manual hasta relectura correcta" classname="ar.edu.unmdp.entrenamiento.ui.InstrumentViewModelTest" time="0.01"/>
+  <testcase name="salir durante guardado final conserva diez respuestas y no duplica resultado" classname="ar.edu.unmdp.entrenamiento.ui.InstrumentViewModelTest" time="0.019"/>
+  <testcase name="diez respuestas durante audio cancelan la melodia y guardan un solo resultado" classname="ar.edu.unmdp.entrenamiento.ui.InstrumentViewModelTest" time="0.025"/>
+  <testcase name="simulacion del inspector no reproduce audio ni cambia partida o historial reales" classname="ar.edu.unmdp.entrenamiento.ui.InstrumentViewModelTest" time="0.012"/>
+  <testcase name="volver al menu durante audio cancela y guarda una sola interrupcion" classname="ar.edu.unmdp.entrenamiento.ui.InstrumentViewModelTest" time="0.009"/>
+  <testcase name="timeout de audio permite reintentar y no deja bloqueada la interfaz" classname="ar.edu.unmdp.entrenamiento.ui.InstrumentViewModelTest" time="0.016"/>
+  <testcase name="el historial tardio no deshace la apertura de instrumentos" classname="ar.edu.unmdp.entrenamiento.ui.InstrumentViewModelTest" time="0.009"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

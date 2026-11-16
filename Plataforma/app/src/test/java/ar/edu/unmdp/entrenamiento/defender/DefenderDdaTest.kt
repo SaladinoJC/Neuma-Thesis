@@ -36,7 +36,7 @@ internal class DefenderHarness(val stage: DefenderStage = DefenderStage.N1,
 }
 
 class DefenderDdaTest {
-    @Test fun aceleraDesdeQuintaResolucionConEnfriamientoDeTresYLimiteSeis() {
+    @Test fun aceleraDesdeQuintaResolucionConEnfriamientoDeTresYLimiteTres() {
         val h = DefenderHarness()
         repeat(4) { h.hit() }
         assertEquals(10_000L, h.session.state.currentTravelMillis)
@@ -48,8 +48,8 @@ class DefenderDdaTest {
         assertEquals(DefenderDdaReason.COOLDOWN, h.session.state.ddaDecisions.last().reason)
         h.hit()
         assertEquals(8_000L, h.session.state.currentTravelMillis)
-        repeat(15) { h.hit() }
-        assertEquals(6_000L, h.session.state.currentTravelMillis)
+        repeat(18) { h.hit() }
+        assertEquals(3_000L, h.session.state.currentTravelMillis)
         assertTrue(h.session.state.ddaDecisions.any { it.reason == DefenderDdaReason.LIMIT })
         assertTrue(h.session.state.ddaDecisions.all { kotlin.math.abs(it.appliedDeltaMillis) <= 1000 })
     }

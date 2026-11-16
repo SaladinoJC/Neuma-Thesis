@@ -1,0 +1,1 @@
+package: name='ar.edu.unmdp.entrenamiento' versionCode='41' versionName='0.12.26' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'

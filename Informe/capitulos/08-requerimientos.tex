@@ -1,10 +1,213 @@
 \chapter{Análisis de requerimientos}
 \label{cap:requerimientos}
+Derivé los requerimientos del protocolo, las definiciones de actividades y las
+especificaciones utilizadas durante el desarrollo. Los organizo como condiciones
+de comportamiento y calidad de la entrega propuesta, vinculadas con los objetivos
+del capítulo~\ref{cap:objetivos}. La arquitectura, los algoritmos y los mecanismos
+concretos para satisfacerlas corresponden a los capítulos de diseño e implementación.
+
+El alcance propuesto comprende intervalos vocales, reconocimiento de instrumentos,
+Rhythm Tap y Defender, sujeto a revisión del director. Incluye dos funciones
+específicas todavía pendientes: respuesta mediante piano en Defender y selección
+automática de ayuda vocal. Simón sigue en revisión y el afinador es complementario.
+Las metas de días de práctica, las recompensas cosméticas, el dictado rítmico y la escucha
+de conjuntos conservan su carácter de propuestas de ampliación.
+
 \section{Requerimientos funcionales}
-\pendiente{Derivar requerimientos identificados de las especificaciones vigentes y del alcance acordado.}
+La tabla~\ref{tab:requerimientos-funcionales} identifica los comportamientos
+propuestos. Su vínculo con OE1--OE7 expresa trazabilidad con los objetivos de
+trabajo, sin dar por cumplido el requisito. La comprobación deberá conservar
+versión, caso de prueba y evidencia en el capítulo~\ref{cap:pruebas}.
+
+\begingroup
+\small
+\singlespacing
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTcapwidth}{\textwidth}
+\begin{longtable}{p{0.10\textwidth}p{0.65\textwidth}p{0.15\textwidth}}
+\caption{Requerimientos funcionales del alcance de entrega propuesto.}
+\label{tab:requerimientos-funcionales}\\
+\toprule
+Código & Comportamiento requerido & Objetivos \\
+\midrule
+\endfirsthead
+\toprule
+Código & Comportamiento requerido & Objetivos \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+RF-01 & Permitir elegir actividad, contenido y modo de práctica o progresión, mostrando las opciones disponibles y los requisitos de acceso. & OE3, OE4 \\
+RF-02 & Presentar referencias sonoras según la actividad y ayuda elegidas, respetando su contenido musical y separando reproducción y captura en los ejercicios vocales. & OE1, OE3 \\
+RF-03 & Solicitar permiso antes de capturar voz, estimar su tono e indicar ausencia de señal admisible sin evaluarla como acierto o error musical. Detener y liberar la captura al cancelar o interrumpir. & OE1 \\
+RF-04 & Evaluar intervalos vocales con imitación, ancla dada y producción libre. Mostrar intervalo objetivo, error relativo firmado y resultado según la tolerancia aplicada, conservando los errores de octava. & OE1, OE3 \\
+RF-05 & Ofrecer reconocimiento de instrumentos mediante melodías y opciones de respuesta. Conservar el ejemplo en las reescuchas y registrar acierto y ayuda utilizada por separado. & OE3 \\
+RF-06 & Generar ejercicios rítmicos con las categorías y el compás seleccionados; admitir ejecución táctil y distinguir adelantos, atrasos, omisiones y golpes extra. Permitir repetir el ejercicio como práctica. & OE3 \\
+RF-07 & Ofrecer lectura de notas y acordes en Defender, con respuesta por nombre o piano virtual según variante. Evaluar grafía en respuestas por nombre y conjunto exacto de teclas con octava en piano. & OE3 \\
+RF-08 & Presentar devoluciones y revisión de errores; permitir nuevos intentos según las reglas de cada actividad, conservando el progreso ya adquirido. & OE3, OE4 \\
+RF-09 & Ajustar la dificultad según el desempeño y la política de cada actividad, manteniendo las condiciones ya asignadas a estímulos en curso y aplicando ajustes en el siguiente punto permitido. & OE2, OE3 \\
+RF-10 & Habilitar contenidos por evidencia de progresión y mantener los accesos adquiridos. Distinguir práctica manual y progresión, sin conceder desbloqueos por práctica o simulaciones. & OE2, OE4 \\
+RF-11 & Guardar resultados, configuración, procedencia y progreso del perfil local. Identificar guardados pendientes y permitir reintentar sin duplicar resultados o avances. & OE4 \\
+RF-12 & Permitir consultar historial, resultados, ayudas y progreso, diferenciando intentos completos, interrumpidos, manuales y de progresión. & OE4 \\
+RF-13 & Exportar registros y configuración para análisis, conservando la identificación de versión y la distinción entre datos jugados y simulados. & OE4, OE5 \\
+RF-14 & Permitir reiniciar los datos del perfil mediante confirmación explícita, distinguiendo cancelación, éxito y fallo de la operación. & OE4 \\
+RF-15 & Permitir inspeccionar indicadores, reglas activadas, propuesta y ajuste aplicado del DDA, y ejecutar simulaciones identificadas que no alteren el progreso real. & OE2, OE5 \\
+RF-16 & Seleccionar automáticamente la ayuda vocal por intervalo y desempeño, respetando los accesos disponibles. Permitir elegir ayuda manualmente para practicar y registrar el origen de la elección. & OE2, OE3 \\
+\end{longtable}
+\endgroup
+
+RF-07 incluye la variante de piano pendiente y RF-16 la gobernanza automática
+de ayudas, también pendiente. Los tres recorridos vocales existentes se eligen
+explícitamente. Sus reglas de transición automática deberán concretarse sin
+confundir la selección de ayuda con la tolerancia de afinación o con los
+desbloqueos; los valores de los borradores no se adoptan como parámetros calibrados.
+
 \section{Requerimientos no funcionales}
-\pendiente{Definir criterios medibles y su método de comprobación.}
+Los siguientes requisitos definen condiciones de calidad y su forma de revisión.
+Los parámetros experimentales de una actividad no sustituyen los criterios de
+aceptación del sistema.
+
+\begin{description}
+\item[RNF-01. Autonomía de ejecución.] Las actividades y el perfil deberán funcionar
+sin conexión ni cuenta remota. Se comprobarán inicio, práctica, consulta y
+persistencia con conectividad deshabilitada y recursos locales disponibles.
+\item[RNF-02. Consistencia de datos.] Un resultado confirmado y su efecto sobre el
+progreso deberán conservarse al reabrir la aplicación. Fallos y reintentos no
+deberán producir duplicados ni conceder avance antes de confirmar el guardado.
+Se verificarán interrupciones de escritura, reapertura y recuperación.
+\item[RNF-03. Coherencia musical.] Estímulo, notación, respuesta esperada y devolución
+deberán derivar de un contenido consistente. Se comprobarán duración métrica,
+ataques, silencios, ligaduras, grafía, alturas e inversiones con casos de referencia.
+\item[RNF-04. Precisión y respuesta temporal.] La estimación y la devolución vocal
+deberán evaluarse contra referencias conocidas, registrando error en cents,
+proporción de estimaciones admitidas y tiempos bajo condiciones explícitas.
+El protocolo deberá distinguir tiempo del estimador y latencia de la interacción.
+\item[RNF-05. Interacción y legibilidad.] La interfaz deberá permitir completar los
+recorridos sin controles esenciales ocultos o notación ilegible. Como matriz
+inicial de verificación se proponen anchos de 320, 360 y 411 dp, texto ampliado
+al 200\,\%, controles táctiles de al menos 48 dp y revisión con lector de pantalla.
+La reducción de movimiento deberá conservar las acciones y el seguimiento musical.
+\item[RNF-06. Privacidad de la voz.] Los ejercicios deberán procesar la señal en
+el dispositivo y conservar mediciones derivadas, sin guardar grabaciones ni
+enviarlas a servicios remotos. Se revisarán permisos, archivos y exportaciones.
+\item[RNF-07. Reconstrucción de resultados.] Los registros deberán permitir relacionar
+estímulos, respuestas y decisiones con su configuración y origen. Se contrastarán
+datos exportados con resultados visibles y casos controlados reproducibles.
+\end{description}
+
+RNF-04 permanece abierto en sus límites cuantitativos: deberé acordar con el
+director el rango y las referencias de ensayo, el error admisible, la disponibilidad
+mínima y el tiempo máximo aceptable. No fijo esos valores a partir de la tolerancia
+pedagógica de un ejercicio ni de una medición sintética aislada. La matriz de
+RNF-05 es una propuesta técnica de comprobación, no una afirmación de accesibilidad
+ya validada. Ambos se vinculan con OE5/OE6 y con la estrategia de evaluación de
+la sección~\ref{sec:metodo-evaluacion}.
+
 \section{Restricciones}
-\pendiente{Documentar plataforma, recursos, entorno acústico y demás restricciones confirmadas.}
+\begin{description}
+\item[RES-01. Plataforma.] El producto se desarrollará para Android, con Kotlin y
+Compose conforme a los ADR vigentes; no se exige una versión multiplataforma.
+\item[RES-02. Entrada y procesamiento.] El análisis vocal se limita a entrada
+monofónica y procesamiento local. La extracción de voz en mezclas polifónicas,
+el multijugador en tiempo real y la realidad extendida quedan fuera del alcance.
+\item[RES-03. Adaptación.] El ajuste utilizará lógica difusa Mamdani y políticas
+por actividad. Su configuración experimental deberá permanecer identificable.
+\item[RES-04. Acceso y distribución.] La entrega propuesta será gratuita en todas
+sus funciones y sin suscripción, con código y documentación publicados bajo
+licencias compatibles con los recursos empleados. Su cumplimiento corresponde a OE7.
+\item[RES-05. Recursos y evaluación.] El trabajo se ajustará a los equipos,
+dedicación y fechas del capítulo~\ref{cap:factibilidad}. La evaluación prevista
+es técnica y exploratoria de uso; no acredita eficacia pedagógica.
+\end{description}
+
 \section{Casos de uso}
-\pendiente{Describir actores, flujos principales, alternativas y condiciones de finalización.}
+Distingo dos roles: el \textit{usuario}, que practica y gestiona su perfil, y el
+\textit{responsable de evaluación}, que examina registros e inferencias. Una misma
+persona puede asumir ambos; el modelo no incorpora cuentas ni permisos diferenciados.
+La figura~\ref{fig:casos-uso} presenta sus asociaciones con los casos principales.
+
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.92\textwidth]{figuras/casos-uso.pdf}
+  \caption{Casos de uso del alcance propuesto. Las líneas representan asociaciones
+  entre roles y casos, no un orden de ejecución.}
+  \label{fig:casos-uso}
+\end{figure}
+\clearpage
+
+\subsection{CU-01. Practicar intervalos vocales}
+\textbf{Actor y precondiciones:} usuario; actividad disponible, configuración
+admisible y permiso de micrófono antes de capturar. En progresión se requieren
+los accesos correspondientes.
+
+\textbf{Flujo principal:} el usuario selecciona contenido y modo; el sistema
+determina la ayuda automática o aplica la elección manual. Presenta la referencia
+que corresponda, recibe una o dos capturas según el modo y evalúa el intervalo.
+Muestra la devolución y guarda resultado y eventual avance antes de preparar
+el siguiente ejercicio.
+
+\textbf{Alternativas:} rechazar permiso conserva el acceso a las otras actividades;
+señal insuficiente permite esperar o cancelar sin inventar acierto/error.
+Cancelación o segundo plano interrumpen la captura. Si falla el guardado, el
+resultado se indica pendiente, sin duplicar avance al reintentar.
+
+\textbf{Postcondiciones y vínculo:} resultado confirmado o interrupción/pendiente
+identificados; micrófono liberado al finalizar. RF-01--RF-04, RF-08--RF-11 y RF-16.
+
+\subsection{CU-02. Practicar sin captura vocal}
+\textbf{Actor y precondiciones:} usuario; contenido y recursos locales de la
+actividad disponibles, con configuración compatible.
+
+\textbf{Flujo principal:} el usuario elige Instrumentos, Rhythm Tap o Defender,
+configura la práctica o progresión e inicia. Responde mediante opciones de timbre,
+golpes en pantalla o nombres/teclas, respectivamente. El sistema evalúa, devuelve
+el resultado y registra el cierre con la política de progreso correspondiente.
+
+\textbf{Alternativas:} una configuración rítmica incompatible o sin contenido
+disponible debe explicarse antes de iniciar. Las reescuchas conservan el ejemplo;
+la repetición rítmica conserva la partitura como práctica. Una pausa o salida
+respeta las reglas de interrupción de cada actividad.
+
+\textbf{Postcondiciones y vínculo:} resultados completos/interrumpidos o pendientes
+identificados, sin premiar una práctica como progresión. RF-01, RF-02, RF-05--RF-11.
+
+\subsection{CU-03. Consultar resultados y progreso}
+\textbf{Actores y precondiciones:} usuario o responsable de evaluación; perfil
+accesible, aunque todavía no contenga resultados.
+
+\textbf{Flujo principal:} acceder al historial o progreso, elegir actividad y
+consultar resumen, detalle, ayudas, origen y accesos. \textbf{Alternativas:}
+mostrar estado vacío o error de lectura sin sustituir silenciosamente los datos.
+\textbf{Postcondición:} consulta realizada sin modificar resultados ni progreso.
+\textbf{Vínculo:} RF-10--RF-12.
+
+\subsection{CU-04. Exportar registros}
+\textbf{Actores y precondiciones:} usuario o responsable de evaluación; registros
+accesibles y destino de exportación seleccionable.
+
+\textbf{Flujo principal:} solicitar exportación, elegir destino y generar el
+archivo con datos y configuración identificados. \textbf{Alternativas:} cancelar
+la selección o informar un fallo sin borrar el perfil. \textbf{Postcondición:}
+archivo generado o cancelación/fallo comunicado, conservando los datos locales.
+\textbf{Vínculo:} RF-11, RF-13.
+
+\subsection{CU-05. Reiniciar perfil}
+\textbf{Actor y precondiciones:} usuario; acceso a la gestión del perfil.
+
+\textbf{Flujo principal:} solicitar reinicio, revisar la advertencia y confirmar;
+el sistema detiene las operaciones afectadas, elimina los datos del perfil y
+actualiza sus vistas. \textbf{Alternativas:} cancelar conserva el perfil; un fallo
+se informa y queda sujeto a recuperación. \textbf{Postcondición:} estado inicial
+local o fallo identificado; los archivos ya exportados no se eliminan.
+\textbf{Vínculo:} RF-14.
+
+\subsection{CU-06. Inspeccionar DDA y simulaciones}
+\textbf{Actor y precondiciones:} responsable de evaluación; configuración
+identificada y decisiones o escenarios disponibles.
+
+\textbf{Flujo principal:} abrir el inspector, seleccionar una decisión y examinar
+indicadores, pertenencias, reglas, salida y aplicación. Puede ejecutar un escenario
+controlado identificado como simulación. \textbf{Alternativas:} indicar ausencia
+de evidencia o decisión no aplicable sin inventar trazas. \textbf{Postcondición:}
+inspección o simulación realizada sin alterar el progreso real.
+\textbf{Vínculo:} RF-09, RF-15.

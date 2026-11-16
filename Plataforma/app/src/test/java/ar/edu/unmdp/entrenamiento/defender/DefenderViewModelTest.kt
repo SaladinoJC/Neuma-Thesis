@@ -9,6 +9,27 @@ import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class DefenderViewModelTest {
+    @Test fun `preparacion aplica viaje y aparicion manual sin trasladarlos a progresion`() = runTest {
+        Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+        val audio = object : DefenderAudio {
+            override suspend fun note(midi: Int) = 0
+            override suspend fun effect(effect: DefenderEffect) = 0
+        }
+        val model = DefenderViewModel(audio) { currentTime }
+        try {
+            runCurrent()
+            model.travel(3000); model.spawnInterval(1000); model.start(7); runCurrent()
+            assertEquals(3000L, model.ui.value.game.configuration.travelMillis)
+            assertEquals(1000L, model.ui.value.game.configuration.spawnIntervalMillis)
+            model.spawnInterval(2000); model.travel(4000)
+            assertEquals(3000L, model.ui.value.game.configuration.travelMillis)
+            assertEquals(1000L, model.ui.value.game.configuration.spawnIntervalMillis)
+            model.home(); runCurrent(); model.prepare(); model.progression(true); model.start(7); runCurrent()
+            assertEquals(10_000L, model.ui.value.game.configuration.travelMillis)
+            assertNull(model.ui.value.game.configuration.spawnIntervalMillis)
+            assertEquals(3000L, model.ui.value.game.configuration.dda.minimumTravelMillis)
+        } finally { model.home(); advanceUntilIdle(); Dispatchers.resetMain() }
+    }
     @Test fun `sonidos independientes solo tras respuesta y pausa cancela sin repeticion`() = runTest {
         Dispatchers.setMain(StandardTestDispatcher(testScheduler))
         val notes = mutableListOf<Int>(); val effects = mutableListOf<DefenderEffect>(); var released = 0
