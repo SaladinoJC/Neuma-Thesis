@@ -90,3 +90,20 @@ Personaje pausado; sonidos de interfaz y respuesta táctil pendientes.
 La comprobación remota y los identificadores finales se registran al terminar
 la transferencia. No se atribuye una nueva ejecución de pruebas de producto a
 este cierre: se respalda la evidencia ya obtenida.
+
+## Estado al irse el autor
+
+Fuentes subidos en `db54509`, tag anotado remoto y clon de recuperación
+verificados: 1.241 archivos, fsck correcto. El bundle local recupera las 19
+ramas existentes, también verificado. PDF, APK actuales y otros seis adjuntos
+ya tienen tamaño y SHA-256 remoto cotejados (9 de 12 archivos en total).
+
+La carga de **bundle**, **ZIP de APK históricos** y **ZIP de materiales locales**
+seguía en curso cuando el autor pidió cerrar. No considerar completos esos tres
+adjuntos hasta comprobar estado `uploaded`, tamaño y digest SHA-256. La entrega:
+https://github.com/SaladinoJC/Tesis/releases/tag/untagged-c7b3a2843368e4db7dff
+
+Si se apaga o desconecta la PC antes de finalizar, retomar mañana la transferencia
+desde `Plataforma/build/backup-2026-11-16/`. Los fuentes, el PDF y los APK actuales
+ya están fuera de la PC; los materiales locales ignorados todavía requieren
+terminar esta comprobación. No se borró ningún original.

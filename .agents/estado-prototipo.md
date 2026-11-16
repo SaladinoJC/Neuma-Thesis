@@ -4,6 +4,18 @@
 
 ## Cierre solicitado y respaldo GitHub — 2026-11-16
 
+**Cierre definitivo pedido por el autor antes de irse:** fuentes guardados y
+subidos en `db54509`, etiqueta `backup-2026-11-16-v0.12.27`; clon remoto de 1.241
+archivos verificado con fsck y H0014=8 horas informado. Bundle local recupera
+19 ramas, fsck correcto. En la entrega privada en borrador ya están verificados
+por SHA-256/size 9 de 12 adjuntos, incluidos PDF y APK actuales. **Siguen en
+transferencia** `neuma-repositorio-20261116.bundle`, `neuma-apk-historicos-20261116.zip`
+y `neuma-materiales-locales-20261116.zip` (estado remoto starter al cierre).
+Proceso de carga sesión 71704; no dar por terminado el respaldo de materiales
+ignorados. Mañana comprobar entrega y hashes; si se interrumpió, reanudar esos
+tres adjuntos desde `Plataforma/build/backup-2026-11-16/` sin duplicar los demás.
+No continuar desarrollo hoy. Guía de recuperación conserva el tag y la rama.
+
 El autor pide parar por hoy y respaldar todo el trabajo en GitHub ante posible
 pérdida de la PC. Informa **8 horas** personales; H0014 pasa a informado sin
 duplicar jornada. No continuar desarrollo de Defender ni otras funcionalidades.
